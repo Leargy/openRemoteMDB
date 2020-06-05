@@ -98,3 +98,22 @@ public class Dispatcher extends ADispatcher {
         // TODO: Обработка разрыва подключения
     }
 }
+
+class PassCheck {
+    private boolean isConfirmed;
+    private String login;
+    private String password;
+
+    public void setIsConfirmed(boolean confirmed) {
+        isConfirmed = confirmed;
+    }
+    public boolean isConfirmed() {
+        return isConfirmed;
+    }
+    public String getLogin() {
+        return login;
+    }
+    public String getPassword() {
+        return password;
+    }
+}

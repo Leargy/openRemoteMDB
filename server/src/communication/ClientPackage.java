@@ -15,6 +15,8 @@ public class ClientPackage implements Serializable {
     private static final long serialVersionUID = 1L; // идентификатор сериализации
     private RawDecree command;
     private Report report;
+    private String login;
+    private String password;
 
     /**
      * Базовый конструктор,
