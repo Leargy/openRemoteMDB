@@ -9,5 +9,6 @@ public enum Markers {
     READ,
     WRITE,
     STOP,
-    INTERRUPTED;
+    INTERRUPTED,
+    CONFIRMING;
 }

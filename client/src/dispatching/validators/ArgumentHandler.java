@@ -47,10 +47,10 @@ public class ArgumentHandler extends DataHandler{
     public RawDecree handle(Segment parcel) throws CommandSyntaxException {
         String tempCommand = parcel.getStringData()[0];
 
-        boolean isLimited = true;
-        Map.Entry<String,String> foundedCommand = commandMap.entrySet().stream().filter((a) -> (a.getValue().equals(tempCommand))).findFirst().get();
-        if (foundedCommand.getKey().matches(".*\\s*\\[(key|id)\\].*")) {
-            isLimited = false;
+        boolean isLimited = false;
+        Map.Entry<String,String> foundedCommand = commandMap.entrySet().stream().filter((a) -> (a.getKey().equals(tempCommand))).findFirst().get();
+        if (foundedCommand.getValue().matches(".*\\s*\\[(key|id)\\].*")) {
+            isLimited = true;
         }
         if (tempCommand.equals(RawRemoveLower.NAME)) {
             return new RawRemoveLower(junkerCreator.prepareJunker());
@@ -68,7 +68,7 @@ public class ArgumentHandler extends DataHandler{
             throw new CommandSyntaxException("Command should have at list one argument!");
         }
 
-        if (!isLimited) {
+        if (isLimited) {
             Integer intArgument = null;
             try {
                 intArgument = Integer.valueOf(stringArgument);
@@ -79,7 +79,7 @@ public class ArgumentHandler extends DataHandler{
             } catch (NumberFormatException e) {
                 throw new CommandSyntaxException("Entered argument should be one positive integer!");
             }
-            switch (foundedCommand.getValue()) {
+            switch (foundedCommand.getKey()) {
                 case RawRemoveKey.NAME: return new RawRemoveKey(intArgument);
                 case RawInsert.NAME: return new RawInsert(intArgument, junkerCreator.prepareJunker());
                 case RawUpdate.NAME: return new RawUpdate(intArgument, junkerCreator.prepareJunker());
@@ -87,7 +87,7 @@ public class ArgumentHandler extends DataHandler{
                 case RawReplaceIfGreater.NAME: return new RawReplaceIfGreater(intArgument, junkerCreator.prepareJunker());
             }
         }else {
-            switch (foundedCommand.getValue()) {
+            switch (foundedCommand.getKey()) {
                 case RawExecuteScript.NAME:
                     try{
                         return new RawExecuteScript(fileDescriptor.discript(stringArgument));

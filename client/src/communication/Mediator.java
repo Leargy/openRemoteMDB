@@ -65,5 +65,6 @@ public class Mediator implements Mediating {
             servant.resetConnection();
         }
         if (component == receiver && parcel.getMarker() == Markers.WRITE) servant.notification(parcel);
+        if (component == receiver && parcel.getMarker() == Markers.CONFIRMING) dispatcher.confirme(parcel.getClientPackage().getReport().isSuccessful());
     }
 }
