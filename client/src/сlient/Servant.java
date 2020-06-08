@@ -15,7 +15,7 @@ import dispatching.validators.Filters;
  */
 public class Servant extends AServant {
     private String ip = "";
-    private int port =0;
+    private int port = 0;
     /**
      * Конструктор принимающий ссылку на посредника.
      * @param mediator

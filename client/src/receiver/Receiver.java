@@ -43,12 +43,17 @@ public class Receiver extends AReceiver{
             objectInputStream = new ObjectInputStream(byteArrayInputStream);
             Report query = (Report) objectInputStream.readObject();
             parcel.setClientPackage(new ClientPackage(null,query));
+            // Block of checking if user's login and pass was confirmed.
+            if (query.getIsConfirmed()) {
+                parcel.setMarker(Markers.CONFIRMING);
+                mediator.notify(this, parcel);
+            }
             parcel.setMarker(Markers.WRITE);
-            mediator.notify(this,parcel);
+            mediator.notify(this, parcel);
         }catch (IOException ex) {
             parcel.setMarker(Markers.INTERRUPTED);
             System.err.println("────>Connection interrupted< <─w─");
-            mediator.notify(this,parcel);
+            mediator.notify(this, parcel);
         }catch (ClassNotFoundException ex) {
             System.out.println(ex.getException());
             //TODO:write an handling to this type of error

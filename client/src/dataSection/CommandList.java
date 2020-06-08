@@ -18,21 +18,24 @@ public class CommandList implements Commands {
      * Конструктор в котором происходи добавление сырых команд в список доступных.
      */
     public CommandList() {
-        commandMap.put(RawExit.SYNTAX, RawExit.NAME);
-        commandMap.put(RawClear.SYNTAX, RawClear.NAME);
-        commandMap.put(RawHelp.SYNTAX, RawHelp.NAME);
-        commandMap.put(RawInfo.SYNTAX, RawInfo.NAME);
-        commandMap.put(RawShow.SYNTAX, RawShow.NAME);
-        commandMap.put(RawInsert.SYNTAX, RawInsert.NAME);
-        commandMap.put(RawFilterContainsName.SYNTAX, RawFilterContainsName.NAME);
-        commandMap.put(RawMaxByDate.SYNTAX, RawMaxByDate.NAME);
-        commandMap.put(RawRemoveKey.SYNTAX, RawRemoveKey.NAME);
-        commandMap.put(RawRemoveLower.SYNTAX, RawRemoveLower.NAME);
-        commandMap.put(RawReplaceIfGreater.SYNTAX, RawReplaceIfGreater.NAME);
-        commandMap.put(RawReplaceIfLower.SYNTAX, RawReplaceIfLower.NAME);
-        commandMap.put(RawSumOfAnnualTurnover.SYNTAX, RawSumOfAnnualTurnover.NAME);
-        commandMap.put(RawUpdate.SYNTAX, RawUpdate.NAME);
-        commandMap.put(RawExecuteScript.SYNTAX, RawExecuteScript.NAME);
+        commandMap.put(RawExit.NAME,RawExit.SYNTAX);
+        commandMap.put(RawClear.NAME,RawClear.SYNTAX);
+        commandMap.put(RawHelp.NAME, RawHelp.SYNTAX);
+        commandMap.put(RawInfo.NAME, RawInfo.SYNTAX);
+        commandMap.put(RawShow.NAME, RawShow.SYNTAX);
+        commandMap.put(RawInsert.NAME, RawInsert.SYNTAX);
+        commandMap.put(RawFilterContainsName.NAME, RawFilterContainsName.SYNTAX);
+        commandMap.put(RawMaxByDate.NAME, RawMaxByDate.SYNTAX);
+        commandMap.put(RawRemoveKey.NAME, RawRemoveKey.SYNTAX);
+        commandMap.put(RawRemoveLower.NAME, RawRemoveLower.SYNTAX);
+        commandMap.put(RawReplaceIfGreater.NAME, RawReplaceIfGreater.SYNTAX);
+        commandMap.put(RawReplaceIfLower.NAME, RawReplaceIfLower.SYNTAX);
+        commandMap.put(RawSumOfAnnualTurnover.NAME, RawSumOfAnnualTurnover.SYNTAX);
+        commandMap.put(RawUpdate.NAME, RawUpdate.SYNTAX);
+        commandMap.put(RawExecuteScript.NAME, RawExecuteScript.SYNTAX);
+        commandMap.put(RawSignUp.NAME, RawSignUp.SYNTAX);
+        commandMap.put(RawSignIn.NAME, RawSignIn.SYNTAX);
+        commandMap.put(RawSignOut.NAME, RawSignOut.SYNTAX);
     }
 
     /**
