@@ -1,6 +1,6 @@
-package communication.treasures.parameters.entities;
+package parameters.entities;
 
-import communication.treasures.parameters.Junker;
+import parameters.Junker;
 import entities.OrganizationType;
 
 public final class OrganizationParameters extends EntityParameters {

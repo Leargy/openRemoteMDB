@@ -2,8 +2,7 @@ package entities;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
-import communication.treasures.parameters.entities.AddressParameters;
-import communication.treasures.parameters.entities.LocationParameters;
+import parameters.entities.AddressParameters;
 
 import javax.xml.bind.annotation.*;
 

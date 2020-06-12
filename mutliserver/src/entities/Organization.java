@@ -2,12 +2,10 @@ package entities;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
-import communication.treasures.parameters.entities.OrganizationParameters;
+import parameters.entities.OrganizationParameters;
 
 import javax.xml.bind.annotation.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 @XmlRootElement(name = "organization")
 @XmlAccessorType(XmlAccessType.FIELD)

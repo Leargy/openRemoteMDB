@@ -1,7 +1,7 @@
-package communication.treasures.parameters.entities;
+package parameters.entities;
 
-import communication.treasures.parameters.Junker;
-import communication.treasures.parameters.Parameters;
+import parameters.Junker;
+import parameters.Parameters;
 
 public abstract class EntityParameters implements Parameters {
     protected final Junker UNSORTED_PARAMETERS;

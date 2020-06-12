@@ -1,7 +1,7 @@
 package entities;
 
 import com.sun.istack.internal.NotNull;
-import communication.treasures.parameters.entities.LocationParameters;
+import parameters.entities.LocationParameters;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

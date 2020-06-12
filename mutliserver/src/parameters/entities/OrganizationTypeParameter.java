@@ -1,4 +1,4 @@
-package communication.treasures.parameters.entities;
+package parameters.entities;
 
 import entities.OrganizationType;
 

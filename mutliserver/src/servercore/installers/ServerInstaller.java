@@ -1,7 +1,7 @@
 package servercore.installers;
 
-import communication.treasures.parameters.server.ConfiguredServerParameters;
-import communication.treasures.parameters.server.ServerParameters;
+import parameters.server.ConfiguredServerParameters;
+import parameters.server.ServerParameters;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

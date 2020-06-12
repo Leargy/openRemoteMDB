@@ -1,6 +1,6 @@
 package entities;
 
-import communication.treasures.parameters.entities.UsersParameters;
+import parameters.entities.UsersParameters;
 
 import java.util.UUID;
 
@@ -25,7 +25,7 @@ public final class User {
     }
 
     public User(UsersParameters userParams) {
-        ID = UUID.randomUUID();
+        ID =  userParams.getID();
         LOGIN = userParams.getLogin();
         PASSWORD = userParams.getPassword();
         ENVIRONMENT_VARIABLE_NAME = userParams.getEnvironmentVariableName();

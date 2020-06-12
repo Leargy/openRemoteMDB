@@ -1,6 +1,6 @@
-package communication.treasures.parameters.server;
+package parameters.server;
 
-import communication.treasures.parameters.Parameters;
+import parameters.Parameters;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

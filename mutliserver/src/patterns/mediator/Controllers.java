@@ -1,8 +1,8 @@
 package patterns.mediator;
 
 import communication.Report;
-import communication.uplinkbags.ValuableBags;
+import uplink_bags.TransportableBag;
 
 public interface Controllers {
-    Report notify(Component sender, ValuableBags parcel);
+    Report notify(Component sender, TransportableBag parcel);
 }

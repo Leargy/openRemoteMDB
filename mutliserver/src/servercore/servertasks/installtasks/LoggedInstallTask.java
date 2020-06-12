@@ -1,7 +1,7 @@
 package servercore.servertasks.installtasks;
 
-import communication.treasures.parameters.server.ConfiguredServerParameters;
-import communication.treasures.parameters.server.ServerParameters;
+import parameters.server.ConfiguredServerParameters;
+import parameters.server.ServerParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import servercore.Server;

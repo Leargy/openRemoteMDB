@@ -1,7 +1,7 @@
 package servercore.servertasks.installtasks;
 
-import communication.treasures.parameters.server.ConfiguredServerParameters;
-import communication.treasures.parameters.server.ServerParameters;
+import parameters.server.ConfiguredServerParameters;
+import parameters.server.ServerParameters;
 import servercore.Server;
 import servercore.installers.ServerInstaller;
 

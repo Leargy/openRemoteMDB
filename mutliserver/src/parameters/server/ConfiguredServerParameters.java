@@ -1,4 +1,4 @@
-package communication.treasures.parameters.server;
+package parameters.server;
 
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;

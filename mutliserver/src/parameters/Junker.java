@@ -1,4 +1,4 @@
-package communication.treasures.parameters;
+package parameters;
 
 import java.io.Serializable;
 

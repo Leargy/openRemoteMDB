@@ -1,6 +1,6 @@
-package communication.treasures.parameters.entities;
+package parameters.entities;
 
-import communication.treasures.parameters.Junker;
+import parameters.Junker;
 
 public final class AddressParameters extends EntityParameters {
     private final LocationParameters LOCATION_PARAMETERS;

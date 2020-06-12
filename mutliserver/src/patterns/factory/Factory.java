@@ -1,9 +1,7 @@
 package patterns.factory;
+import parameters.Parameters;
 
-import communication.treasures.Wealths;
-import communication.treasures.parameters.Parameters;
-
-public interface Factory<T extends Wealths> {
-    T make(Parameters params);
+public interface Factory<T extends Creatable> {
+    T makeInstance(Parameters params);
 
 }

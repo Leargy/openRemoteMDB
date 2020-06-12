@@ -1,25 +1,37 @@
 package base_modules.dispatchers;
 
+import base_modules.dispatchers.sending_tasks.SendingResultsTask;
 import communication.Report;
-import communication.uplinkbags.NotifyBag;
-import communication.uplinkbags.ValuableBags;
 import patterns.mediator.Component;
 import patterns.mediator.Controllers;
+import uplink_bags.NotifyBag;
+import uplink_bags.TransportableBag;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DispatchController implements Dispatchers {
+    private final Controllers CONTROLLER;
+    private final ExecutorService DISPATCHER;
+
+    public DispatchController(Controllers controller, int poolSize) {
+        CONTROLLER = controller;
+        DISPATCHER = Executors.newFixedThreadPool(poolSize);
+    }
 
     @Override
     public Report sendResults2Client(NotifyBag parcel) {
-        return new Report("Hello, user");
+        DISPATCHER.execute(new SendingResultsTask(this, parcel));
+        return null; // TODO: return successful Report with report formatter
     }
 
     @Override
     public Controllers getController() {
-        return null;
+        return CONTROLLER;
     }
 
     @Override
-    public Report notify(Component sender, ValuableBags parcel) {
+    public Report notify(Component sender, TransportableBag parcel) {
         return null;
     }
 }

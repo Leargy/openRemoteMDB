@@ -1,6 +1,6 @@
 package servercore;
 
-import communication.treasures.parameters.server.ConfiguredServerParameters;
+import parameters.server.ConfiguredServerParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import servercore.installers.LoggedServerInstaller;

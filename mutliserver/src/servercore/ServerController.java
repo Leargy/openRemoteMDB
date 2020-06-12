@@ -9,11 +9,12 @@ import base_modules.readers.Perusals;
 import base_modules.registers.ReceptionController;
 import base_modules.registers.Registers;
 import communication.Report;
-import communication.uplinkbags.ValuableBags;
 import patterns.mediator.Component;
 import patterns.mediator.Controllers;
+import uplink_bags.TransportableBag;
 
 public class ServerController implements Controllers {
+    private static final int MAX_SIMULTANEOUS_SENDS = 50;
     private final Registers REGISTER;
     private final Perusals PERUSALER;
     private final Processors SUBPROCESSOR;
@@ -23,22 +24,11 @@ public class ServerController implements Controllers {
         REGISTER = new ReceptionController(this);
         PERUSALER = new PerusalController();
         SUBPROCESSOR = new SubProcessorController();
-        DISPATCHER = new DispatchController();
+        DISPATCHER = new DispatchController(this, MAX_SIMULTANEOUS_SENDS);
     }
 
     @Override
-    public Report notify(Component sender, ValuableBags parcel) {
-        if (sender == PERUSALER)
-            SUBPROCESSOR.process(null);
-        else if (sender == SUBPROCESSOR)
-            DISPATCHER.sendResults2Client(null);
+    public Report notify(Component sender, TransportableBag parcel) {
         return new Report("Sending successful");
-    }
-
-    public void connectNewClient() {
-    }
-
-    public void serviceClientQuery() {
-
     }
 }

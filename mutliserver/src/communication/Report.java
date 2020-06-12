@@ -1,10 +1,8 @@
 package communication;
 
-import communication.treasures.Wealths;
-
 import java.io.Serializable;
 
-public class Report implements Wealths, Serializable {
+public class Report implements Serializable {
     private final String MESSAGE;
 
     public Report(String message) { MESSAGE = message; }
