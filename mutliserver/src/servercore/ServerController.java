@@ -23,7 +23,7 @@ public class ServerController implements Controllers {
     public ServerController() {
         REGISTER = new ReceptionController(this);
         PERUSALER = new PerusalController();
-        SUBPROCESSOR = new SubProcessorController();
+        SUBPROCESSOR = new SubProcessorController(this);
         DISPATCHER = new DispatchController(this, MAX_SIMULTANEOUS_SENDS);
     }
 

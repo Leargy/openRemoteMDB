@@ -2,8 +2,11 @@ package base_modules.dispatchers;
 
 import base_modules.dispatchers.sending_tasks.SendingResultsTask;
 import communication.Report;
+import communication.ReportsFormatter;
+import extension_modules.ClassUtils;
 import patterns.mediator.Component;
 import patterns.mediator.Controllers;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import uplink_bags.NotifyBag;
 import uplink_bags.TransportableBag;
 
@@ -22,7 +25,7 @@ public class DispatchController implements Dispatchers {
     @Override
     public Report sendResults2Client(NotifyBag parcel) {
         DISPATCHER.execute(new SendingResultsTask(this, parcel));
-        return null; // TODO: return successful Report with report formatter
+        return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 
     @Override
@@ -32,6 +35,7 @@ public class DispatchController implements Dispatchers {
 
     @Override
     public Report notify(Component sender, TransportableBag parcel) {
-        return null;
+        throw new NotImplementedException();
+        //return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 }
