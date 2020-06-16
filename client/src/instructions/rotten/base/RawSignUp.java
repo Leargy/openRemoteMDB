@@ -20,11 +20,11 @@ public class RawSignUp extends RawDecree implements Accessible, Serializable {
 
     @Override
     public String getLogin() {
-        return null;
+        return login;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 }

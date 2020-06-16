@@ -10,5 +10,7 @@ public enum Markers {
     WRITE,
     STOP,
     INTERRUPTED,
-    CONFIRMING;
+    CONFIRMING,
+    BADINPUTCONDITION,
+    GOODINPUTCONDITION;
 }

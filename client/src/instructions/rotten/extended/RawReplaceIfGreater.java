@@ -1,6 +1,6 @@
 package instructions.rotten.extended;
 
-import entities.Junker;
+import entities.Organization;
 
 import java.io.Serializable;
 
@@ -21,7 +21,7 @@ public final class RawReplaceIfGreater extends RawReplaceIf implements Serializa
      * @param key
      * @param junk
      */
-    public RawReplaceIfGreater(Integer key, Junker junk) {
-        super(key, junk);
+    public RawReplaceIfGreater(Integer key, Organization organization) {
+        super(key, organization);
     }
 }

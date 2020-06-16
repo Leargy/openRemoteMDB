@@ -1,6 +1,6 @@
 package instructions.rotten.extended;
 
-import entities.Junker;
+import entities.Organization;
 import instructions.rotten.IClued;
 import instructions.rotten.IJunked;
 import instructions.rotten.RawCommitter;
@@ -18,18 +18,18 @@ public abstract class RawReplaceIf extends RawCommitter implements IClued, IJunk
      * добавляемого объекта
      * @param junk
      */
-    protected RawReplaceIf(Integer key, Junker junk) {
-        super(junk);
+    protected RawReplaceIf(Integer key, Organization organization) {
+        super(organization);
         KEY = key;
     }
 
     /**
      * Возвращает объект, содержащий данные об объекте коллекции.
-     * @return Junker
+     * @return Organization
      */
     @Override
-    public final Junker Params() {
-        return JUNK;
+    public final Organization Params() {
+        return ORGANIZATION;
     }
 
     /**

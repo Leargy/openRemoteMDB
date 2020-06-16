@@ -1,10 +1,15 @@
 package dispatching.validators;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import communication.Segment;
 import dataSection.Commands;
+import dispatching.Dispatcher;
+import dispatching.scriptHandler.ExecuteScript;
 import entities.Descriptor;
 import entities.JunkerCreator;
+import entities.organizationFactory.OrganizationBuilder;
 import exceptions.CommandSyntaxException;
+import exceptions.ScriptHandlerException;
 import instructions.rotten.base.*;
 import instructions.rotten.extended.*;
 import instructions.rotten.RawDecree;
@@ -27,6 +32,9 @@ import java.util.stream.StreamSupport;
 public class ArgumentHandler extends DataHandler{
     private final HashMap<String,String> commandMap;
     private final Descriptor fileDescriptor;
+    private ExecuteScript executeScript;
+    private Dispatcher dispatcher;
+    private OrganizationBuilder organizationBuilder;
     /**
      * Конструктор принимающий список команд относительно которых будет производиться проверка.
      * @param commandList
@@ -37,6 +45,11 @@ public class ArgumentHandler extends DataHandler{
         fileDescriptor = new Descriptor();
     }
 
+    public void setDispatcher(Dispatcher dispatcher) {
+        organizationBuilder = new OrganizationBuilder();
+        executeScript = new ExecuteScript(dispatcher,organizationBuilder);
+    };
+
     /**
      * Метод седержащий логику проверки аргументной части команды.
      * @param parcel
@@ -44,7 +57,7 @@ public class ArgumentHandler extends DataHandler{
      * @throws CommandSyntaxException
      */
     @Override
-    public RawDecree handle(Segment parcel) throws CommandSyntaxException {
+    public RawDecree handle(Segment parcel) throws CommandSyntaxException{
         String tempCommand = parcel.getStringData()[0];
 
         boolean isLimited = false;
@@ -53,7 +66,7 @@ public class ArgumentHandler extends DataHandler{
             isLimited = true;
         }
         if (tempCommand.equals(RawRemoveLower.NAME)) {
-            return new RawRemoveLower(junkerCreator.prepareJunker());
+            return new RawRemoveLower(organizationBuilder.make(junkerCreator.prepareJunker()));
         }
         String stringArgument = "";
         try {
@@ -81,20 +94,23 @@ public class ArgumentHandler extends DataHandler{
             }
             switch (foundedCommand.getKey()) {
                 case RawRemoveKey.NAME: return new RawRemoveKey(intArgument);
-                case RawInsert.NAME: return new RawInsert(intArgument, junkerCreator.prepareJunker());
-                case RawUpdate.NAME: return new RawUpdate(intArgument, junkerCreator.prepareJunker());
-                case RawReplaceIfLower.NAME: return new RawReplaceIfLower(intArgument, junkerCreator.prepareJunker());
-                case RawReplaceIfGreater.NAME: return new RawReplaceIfGreater(intArgument, junkerCreator.prepareJunker());
+                case RawInsert.NAME: return new RawInsert(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
+                case RawUpdate.NAME: return new RawUpdate(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
+                case RawReplaceIfLower.NAME: return new RawReplaceIfLower(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
+                case RawReplaceIfGreater.NAME: return new RawReplaceIfGreater(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
             }
         }else {
             switch (foundedCommand.getKey()) {
                 case RawExecuteScript.NAME:
                     try{
-                        return new RawExecuteScript(fileDescriptor.discript(stringArgument));
+//                        return new RawExecuteScript(fileDescriptor.discript(stringArgument));
+                        executeScript.read(fileDescriptor.discript(stringArgument),parcel.getSocketChannel());
                     }catch (IOException ex) {
                         throw new CommandSyntaxException(ex.getMessage());
                     }
+                    break;
                 case RawFilterContainsName.NAME: return new RawFilterContainsName(stringArgument);
+                default: return null;
                 //case RawRemoveLower.NAME: return new RawRemoveLower(junkerCreator.prepareJunker());
             }
         }

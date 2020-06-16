@@ -22,6 +22,8 @@ public abstract class AServant implements Component {
     protected final Scanner scanner;
     protected final InputStream pipeIn;
     protected final PrintStream pipeOut;
+    protected volatile boolean isReplying = false;
+    protected volatile boolean waitingReply = false;
 
     /**
      * Конструктор принимающий ссылку на посредника, инициализирующий точки In и Out, а также Scanner.
@@ -48,11 +50,18 @@ public abstract class AServant implements Component {
      * @return boolean
      * @throws IOException
      */
-    public boolean resetConnection() { return false;}
+    public boolean resetConnection(boolean droppedConnection) { return false;}
     /**
      * Метод для общения с клиентом.
      * @return String
      */
     public String debrief() { return "";}
     public void notification(Segment parcel) { }
+
+    public void setIsReplying(boolean isReplying) {
+        this.isReplying = isReplying;
+    }
+//    public void setIsIncoming(boolean isIncoming) {
+//        this.isIncoming = isIncoming;
+//    }
 }

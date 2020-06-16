@@ -1,6 +1,6 @@
 package instructions.rotten;
 
-import entities.Junker;
+import entities.Organization;
 
 /**
  * Обобщение для т.н. "сырых"
@@ -10,5 +10,5 @@ import entities.Junker;
  * @param <D>
  */
 public interface IJunked {
-    Junker Params();
+    Organization Params();
 }

@@ -11,6 +11,9 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.nio.ByteBuffer;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Класс получатель, в метод принимает посылку от сервера и десериализует в пригодный для обработки вид.
@@ -21,7 +24,8 @@ import java.nio.ByteBuffer;
 public class Receiver extends AReceiver{
     private ByteArrayInputStream byteArrayInputStream;
     private ObjectInputStream objectInputStream;
-    private final ByteBuffer byteBuffer = ByteBuffer.allocate(3*1024);
+    private ByteBuffer byteBuffer = ByteBuffer.allocate(3 * 1024);
+    private Lock lock = new ReentrantLock();
 
     public Receiver(Mediating mediator){
         super(mediator);
@@ -33,9 +37,12 @@ public class Receiver extends AReceiver{
      */
     @Override
     public void receive(Segment parcel) {
+        //System.out.println(Thread.currentThread().getName());
+        lock.lock();
         byteBuffer.clear();
         try {
             if(parcel.getSocketChannel().read(byteBuffer) == -1) {
+                mediator.notify(this, new Segment(Markers.WRITE));
                 throw new EOFException();
             }
             byteBuffer.flip();
@@ -44,6 +51,7 @@ public class Receiver extends AReceiver{
             Report query = (Report) objectInputStream.readObject();
             parcel.setClientPackage(new ClientPackage(null,query));
             // Block of checking if user's login and pass was confirmed.
+            lock.unlock();
             if (query.getIsConfirmed()) {
                 parcel.setMarker(Markers.CONFIRMING);
                 mediator.notify(this, parcel);
@@ -52,11 +60,13 @@ public class Receiver extends AReceiver{
             mediator.notify(this, parcel);
         }catch (IOException ex) {
             parcel.setMarker(Markers.INTERRUPTED);
-            System.err.println("────>Connection interrupted< <─w─");
             mediator.notify(this, parcel);
         }catch (ClassNotFoundException ex) {
             System.out.println(ex.getException());
             //TODO:write an handling to this type of error
+        }
+        finally {
+            lock.unlock();
         }
     }
 }

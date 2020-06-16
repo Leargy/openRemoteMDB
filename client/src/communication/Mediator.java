@@ -3,6 +3,8 @@ package communication;
 import dataSection.enumSection.Markers;
 import dispatching.ADispatcher;
 import dispatching.validators.DataHandler;
+import entities.OrganizationType;
+import entities.organizationFactory.OrganizationBuilder;
 import receiver.AReceiver;
 import сlient.Client;
 import сlient.Servant;
@@ -18,7 +20,7 @@ import java.io.IOException;
  * @author Leargy aka Anton Sushkevich
  */
 public class Mediator implements Mediating {
-    private final Client client;
+    private volatile Client client;
     private final AReceiver receiver;
     private final ADispatcher dispatcher;
     private final AServant servant;
@@ -55,16 +57,42 @@ public class Mediator implements Mediating {
      */
     @Override
     public void notify(Component component, Segment parcel) {
+//        if (component == receiver && parcel.getMarker() == Markers.INTERRUPTED) client.dropReceives();
+        if (component == receiver && parcel.getMarker() == Markers.WRITE) servant.setIsReplying(true);
+        if (component == client && parcel.getMarker() == Markers.INTERRUPTED) {
+            System.out.println(Thread.currentThread().getName() + " from client");
+            ((Servant)servant).setIsIncoming(true);
+            servant.resetConnection(true);
+        }
         if (component == servant && parcel.getMarker() == Markers.WRITE) dispatcher.giveOrder(parcel);
-        if (component == dispatcher && parcel.getMarker() == Markers.INTERRUPTED) servant.resetConnection();
+        if (component == dispatcher && parcel.getMarker() == Markers.GOODINPUTCONDITION) {
+            servant.setIsReplying(true);
+            client.setInputCondition(true);
+        }
+        if (component == dispatcher && parcel.getMarker() == Markers.BADINPUTCONDITION) {
+            servant.setIsReplying(false);
+            client.setInputCondition(false);
+        }
+        if (component == dispatcher && parcel.getMarker() == Markers.INTERRUPTED) {
+            System.out.println(Thread.currentThread().getName() + " from dispatcher");
+            ((Servant)servant).setIsIncoming(true);
+            servant.resetConnection(true);
+        }
         if ((component == dispatcher || component == servant) && parcel.getMarker() == Markers.STOP) client.stopAndClose();
         if (component == client && parcel.getMarker() == Markers.WRITE) servant.order(parcel);
         if (component == client && parcel.getMarker() == Markers.READ) receiver.receive(parcel);
         if (component == receiver && parcel.getMarker() == Markers.INTERRUPTED) {
+            System.out.println(Thread.currentThread().getName() + " from receiver");
             client.killSocket();
-            servant.resetConnection();
+            ((Servant)servant).setIsIncoming(true);
+//            servant.setIsReplying(false);
+            servant.resetConnection(true);
         }
-        if (component == receiver && parcel.getMarker() == Markers.WRITE) servant.notification(parcel);
+        if (component == receiver && parcel.getMarker() == Markers.WRITE) {
+            ((Servant)servant).setIsIncoming(true);
+//            System.out.println(Thread.currentThread().getName() + " me incoming");
+            servant.notification(parcel);
+        }
         if (component == receiver && parcel.getMarker() == Markers.CONFIRMING) dispatcher.confirme(parcel.getClientPackage().getReport().isSuccessful());
     }
 }

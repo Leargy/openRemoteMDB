@@ -9,13 +9,14 @@ import exceptions.CommandSyntaxException;
 import instructions.rotten.RawDecree;
 import instructions.rotten.base.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class AuthorizationHandler extends DataHandler {
     private final HashMap<String,String> commandMap;
-    private boolean isConfirmed;
+    private boolean isConfirmed = false;
     private Encrepted encryptor;
 
     public AuthorizationHandler(Commands commandList) {
@@ -45,7 +46,8 @@ public class AuthorizationHandler extends DataHandler {
                 try {
                     login = parcel.getStringData()[1];
                     password = encryptor.encrypt(parcel.getStringData()[2]);
-                }catch (ArrayIndexOutOfBoundsException ex) {
+                }catch (ArrayIndexOutOfBoundsException | NoSuchAlgorithmException ex) {
+//                    if (ex instanceof NoSuchAlgorithmException ) throw new CommandSyntaxException("Problems in encrypting the password");
                     throw new CommandSyntaxException("Missed some command's arguments");
                 }
                 switch (tempCommand) {
@@ -60,6 +62,7 @@ public class AuthorizationHandler extends DataHandler {
                 }
             }
         }
+        System.out.println("HOW");
         return null;
     }
     public void setIsConfirmed(boolean isConfirmed) {

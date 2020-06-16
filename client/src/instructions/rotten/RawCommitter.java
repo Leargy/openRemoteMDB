@@ -1,7 +1,6 @@
 package instructions.rotten;
 
-
-import entities.Junker;
+import entities.Organization;
 import instructions.Command;
 import instructions.rotten.RawDecree;
 
@@ -18,13 +17,13 @@ import java.io.Serializable;
  * @see Command
  */
 public abstract class RawCommitter extends RawDecree implements Serializable {
-    protected final Junker JUNK;
+    protected final Organization ORGANIZATION;
     /**
      * Конструктор, устанавливающий параметры
      * добавляемого объекта
      * @param parameters инкапсуляция параметров объекта
      */
-    protected RawCommitter(Junker junk) {
-        JUNK = junk;
+    protected RawCommitter(Organization organization) {
+        ORGANIZATION = organization;
     }
 }

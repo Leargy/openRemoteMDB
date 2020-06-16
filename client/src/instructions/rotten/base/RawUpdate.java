@@ -1,6 +1,6 @@
 package instructions.rotten.base;
 
-import entities.Junker;
+import entities.Organization;
 import instructions.rotten.IClued;
 import instructions.rotten.IJunked;
 import instructions.rotten.RawCommitter;
@@ -24,8 +24,8 @@ public final class RawUpdate extends RawCommitter implements IClued, IJunked, Se
      * @param id
      * @param junk
      */
-    public RawUpdate(Integer id, Junker junk) {
-        super(junk);
+    public RawUpdate(Integer id, Organization organization) {
+        super(organization);
         ID = id;
     }
 
@@ -41,6 +41,6 @@ public final class RawUpdate extends RawCommitter implements IClued, IJunked, Se
      * @return Junker
      */
     @Override
-    public final Junker Params() { return JUNK;}
+    public final Organization Params() { return ORGANIZATION;}
 
 }
