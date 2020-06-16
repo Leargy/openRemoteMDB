@@ -16,8 +16,9 @@ import java.util.Properties;
 
 public final class DataBaseConnector {
     private static final String DATABASE_DRIVER_NAME = "org.postgresql.Driver";
+    private static final String DEFAULT_PROPERTIES = "database.properties";
     private final Logger LOG = LoggerFactory.getLogger(DataBaseConnector.class);
-    private Connection CURRENT_CONNECTION = null;
+    private volatile Connection CURRENT_CONNECTION = null;
     private static volatile DataBaseConnector instance;
 
     public static DataBaseConnector getInstance() {
@@ -45,7 +46,7 @@ public final class DataBaseConnector {
                 ClassUtils.retrieveExecutedMethod());
     }
 
-    protected Connection getConnectionUsingFProperties(String filename) {
+    private Connection getConnectionUsingFProperties(String filename) {
         Path userDir = Paths.get(System.getProperty("user.dir"));
         Path propertiesWay = userDir.resolve(filename);
         Properties props = new Properties();
@@ -93,6 +94,12 @@ public final class DataBaseConnector {
             return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod() + " closing connection");
         }
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod() + " closing connection");
+    }
+
+    public Connection retrieveCurrentConnection() {
+        if (CURRENT_CONNECTION == null)
+            return CURRENT_CONNECTION = getConnectionUsingFProperties(DEFAULT_PROPERTIES);
+        else return CURRENT_CONNECTION;
     }
 
 }
