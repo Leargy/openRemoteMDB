@@ -20,6 +20,12 @@ public final class UsersParameters {
                 buildHexLineFromParameters(LOGIN, PASSWORD, ENVIRONMENT_VARIABLE_NAME));
     }
 
+    public UsersParameters(String login, String password, String environmentVariableName, UUID id) {
+        LOGIN = login;
+        PASSWORD = password;
+        ENVIRONMENT_VARIABLE_NAME = environmentVariableName;
+        USER_ID = id;
+    }
 
     private String buildHexLineFromParameters(String login, String pass, String envName) {
         StringBuilder hexNumber = new StringBuilder();

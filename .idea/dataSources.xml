@@ -5,6 +5,7 @@
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <remarks>Fucking database</remarks>
+      <schema-control>FORBID</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://pg:5432/studs</jdbc-url>
       <driver-properties>

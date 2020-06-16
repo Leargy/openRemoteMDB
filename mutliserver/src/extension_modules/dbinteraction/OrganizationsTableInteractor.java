@@ -1,4 +1,10 @@
 package extension_modules.dbinteraction;
 
-public class OrganizationsTableInteractor {
+import communication.Report;
+
+public class OrganizationsTableInteractor implements TablesInteractor {
+    private static final String DB_TABLE_NAME = "organizations";
+
+    @Override
+    public String getTableName() { return DB_TABLE_NAME; }
 }
