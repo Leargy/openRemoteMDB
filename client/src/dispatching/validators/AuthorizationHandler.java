@@ -5,6 +5,7 @@ import dataSection.CommandList;
 import dataSection.Commands;
 import dataSection.Encrepted;
 import dataSection.Encryptor;
+import dispatching.Dispatcher;
 import exceptions.CommandSyntaxException;
 import instructions.rotten.RawDecree;
 import instructions.rotten.base.*;
@@ -53,7 +54,7 @@ public class AuthorizationHandler extends DataHandler {
                 switch (tempCommand) {
                     case RawSignUp.NAME: return new RawSignUp(login, password);
                     case RawSignIn.NAME: return new RawSignIn(login, password);
-                    case RawSignOut.NAME: return new RawSignOut(login, password);
+                    case RawSignOut.NAME: return new RawSignOut();
                 }
             }else {
                 switch (tempCommand) {
@@ -62,7 +63,6 @@ public class AuthorizationHandler extends DataHandler {
                 }
             }
         }
-        System.out.println("HOW");
         return null;
     }
     public void setIsConfirmed(boolean isConfirmed) {

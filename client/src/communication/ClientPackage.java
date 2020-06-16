@@ -14,7 +14,7 @@ public class ClientPackage implements Serializable {
     private RawDecree command;
     private Report report;
     private String login;
-    private String password;
+    private String passWord;
 
     /**
      * Базовый конструктор,
@@ -24,6 +24,18 @@ public class ClientPackage implements Serializable {
      */
     public ClientPackage(RawDecree command) {
         this.command = command;
+    }
+
+    /**
+     * Конструктор для индифицирующей передачей
+     * @param command
+     * @param login
+     * @param passWord
+     */
+    public ClientPackage(RawDecree command, String login, String passWord ) {
+        this(command);
+        this.login = login;
+        this.passWord = passWord;
     }
 
     /**
@@ -42,7 +54,10 @@ public class ClientPackage implements Serializable {
     public RawDecree getCommand() {
         return command;
     }
-    public Report getReport() {return report; }
+    public String getPassWord() { return passWord; }
+    public Report getReport() { return report; }
+    public String getLogin() { return login; }
+
     public void setReport(Report report) {
         this.report = report;
     }

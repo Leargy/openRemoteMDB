@@ -49,7 +49,7 @@ public class InstallServerTask implements Callable<Server> {
     protected final int promptServerPort(int attemptNumber, Scanner scanner) {
         int resultServerPort = ServerParameters.getDefaultPort();
         do {
-            System.out.println("Input the correct server Port: ");
+            System.out.print("Input the correct server Port: ");
             try {
                 int newPort = Integer.valueOf(scanner.nextLine());
                 if (!ServerParameters.checkFreePort(newPort)) throw new NumberFormatException();

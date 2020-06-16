@@ -4,6 +4,8 @@ import base_modules.readers.readertasks.ClientPackageRetrievingTask;
 import patterns.mediator.Controllers;
 
 import java.nio.channels.SocketChannel;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public final class UserDataRetrievingTask extends ClientPackageRetrievingTask {
 
@@ -12,4 +14,10 @@ public final class UserDataRetrievingTask extends ClientPackageRetrievingTask {
     }
 
     // TODO: rewrite reading method from super class
+    @Override
+    public void run() {
+        super.run();
+
+
+    }
 }

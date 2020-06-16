@@ -17,16 +17,16 @@ import java.util.concurrent.Future;
 public class Server {
     private static final Logger logger = LoggerFactory.getLogger(Server.class);
     private static volatile Server instance;
-    private static final MainServerTask MAIN_TASK = new MainServerTask();
+
     private static final InstallServerTask INSTALL_TASK = new LoggedInstallTask(new LoggedServerInstaller());
     private static final InputServerTask INPUT_TASK = new InputServerTask();
     private final ConfiguredServerParameters PARAMETERS;
 
-    private final ServerController SERVER_CONTROLLER;
+    private static ServerController SERVER_CONTROLLER;
 
     private Server(ConfiguredServerParameters params) {
         PARAMETERS = params;
-        SERVER_CONTROLLER = new ServerController();
+        SERVER_CONTROLLER = new ServerController(params);
     }
 
     public static Server getInstance(ConfiguredServerParameters params) {
@@ -48,7 +48,13 @@ public class Server {
         Server installedServer = null;
         ExecutorService installExecutor = Executors.newSingleThreadExecutor();
         Future<Server> installingProcess = installExecutor.submit(INSTALL_TASK);
-        while (!installingProcess.isDone()) logger.info("Waiting server installing");
+        logger.info("Waiting server installing");
+        try {
+            installingProcess.get();
+        }catch (InterruptedException | ExecutionException ex) {
+            System.out.println(ex.getMessage());
+        }
+//        while (!installingProcess.isDone()) //logger.info("Waiting server installing");
         try {
             installedServer = installingProcess.get();
         } catch (InterruptedException interruptedException) {
@@ -62,14 +68,14 @@ public class Server {
         return installedServer;
     }
 
-    public static void launch() {
+    protected static void launch() {
         if (instance == null) {
             logger.error("Server isn't installed. Did you forgive invoke install before launching?");
             return;
         }
         logger.info("Server is starting...");
         Thread inputTaskThread = new Thread(INPUT_TASK);
-        Thread mainTaskThread = new Thread(MAIN_TASK);
+        Thread mainTaskThread = new Thread(SERVER_CONTROLLER.getMAIN_SERVER_TASK());
         inputTaskThread.start();
         logger.info("Server's command input starts");
         mainTaskThread.start();

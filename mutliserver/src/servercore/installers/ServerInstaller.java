@@ -63,7 +63,7 @@ public class ServerInstaller {
 
     protected final ServerSocketChannel openServerChannel() throws IOException {
         try (ServerSocketChannel serverSocketChannel = ServerSocketChannel.open()) {
-            return serverSocketChannel;
+            return ServerSocketChannel.open();
         }
     }
 
@@ -77,7 +77,7 @@ public class ServerInstaller {
 
     protected final Selector openServerSelector() throws IOException {
         try (Selector serverSelector = Selector.open()) {
-            return serverSelector;
+            return Selector.open();
         }
     }
 

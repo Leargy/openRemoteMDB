@@ -19,6 +19,8 @@ public class Segment {
     private ClientPackage clientPackage;
     private SocketChannel socketChannel;
     private Markers marker;
+    private String login;
+    private String passWord;
 
     /**
      * @param marker
@@ -34,21 +36,25 @@ public class Segment {
         this.socketChannel = socketChannel;
     }
 
+    public void setLogin(String login) { this.login = login; }
     public void setMarker(Markers marker) { this.marker = marker; }
-    public void setStringData(final String[] stringData) { this.stringData = stringData; }
+    public void setPassWord(String passWord) { this.passWord = passWord; }
     public void setCommandData(RawDecree commandData) { this.commandData = commandData; }
+    public void setStringData(final String[] stringData) { this.stringData = stringData; }
     public void setClientPackage(ClientPackage clientPackage) { this.clientPackage = clientPackage; }
 
     public SocketChannel getSocketChannel() { return this.socketChannel; }
     public ClientPackage getClientPackage() { return clientPackage; }
     public RawDecree getCommandData() { return commandData; }
     public String[] getStringData() { return stringData; }
+    public String getPassWord() { return passWord; }
     public Markers getMarker() { return marker; }
+    public String getLogin() { return login; }
 
     /**
      * Возвращает новый объект пакета, предназначенного для обмена информацией между клиентом и сервером.
      * В конструктор ClientPackage передается объект сырой команды.
      * @return ClientPackage
      */
-    public ClientPackage prepareDataObject() { return new ClientPackage(commandData); }
+    public ClientPackage prepareDataObject() { return new ClientPackage(commandData,login,passWord); }
 }

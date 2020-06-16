@@ -14,7 +14,7 @@ public final class LoggedInstallTask extends InstallServerTask {
     public Server call() throws Exception {
         logger.info("Trying get server parameters");
         ServerParameters rawParameters = promptServerParameters();
-        logger.info("Have got server parameters");
+        logger.info("Received server parameters");
         logger.info("Trying configure server with parameters");
         ConfiguredServerParameters configuredParameters = MAIN_INSTALLER.configureServer(rawParameters);
         logger.info("Server configured");

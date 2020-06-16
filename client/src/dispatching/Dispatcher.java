@@ -87,8 +87,16 @@ public class Dispatcher extends ADispatcher {
             }
             if (tempCommand instanceof Accessible) {
                 if (tempCommand instanceof RawSignOut) {
-                    passCheck.setLogin("");
-                    passCheck.setPassword("");
+                    if (!passCheck.isConfirmed()) {
+                        System.err.println("You haven't authorised yet");
+                        mediator.notify(this, new Segment(Markers.BADINPUTCONDITION));
+                        return;
+                    }else {
+                        ((RawSignOut)tempCommand).setDeauthorizationData(passCheck.getLogin(),passCheck.getPassword());
+                        passCheck.setIsConfirmed(false);
+                        passCheck.setLogin("");
+                        passCheck.setPassword("");
+                    }
                 } else {
                     passCheck.setLogin(((Accessible) tempCommand).getLogin());
                     passCheck.setPassword(((Accessible) tempCommand).getPassword());
@@ -96,6 +104,8 @@ public class Dispatcher extends ADispatcher {
                 }
             }
             if (tempCommand == null) {
+                System.err.println("You haven't authorised yet");
+                mediator.notify(this, new Segment(Markers.BADINPUTCONDITION));
                 return;
             }
             parcel.setCommandData(tempCommand);
@@ -116,6 +126,8 @@ public class Dispatcher extends ADispatcher {
 
         if (passCheck.isConfirmed() || parcel.getCommandData() instanceof Accessible || parcel.getCommandData() instanceof RawHelp) {
             mediator.notify(this,new Segment(Markers.GOODINPUTCONDITION));
+            parcel.setLogin(passCheck.getLogin());
+            parcel.setPassWord(passCheck.getPassword());
             try {
                 objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
                 objectOutputStream.writeObject(parcel.prepareDataObject());
@@ -135,6 +147,7 @@ public class Dispatcher extends ADispatcher {
         }else {
             System.err.println("You haven't authorised yet");
             mediator.notify(this, new Segment(Markers.BADINPUTCONDITION));
+            return;
         }
         // TODO: Обработка разрыва подключения
     }
@@ -143,6 +156,7 @@ public class Dispatcher extends ADispatcher {
     // Which comes from receiver module.
     public synchronized void Confirm(boolean isConfirmed) {
         if (passCheck != null) {
+            ((AuthorizationHandler)dataHandler).setIsConfirmed(isConfirmed);
             passCheck.setIsConfirmed(isConfirmed);
         }
     }
@@ -161,19 +175,20 @@ class PassCheck {
     private volatile boolean isConfirmed = false;
     private volatile String login = "";
     private volatile String password = "";
-
     public synchronized void setIsConfirmed(boolean confirmed) {
         isConfirmed = confirmed;
     }
-    public boolean isConfirmed() {
+    public synchronized boolean isConfirmed() {
         return isConfirmed;
     }
-    public synchronized void setLogin(String login) { this.login = login; }
-    public synchronized void setPassword(String password) { this.password = password; }
-    public String getLogin() {
-        return login;
+    public String getLogin() { return login; }
+    public String getPassword() { return password; }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
-    public String getPassword() {
-        return password;
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -5,10 +5,11 @@ import java.util.Scanner;
 public class InputServerTask implements Runnable {
     @Override
     public void run() {
-        Scanner sysAdminInputScanner = new Scanner("System.in");
+        Scanner sysAdminInputScanner = new Scanner(System.in);
+        String sysAdminInput = "";
         do {
             System.out.print(">> ");
-            String sysAdminInput = sysAdminInputScanner.nextLine();
+            sysAdminInput = sysAdminInputScanner.next();
             if ("exit".equals(sysAdminInput)) {
                 System.out.println("Entered the exit command");
                 break;

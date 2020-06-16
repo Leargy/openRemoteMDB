@@ -20,33 +20,33 @@ public final class LoggedServerInstaller extends ServerInstaller {
         ServerSocketChannel installingServerChannel = null;
         try {
             installingServerChannel = openServerChannel();
-            logger.info("The server channel opened");
+            logger.info("The server channel is opened");
         } catch (IOException ioException) {
             logger.error("Failed open the server socket channel");
             System.exit(ioException.hashCode());
         }
 
         // 2 stage: bind the channel
-        logger.info("Trying binding server channel");
+        logger.info("Trying to bind server channel");
         ServerSocketChannel bindedServerChannel = null;
         try {
             bindedServerChannel = bindServerChannel(params, installingServerChannel);
-            logger.info("The server channel binded");
+            logger.info("The server channel is binded");
         } catch (IOException ioException) {
             logger.error("Failed binding the server socket channel");
             System.exit(ioException.hashCode());
         }
 
         // 3 stage: configure server channel
-        logger.info("Trying configure server channel");
-        ServerSocketChannel configuredServerChannel = null;
-        try {
-            configuredServerChannel = configureServerChannel(bindedServerChannel);
-            logger.info("The server channel configured");
-        } catch (IOException ioException) {
-            logger.error("Failed configuring server channel");
-            System.exit(ioException.hashCode());
-        }
+//        logger.info("Trying configure server channel");
+//        ServerSocketChannel configuredServerChannel = null;
+//        try {
+//            configuredServerChannel = configureServerChannel(bindedServerChannel);
+//            logger.info("The server channel is configured");
+//        } catch (IOException ioException) {
+//            logger.error("Failed configuring server channel");
+//            System.exit(ioException.hashCode());
+//        }
 
         // 4 stage: open the selector
         logger.info("Trying open server selector");
@@ -60,15 +60,16 @@ public final class LoggedServerInstaller extends ServerInstaller {
         }
 
         // 5 stage: register configured server channel to selector
-        logger.info("Trying register server channel to opened selector");
-        try {
-            registerServer2Selector(configuredServerChannel, openedSelector);
-            logger.info("Registering succesful");
-        } catch (ClosedChannelException closedChannelException) {
-            logger.error("Sorry, but server channel has already closed");
-            System.exit(closedChannelException.hashCode());
-        }
+//        logger.info("Trying register server channel to opened selector");
+//        try {
+//            registerServer2Selector(configuredServerChannel, openedSelector);
+//            logger.info("Registering successful");
+//        } catch (ClosedChannelException closedChannelException) {
+//            logger.error("Sorry, but server channel has already closed");
+//            System.exit(closedChannelException.hashCode());
+//        }
         // 6 stage: returning new parameters
-        return new ConfiguredServerParameters(params, openedSelector, configuredServerChannel);
+        return new ConfiguredServerParameters(params, openedSelector ,bindedServerChannel);
+//        return new ConfiguredServerParameters(params, openedSelector, configuredServerChannel);
     }
 }

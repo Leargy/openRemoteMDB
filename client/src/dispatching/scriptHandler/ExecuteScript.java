@@ -40,7 +40,7 @@ public class ExecuteScript {
 //        super(controller, ctrl);
 //    }
 
-    public Report read(ArrayList<String> script, SocketChannel socketChannel) {
+    public void read(ArrayList<String> script, SocketChannel socketChannel) {
 
         ArrayList<String> tempScriptParts = script;
         int capacity = tempScriptParts.size();
@@ -51,20 +51,17 @@ public class ExecuteScript {
         if (!dispatcher.switchOrder()) {
             dispatcher.switchOrder();
         };
-        //Invoker ptr = CTRL;
         for(int i = 0; i < capacity; i = capacity - scriptParticles.size()) {
             RawDecree parsedCommand = parse(scriptParticles.poll(), scriptParticles);
             if (parsedCommand == null) {
-                //executed += "Не удалось разобрать строку "  + scriptParticles.peekFirst() + "\n";
+                System.err.println("Не удалось разобрать строку "  + scriptParticles.peekFirst() );
             } else {
                 Segment segment = new Segment(socketChannel,Markers.CONFIRMING);
                 segment.setCommandData(parsedCommand);
                 dispatcher.giveOrder(segment);
-                //MAGIV.getInstBuilder().make(new QueryBag(null, parsedCommand), MAGIV.getFate());
             }
         }
         dispatcher.switchOrder();
-        return new Report(0, "Скрипт обработан\nЗапись обработки файла:\n" + executed);
     }
 
 

@@ -85,7 +85,7 @@ public final class DataBaseConnector {
 
     public Report dropDatabase() {
         if (CURRENT_CONNECTION == null) {
-            LOG.info("Sorry, but there are no to drop");
+            LOG.info("Sorry, but there are no DBs to drop");
             return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod() + " closing connection");
         } else try {
             CURRENT_CONNECTION.close();

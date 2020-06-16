@@ -1,5 +1,6 @@
 package base_modules.registers;
 
+import base_modules.readers.readertasks.ClientPackageRetrievingTask;
 import base_modules.registers.reg_tasks.RegistrationTask;
 import base_modules.registers.reg_tasks.UserDataRetrievingTask;
 import communication.Report;
@@ -26,13 +27,15 @@ public class ReceptionController implements Registers {
         CONTROLLER = controller;
     }
 
+    // Take another client's socketChannel
     @Override
     public Report register(RegistrationBag registrationData) {
         SocketChannel client = null;
-        Future<SocketChannel> resultClient = REGISTRAR.submit(new RegistrationTask(registrationData));
-        while (!resultClient.isDone()) logger.info("Getting and configuring client channel...");
+        Future<SocketChannel> resultClient = REGISTRAR.submit(new RegistrationTask(registrationData.getChannel()));
+
+        //while (!resultClient.isDone()) logger.info("Getting and configuring client channel...");
         try {
-            resultClient.get();
+            client = resultClient.get();
         } catch (InterruptedException interruptedException) {
             logger.error("There were some problems while getting client channel because of unexpected interruption");
             return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
@@ -40,7 +43,10 @@ public class ReceptionController implements Registers {
             logger.error("There were problems while getting client channel at execution time");
             return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
         }
-        USER_DATA_RETRIEVER.execute(new UserDataRetrievingTask(this, client));
+        //
+        System.out.println(Thread.currentThread().getName());
+        //
+        USER_DATA_RETRIEVER.execute(new ClientPackageRetrievingTask(this, client));
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 

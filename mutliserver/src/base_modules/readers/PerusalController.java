@@ -9,6 +9,8 @@ import uplink_bags.TransportableBag;
 import java.nio.channels.SocketChannel;
 
 public class PerusalController implements Perusals, Controllers {
+
+
     @Override
     public Controllers getController() {
         return null;
@@ -16,6 +18,7 @@ public class PerusalController implements Perusals, Controllers {
 
     @Override
     public Report notify(Component sender, TransportableBag parcel) {
+
         return null;
     }
 }

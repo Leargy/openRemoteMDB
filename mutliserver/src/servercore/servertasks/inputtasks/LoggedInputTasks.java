@@ -9,10 +9,11 @@ public final class LoggedInputTasks extends InputServerTask {
     private final Logger logger = LoggerFactory.getLogger(InputServerTask.class);
     @Override
     public void run() {
-        Scanner sysAdminInputScanner = new Scanner("System.in");
+        Scanner sysAdminInputScanner = new Scanner(System.in);
+        String sysAdminInput = "";
         do {
             System.out.println(">> ");
-            String sysAdminInput = sysAdminInputScanner.nextLine();
+            sysAdminInput = sysAdminInputScanner.nextLine();
             if ("exit".equals(sysAdminInput)) {
                 logger.info("Entered the exit command");
                 break;
