@@ -3,6 +3,8 @@ package base_modules.registers;
 import base_modules.registers.reg_tasks.RegistrationTask;
 import base_modules.registers.reg_tasks.UserDataRetrievingTask;
 import communication.Report;
+import communication.ReportsFormatter;
+import extension_modules.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import patterns.mediator.Component;
@@ -33,13 +35,13 @@ public class ReceptionController implements Registers {
             resultClient.get();
         } catch (InterruptedException interruptedException) {
             logger.error("There were some problems while getting client channel because of unexpected interruption");
-            // TODO: return Report with Report formatter
+            return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
         } catch (ExecutionException executionException) {
             logger.error("There were problems while getting client channel at execution time");
-            // TODO: return Report with Report formatter
+            return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
         }
         USER_DATA_RETRIEVER.execute(new UserDataRetrievingTask(this, client));
-        return null; // TODO: return successful report using reports formatter
+        return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 
     @Override
@@ -53,6 +55,6 @@ public class ReceptionController implements Registers {
     public Report notify(Component sender, TransportableBag parcel) {
         if (sender instanceof UserDataRetrievingTask)
             throw new NotImplementedException(); // TODO: send on registration
-        return null; // TODO: return successful report using reports formatter
+        return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 }
