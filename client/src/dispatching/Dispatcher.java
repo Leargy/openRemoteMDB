@@ -149,7 +149,6 @@ public class Dispatcher extends ADispatcher {
             mediator.notify(this, new Segment(Markers.BADINPUTCONDITION));
             return;
         }
-        // TODO: Обработка разрыва подключения
     }
 
     // Method to set status of combination of Login and Pass (confirmed/rejected)

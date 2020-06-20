@@ -16,7 +16,7 @@ import servercore.servertasks.maintasks.MainServerTask;
 import uplink_bags.RegistrationBag;
 import uplink_bags.TransportableBag;
 
-public class ServerController implements Controllers {
+public class ServerController implements Controllers, Component {
     private static final int MAX_SIMULTANEOUS_SENDS = 50;
     private final Registers REGISTER;
     private final Perusals PERUSALER;
@@ -27,7 +27,7 @@ public class ServerController implements Controllers {
     public ServerController(ConfiguredServerParameters CSP) {
         MAIN_SERVER_TASK = new MainServerTask(CSP,this);
         REGISTER = new ReceptionController(this);
-        PERUSALER = new PerusalController();
+        PERUSALER = new PerusalController(this);
         SUBPROCESSOR = new SubProcessorController(this);
         DISPATCHER = new DispatchController(this, MAX_SIMULTANEOUS_SENDS);
     }
@@ -35,10 +35,16 @@ public class ServerController implements Controllers {
     @Override
     public Report notify(Component sender, TransportableBag parcel) {
         if (sender == MAIN_SERVER_TASK) REGISTER.register((RegistrationBag) parcel);
-        return new Report("Sending successful");
+        if (sender == REGISTER) ((PerusalController)PERUSALER).notify(this, parcel);
+        return new Report(0,"Sending successful");
     }
 
     public MainServerTask getMAIN_SERVER_TASK() {
         return MAIN_SERVER_TASK;
+    }
+
+    @Override
+    public Controllers getController() {
+        return this;
     }
 }

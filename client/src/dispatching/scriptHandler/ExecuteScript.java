@@ -200,7 +200,6 @@ public class ExecuteScript {
 //                                executed += "Выполнена команда: " + command_name + "\n";
                                 return new RawUpdate(id, element);
                             }
-                            //TODO: тут был реплэйс иф ловер
                             case "replace_if_lower": {
                                 Integer key = Integer.valueOf(argument);
                                 if (key == null) return null;
@@ -282,7 +281,6 @@ public class ExecuteScript {
                     case "org.annual-turnover": {
                         if (prmParts.length == 1) continue;
                         try { annualTurnover = Float.valueOf(prmParts[1].trim()); } catch (NumberFormatException e) { continue; }
-                        //TODO:Сервер падает если введены некоректные значения для обязательных полей
                         params[2] = annualTurnover;
                         break;
                     }

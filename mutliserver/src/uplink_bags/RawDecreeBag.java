@@ -1,19 +1,18 @@
 package uplink_bags;
 
-import instructions.raw.RawDecree;
+import entities.User;
+import instructions.rotten.RawDecree;
 
 import java.nio.channels.SocketChannel;
 
 public class RawDecreeBag extends ChanneledBag {
-    private final RawDecree UNINVOKABLE_COMMAND;
+    public final RawDecree UNINVOKABLE_COMMAND;
+    public final User USER;
 
-    public RawDecreeBag(SocketChannel someChannel, RawDecree query) {
+    public RawDecreeBag(SocketChannel someChannel, RawDecree query,User user) {
         super(someChannel);
         UNINVOKABLE_COMMAND = query;
-    }
-
-    public RawDecree getRawDecree() {
-        return UNINVOKABLE_COMMAND;
+        USER = user;
     }
 
     @Override

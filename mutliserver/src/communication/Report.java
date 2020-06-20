@@ -1,25 +1,48 @@
 package communication;
 
 import java.io.Serializable;
-
+/**
+ * Класс отчетов, хранящих информацию о результатах,
+ * работы сервера.
+ * Может использоваться для:
+ * <ul>
+ *   <li>Хранения результатов обработки запросов</li>
+ *   <li>Хранения результатов чтения запросов</li>
+ *   <li>Хранения результатов попытки отправки результатов обработки запросов</li>
+ * </ul>
+ */
 public class Report implements Serializable {
-    private final int ERROR_CODE;
-    private final String MESSAGE;
+    private final int ERROR_CODE; // Error code
+    private final String MESSAGE; // Message
+    private boolean isConfirmed;
 
-    public Report(String message) {
-        MESSAGE = message;
-        ERROR_CODE = 0;
-    }
-
+    /**
+     * Основной конструктор, устанавливающий
+     * параметры отправляемого ответа
+     * @param errorCode код ошибки
+     * @param message передаваемое сообщение
+     */
     public Report(int errorCode, String message) {
         ERROR_CODE = errorCode;
-        MESSAGE = message;
+        MESSAGE = (message == null)? "" : message;
     }
 
-    public String getMessage() { return MESSAGE; }
-    public int getErrorCode() { return ERROR_CODE; }
+    /**
+     * Свойство, определяющее успешность
+     * выполнения операции
+     * @return успешно/неуспешно
+     */
+    public boolean isSuccessful() { return ERROR_CODE == 0; }
 
-    public boolean isSuccessful() {
-        return ERROR_CODE == 0;
+    /**
+     * Метод взятия сообщения
+     * @return строка с сообщением
+     */
+    public String Message() { return MESSAGE; }
+    public boolean getIsConfirmed() {
+        return isConfirmed;
+    }
+    public void setIsConfirmed(boolean isConfirmed) {
+        this.isConfirmed = isConfirmed;
     }
 }

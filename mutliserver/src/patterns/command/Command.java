@@ -2,6 +2,9 @@ package patterns.command;
 
 import communication.Report;
 
-public interface Command {
+import java.io.Serializable;
+
+@FunctionalInterface
+public interface Command extends Serializable {
     Report execute();
 }

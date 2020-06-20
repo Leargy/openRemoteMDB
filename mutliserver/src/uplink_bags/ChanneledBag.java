@@ -1,5 +1,6 @@
 package uplink_bags;
 
+import java.nio.channels.SocketChannel;
 import java.nio.channels.spi.AbstractSelectableChannel;
 
 public class ChanneledBag implements TransportableBag {

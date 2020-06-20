@@ -125,9 +125,7 @@ public class UsersTableInteractor implements TablesInteractor {
             return null;
         }
     }
-    
-    @Override
-    public String getTableName() { return DB_TABLE_NAME; }
+
 
     protected String prepareInsertionParameters(UsersParameters params) {
         return "("

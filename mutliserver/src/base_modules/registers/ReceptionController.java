@@ -3,6 +3,7 @@ package base_modules.registers;
 import base_modules.readers.readertasks.ClientPackageRetrievingTask;
 import base_modules.registers.reg_tasks.RegistrationTask;
 import base_modules.registers.reg_tasks.UserDataRetrievingTask;
+import communication.ClientPackage;
 import communication.Report;
 import communication.ReportsFormatter;
 import extension_modules.ClassUtils;
@@ -11,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import patterns.mediator.Component;
 import patterns.mediator.Controllers;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import uplink_bags.ChanneledBag;
+import uplink_bags.ClientPackBag;
 import uplink_bags.RegistrationBag;
 import uplink_bags.TransportableBag;
 
@@ -25,6 +28,7 @@ public class ReceptionController implements Registers {
 
     public ReceptionController(Controllers controller) {
         CONTROLLER = controller;
+
     }
 
     // Take another client's socketChannel
@@ -32,7 +36,6 @@ public class ReceptionController implements Registers {
     public Report register(RegistrationBag registrationData) {
         SocketChannel client = null;
         Future<SocketChannel> resultClient = REGISTRAR.submit(new RegistrationTask(registrationData.getChannel()));
-
         //while (!resultClient.isDone()) logger.info("Getting and configuring client channel...");
         try {
             client = resultClient.get();
@@ -43,10 +46,11 @@ public class ReceptionController implements Registers {
             logger.error("There were problems while getting client channel at execution time");
             return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
         }
+        CONTROLLER.notify(this,new ChanneledBag(client));
         //
-        System.out.println(Thread.currentThread().getName());
+        //System.out.println(Thread.currentThread().getName());
         //
-        USER_DATA_RETRIEVER.execute(new ClientPackageRetrievingTask(this, client));
+        //USER_DATA_RETRIEVER.execute(new ClientPackageRetrievingTask(this, client));
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 
@@ -59,8 +63,12 @@ public class ReceptionController implements Registers {
 
     @Override
     public Report notify(Component sender, TransportableBag parcel) {
-        if (sender instanceof UserDataRetrievingTask)
-            throw new NotImplementedException(); // TODO: send on registration
+        if (sender instanceof ClientPackageRetrievingTask) {
+            CONTROLLER.notify();
+            throw new NotImplementedException(); // after we get client package send it to disassembly
+        }
+//        if (sender instanceof UserDataRetrievingTask)
+//            throw new NotImplementedException(); // TODO: send on registration
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 }

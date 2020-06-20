@@ -1,10 +1,16 @@
 package extension_modules.dbinteraction;
 
 import communication.Report;
+import entities.User;
+
+import java.sql.SQLException;
 
 public class OrganizationsTableInteractor implements TablesInteractor {
-    private static final String DB_TABLE_NAME = "organizations";
+    public static final String DB_TABLE_NAME = "organizations";
 
-    @Override
-    public String getTableName() { return DB_TABLE_NAME; }
+
+    public Report clearUserOrganization(User user) throws SQLException {
+        //TODO: write the realization of targeted "clear"
+        return null;
+    }
 }

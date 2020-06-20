@@ -52,7 +52,6 @@ public class RegistrationTask implements Callable<SocketChannel> {
     }
 
     private SocketChannel acceptNewClient(ServerSocketChannel serverChannel) throws IOException {
-        System.out.println(serverChannel.isBlocking());
         return serverChannel.accept();
     }
 
