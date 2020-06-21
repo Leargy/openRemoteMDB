@@ -1,8 +1,8 @@
 package trash;
 
-import communication.Mediator;
-import communication.Component;
-import communication.Valuable;
+import communication_tools.Mediator;
+import communication_tools.Component;
+import communication_tools.Valuable;
 
 import java.nio.channels.Selector;
 

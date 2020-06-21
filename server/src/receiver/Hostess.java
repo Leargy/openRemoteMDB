@@ -1,10 +1,10 @@
 package receiver;
 
-import communication.Component;
-import communication.ServerCustomer;
-import communication.Valuable;
-import communication.wrappers.HandShakeBag;
-import communication.wrappers.PassBag;
+import communication_tools.Component;
+import communication_tools.ServerCustomer;
+import communication_tools.Valuable;
+import communication_tools.wrappers.HandShakeBag;
+import communication_tools.wrappers.PassBag;
 import czerkaloggers.HawkPDroid;
 import czerkaloggers.receiver.S_0D3_GE3;
 import systemcore.ServerController;
@@ -14,7 +14,6 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 import java.nio.channels.*;
 
 /**

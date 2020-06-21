@@ -1,13 +1,12 @@
 package systemcore;
 
-import communication.Component;
-import communication.Mediator;
-import communication.Valuable;
+import communication_tools.Component;
+import communication_tools.Mediator;
+import communication_tools.Valuable;
 import czerkaloggers.HawkPDroid;
 import czerkaloggers.systemcore.C7_E3_GE3;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.channels.ClosedChannelException;

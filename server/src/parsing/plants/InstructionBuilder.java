@@ -1,8 +1,8 @@
 package parsing.plants;
 
-import communication.Component;
-import communication.wrappers.ExecuteBag;
-import communication.wrappers.QueryBag;
+import communication_tools.Component;
+import communication_tools.wrappers.ExecuteBag;
+import communication_tools.wrappers.QueryBag;
 import entities.Organization;
 import instructions.rotten.IJunked;
 import instructions.rotten.RawCommitter;
@@ -11,7 +11,6 @@ import parsing.Resolver;
 import parsing.customer.distro.LimboKeeper;
 import parsing.plants.pickers.CommittersBuilder;
 import parsing.plants.pickers.JustCommandBuilder;
-import parsing.supplying.interpreter.Shell;
 
 /**
  * Псевдо-фабрика сборки из абстрактных комманд

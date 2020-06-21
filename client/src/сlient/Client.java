@@ -1,9 +1,9 @@
 package сlient;
 
-import communication.Component;
+import communication_tools.Component;
 import dataSection.enumSection.Markers;
-import communication.Mediating;
-import communication.Segment;
+import communication_tools.Mediating;
+import communication_tools.Segment;
 
 import java.io.IOException;
 import java.net.*;

@@ -1,7 +1,6 @@
 package dispatching.validators;
 
-import communication.Segment;
-import dataSection.CommandList;
+import communication_tools.Segment;
 import dataSection.Commands;
 import dataSection.Encrepted;
 import dataSection.Encryptor;

@@ -1,6 +1,6 @@
 package czerkaloggers;
 
-import communication.Mediator;
+import communication_tools.Mediator;
 
 /**
  * Фабрика дроидов? Нет, ****

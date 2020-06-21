@@ -1,10 +1,8 @@
 package instructions.concrete.base;
 
-import communication.Report;
+import communication_tools.Report;
 import entities.Organization;
 import parsing.customer.Receiver;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Команда обновления элемента

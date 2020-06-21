@@ -1,6 +1,6 @@
 package parsing.plants;
 
-import communication.Component;
+import communication_tools.Component;
 import entities.*;
 import parsing.Resolver;
 

@@ -1,6 +1,6 @@
 package instructions;
 
-import communication.Valuable;
+import communication_tools.Valuable;
 
 /**
  * Абстрактный класс комманд, расширяющий интерфейс

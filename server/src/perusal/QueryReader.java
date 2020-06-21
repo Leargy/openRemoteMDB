@@ -1,12 +1,10 @@
 package perusal;
 
-import communication.Component;
-import communication.Mediator;
-import communication.wrappers.DossierBag;
-import communication.wrappers.TunnelBag;
+import communication_tools.Component;
+import communication_tools.Mediator;
+import communication_tools.wrappers.TunnelBag;
 import systemcore.ServerController;
 
-import java.net.Socket;
 import java.nio.channels.SocketChannel;
 
 /**

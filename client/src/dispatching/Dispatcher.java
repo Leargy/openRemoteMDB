@@ -2,8 +2,8 @@ package dispatching;
 
 import dataSection.Commands;
 import dataSection.enumSection.Markers;
-import communication.Mediating;
-import communication.Segment;
+import communication_tools.Mediating;
+import communication_tools.Segment;
 import dataSection.CommandList;
 import dispatching.validators.AuthorizationHandler;
 import exceptions.CommandSyntaxException;

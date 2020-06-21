@@ -1,15 +1,11 @@
 package czerkaloggers.systemcore;
 
-import communication.Component;
-import communication.Mediator;
-import communication.Report;
-import communication.wrappers.AlertBag;
+import communication_tools.Component;
+import communication_tools.Mediator;
 import czerkaloggers.HawkPDroid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import systemcore.ServerController;
-
-import java.nio.channels.SocketChannel;
 
 /**
  *

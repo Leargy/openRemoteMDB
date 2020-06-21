@@ -1,8 +1,10 @@
 package parameters.entities;
 
+import parameters.Parameters;
+
 import java.util.UUID;
 
-public final class UsersParameters {
+public final class UsersParameters implements Parameters {
     private final UUID USER_ID;
     private final String LOGIN;
     private final String PASSWORD;

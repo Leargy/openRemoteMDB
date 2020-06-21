@@ -1,9 +1,9 @@
 package receiver;
 
-import communication.Component;
-import communication.Mediator;
-import communication.ServerCustomer;
-import communication.wrappers.PassBag;
+import communication_tools.Component;
+import communication_tools.Mediator;
+import communication_tools.ServerCustomer;
+import communication_tools.wrappers.PassBag;
 import systemcore.ServerController;
 
 import java.nio.ByteBuffer;

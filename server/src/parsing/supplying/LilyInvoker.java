@@ -1,8 +1,8 @@
 package parsing.supplying;
 
-import communication.Report;
-import communication.wrappers.AlertBag;
-import communication.wrappers.ExecuteBag;
+import communication_tools.Report;
+import communication_tools.wrappers.AlertBag;
+import communication_tools.wrappers.ExecuteBag;
 import instructions.concrete.base.Save;
 import instructions.concrete.extended.ExecuteScript;
 import parsing.Resolver;

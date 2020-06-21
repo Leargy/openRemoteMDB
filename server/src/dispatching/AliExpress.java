@@ -1,9 +1,9 @@
 package dispatching;
 
-import communication.Component;
-import communication.Report;
-import communication.wrappers.AlertBag;
-import communication.Valuable;
+import communication_tools.Component;
+import communication_tools.Report;
+import communication_tools.wrappers.AlertBag;
+import communication_tools.Valuable;
 import czerkaloggers.HawkPDroid;
 import czerkaloggers.dispatching.TT_32_GE3;
 import systemcore.ServerController;

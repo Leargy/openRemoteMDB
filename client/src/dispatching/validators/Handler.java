@@ -1,6 +1,6 @@
 package dispatching.validators;
 
-import communication.Segment;
+import communication_tools.Segment;
 import exceptions.CommandSyntaxException;
 import instructions.rotten.RawDecree;
 

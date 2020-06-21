@@ -1,9 +1,9 @@
 package parsing;
 
-import communication.*;
-import communication.wrappers.AlertBag;
-import communication.wrappers.ExecuteBag;
-import communication.wrappers.QueryBag;
+import communication_tools.*;
+import communication_tools.wrappers.AlertBag;
+import communication_tools.wrappers.ExecuteBag;
+import communication_tools.wrappers.QueryBag;
 import entities.Organization;
 import czerkaloggers.customer.B_4D4_GE3;
 import czerkaloggers.HawkPDroid;

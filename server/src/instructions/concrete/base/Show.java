@@ -1,7 +1,7 @@
 package instructions.concrete.base;
 
 
-import communication.Report;
+import communication_tools.Report;
 import entities.Organization;
 import instructions.concrete.ConDecree;
 import parsing.customer.Receiver;

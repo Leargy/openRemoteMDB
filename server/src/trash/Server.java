@@ -1,8 +1,8 @@
 package trash;
 
-import communication.Component;
-import communication.Mediator;
-import communication.wrappers.AlertBag;
+import communication_tools.Component;
+import communication_tools.Mediator;
+import communication_tools.wrappers.AlertBag;
 
 public abstract class Server implements Component, Runnable {
   protected final Mediator controller;

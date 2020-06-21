@@ -1,8 +1,8 @@
 package trash;
 
-import communication.Mediator;
-import communication.wrappers.AlertBag;
-import communication.wrappers.PassBag;
+import communication_tools.Mediator;
+import communication_tools.wrappers.AlertBag;
+import communication_tools.wrappers.PassBag;
 import receiver.Hostess;
 import systemcore.ServerController;
 

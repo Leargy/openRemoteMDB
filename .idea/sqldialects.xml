@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/mutliserver/src/extension_modules/dbinteraction/UsersTableInteractor.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/mutliserver/src/extension_modules/databases_interaction/tables_managers/clients/UsersTableManager.java" dialect="GenericSQL" />
     <file url="PROJECT" dialect="PostgreSQL" />
   </component>
 </project>

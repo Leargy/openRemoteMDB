@@ -1,6 +1,6 @@
 package instructions.concrete;
 
-import communication.Valuable;
+import communication_tools.Valuable;
 import parsing.customer.Receiver;
 import instructions.Command;
 import instructions.Decree;

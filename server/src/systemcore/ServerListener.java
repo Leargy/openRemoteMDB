@@ -1,7 +1,7 @@
 package systemcore;
 
-import communication.Component;
-import communication.wrappers.QueryBag;
+import communication_tools.Component;
+import communication_tools.wrappers.QueryBag;
 import instructions.rotten.base.RawExit;
 import instructions.rotten.base.RawSave;
 import parsing.SubProcessController;

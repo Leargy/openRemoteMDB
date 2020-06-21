@@ -1,12 +1,10 @@
 package systemcore;
 
-import communication.Component;
-import communication.Report;
-import communication.wrappers.AlertBag;
-import communication.wrappers.PassBag;
-import communication.wrappers.QueryBag;
-import communication.wrappers.TunnelBag;
-import instructions.rotten.base.RawSave;
+import communication_tools.Component;
+import communication_tools.Report;
+import communication_tools.wrappers.AlertBag;
+import communication_tools.wrappers.PassBag;
+import communication_tools.wrappers.TunnelBag;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -16,7 +14,6 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.Timer;
 
 /**
  * Ну, сервер и сервер. Чо бубнить-то.

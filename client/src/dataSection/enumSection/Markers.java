@@ -1,7 +1,7 @@
 package dataSection.enumSection;
 
 /**
- * Класс enum отвечающий за маркеровку обращений к {@link communication.Mediator}
+ * Класс enum отвечающий за маркеровку обращений к {@link communication_tools.Mediator}
  * @author Leargy aka Anton Sushkevich
  * @author Come_1LL_F00 aka Lenar Khannanov
  */

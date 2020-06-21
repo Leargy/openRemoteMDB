@@ -1,10 +1,8 @@
 package instructions.concrete.extended;
 
-import communication.Report;
+import communication_tools.Report;
 import instructions.concrete.ConDecree;
 import parsing.customer.Receiver;
-import parsing.supplying.Invoker;
-import parsing.supplying.interpreter.Shell;
 
 import java.util.ArrayList;
 

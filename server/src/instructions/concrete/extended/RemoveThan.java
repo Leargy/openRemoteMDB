@@ -1,13 +1,8 @@
 package instructions.concrete.extended;
 
-import communication.Report;
 import entities.Organization;
-import entities.comparators.OrganizationTitleComparator;
 import instructions.concrete.base.Committer;
-import parsing.customer.Indicator;
 import parsing.customer.Receiver;
-
-import java.util.Map;
 
 /**
  * Абстракция команд, удаляющих

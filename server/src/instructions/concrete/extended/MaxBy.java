@@ -1,6 +1,6 @@
 package instructions.concrete.extended;
 
-import communication.Report;
+import communication_tools.Report;
 import entities.Mappable;
 import entities.Organization;
 import instructions.concrete.ConDecree;

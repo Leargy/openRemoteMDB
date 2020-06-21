@@ -1,7 +1,7 @@
 package dispatching.validators;
 
-import communication.Mediating;
-import communication.Segment;
+import communication_tools.Mediating;
+import communication_tools.Segment;
 import exceptions.CommandSyntaxException;
 import entities.JunkerCreator;
 import instructions.rotten.RawDecree;

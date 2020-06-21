@@ -1,12 +1,12 @@
 package systemcore;
 
-import communication.Component;
-import communication.Mediator;
-import communication.Valuable;
-import communication.wrappers.AlertBag;
-import communication.wrappers.PassBag;
-import communication.wrappers.QueryBag;
-import communication.wrappers.TunnelBag;
+import communication_tools.Component;
+import communication_tools.Mediator;
+import communication_tools.Valuable;
+import communication_tools.wrappers.AlertBag;
+import communication_tools.wrappers.PassBag;
+import communication_tools.wrappers.QueryBag;
+import communication_tools.wrappers.TunnelBag;
 import czerkaloggers.HawkPDroid;
 import czerkaloggers.systemcore.S4_C8_GE3;
 import dispatching.AliExpress;

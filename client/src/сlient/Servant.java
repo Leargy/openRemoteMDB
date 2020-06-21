@@ -1,9 +1,9 @@
 package сlient;
 
-import communication.Report;
+import communication_tools.Report;
 import dataSection.enumSection.Markers;
-import communication.Mediating;
-import communication.Segment;
+import communication_tools.Mediating;
+import communication_tools.Segment;
 import dispatching.validators.Filters;
 
 /**

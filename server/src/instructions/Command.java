@@ -1,6 +1,6 @@
 package instructions;
 
-import communication.Report;
+import communication_tools.Report;
 import java.io.Serializable;
 
 /**

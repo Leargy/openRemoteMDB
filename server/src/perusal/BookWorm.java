@@ -1,13 +1,13 @@
 package perusal;
 
 
-import communication.ClientPackage;
-import communication.Component;
-import communication.Report;
-import communication.Valuable;
-import communication.wrappers.AlertBag;
-import communication.wrappers.QueryBag;
-import communication.wrappers.TunnelBag;
+import communication_tools.ClientPackage;
+import communication_tools.Component;
+import communication_tools.Report;
+import communication_tools.Valuable;
+import communication_tools.wrappers.AlertBag;
+import communication_tools.wrappers.QueryBag;
+import communication_tools.wrappers.TunnelBag;
 import czerkaloggers.HawkPDroid;
 import czerkaloggers.perusal.C9_T9_GE3;
 import instructions.rotten.RawDecree;

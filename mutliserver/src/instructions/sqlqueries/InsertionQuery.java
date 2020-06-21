@@ -1,9 +1,8 @@
 package instructions.sqlqueries;
 
-import communication.Report;
-import communication.ReportsFormatter;
+import communication_tools.Report;
+import communication_tools.ReportsFormatter;
 import entities.Organization;
-import extension_modules.ClassUtils;
 import patterns.command.Command;
 
 import java.sql.Connection;

@@ -10,6 +10,10 @@ public final class User {
     private final String PASSWORD;
     private final String ENVIRONMENT_VARIABLE_NAME;
 
+    public User(UUID user_id, String login, String password, String environment_name) {
+        this(new UsersParameters(login, password, environment_name, user_id));
+    }
+
     public UUID getID() { return ID; }
 
     public String getLogin() {

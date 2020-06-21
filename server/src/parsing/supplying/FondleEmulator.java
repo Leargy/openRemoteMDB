@@ -1,6 +1,6 @@
 package parsing.supplying;
 
-import communication.Component;
+import communication_tools.Component;
 import instructions.concrete.ConDecree;
 import instructions.concrete.base.Exit;
 import instructions.concrete.base.Save;

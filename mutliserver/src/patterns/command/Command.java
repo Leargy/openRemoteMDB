@@ -1,6 +1,6 @@
 package patterns.command;
 
-import communication.Report;
+import communication_tools.Report;
 
 public interface Command {
     Report execute();

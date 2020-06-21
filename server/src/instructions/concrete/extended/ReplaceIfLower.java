@@ -1,9 +1,8 @@
 package instructions.concrete.extended;
 
-import communication.Report;
+import communication_tools.Report;
 import entities.Organization;
 import entities.comparators.OrganizationTitleComparator;
-import instructions.concrete.base.Committer;
 import parsing.customer.Receiver;
 import parsing.customer.distro.LimboKeeper;
 

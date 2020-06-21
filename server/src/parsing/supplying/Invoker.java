@@ -1,6 +1,6 @@
 package parsing.supplying;
 
-import communication.wrappers.ExecuteBag;
+import communication_tools.wrappers.ExecuteBag;
 import instructions.concrete.ConDecree;
 
 /**

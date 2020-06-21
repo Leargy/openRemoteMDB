@@ -1,7 +1,7 @@
 package dispatching;
 
-import communication.Component;
-import communication.Segment;
+import communication_tools.Component;
+import communication_tools.Segment;
 
 import java.io.IOException;
 

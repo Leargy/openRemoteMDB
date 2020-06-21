@@ -1,9 +1,7 @@
 package instructions.concrete.base;
 
-import communication.Report;
-import instructions.concrete.ConDecree;
+import communication_tools.Report;
 import instructions.concrete.extended.*;
-import instructions.rotten.RawDecree;
 import parsing.customer.Receiver;
 
 import java.util.ArrayList;

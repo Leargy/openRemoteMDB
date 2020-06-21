@@ -1,6 +1,6 @@
 package instructions.concrete.extended;
 
-import communication.Report;
+import communication_tools.Report;
 import entities.Organization;
 import entities.comparators.OrganizationTitleComparator;
 import parsing.customer.Indicator;

@@ -1,7 +1,7 @@
 package czerkaloggers;
 
-import communication.Component;
-import communication.Mediator;
+import communication_tools.Component;
+import communication_tools.Mediator;
 
 /**
  * Логгер, умеющий работать с контроллером

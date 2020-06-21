@@ -1,6 +1,6 @@
 package dispatching.validators;
 
-import communication.Segment;
+import communication_tools.Segment;
 import dataSection.Commands;
 import entities.Descriptor;
 import entities.JunkerCreator;
@@ -10,14 +10,8 @@ import instructions.rotten.extended.*;
 import instructions.rotten.RawDecree;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 /**
  * Звено проверки аргументов команд.Реализация паттерна "Цепочка обязанностей" (Chain of Responsibility)

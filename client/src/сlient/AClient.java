@@ -1,6 +1,6 @@
 package сlient;
 
-import communication.Mediating;
+import communication_tools.Mediating;
 
 /**
  * Абстрактный класс модуля установления/завершение подключений, определения вектора взаимодействия с сервером или клиентом.

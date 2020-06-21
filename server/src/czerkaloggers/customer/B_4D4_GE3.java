@@ -1,12 +1,11 @@
 package czerkaloggers.customer;
 
-import communication.Component;
-import communication.Mediator;
-import communication.Report;
-import communication.wrappers.AlertBag;
+import communication_tools.Component;
+import communication_tools.Mediator;
+import communication_tools.Report;
+import communication_tools.wrappers.AlertBag;
 import czerkaloggers.HawkPDroid;
 import czerkaloggers.RadioLogger;
-import czerkaloggers.dispatching.TT_32_GE3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import parsing.Resolver;
