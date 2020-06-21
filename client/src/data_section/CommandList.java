@@ -1,8 +1,7 @@
-package dataSection;
+package data_section;
 
 import instructions.rotten.base.*;
 import instructions.rotten.extended.*;
-import instructions.rotten.RawDecree;
 
 import java.util.HashMap;
 

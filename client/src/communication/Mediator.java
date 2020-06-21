@@ -1,10 +1,7 @@
 package communication;
 
-import dataSection.enumSection.Markers;
+import data_section.enumSection.Markers;
 import dispatching.ADispatcher;
-import dispatching.validators.DataHandler;
-import entities.OrganizationType;
-import entities.organizationFactory.OrganizationBuilder;
 import receiver.AReceiver;
 import сlient.Client;
 import сlient.Servant;

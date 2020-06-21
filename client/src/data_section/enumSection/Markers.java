@@ -1,4 +1,4 @@
-package dataSection.enumSection;
+package data_section.enumSection;
 
 /**
  * Класс enum отвечающий за маркеровку обращений к {@link communication.Mediator}

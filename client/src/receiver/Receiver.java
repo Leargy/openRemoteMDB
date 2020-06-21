@@ -2,7 +2,7 @@ package receiver;
 
 import communication.ClientPackage;
 import communication.Report;
-import dataSection.enumSection.Markers;
+import data_section.enumSection.Markers;
 import communication.Mediating;
 import communication.Segment;
 
@@ -11,7 +11,6 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.nio.ByteBuffer;
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 

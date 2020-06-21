@@ -1,10 +1,8 @@
 package communication;
 
-import dataSection.enumSection.Markers;
+import data_section.enumSection.Markers;
 import instructions.rotten.RawDecree;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
 /**

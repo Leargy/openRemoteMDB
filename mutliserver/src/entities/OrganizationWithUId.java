@@ -4,19 +4,21 @@ package entities;
 
 import com.sun.istack.internal.NotNull;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 @XmlRootElement (name = "reserved-organization")
+@XmlAccessorType (XmlAccessType.FIELD)
 public class OrganizationWithUId implements Mappable<Integer>{
     @XmlElement(name = "organization")
-    @NotNull
-    private final Organization ORGANIZATION;
+    private Organization ORGANIZATION;
     @XmlAttribute(name = "user-name")
-    @NotNull
-    private final String UID;
+    private String UID;
+    private Integer collectionKey;
 
+    public OrganizationWithUId() {
+//        ORGANIZATION = new Organization();
+//        UID = "";
+    }
     public OrganizationWithUId(Organization organization, String Uid) {
         ORGANIZATION = organization;
         UID = Uid;
@@ -30,9 +32,16 @@ public class OrganizationWithUId implements Mappable<Integer>{
         return ORGANIZATION;
     }
 
+    public void setCollectionKey(Integer collectionKey) {
+        this.collectionKey = collectionKey;
+    }
+
     @Override
     public Integer getKey() {
-        return ORGANIZATION.getKey();
+        if (collectionKey == null){
+            return ORGANIZATION.getKey();
+        }
+        return collectionKey;
     }
 
     @Override

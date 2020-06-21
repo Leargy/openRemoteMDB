@@ -1,16 +1,15 @@
 package dispatching;
 
-import dataSection.Commands;
-import dataSection.enumSection.Markers;
+import data_section.Commands;
+import data_section.enumSection.Markers;
 import communication.Mediating;
 import communication.Segment;
-import dataSection.CommandList;
+import data_section.CommandList;
 import dispatching.validators.AuthorizationHandler;
 import exceptions.CommandSyntaxException;
 import dispatching.validators.ArgumentHandler;
 import dispatching.validators.CommandHandler;
 import dispatching.validators.Handler;
-import exceptions.ScriptHandlerException;
 import instructions.rotten.Accessible;
 import instructions.rotten.RawDecree;
 import instructions.rotten.base.RawExit;
@@ -18,7 +17,6 @@ import instructions.rotten.base.RawHelp;
 import instructions.rotten.base.RawSignIn;
 import instructions.rotten.base.RawSignOut;
 
-import javax.script.ScriptException;
 import java.io.*;
 import java.nio.ByteBuffer;
 

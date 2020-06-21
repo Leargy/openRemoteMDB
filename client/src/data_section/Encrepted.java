@@ -1,4 +1,4 @@
-package dataSection;
+package data_section;
 
 import java.security.NoSuchAlgorithmException;
 

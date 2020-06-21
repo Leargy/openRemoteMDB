@@ -20,8 +20,9 @@ public class Clear extends ConcreteDecree {
    * по очистке коллекции
    * @param sieve текущий управленец коллекцией
    */
-  public Clear(Receiver sieve) {
+  public Clear(Receiver sieve,String userLogin) {
     super(sieve);
+    this.userLogin = userLogin;
   }
 
   /**
@@ -40,9 +41,9 @@ public class Clear extends ConcreteDecree {
     return new Report(0, "Очистка коллекции успешна");
   }
 
-  public void setUserLogin(String userLogin) {
-    this.userLogin = userLogin;
-  }
+//  public void setUserLogin(String userLogin) {
+//    this.userLogin = userLogin;
+//  }
 
   public static final String NAME = "clear";
   public static final String BRIEF = "очищает коллекцию";

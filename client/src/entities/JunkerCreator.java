@@ -1,10 +1,8 @@
 package entities;
 
-import dataSection.enumSection.OrganizationType;
-import entities.Junker;
+import data_section.enumSection.OrganizationType;
 import dispatching.validators.Filters;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**

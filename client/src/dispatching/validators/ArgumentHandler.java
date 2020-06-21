@@ -1,28 +1,20 @@
 package dispatching.validators;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import communication.Segment;
-import dataSection.Commands;
+import data_section.Commands;
 import dispatching.Dispatcher;
-import dispatching.scriptHandler.ExecuteScript;
+import dispatching.script_handler.ExecuteScript;
 import entities.Descriptor;
 import entities.JunkerCreator;
 import entities.organizationFactory.OrganizationBuilder;
 import exceptions.CommandSyntaxException;
-import exceptions.ScriptHandlerException;
 import instructions.rotten.base.*;
 import instructions.rotten.extended.*;
 import instructions.rotten.RawDecree;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 /**
  * Звено проверки аргументов команд.Реализация паттерна "Цепочка обязанностей" (Chain of Responsibility)

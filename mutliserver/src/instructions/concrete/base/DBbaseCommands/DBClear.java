@@ -14,8 +14,7 @@ public class DBClear extends Clear {
     public final User TEMP_USER;
 
     public DBClear(Receiver receiver, TablesInteractor organizationTablesInteractor, User user) {
-        super(receiver);
-        super.setUserLogin(user.getLogin());
+        super(receiver,user.getLogin());
         ORGANIZATION_TABLE_INTERACTOR = (OrganizationsTableInteractor) organizationTablesInteractor;
         TEMP_USER = user;
     }

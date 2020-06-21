@@ -63,7 +63,7 @@ public final class JustCommandBuilder {
         return signOut;
       }
       else if (c instanceof RawNotAuthorizedHelp) return new NotAuthorizedHelp(receiver);
-      else if (c instanceof RawClear) return new Clear(receiver);
+      else if (c instanceof RawClear) return new Clear(receiver,((RawSignUp)c).getLogin());
       else if (c instanceof RawInfo) return new Info(receiver);
       else if (c instanceof RawSave) return new Save(receiver);
       else if (c instanceof RawShow) return new Show(receiver);

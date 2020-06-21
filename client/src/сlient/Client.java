@@ -1,20 +1,15 @@
 package сlient;
 
 import communication.Component;
-import dataSection.enumSection.Markers;
+import data_section.enumSection.Markers;
 import communication.Mediating;
 import communication.Segment;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.net.*;
 import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Condition;
