@@ -2,8 +2,8 @@ package instructions.concrete.extended;
 
 import communication.Report;
 import entities.Mappable;
-import instructions.concrete.ConDecree;
-import parsing.customer.Receiver;
+import instructions.concrete.ConcreteDecree;
+import patterns.command.Receiver;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ import java.util.function.Function;
  * @param <V> тип элементов колллекции
  * @param <R> тип поле, по которому происходит фильтрование
  */
-public class FilterContains<K, V extends Mappable<K>, R> extends ConDecree {
+public class FilterContains<K, V extends Mappable<K>, R> extends ConcreteDecree {
   protected final Function<? super V, ? extends R> fertilizer;
   protected final R filtered;
   /**
@@ -46,7 +46,7 @@ public class FilterContains<K, V extends Mappable<K>, R> extends ConDecree {
     // коллекция, что содержит соответствие между ключом и полем элемента
     Map<K, R> buffer = SIEVE.getBy(fertilizer); // возможно придется добавить ClassCast
     // коллекция, что содержит соответствие между ключом и действительным ключом
-    Map<K, K> realkeys = ((Receiver<K, V>) SIEVE).getBy(V::Key); // костыль
+    Map<K, K> realkeys = ((Receiver<K, V>) SIEVE).getBy(V::getKey); // костыль
     // коллекция, которая содержит нужные ключи, равные полю, которое ищем
     Map<K, R> correct = new HashMap<>();
     // заполнили предыдущую коллекцию
@@ -72,7 +72,7 @@ public class FilterContains<K, V extends Mappable<K>, R> extends ConDecree {
     for (Map.Entry<K, K> e : keys)
       realkeys.put(e.getKey(), e.getValue());
     // получаем описание тех элементов, чьи реальные ключи содержатся в фильтрованной коллекции
-    String result = ((Receiver<K, V>) SIEVE).survey((element)->(realkeys.containsValue(element.Key())));
+    String result = ((Receiver<K, V>) SIEVE).survey((element)->(realkeys.containsValue(element.getKey()))); //TODO: если не работает, то тут было element.Key()
     return new Report(0, result);
   }
 

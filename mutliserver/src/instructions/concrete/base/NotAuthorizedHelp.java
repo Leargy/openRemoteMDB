@@ -2,6 +2,8 @@ package instructions.concrete.base;
 
 import communication.Report;
 import instructions.concrete.ConcreteDecree;
+import instructions.concrete.base.DBbaseCommands.SignIn;
+import instructions.concrete.base.DBbaseCommands.SignUp;
 import patterns.command.Receiver;
 
 import java.util.ArrayList;
@@ -68,5 +70,5 @@ public class NotAuthorizedHelp extends ConcreteDecree {
      * @return название команды
      */
     @Override
-    public String toString() { return NAME; }
+    public String toString() { return NAME + " for not authorized"; }
 }

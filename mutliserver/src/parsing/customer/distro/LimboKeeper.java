@@ -2,6 +2,7 @@ package parsing.customer.distro;
 
 import czerkaloggers.HawkPDroid;
 import entities.Organization;
+import entities.OrganizationWithUId;
 import parsing.customer.bootstrapper.LoaferLoader;
 import parsing.customer.local.Commander;
 import parsing.customer.local.TotalCommander;
@@ -22,5 +23,5 @@ public abstract class LimboKeeper extends TotalCommander {
    * но и отправлять его модулю разбора запросов клиента
    * @param logger логгер, взаимодействующий с контроллером
    */
-  protected LimboKeeper(LoaferLoader<Organization> loader, HawkPDroid logger) { super(loader, logger); }
+  protected LimboKeeper(LoaferLoader<OrganizationWithUId> loader, HawkPDroid logger) { super(loader, logger); }
 }

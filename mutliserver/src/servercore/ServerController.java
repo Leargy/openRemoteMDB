@@ -17,7 +17,7 @@ import uplink_bags.RegistrationBag;
 import uplink_bags.TransportableBag;
 
 public class ServerController implements Controllers, Component {
-    private static final int MAX_SIMULTANEOUS_SENDS = 50;
+    private static final int MAX_SIMULTANEOUS_SENDS = 10;
     private final Registers REGISTER;
     private final Perusals PERUSALER;
     private final Processors SUBPROCESSOR;
@@ -36,6 +36,8 @@ public class ServerController implements Controllers, Component {
     public Report notify(Component sender, TransportableBag parcel) {
         if (sender == MAIN_SERVER_TASK) REGISTER.register((RegistrationBag) parcel);
         if (sender == REGISTER) ((PerusalController)PERUSALER).notify(this, parcel);
+        if (sender == PERUSALER) SUBPROCESSOR.notify(this,parcel);
+        if (sender == SUBPROCESSOR) DISPATCHER.notify(this,parcel);
         return new Report(0,"Sending successful");
     }
 
@@ -43,8 +45,4 @@ public class ServerController implements Controllers, Component {
         return MAIN_SERVER_TASK;
     }
 
-    @Override
-    public Controllers getController() {
-        return this;
-    }
 }

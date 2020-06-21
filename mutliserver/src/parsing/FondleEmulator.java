@@ -1,7 +1,11 @@
 package parsing;
 
+import instructions.concrete.ConcreteDecree;
+import instructions.concrete.base.Exit;
+import instructions.concrete.base.Save;
 import parsing.Resolver;
-import parsing.interpreter.Shell;
+import patterns.mediator.Component;
+import patterns.mediator.Controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,32 +22,30 @@ import java.util.Map;
  * @see Invoker
  */
 public abstract class FondleEmulator extends Prompter implements Component {
-  protected final Resolver MAGIV; // ссылка на SSPC
-  protected Shell fReader;
+  protected final Controllers MAGIV; // ссылка на SSPC
+//  protected Shell fReader;
 
   /**
    * Конструктор устанавливающий контроллер
    * над эмулятором
    * @param controller ссылка на SSPC
    */
-  public FondleEmulator(Resolver controller) { MAGIV = controller; }
+  public FondleEmulator(Controllers controller) { MAGIV = controller; }
 
   /**
    * Вместо скроллинга ленты в ВК,
    * скроллим список доступных комманд
    * @return список доступных комманд
    */
-  public final List<ConDecree> scroll() {
-    List<ConDecree> listing = new ArrayList<>();
+  public final List<ConcreteDecree> scroll() {
+    List<ConcreteDecree> listing = new ArrayList<>();
     availableCommands
         .entrySet()
         .stream()
-        .forEach(
-            (Map.Entry<String, ConDecree> enter)->
-            {
-              if (!(Exit.NAME.equals(enter.getKey()) || Save.NAME.equals(enter.getKey())))
-                listing.add(enter.getValue());
-            });
+        .forEach((entry) -> {
+          entry.getValue(); if (!(Exit.NAME.equals(entry.getKey()) || Save.NAME.equals(entry.getKey())))
+            listing.add(entry.getValue());
+        });
     return listing;
   }
 }

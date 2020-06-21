@@ -1,5 +1,6 @@
 package parsing;
 
+import base_modules.processors.processing_tasks.AuthenticationTask;
 import entities.OrganizationWithUId;
 import extension_modules.dbinteraction.OrganizationsTableInteractor;
 import instructions.rotten.IJunked;
@@ -36,8 +37,9 @@ public final class InstructionBuilder implements Component {
    * формирующую элементы коллекции
    * @param controller контроллер
    */
-  public InstructionBuilder(Controllers controller) {
+  public InstructionBuilder(Controllers controller, AuthenticationTask authenticationTask) {
     SUB_PROCESS_CONTROLLER = controller;
+    COMMON_COMMAND_BUILDER.setLinkToAuthenticationTask(authenticationTask);
 //    MARDUK = facility;
   }
 
@@ -57,13 +59,9 @@ public final class InstructionBuilder implements Component {
    */
   public void make(TransportableBag rawDecreeBag, LimboKeeper receiver) {
     RawDecree command = ((RawDecreeBag)rawDecreeBag).UNINVOKABLE_COMMAND;
+    System.out.println(Thread.currentThread().getName() + " me in instrBuilder " + command);
     if (command instanceof IJunked)
-      SUB_PROCESS_CONTROLLER.notify(this, new ExecuteBag(((RawDecreeBag) rawDecreeBag).getChannel(), COMMITERS_BUILDER.make((RawCommitter) command, receiver,organizationsTableInteractor,((RawDecreeBag)rawDecreeBag).USER)));
-    else SUB_PROCESS_CONTROLLER.notify(this, new ExecuteBag(((RawDecreeBag) rawDecreeBag).getChannel(), COMMON_COMMAND_BUILDER.make(command, receiver)));
-  }
-
-  @Override
-  public Controllers getController() {
-    return SUB_PROCESS_CONTROLLER;
+    SUB_PROCESS_CONTROLLER.notify(this, new ExecuteBag(((RawDecreeBag) rawDecreeBag).getChannel(), COMMITERS_BUILDER.make((RawCommitter) command, receiver,organizationsTableInteractor,((RawDecreeBag)rawDecreeBag).USER)));
+    else SUB_PROCESS_CONTROLLER.notify(this, new ExecuteBag(((RawDecreeBag) rawDecreeBag).getChannel(), COMMON_COMMAND_BUILDER.make(command, receiver,((RawDecreeBag)rawDecreeBag).getChannel())));
   }
 }

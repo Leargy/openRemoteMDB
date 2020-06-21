@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Допсущность взятия, сортированной
@@ -8,17 +9,21 @@ import java.util.*;
  * @param <K> ключи отображения
  * @param <V> элементы отображения
  */
-public class HashMax<K, V extends OrganizationWithUId> extends HashMap {
+public class HashMax<K, V extends OrganizationWithUId> extends ConcurrentHashMap {
+    public HashMax(){
+        super();
+    }
+
     /**
      * Вот эта вот херня была придумана Укропами,
      * была взята прям с боем.
      * Метод сортировки элементов по имени
      * @return отображение, хранящее порядок элементов
      */
-    public LinkedHashMap<Integer, OrganizationWithUId>  sortByNameOfOrganization() {
+    public synchronized LinkedHashMap<Integer, OrganizationWithUId>  sortByNameOfOrganization() {
         ArrayList<OrganizationWithUId> organizationArrayList = new ArrayList<>();
         LinkedHashMap<Integer, OrganizationWithUId> newOrganizationHashMap = new LinkedHashMap<>();
-        Iterator<Entry<Integer, OrganizationWithUId>> iter1 = ((HashMap<Integer,OrganizationWithUId>)this).entrySet().iterator();
+        Iterator<Entry<Integer, OrganizationWithUId>> iter1 = ((ConcurrentHashMap<Integer,OrganizationWithUId>)this).entrySet().iterator();
         while (iter1.hasNext()) {
             organizationArrayList.add(iter1.next().getValue());
         }

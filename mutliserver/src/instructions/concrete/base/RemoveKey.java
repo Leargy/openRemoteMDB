@@ -13,7 +13,7 @@ import patterns.command.Receiver;
  * @see parsing.instructions.Decree
  * @see Command
  */
-public final class RemoveKey extends ConcreteDecree {
+public class RemoveKey extends ConcreteDecree {
   protected final Integer key;
   /**
    * Конструктор, устанавливающий ссылку на

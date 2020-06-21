@@ -1,7 +1,8 @@
 package instructions.concrete.extended;
 
 import entities.Organization;
-import parsing.customer.Receiver;
+import entities.OrganizationWithUId;
+import patterns.command.Receiver;
 
 public final class FilterContainsName extends FilterContains<Integer, Organization, String> {
   /**
@@ -13,7 +14,7 @@ public final class FilterContainsName extends FilterContains<Integer, Organizati
    * @param filter поле, которое ищем
    */
   public FilterContainsName(Receiver sieve, String filter) {
-    super(sieve, filter, Organization::Name);
+    super(sieve, filter, Organization::getName);
   }
 
   public static final String NAME = "filter_contains_name";

@@ -21,10 +21,11 @@ public class DBClear extends Clear {
     }
     @Override
     public Report execute() {
+        Report dbReport = null;
         try {
-            ORGANIZATION_TABLE_INTERACTOR.clearUserOrganization(TEMP_USER);
+            dbReport = ORGANIZATION_TABLE_INTERACTOR.clearUserOrganization(TEMP_USER);
         }catch (SQLException ex) {
-            return new Report(12,"Failed to clear user's organization");
+            return new Report(12,"Failed to clear user's organization!\n" + dbReport);
         }
         return super.execute();
     }

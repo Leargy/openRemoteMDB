@@ -14,28 +14,26 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class DispatchController implements Dispatchers {
-    private final Controllers CONTROLLER;
+    public final Controllers MAIN_SERVER_CONTROLLER;
     private final ExecutorService DISPATCHER;
 
     public DispatchController(Controllers controller, int poolSize) {
-        CONTROLLER = controller;
+        MAIN_SERVER_CONTROLLER = controller;
         DISPATCHER = Executors.newFixedThreadPool(poolSize);
     }
 
     @Override
     public Report sendResults2Client(NotifyBag parcel) {
-        DISPATCHER.execute(new SendingResultsTask(this, parcel));
+        DISPATCHER.submit(new SendingResultsTask(this, parcel));
+//        DISPATCHER.execute(new SendingResultsTask(this, parcel));
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 
     @Override
-    public Controllers getController() {
-        return CONTROLLER;
-    }
-
-    @Override
     public Report notify(Component sender, TransportableBag parcel) {
-        throw new NotImplementedException();
-        //return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
+        //TODO: make logging
+        System.out.println("me under dispatching");
+        if (sender == MAIN_SERVER_CONTROLLER) this.sendResults2Client((NotifyBag) parcel);
+        return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 }

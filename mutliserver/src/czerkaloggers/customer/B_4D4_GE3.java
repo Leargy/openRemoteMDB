@@ -1,6 +1,5 @@
 package czerkaloggers.customer;
 
-import communication.Component;
 import communication.Mediator;
 import communication.Report;
 import communication.wrappers.AlertBag;
@@ -10,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import parsing.Resolver;
 import patterns.mediator.Component;
+import patterns.mediator.Controllers;
 
 import java.nio.channels.SocketChannel;
 

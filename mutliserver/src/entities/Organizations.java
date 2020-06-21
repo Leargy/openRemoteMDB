@@ -11,14 +11,14 @@ import java.util.Map;
 @XmlRootElement(name = "organizations")
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class Organizations {
-  @XmlElement(name = "organization")
-  private List<Organization> companies;
+  @XmlElement(name = "reserved-organization")
+  private List<OrganizationWithUId> companies;
 
   public Organizations() { companies = new ArrayList<>(); }
 
-  public Organizations(List<Organization> companies) { this.companies = companies; }
+  public Organizations(List<OrganizationWithUId> companies) { this.companies = companies; }
 
-  public Organizations(Map<Integer, Organization> companies) { this.companies = new ArrayList<>(companies.values()); }
+  public Organizations(Map<Integer, OrganizationWithUId> companies) { this.companies = new ArrayList<>(companies.values()); }
 
-  public final List<Organization> getCompanies() { return companies; }
+  public final List<OrganizationWithUId> getCompanies() { return companies; }
 }

@@ -14,9 +14,9 @@ import java.nio.ByteBuffer;
 public class SendingResultsTask implements Component, Runnable {
     private static final int BUFFER_MAX_SIZE = 10 * 1024;
     private final ByteBuffer BYTE_BUFFER = ByteBuffer.allocate(BUFFER_MAX_SIZE);
-    protected final Controllers CONTROLLER;
-    protected final NotifyBag NOTIFICATION;
-    protected final Logger logger = LoggerFactory.getLogger(SendingResultsTask.class);
+    public final Controllers CONTROLLER;
+    public final NotifyBag NOTIFICATION;
+    public final Logger logger = LoggerFactory.getLogger(SendingResultsTask.class);
 
     public SendingResultsTask(Controllers controller, NotifyBag notification) {
         CONTROLLER = controller;
@@ -42,8 +42,4 @@ public class SendingResultsTask implements Component, Runnable {
         logger.info("Transaction completed successfully");
     }
 
-    @Override
-    public Controllers getController() {
-        return CONTROLLER;
-    }
 }

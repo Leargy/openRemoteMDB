@@ -2,13 +2,14 @@ package instructions.concrete.extended;
 
 import communication.Report;
 import entities.Organization;
+import entities.OrganizationWithUId;
 import entities.comparators.OrganizationTitleComparator;
 import parsing.customer.Indicator;
-import parsing.customer.Receiver;
+import patterns.command.Receiver;
 
 import java.util.Map;
 
-public final class RemoveLower extends RemoveThan {
+public class RemoveLower extends RemoveThan {
   protected final Indicator MENACE;
   /**
    * Конструктор, устанавливающий ссылку на
@@ -18,10 +19,10 @@ public final class RemoveLower extends RemoveThan {
    * @param sieve текущий управленец коллекцией
    * @param added добавляемый элемент
    */
-  public RemoveLower(Receiver sieve, Organization added) {
+  public RemoveLower(Receiver sieve, OrganizationWithUId added) {
     super(sieve, added);
     OrganizationTitleComparator cmp = new OrganizationTitleComparator();
-    MENACE = (org)->(cmp.compare((Organization) org, EMBEDDED) < 0);
+    MENACE = (org)->(cmp.compare(((OrganizationWithUId)org).getOrganization(), EMBEDDED.getOrganization()) < 0);
   }
 
   /**
@@ -29,20 +30,20 @@ public final class RemoveLower extends RemoveThan {
    * @return отчет выполнения
    */
   @Override
-  public final Report execute() {
+  public Report execute() {
         int[] deletedNumber = new int[]{0};
-        Receiver<Integer, Organization> REAL = (Receiver<Integer, Organization>) SIEVE;
+        Receiver<Integer, OrganizationWithUId> REAL = (Receiver<Integer, OrganizationWithUId>) SIEVE;
         StringBuilder result = new StringBuilder();
-        Map<Integer, Integer> keys = REAL.getBy(Organization::Key);
+        Map<Integer, Integer> keys = REAL.getBy(OrganizationWithUId::getKey); //TODO: тут было Organization::getKey
         keys
             .entrySet()
             .stream()
             .forEach((Map.Entry<Integer, Integer> e)-> {
-              Organization taken = null;
-              Organization[] takens = new Organization[]{taken};
+              OrganizationWithUId taken = null;
+              OrganizationWithUId[] takens = new OrganizationWithUId[]{taken}; //там где OrganizationWithUId было Organization
               REAL.search(new Integer[]{e.getKey()}, takens, (org)->(true));
               OrganizationTitleComparator cmp = new OrganizationTitleComparator();
-              REAL.remove(new Integer[]{e.getKey()}, new Organization[]{takens[0]}, MENACE);
+              REAL.remove(new Integer[]{e.getKey()}, new OrganizationWithUId[]{takens[0]}, MENACE);
                   if (MENACE.verify(takens[0])) {
                       result.append("Элемент " + takens[0] + " по ключу " + e.getKey() + " удален\n");
                       deletedNumber[0]++;

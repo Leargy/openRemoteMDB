@@ -1,6 +1,7 @@
 package parsing;
 
-import instructions.concrete.ConDecree;
+import instructions.concrete.ConcreteDecree;
+import patterns.command.Invoker;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +16,7 @@ import java.util.TreeSet;
  * @see Invoker
  */
 public abstract class Prompter implements Invoker {
-  protected final Map<String, ConDecree> availableCommands; // доступные к вызову команды
+  protected final Map<String, ConcreteDecree> availableCommands; // доступные к вызову команды
   protected final SortedSet<String> junkedCommands = new TreeSet<String>() {
           {
               add("insert");

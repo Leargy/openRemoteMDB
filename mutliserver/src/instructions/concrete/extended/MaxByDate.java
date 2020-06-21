@@ -1,11 +1,14 @@
 package instructions.concrete.extended;
 
 import entities.Organization;
+import entities.OrganizationWithUId;
 import instructions.Command;
 import instructions.concrete.ConDecree;
-import parsing.customer.Receiver;
+import patterns.command.Receiver;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.function.Function;
 
 /**
  * Конкретная команда поиска
@@ -17,7 +20,7 @@ import java.time.ZonedDateTime;
  * @see ConDecree
  * @see Command
  */
-public final class MaxByDate extends MaxBy<Integer, Organization, ZonedDateTime> {
+public final class MaxByDate extends MaxBy<Integer, OrganizationWithUId, LocalDateTime> {
   /**
    * Конструктор, устанавливающий ссылку на
    * управленца коллекцией. Также предустанавливает
@@ -25,8 +28,8 @@ public final class MaxByDate extends MaxBy<Integer, Organization, ZonedDateTime>
    * его дате создания
    * @param sieve текущий управленец коллекцией
    */
-  public MaxByDate(Receiver<Integer, Organization> sieve) {
-    super(sieve, Organization::getCreationDate);
+  public MaxByDate(Receiver<Integer, OrganizationWithUId> sieve) {
+    super(sieve, (orga)->(orga.getOrganization().getCreationDate()));
   }
 
   public static final String NAME = "max_by_date";

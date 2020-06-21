@@ -2,9 +2,9 @@ package instructions.concrete.extended;
 
 import communication.Report;
 import entities.Mappable;
-import entities.Organization;
-import instructions.concrete.ConDecree;
-import parsing.customer.Receiver;
+import entities.OrganizationWithUId;
+import instructions.concrete.ConcreteDecree;
+import patterns.command.Receiver;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -19,7 +19,7 @@ import java.util.function.Function;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  */
-public class MaxBy<K extends Integer, V extends Mappable<K>, R extends Comparable<? super R>> extends ConDecree {
+public class MaxBy<K extends Integer, V extends Mappable<K>, R extends Comparable<? super R>> extends ConcreteDecree {
   protected final Function<? super V,? extends R> keySearcher;
   /**
    * Конструктор, устанавливающий ссылку на
@@ -51,8 +51,8 @@ public class MaxBy<K extends Integer, V extends Mappable<K>, R extends Comparabl
       maxim_key = maxim.get().getKey();
     } catch (NoSuchElementException e) { return new Report(404, "Подходящий элемент не найден, проверьте размер коллекции"); }
     // найти в исходной коллекции тот элемент
-    Organization recology = null;
-    Organization[] recologys = new Organization[]{recology};
+    OrganizationWithUId recology = null;
+    OrganizationWithUId[] recologys = new OrganizationWithUId[]{recology};
     Integer[] maxim_keys = new Integer[]{maxim_key};
     SIEVE.search(maxim_keys, recologys, (element)->true);
     // вернуть информацию об элементе

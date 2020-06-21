@@ -1,6 +1,7 @@
 package communication;
 
 import java.io.Serializable;
+
 /**
  * Класс отчетов, хранящих информацию о результатах,
  * работы сервера.

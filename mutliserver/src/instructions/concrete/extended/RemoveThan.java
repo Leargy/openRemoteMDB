@@ -1,8 +1,10 @@
 package instructions.concrete.extended;
 
 import entities.Organization;
+import entities.OrganizationWithUId;
 import instructions.concrete.base.Committer;
 import patterns.command.Receiver;
+
 
 /**
  * Абстракция команд, удаляющих
@@ -19,7 +21,7 @@ public abstract class RemoveThan extends Committer {
    * @param added добавляемый элемент
    * @param menace условие удаления
    */
-  public RemoveThan(Receiver sieve, Organization added) {
+  public RemoveThan(Receiver sieve, OrganizationWithUId added) {
     super(sieve, added);
   }
 }

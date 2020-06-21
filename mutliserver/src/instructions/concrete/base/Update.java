@@ -14,7 +14,7 @@ import patterns.command.Receiver;
  * @see parsing.instructions.Decree
  * @see parsing.instructions.Command
  */
-public final class Update extends Committer {
+public class Update extends Committer {
   protected final Integer id;
 
   /**

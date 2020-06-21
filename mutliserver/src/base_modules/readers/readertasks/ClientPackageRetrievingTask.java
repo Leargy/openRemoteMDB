@@ -88,7 +88,4 @@ public class ClientPackageRetrievingTask implements Component,Runnable{
         }
         return receivedPackage;
     }
-
-    @Override
-    public Controllers getController() { return CONTROLLER; }
 }

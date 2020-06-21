@@ -15,6 +15,7 @@ import instructions.rotten.Accessible;
 import instructions.rotten.RawDecree;
 import instructions.rotten.base.RawExit;
 import instructions.rotten.base.RawHelp;
+import instructions.rotten.base.RawSignIn;
 import instructions.rotten.base.RawSignOut;
 
 import javax.script.ScriptException;
@@ -97,10 +98,10 @@ public class Dispatcher extends ADispatcher {
                         passCheck.setLogin("");
                         passCheck.setPassword("");
                     }
-                } else {
+                }
+                else if (tempCommand instanceof RawSignIn){
                     passCheck.setLogin(((Accessible) tempCommand).getLogin());
                     passCheck.setPassword(((Accessible) tempCommand).getPassword());
-
                 }
             }
             if (tempCommand == null) {

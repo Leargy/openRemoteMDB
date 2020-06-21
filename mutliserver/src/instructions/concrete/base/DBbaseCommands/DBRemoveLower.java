@@ -1,38 +1,38 @@
 package instructions.concrete.base.DBbaseCommands;
 
 import communication.Report;
-import entities.Organization;
 import entities.OrganizationWithUId;
 import entities.User;
 import extension_modules.dbinteraction.OrganizationsTableInteractor;
-import instructions.concrete.base.Insert;
+import instructions.concrete.extended.RemoveLower;
 import patterns.command.Receiver;
 
 import java.sql.SQLException;
 
-public class DBInsert extends Insert {
+public class DBRemoveLower extends RemoveLower {
     public final OrganizationsTableInteractor ORGANIZATION_TABLE_INTERACTOR;
+    public final User TEMP_USER;
     /**
      * Конструктор, устанавливающий ссылку на
-     * управленца коллекцией, добавляемый элемент
-     * и ключ, по которому нужно добавить элемент
+     * управленца коллекцией, а также объект
+     * добавляемого элемента
      *
      * @param sieve текущий управленец коллекцией
-     * @param key   ключ добавляемого элемента
      * @param added добавляемый элемент
      */
-    public DBInsert(Receiver sieve, Integer key, OrganizationWithUId organizationWithUId, OrganizationsTableInteractor organizationsTableInteractor) {
-        super(sieve, key, organizationWithUId);
+    public DBRemoveLower(Receiver sieve, OrganizationWithUId added, OrganizationsTableInteractor organizationsTableInteractor, User tempUser) {
+        super(sieve, added);
         ORGANIZATION_TABLE_INTERACTOR = organizationsTableInteractor;
+        TEMP_USER = tempUser;
     }
 
     @Override
     public Report execute() {
         Report dbReport = null;
         try {
-            dbReport = ORGANIZATION_TABLE_INTERACTOR.insertUserOrganization(super.key,super.EMBEDDED);
-        }catch (SQLException ex) {
-            return new Report(12,"Failed to insert user's organization!\n" + dbReport);
+            dbReport = ORGANIZATION_TABLE_INTERACTOR.removeLoweUserOrganization(TEMP_USER, super.EMBEDDED);
+        } catch (SQLException ex) {
+            return new Report(12, "Failed to remove lower organization!\n" + dbReport);
         }
         return super.execute();
     }

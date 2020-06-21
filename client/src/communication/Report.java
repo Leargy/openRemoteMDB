@@ -12,7 +12,7 @@ import java.io.Serializable;
  *   <li>Хранения результатов попытки отправки результатов обработки запросов</li>
  * </ul>
  */
-public final class Report implements Serializable {
+public class Report implements Serializable {
     private final int ERROR_CODE; // Error code
     private final String MESSAGE; // Message
     private boolean isConfirmed;

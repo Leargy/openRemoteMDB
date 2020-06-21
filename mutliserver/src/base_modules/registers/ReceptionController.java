@@ -46,17 +46,12 @@ public class ReceptionController implements Registers {
             logger.error("There were problems while getting client channel at execution time");
             return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
         }
-        CONTROLLER.notify(this,new ChanneledBag(client));
+        CONTROLLER.notify(this, new ChanneledBag(client));
         //
         //System.out.println(Thread.currentThread().getName());
         //
         //USER_DATA_RETRIEVER.execute(new ClientPackageRetrievingTask(this, client));
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
-    }
-
-    @Override
-    public Controllers getController() {
-        return CONTROLLER;
     }
 
     // TODO: write real registration with database

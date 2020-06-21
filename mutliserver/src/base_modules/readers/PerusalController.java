@@ -17,24 +17,20 @@ import java.util.concurrent.Executors;
 public class PerusalController implements Perusals, Controllers {
     private Executor readCachedThreadPool = Executors.newCachedThreadPool();
     private final Controllers SERVER_CONTROLLER;
-    private final SubProcessorController SUB_PROCESS_CONTROLLER;
+//    private final SubProcessorController SUB_PROCESS_CONTROLLER;
 //    private ClientPackageRetrievingTask CLIENT_PACKAGE_RETRIEVING_TASK;
 
     public PerusalController(Controllers serverController) {
         this.SERVER_CONTROLLER = serverController;
-        SUB_PROCESS_CONTROLLER = new SubProcessorController(this);
+//        SUB_PROCESS_CONTROLLER = new SubProcessorController(this);
 //        CLIENT_PACKAGE_RETRIEVING_TASK = new ClientPackageRetrievingTask(this);
     }
 
     @Override
     public Report notify(Component sender, TransportableBag parcel) {
         if (sender == SERVER_CONTROLLER) readCachedThreadPool.execute(new ClientPackageRetrievingTask(this, (SocketChannel)((ChanneledBag)parcel).getChannel()));
-        if (sender instanceof ClientPackageRetrievingTask) SUB_PROCESS_CONTROLLER.notify(this, parcel);
-        return null;
-    }
-
-    @Override
-    public Controllers getController() {
+//        if (sender == SUB_PROCESS_CONTROLLER) SERVER_CONTROLLER.notify(this,parcel);
+        if (sender instanceof ClientPackageRetrievingTask) SERVER_CONTROLLER.notify(this, parcel);
         return null;
     }
 }

@@ -71,9 +71,7 @@ public class AuthenticationTask implements Component {
     public synchronized void addAuthorizedUser(SocketChannel socketChannel, User user) {
         LOGGED_USERS.putIfAbsent(socketChannel, user);
     }
-
-    @Override
-    public Controllers getController() {
-        return SUB_PROCESS_CONTROLLER;
+    public synchronized void removeAuthorizedUser(SocketChannel socketChannel) {
+        LOGGED_USERS.remove(socketChannel);
     }
 }

@@ -16,7 +16,7 @@ public class UsersTableInteractor implements TablesInteractor {
     private final Logger LOG = LoggerFactory.getLogger(UsersTableInteractor.class);
     private static final String DB_TABLE_NAME = "clients";
     
-    public Report addNewUser(UsersParameters params) {
+    public Report addNewUser(UsersParameters params) throws SQLException{
         LOG.info("Adding new user to table");
         if (selectUserFromParameters(params) == null) {
             LOG.info("There are no users with such parameters");
@@ -51,7 +51,7 @@ public class UsersTableInteractor implements TablesInteractor {
         }
     }
     
-    public Report removeExistingUser(UsersParameters params) {
+    public Report removeExistingUser(UsersParameters params) throws SQLException {
         LOG.info("Removing user from clients");
         if (selectUserFromParameters(params) == null) {
             LOG.info("Not exists any user with that parameters");
@@ -88,7 +88,7 @@ public class UsersTableInteractor implements TablesInteractor {
         }
     }
 
-    public UsersParameters selectUserFromParameters(UsersParameters params) {
+    public UsersParameters selectUserFromParameters(UsersParameters params) throws SQLException{
         LOG.info("Searching user in table");
         final String SELECT_USER_QUERY = "SELECT * FROM "
                 + DB_TABLE_NAME + " WHERE login = "

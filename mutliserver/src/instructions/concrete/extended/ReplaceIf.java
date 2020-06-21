@@ -1,8 +1,9 @@
 package instructions.concrete.extended;
 
 import entities.Organization;
+import entities.OrganizationWithUId;
 import instructions.concrete.base.Committer;
-import parsing.customer.Receiver;
+import patterns.command.Receiver;
 
 public abstract class ReplaceIf extends Committer {
   protected final Integer KEY;
@@ -14,7 +15,7 @@ public abstract class ReplaceIf extends Committer {
    * @param sieve текущий управленец коллекцией
    * @param added добавляемый элемент
    */
-  public ReplaceIf(Receiver sieve, Integer key, Organization added) {
+  public ReplaceIf(Receiver sieve, Integer key, OrganizationWithUId added) {
     super(sieve, added);
     KEY = key;
   }

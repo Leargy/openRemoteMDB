@@ -1,6 +1,7 @@
 package parsing.customer.bootstrapper;
 
 import entities.Organization;
+import entities.OrganizationWithUId;
 import entities.Organizations;
 
 import javax.xml.bind.JAXBContext;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+
 /**
  * Стандартный подгрузчик коллекции,
  * пытаемся следовать SRP, а также
@@ -27,7 +29,7 @@ import java.util.regex.Pattern;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @see LoaferLoader
  */
-public final class NakedCrateLoader implements LoaferLoader<Organization> {
+public final class NakedCrateLoader implements LoaferLoader<OrganizationWithUId> {
   private static final String TEST_MODE = "DEBUG"; // маркер для определения подгрузки тестовой коллекции
   private static final String CAL_FOLDER = "storage"; // директория, хранящая все коллекции
   private String birthDay = ZonedDateTime.now().toString(); // дата создания загрузчика коллекции или файла с коллекцией
@@ -39,7 +41,7 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
    * Спойлер: бомбит
    * @return список элементов
    */
-  @Override public List<Organization> load() {
+  @Override public List<OrganizationWithUId> load() {
     // получаем файловый разделитель нашей OS
     // запоминаем детки, что для Windows - это \, а для Линуха - /,
     // а MacOS - это дерьмо для геев и его даже знать не надо
@@ -73,8 +75,8 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
     // О-па, второй try, загружающий коллекцию
     // создаем входной поток в файл, а также раба, читающего его
     try (
-        InputStream nvidickShield = new FileInputStream(fuck);
-        InputStreamReader assWorm = new InputStreamReader(nvidickShield);
+            InputStream nvidickShield = new FileInputStream(fuck);
+            InputStreamReader assWorm = new InputStreamReader(nvidickShield);
     ) {
       // мне, однажды, сказал одноклассник, что стринги - это аксессуар
       // поэтому атрибуты файла так называются; закидываем в трусики сведение о нашем файле
@@ -94,7 +96,7 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
         System.err.println(e.getMessage());
         System.err.println(e.getStackTrace());
         System.err.println("Произошла критическая ошибка при загрузке с помощью этой\n" +
-            "тупой библиотеки, которая не умеет предотвращать никакие ошибки");
+                "тупой библиотеки, которая не умеет предотвращать никакие ошибки");
         // здесь уже медицина бессильна, поэтому остается только уйти незаметно
         System.exit(0);
       }
@@ -105,7 +107,7 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
     } catch (IOException e) {
       // чувствительное исключение, выкинулось даже, когда права не выдал
       System.err.println("Произошла критическая ошибка в вашей файловой системе.\n" +
-          "Запустите ее диагностику с помощью соотвествующей утилиты вашей ОС.");
+              "Запустите ее диагностику с помощью соотвествующей утилиты вашей ОС.");
       // здесь уже медицина бессильна, поэтому остается только уйти незаметно
       System.exit(0);
     }
@@ -122,7 +124,7 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
    * @param elements коллекция элементов
    */
   @Override
-  public void unload(List<Organization> elements) throws NullPointerException {
+  public void unload(List<OrganizationWithUId> elements) throws NullPointerException {
     // снова для начала берем разделитель нашей OS
     String sptr = System.getProperty("file.separator");
     // также получаем имя файла, куда срать будем, и формируем путь до него
@@ -154,7 +156,7 @@ public final class NakedCrateLoader implements LoaferLoader<Organization> {
     } catch (JAXBException e) {
       // наше любимое исключение, что готово заменить все имеющиеся
       System.err.println("Произошла критическая ошибка при попытке сохранить коллекцию\n" +
-          "с помощью этой дурацкой библиотеки");
+              "с помощью этой дурацкой библиотеки");
       System.exit(0); // выйди отсюда, розбийник
     }
     // TODO: левой рукой клиента тереблю, правой - логгер щекочу

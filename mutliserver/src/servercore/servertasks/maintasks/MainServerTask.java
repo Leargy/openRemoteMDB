@@ -35,9 +35,4 @@ public class MainServerTask implements Runnable, Component {
         }
         // TODO: write base logic with selector and processing users queries
     }
-
-    @Override
-    public Controllers getController() {
-        return SERVER_CONTROLLER;
-    }
 }

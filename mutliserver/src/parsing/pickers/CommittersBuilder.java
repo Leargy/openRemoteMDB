@@ -38,16 +38,16 @@ public final class CommittersBuilder {
     if (c instanceof IClued) {
       Integer p = ((IClued) c).Key();
       if (c instanceof RawInsert)
-          return new DBInsert(r,p,organizationWithUId,organizationsTableInteractor,user);
+          return new DBInsert(r,p,organizationWithUId,organizationsTableInteractor);
 //        return new Insert(r, p,);
       else if (c instanceof RawUpdate)
           return new Update(r, p, organizationWithUId);
 //        return new Update(r, p,organization);
       else if (c instanceof RawReplaceIfGreater)
-          return new ReplaceIfGreater();
+          return new ReplaceIfGreater(r, p, organizationWithUId);
 //          return new ReplaceIfGreater(r, p, organization );
-      else return new ReplaceIfLower(r, p, organization);
-    } else if (c instanceof RawRemoveLower) return new RemoveLower(r, organization);
+      else return new ReplaceIfLower(r, p, organizationWithUId);
+    } else if (c instanceof RawRemoveLower) return new RemoveLower(r, organizationWithUId);
     else return new Help(r);
   }
 }
