@@ -128,6 +128,10 @@ public class Dispatcher extends ADispatcher {
 
         if (passCheck.isConfirmed() || parcel.getCommandData() instanceof Accessible || parcel.getCommandData() instanceof RawHelp) {
             mediator.notify(this,new Segment(Markers.GOODINPUTCONDITION));
+            if (parcel.getCommandData() instanceof RawSignOut) {
+                parcel.setLogin(((RawSignOut)parcel.getCommandData()).getLogin());
+                parcel.setPassWord(((RawSignOut)parcel.getCommandData()).getPassword());
+            }
             parcel.setLogin(passCheck.getLogin());
             parcel.setPassWord(passCheck.getPassword());
             try {

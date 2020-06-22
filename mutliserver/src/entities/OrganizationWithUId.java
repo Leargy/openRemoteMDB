@@ -35,6 +35,9 @@ public class OrganizationWithUId implements Mappable<Integer> {
     public Integer getKey() {
         return ORGANIZATION.getKey();
     }
+    public void help() {
+        System.out.println("ay hochu piccy");
+    }
 
     @Override
     public String getName() {
