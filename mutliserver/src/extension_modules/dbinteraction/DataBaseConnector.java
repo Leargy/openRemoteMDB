@@ -61,6 +61,7 @@ public final class DataBaseConnector {
         String drivers = props.getProperty("jdbc.drivers");
         if (drivers != null) System.setProperty("jdbc.drivers", drivers);
         else System.setProperty("jdbc.drivers", DATABASE_DRIVER_NAME);
+        String host = props.getProperty("jdbc.host");
         String url = props.getProperty("jdbc.url");
         String username = props.getProperty("jdbc.username");
         String password = props.getProperty("jdbc.password");
