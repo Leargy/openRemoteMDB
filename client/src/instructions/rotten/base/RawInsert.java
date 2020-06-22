@@ -42,8 +42,4 @@ public final class RawInsert extends RawCommitter implements IClued, IJunked, Se
      * Возвращает объект, содержащий данные об объекте коллекции.
      * @return Junker
      */
-    @Override
-    public final Organization Params() {
-        return ORGANIZATION;
-    }
 }

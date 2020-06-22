@@ -1,7 +1,8 @@
 package czerkaloggers;
 
-import communication.Component;
-import communication.Mediator;
+
+import patterns.mediator.Component;
+import patterns.mediator.Controllers;
 
 /**
  * Логгер, умеющий работать с контроллером
@@ -9,7 +10,7 @@ import communication.Mediator;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  */
-public abstract class HawkPDroid<T extends Mediator> implements RadioLogger, Component {
+public abstract class HawkPDroid<T extends Controllers> implements RadioLogger, Component {
   protected final T MAGIV; // ссылка на SSPC
   // SubSystem Process Controller
 
@@ -27,7 +28,7 @@ public abstract class HawkPDroid<T extends Mediator> implements RadioLogger, Com
    * @param plant хранитель протокола сборки
    * @return готовый логгер
    */
-  public static HawkPDroid<? extends Mediator> assemble(Mediator controller, DroidFactory plant) {
+  public static HawkPDroid<? extends Controllers> assemble(Controllers controller, DroidFactory plant) {
     return plant.create(controller);
   }
 }

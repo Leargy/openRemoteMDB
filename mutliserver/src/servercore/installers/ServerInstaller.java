@@ -33,32 +33,32 @@ public class ServerInstaller {
         }
 
         // 3 stage: configure server channel
-        ServerSocketChannel configuredServerChannel = null;
-        try {
-            configuredServerChannel = configureServerChannel(bindedServerChannel);
-        } catch (IOException ioException) {
-            System.err.println("Failed configuring server channel");
-            System.exit(ioException.hashCode());
-        }
+//        ServerSocketChannel configuredServerChannel = null;
+//        try {
+//            configuredServerChannel = configureServerChannel(bindedServerChannel);
+//        } catch (IOException ioException) {
+//            System.err.println("Failed configuring server channel");
+//            System.exit(ioException.hashCode());
+//        }
 
         // 4 stage: open the selector
-        Selector openedSelector = null;
-        try {
-            openedSelector = openServerSelector();
-        } catch (IOException ioException) {
-            System.err.println("Failed opening server selector");
-            System.exit(ioException.hashCode());
-        }
+//        Selector openedSelector = null;
+//        try {
+//            openedSelector = openServerSelector();
+//        } catch (IOException ioException) {
+//            System.err.println("Failed opening server selector");
+//            System.exit(ioException.hashCode());
+//        }
 
         // 5 stage: register configured server channel to selector
-        try {
-            registerServer2Selector(configuredServerChannel, openedSelector);
-        } catch (ClosedChannelException closedChannelException) {
-            System.err.println("Sorry, but server channel has already closed");
-            System.exit(closedChannelException.hashCode());
-        }
+//        try {
+//            registerServer2Selector(configuredServerChannel, openedSelector);
+//        } catch (ClosedChannelException closedChannelException) {
+//            System.err.println("Sorry, but server channel has already closed");
+//            System.exit(closedChannelException.hashCode());
+//        }
         // 6 stage: returning new parameters
-        return new ConfiguredServerParameters(params, openedSelector, configuredServerChannel);
+        return new ConfiguredServerParameters(params, bindedServerChannel);
     }
 
     protected final ServerSocketChannel openServerChannel() throws IOException {
@@ -75,11 +75,11 @@ public class ServerInstaller {
         return (ServerSocketChannel) bindedChannel.configureBlocking(false);
     }
 
-    protected final Selector openServerSelector() throws IOException {
-        try (Selector serverSelector = Selector.open()) {
-            return Selector.open();
-        }
-    }
+//    protected final Selector openServerSelector() throws IOException {
+//        try (Selector serverSelector = Selector.open()) {
+//            return Selector.open();
+//        }
+//    }
 
     protected final void registerServer2Selector(ServerSocketChannel configuredServerChannel, Selector selector) throws ClosedChannelException {
         configuredServerChannel.register(selector, SelectionKey.OP_ACCEPT);

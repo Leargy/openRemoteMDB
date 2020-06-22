@@ -79,12 +79,12 @@ public class Mediator implements Mediating {
         if (component == client && parcel.getMarker() == Markers.WRITE) servant.order(parcel);
         if (component == client && parcel.getMarker() == Markers.READ) receiver.receive(parcel);
         if (component == receiver && parcel.getMarker() == Markers.INTERRUPTED) {
-            dispatcher.confirm(false);
 //            System.out.println(Thread.currentThread().getName() + " from receiver");
-            client.killSocket();
-            ((Servant)servant).setIsIncoming(true);
 //            servant.setIsReplying(false);
+            ((Servant)servant).setIsIncoming(true);
+            client.killSocket();
             servant.resetConnection(true);
+            dispatcher.confirm(false);
         }
         if (component == receiver && parcel.getMarker() == Markers.WRITE) {
             ((Servant)servant).setIsIncoming(true);

@@ -1,8 +1,6 @@
 package parsing;
 
 import communication.Report;
-import communication.wrappers.AlertBag;
-import instructions.concrete.ConDecree;
 import instructions.concrete.ConcreteDecree;
 import instructions.concrete.base.Save;
 import instructions.concrete.extended.ExecuteScript;

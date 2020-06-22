@@ -1,30 +1,31 @@
 package parameters.entities;
 
+import java.util.Random;
 import java.util.UUID;
 
 public final class UsersParameters {
-//    private final UUID USER_ID;
+    private final Integer ID;
     private final String LOGIN;
     private final String PASSWORD;
 //    private final String ENVIRONMENT_VARIABLE_NAME;
 
     public UsersParameters(String login, String password) {
         this(new String[]{login, password});
+
     }
 
     public UsersParameters(String[] params) {
         LOGIN = params[0];
         PASSWORD = params[1];
 //        ENVIRONMENT_VARIABLE_NAME = params[2];
-//        USER_ID = UUID.fromString(
-//                buildHexLineFromParameters(LOGIN, PASSWORD));
+       ID = Math.abs(PASSWORD.hashCode())/2;
     }
 
-    public UsersParameters(String login, String password, String environmentVariableName, UUID id) {
+    public UsersParameters(String login, String password, Integer id) {
         LOGIN = login;
         PASSWORD = password;
 //        ENVIRONMENT_VARIABLE_NAME = environmentVariableName;
-//        USER_ID = id;
+        this.ID = id;
     }
 
     private String buildHexLineFromParameters(String login, String pass) {
@@ -43,5 +44,5 @@ public final class UsersParameters {
 
 //    public String getEnvironmentVariableName() { return ENVIRONMENT_VARIABLE_NAME; }
 
-//    public UUID getID() { return USER_ID; }
+    public Integer getID() { return ID; }
 }

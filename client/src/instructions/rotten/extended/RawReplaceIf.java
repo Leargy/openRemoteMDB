@@ -23,14 +23,6 @@ public abstract class RawReplaceIf extends RawCommitter implements IClued, IJunk
         KEY = key;
     }
 
-    /**
-     * Возвращает объект, содержащий данные об объекте коллекции.
-     * @return Organization
-     */
-    @Override
-    public final Organization Params() {
-        return ORGANIZATION;
-    }
 
     /**
      * Возвращает "ключ" объекта.

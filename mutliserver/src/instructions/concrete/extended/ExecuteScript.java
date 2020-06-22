@@ -1,8 +1,8 @@
 package instructions.concrete.extended;
 
 import communication.Report;
-import instructions.concrete.ConDecree;
-import parsing.customer.Receiver;
+import instructions.concrete.ConcreteDecree;
+import patterns.command.Receiver;
 
 import java.util.ArrayList;
 
@@ -10,15 +10,15 @@ import java.util.ArrayList;
  * Команда исполнения скрипта из
  * каталога scripts
  */
-public final class ExecuteScript extends ConDecree {
+public final class ExecuteScript extends ConcreteDecree {
   private final ArrayList<String> scriptString;
   /**
    * Конструктор, устанавливающий ссылку на
    * управленца коллекцией
    * @param sieve текущий управленец коллекцией
    */
-  public ExecuteScript(Receiver sieve, ArrayList<String> scriptString) {
-    super(sieve);
+  public ExecuteScript(Receiver receiver,ArrayList<String> scriptString) {
+    super(receiver);
     this.scriptString = scriptString;
   }
 

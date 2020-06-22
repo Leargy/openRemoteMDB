@@ -22,7 +22,6 @@ import uplink_bags.TransportableBag;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  * @see Component
- * @see Resolver
  * @see Factory
  */
 public final class InstructionBuilder implements Component {

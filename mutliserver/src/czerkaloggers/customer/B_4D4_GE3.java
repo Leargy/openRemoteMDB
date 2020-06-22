@@ -1,17 +1,11 @@
 package czerkaloggers.customer;
 
-import communication.Mediator;
-import communication.Report;
-import communication.wrappers.AlertBag;
 import czerkaloggers.HawkPDroid;
 import czerkaloggers.RadioLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import parsing.Resolver;
 import patterns.mediator.Component;
 import patterns.mediator.Controllers;
-
-import java.nio.channels.SocketChannel;
 
 /**
  * Вот, самое сложное похоже это придумать название всему,
@@ -23,7 +17,7 @@ import java.nio.channels.SocketChannel;
  * @see HawkPDroid
  * @see RadioLogger
  */
-public final class B_4D4_GE3 extends HawkPDroid<Resolver> implements Component {
+public final class B_4D4_GE3 extends HawkPDroid<Controllers> implements Component {
 
   private static final Logger log = LoggerFactory.getLogger(B_4D4_GE3.class);
 
@@ -33,7 +27,7 @@ public final class B_4D4_GE3 extends HawkPDroid<Resolver> implements Component {
    * отправителя логов
    * @param controller отправитель логов
    */
-  public B_4D4_GE3(Mediator controller) { super((Resolver) controller); }
+  public B_4D4_GE3(Controllers controller) { super(controller); }
 
   /**
    * Помимо логгирования, еще и

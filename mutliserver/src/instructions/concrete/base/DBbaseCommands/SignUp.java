@@ -44,10 +44,12 @@ public class SignUp extends ConcreteDecree{
             dbReport = USER_TABLE_INTERACTOR.addNewUser(new UsersParameters(new String[] {userLogin,userPassword}));
         }catch (SQLException ex) {
             /*If DB method throws exception then only send the report of failure*/
-            return new Report(10, "Failed to add new account to Data Base!\n" + dbReport);
+            return new Report(10, "Failed to add new account to Data Base!\n");
         }
-        AUTHENTICATION_TASK.addAuthorizedUser(userSocketChannel,new User(new UsersParameters(new String[]{userLogin, userPassword})));
-        return new Report(0,"New account was registered.");
+        Report report = new Report(0,"New account was registered.");
+        report.setIsConfirmed(true);
+//        AUTHENTICATION_TASK.addAuthorizedUser(userSocketChannel,new User(new UsersParameters(new String[]{userLogin, userPassword})));
+        return report;
     }
 
     public void setTempUserParametrs(String login, String passWord, SocketChannel socketChannel) {

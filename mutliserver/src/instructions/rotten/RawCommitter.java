@@ -1,9 +1,7 @@
 package instructions.rotten;
 
 
-import entities.Junker;
 import entities.Organization;
-import instructions.Command;
 
 import java.io.Serializable;
 

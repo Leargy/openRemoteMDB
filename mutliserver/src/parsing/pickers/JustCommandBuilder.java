@@ -4,7 +4,6 @@ import base_modules.processors.processing_tasks.AuthenticationTask;
 import entities.User;
 import extension_modules.dbinteraction.TablesInteractor;
 import extension_modules.dbinteraction.UsersTableInteractor;
-import instructions.concrete.ConDecree;
 import instructions.concrete.ConcreteDecree;
 import instructions.concrete.base.*;
 import instructions.concrete.base.DBbaseCommands.DBClear;
@@ -67,7 +66,7 @@ public final class JustCommandBuilder {
       else if (c instanceof RawNotAuthorizedHelp) return new NotAuthorizedHelp(receiver);
       else if (c instanceof RawClear) return new DBClear(receiver,organizationTablesInteractor,user);
       else if (c instanceof RawInfo) return new Info(receiver);
-      else if (c instanceof RawSave) return new Save(receiver);
+//      else if (c instanceof RawSave) return new Save(receiver);
       else if (c instanceof RawShow) return new Show(receiver);
       else if (c instanceof RawMaxByDate) return new MaxByDate(receiver);
       else if (c instanceof RawSumOfAnnualTurnover) return new SumOfAnnualTurnover(receiver); //TODO: поработать над командами

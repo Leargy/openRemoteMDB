@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
 public class ServerParameters implements Parameters {
     protected static final String CORRECT_IP_PATTERN = "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
     protected static final int DEFAULT_PORT = 0xdead;
-    protected static final int MIN_FREE_PORT = 48654;
+    protected static final int MIN_FREE_PORT = 2400;
     protected static String defaultIPAddress;
     static {
         try {
@@ -31,7 +31,7 @@ public class ServerParameters implements Parameters {
     }
 
     public static boolean checkIPv4Address(String address) {
-        return (address != null && !address.isEmpty() && !address.matches(CORRECT_IP_PATTERN));
+        return (address != null && !address.isEmpty() && address.matches(CORRECT_IP_PATTERN));
     }
 
     public static boolean checkFreePort(int port) {

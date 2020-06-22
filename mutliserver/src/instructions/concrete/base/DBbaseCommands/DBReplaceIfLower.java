@@ -26,7 +26,7 @@ public class DBReplaceIfLower extends ReplaceIfLower {
         try {
             dbReport = ORGANIZATION_TABLE_INTERACTOR.replaceUserOrganizationIfLower(TEMP_USER, super.KEY, super.EMBEDDED);
         } catch (SQLException ex) {
-            return new Report(12, "Failed to replace organization!\n" + dbReport);
+            return new Report(12, "Failed to replace organization!\n");
         }
         return super.execute();
     }

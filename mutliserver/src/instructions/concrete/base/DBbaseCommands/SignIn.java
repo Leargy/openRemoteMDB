@@ -39,13 +39,13 @@ public class SignIn extends ConcreteDecree {
     @Override
     public Report execute() {
         try {
-            USER_TABLE_INTERACTOR.selectUserFromParameters(new UsersParameters(new String[] {userLogin,userPassword}));
-        }catch (SQLException ex) {
-            /*If DB method throws exception then only send the report of failure*/
-            Report report = new Report(10, "\"Login\" or \"Password\" is incorrect!");
-            report.setIsConfirmed(false);
-            return report;
-        }
+            if (USER_TABLE_INTERACTOR.selectUserFromParameters(new UsersParameters(new String[]{userLogin, userPassword})) == null) {
+                /*If DB method throws exception then only send the report of failure*/
+                Report report = new Report(10, "\"Login\" or \"Password\" is incorrect!");
+                report.setIsConfirmed(false);
+                return report;
+            }
+        }catch (SQLException ex) {/*NOPE*/}
         AUTHENTICATION_TASK.addAuthorizedUser(userSocketChannel,new User(new UsersParameters(new String[]{userLogin, userPassword})));
         Report report = new Report(0,"You successfully entered under " + "\"" + userLogin + "\".");
         report.setIsConfirmed(true);

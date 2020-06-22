@@ -4,7 +4,7 @@ import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
 
 import javax.xml.bind.annotation.*;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 /**
  * Основной класс, выполняющий роль элемента коллекции
@@ -35,7 +35,7 @@ public class Organization implements Mappable<Integer> {
   public Coordinates getCoordinates() { return coordinates; }
   @XmlTransient
   @NotNull
-  private final ZonedDateTime creationDate = ZonedDateTime.now();
+  private final LocalDateTime creationDate = LocalDateTime.now();
 
   /**
    * Геттер для получения даты создания элемента,
@@ -43,7 +43,7 @@ public class Organization implements Mappable<Integer> {
    * (переопределен из интерфейса Mappable)
    * @return дата создания организации
    */
-  public ZonedDateTime getCreationDate() { return creationDate; }
+  public LocalDateTime getCreationDate() { return creationDate; }
 
   @XmlAttribute(name = "annual-turnover")
   private final float annualTurnover;

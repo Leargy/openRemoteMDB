@@ -42,7 +42,7 @@ public class InstallServerTask implements Callable<Server> {
                 resultAddress = newIP;
                 break;
             }
-        } while (attemptNumber-- <= 0);
+        } while (attemptNumber-- != 0);
         return resultAddress;
     }
 
@@ -60,7 +60,7 @@ public class InstallServerTask implements Callable<Server> {
             } catch (NumberFormatException numberFormatException) {
                 System.out.println("Incorrect port number, try again: remaining input attempts " + attemptNumber);
             }
-        } while (attemptNumber-- <= 0);
+        } while (attemptNumber-- != 0);
         return resultServerPort;
     }
 }

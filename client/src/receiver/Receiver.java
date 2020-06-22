@@ -61,7 +61,7 @@ public class Receiver extends AReceiver{
             parcel.setMarker(Markers.INTERRUPTED);
             mediator.notify(this, parcel);
         }catch (ClassNotFoundException ex) {
-            System.out.println(ex.getException());
+//            System.out.println(ex.getException());
             //TODO:write an handling to this type of error
         }
         finally {

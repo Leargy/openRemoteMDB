@@ -39,7 +39,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="server" />
     <orderEntry type="module-library">
       <library name="com.jcraft:jsch:0.1.55" type="repository">
         <properties maven-id="com.jcraft:jsch:0.1.55" />
@@ -61,5 +60,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="junit:junit:4.13" level="project" />
   </component>
 </module>

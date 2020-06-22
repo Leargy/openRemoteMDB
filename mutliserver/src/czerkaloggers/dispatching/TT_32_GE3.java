@@ -1,11 +1,11 @@
 package czerkaloggers.dispatching;
 
-import communication.Component;
-import communication.Mediator;
+import base_modules.dispatchers.DispatchController;
 import czerkaloggers.HawkPDroid;
-import dispatching.Dispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import patterns.mediator.Component;
+import patterns.mediator.Controllers;
 
 /**
  * Сущность, логирующая сообщения,
@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  */
-public final class TT_32_GE3 extends HawkPDroid<Dispatcher> implements Component {
+public final class TT_32_GE3 extends HawkPDroid<DispatchController> implements Component {
 
   private static final Logger log = LoggerFactory.getLogger(TT_32_GE3.class);
 
@@ -23,7 +23,7 @@ public final class TT_32_GE3 extends HawkPDroid<Dispatcher> implements Component
    * логов
    * @param controller отправитель логов
    */
-  public TT_32_GE3(Mediator controller) { super((Dispatcher) controller); }
+  public TT_32_GE3(Controllers controller) { super((DispatchController) controller); }
 
 
   /**

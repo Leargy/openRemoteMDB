@@ -18,9 +18,10 @@ public class UsersTableInteractor implements TablesInteractor {
     
     public Report addNewUser(UsersParameters params) throws SQLException{
         LOG.info("Adding new user to table");
-        if (selectUserFromParameters(params) == null) {
-            LOG.info("There are no users with such parameters");
-            return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
+        if (selectUserFromParameters(params) != null) {
+            LOG.info("There are users with such parameters");
+            throw new SQLException();
+//            return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
         }
         final String INSERTION_USER_QUERY = "INSERT INTO "
                 + DB_TABLE_NAME + " VALUES "
@@ -28,7 +29,8 @@ public class UsersTableInteractor implements TablesInteractor {
                 + ";";
         LOG.info("Query prepared");
         LOG.info("Connecting to database...");
-        Report connectionResults = DataBaseConnector
+        Report connectionResults = new Report(0,"");
+                DataBaseConnector
                 .getInstance()
                 .connect2DBUsingProperties("database.properties");
         if (connectionResults.isSuccessful()) {
@@ -41,21 +43,25 @@ public class UsersTableInteractor implements TablesInteractor {
                 insert.executeUpdate(INSERTION_USER_QUERY);
                 LOG.info("Add execution success");
             } catch (SQLException sqlException) {
+                System.out.println(sqlException.getSQLState());
                 LOG.error("Errors happened while executing query");
-                return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
+                throw new SQLException();
+//                return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
             }
             return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
         } else {
             LOG.info("Unsuccessful connection");
-            return connectionResults;
+            throw new SQLException();
+//            return connectionResults;
         }
     }
     
     public Report removeExistingUser(UsersParameters params) throws SQLException {
         LOG.info("Removing user from clients");
-        if (selectUserFromParameters(params) == null) {
+        if (selectUserFromParameters(params) != null) {
             LOG.info("Not exists any user with that parameters");
-            return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
+            throw new SQLException();
+//            return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
         }
         final String REMOVING_USER_QUERY = "DELETE FROM "
                 + DB_TABLE_NAME + " WHERE login = "
@@ -80,12 +86,14 @@ public class UsersTableInteractor implements TablesInteractor {
                 LOG.info("Remove execution success");
             } catch (SQLException sqlException) {
                 LOG.error("Errors happened while executing query");
-                return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
+                throw new SQLException();
+//                return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
             }
             return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
         } else {
             LOG.info("Unsuccessful connection");
-            return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
+            throw new SQLException();
+//            return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
         }
     }
 
@@ -106,40 +114,45 @@ public class UsersTableInteractor implements TablesInteractor {
                 select = DataBaseConnector.getInstance()
                         .retrieveCurrentConnection().createStatement();
                 ResultSet results = select.executeQuery(SELECT_USER_QUERY);
-                boolean isOutOfBounds = results.first();
-                if (isOutOfBounds) {
+                results.next();
+                boolean isOutOfBounds = results.getRow() == 0;
+                if (!isOutOfBounds) {
+//                    System.out.println("mew");
                     String login = results.getString("login");
                     String password = results.getString("password");
-                    String environment = results.getString("envi↑ronment");
-                    UUID id = UUID.fromString(results.getString("id"));
-                    return new UsersParameters(login, password, environment, id);
+                    Integer id = Integer.valueOf(results.getString("id"));
+                    return new UsersParameters(login, password, id);
                 } else {
                     LOG.info("Not found any users with such parameters");
+//                    throw new SQLException();
                     return null;
                 }
             } catch (SQLException sqlException) {
                 LOG.info("Errors happened while executing query");
+//                throw new SQLException();
                 return null;
             }
         } else {
             LOG.info("Unsuccessful connection");
+//            throw new SQLException();
             return null;
         }
+//        return null;
     }
 
 
     protected String prepareInsertionParameters(UsersParameters params) {
         return "("
                 + String.join(
-                        ", ",
+                ", ",
+                params.getID().toString(),
                 prepareStringParameter(params.getLogin()),
                 prepareStringParameter(params.getPassword())
-//                prepareStringParameter(params.getEnvironmentVariableName())
                 )
                 + ")";
     }
 
     protected String prepareStringParameter(String parameter) {
-        return "\'" + parameter + "\'";
+        return "'" + parameter + "'";
     }
 }

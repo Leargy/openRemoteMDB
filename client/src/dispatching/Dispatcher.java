@@ -109,9 +109,13 @@ public class Dispatcher extends ADispatcher {
                 mediator.notify(this, new Segment(Markers.BADINPUTCONDITION));
                 return;
             }
+            if (tempCommand == null) {
+                System.err.println("You haven't authorised yet.");
+                mediator.notify(this, new Segment(Markers.BADINPUTCONDITION));
+                return;
+            }
             parcel.setCommandData(tempCommand);
         }
-        System.out.println(parcel.getCommandData().toString());
         send(parcel);
     }
 
@@ -132,8 +136,10 @@ public class Dispatcher extends ADispatcher {
                 parcel.setLogin(((RawSignOut)parcel.getCommandData()).getLogin());
                 parcel.setPassWord(((RawSignOut)parcel.getCommandData()).getPassword());
             }
-            parcel.setLogin(passCheck.getLogin());
-            parcel.setPassWord(passCheck.getPassword());
+            else {
+                parcel.setLogin(passCheck.getLogin());
+                parcel.setPassWord(passCheck.getPassword());
+            }
             try {
                 objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
                 objectOutputStream.writeObject(parcel.prepareDataObject());

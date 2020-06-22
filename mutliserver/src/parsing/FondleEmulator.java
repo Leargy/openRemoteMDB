@@ -3,13 +3,11 @@ package parsing;
 import instructions.concrete.ConcreteDecree;
 import instructions.concrete.base.Exit;
 import instructions.concrete.base.Save;
-import parsing.Resolver;
 import patterns.mediator.Component;
 import patterns.mediator.Controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Абстракция Invoker'a пригодного

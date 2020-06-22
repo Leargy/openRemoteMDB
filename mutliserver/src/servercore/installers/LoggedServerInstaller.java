@@ -49,15 +49,15 @@ public final class LoggedServerInstaller extends ServerInstaller {
 //        }
 
         // 4 stage: open the selector
-        logger.info("Trying open server selector");
-        Selector openedSelector = null;
-        try {
-            openedSelector = openServerSelector();
-            logger.info("The server selector opened");
-        } catch (IOException ioException) {
-            logger.error("Failed opening server selector");
-            System.exit(ioException.hashCode());
-        }
+//        logger.info("Trying open server selector");
+//        Selector openedSelector = null;
+//        try {
+//            openedSelector = openServerSelector();
+//            logger.info("The server selector opened");
+//        } catch (IOException ioException) {
+//            logger.error("Failed opening server selector");
+//            System.exit(ioException.hashCode());
+//        }
 
         // 5 stage: register configured server channel to selector
 //        logger.info("Trying register server channel to opened selector");
@@ -69,7 +69,7 @@ public final class LoggedServerInstaller extends ServerInstaller {
 //            System.exit(closedChannelException.hashCode());
 //        }
         // 6 stage: returning new parameters
-        return new ConfiguredServerParameters(params, openedSelector ,bindedServerChannel);
+        return new ConfiguredServerParameters(params, bindedServerChannel);
 //        return new ConfiguredServerParameters(params, openedSelector, configuredServerChannel);
     }
 }

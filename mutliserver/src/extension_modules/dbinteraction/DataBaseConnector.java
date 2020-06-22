@@ -23,7 +23,7 @@ public final class DataBaseConnector {
     private final Logger LOG = LoggerFactory.getLogger(DataBaseConnector.class);
     private volatile Connection CURRENT_CONNECTION = null;
     private static volatile DataBaseConnector instance;
-    private volatile int LOCAL_PORT = 0xdead;
+    private volatile int LOCAL_PORT = 5000;
 
     public static DataBaseConnector getInstance() {
         if (instance == null)
@@ -58,7 +58,7 @@ public final class DataBaseConnector {
         Path userDir = Paths.get(System.getProperty("user.dir"));
         Path propertiesWay = userDir.resolve(filename);
         Properties props = new Properties();
-        props.put("StrictHostKeyChecking", "no");
+//        props.put("StrictHostKeyChecking", "no");
         LOG.info("Trying get properties from file " + filename);
         try (InputStream in = Files.newInputStream(propertiesWay)) {
             props.load(in);
@@ -83,13 +83,16 @@ public final class DataBaseConnector {
         LOG.info("Trying installing ssh connection");
         JSch jsch = new JSch();
         Session currentSession = null;
+        Properties config = new Properties();
+        config.put("StrictHostKeyChecking", "no");
         try {
-            currentSession = jsch.getSession(username, "se.ifmo.ru", 2222);
-            currentSession.setPassword(password);
-            currentSession.setConfig(props);
+            currentSession = jsch.getSession("s284733", "se.ifmo.ru", 2222);
+            currentSession.setPassword("nsh845");
+            currentSession.setConfig(config);
             currentSession.connect();
-            int assigned_port = currentSession.setPortForwardingL(LOCAL_PORT, "pg", 5432);
-        } catch (JSchException e) {
+            currentSession.setPortForwardingL(5000, "pg", 5432);
+        } catch (JSchException ex) {
+            System.out.println(ex.getCause().getMessage());
             LOG.error("Unable to create secure session");
             return null;
         }
@@ -97,8 +100,9 @@ public final class DataBaseConnector {
         Connection currentConnection = null;
         LOG.info("Trying connection to database");
         try {
-            currentConnection = DriverManager.getConnection(url + ":" + LOCAL_PORT + "/studs", username, password);
+            currentConnection = DriverManager.getConnection("jdbc:postgresql://localhost" + ":" + 5000 + "/studs", "s284733", "nsh845");
         } catch (SQLException sqlException) {
+            System.out.println(sqlException.getCause().getMessage());
             LOG.error("Happened errors while get connection to database");
             return currentConnection;
         }
@@ -107,6 +111,8 @@ public final class DataBaseConnector {
     }
 
     public Report connect2DBUsingProperties(String filename) {
+        if (CURRENT_CONNECTION != null)
+            return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
         Connection connection = getConnectionUsingFProperties(filename);
         if (connection == null)
             return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod() + " connection isn't set");

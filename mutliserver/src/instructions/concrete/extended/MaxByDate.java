@@ -2,8 +2,6 @@ package instructions.concrete.extended;
 
 import entities.Organization;
 import entities.OrganizationWithUId;
-import instructions.Command;
-import instructions.concrete.ConDecree;
 import patterns.command.Receiver;
 
 import java.time.LocalDateTime;

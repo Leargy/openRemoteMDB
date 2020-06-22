@@ -1,6 +1,7 @@
 package czerkaloggers;
 
-import communication.Mediator;
+
+import patterns.mediator.Controllers;
 
 /**
  * Фабрика дроидов? Нет, ****
@@ -14,5 +15,5 @@ public interface DroidFactory {
    * @param controller отправитель логгеров
    * @return экземпляр логгера
    */
-  HawkPDroid<? extends Mediator> create(Mediator controller);
+  HawkPDroid<? extends Controllers> create(Controllers controller);
 }

@@ -97,10 +97,10 @@ public class Client extends AClient implements Component, Runnable {
      */
     public synchronized void killSocket() {
         try {
-            socketChannel.close();
-//            System.out.println(socketChannel.socket());
-        } catch (IOException e) {
-            new IOException("Something went wrong during closing \"socket channel\"", e);
+            socketChannel.socket().close();
+            System.out.println(socketChannel.socket());
+        } catch (IOException ex) {
+            new IOException("Something went wrong during closing \"socket channel\"", ex);
         }
         //TODO:подумать над правильной обработкой остановки сервера.(TIME_OUT)
     }

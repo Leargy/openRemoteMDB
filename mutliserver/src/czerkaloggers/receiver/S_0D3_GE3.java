@@ -1,11 +1,10 @@
 package czerkaloggers.receiver;
 
-import communication.Component;
-import communication.Mediator;
 import czerkaloggers.HawkPDroid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import receiver.Receptionist;
+import patterns.mediator.Component;
+import patterns.mediator.Controllers;
 
 /**
  * Угадайте: что за класс.
@@ -14,7 +13,7 @@ import receiver.Receptionist;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  */
-public final class S_0D3_GE3 extends HawkPDroid<Receptionist> implements Component {
+public final class S_0D3_GE3 extends HawkPDroid<Controllers> implements Component {
 
   private static final Logger log = LoggerFactory.getLogger(S_0D3_GE3.class);
   // builders
@@ -24,7 +23,7 @@ public final class S_0D3_GE3 extends HawkPDroid<Receptionist> implements Compone
    * отправителя логов
    * @param controller отправитель логов
    */
-  public S_0D3_GE3(Mediator controller) { super((Receptionist) controller); }
+  public S_0D3_GE3(Controllers controller) { super(controller); }
   /**
    * Помимо логгирования, еще и составляет протокол действий.
    * @param errorCode код ошибки

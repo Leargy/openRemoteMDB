@@ -8,7 +8,6 @@ import instructions.concrete.extended.*;
 import parsing.customer.bootstrapper.NakedCrateLoader;
 import parsing.customer.distro.ShedBlock;
 import parsing.customer.local.TotalCommander;
-import systemcore.ServerController;
 
 import static org.junit.Assert.*;
 

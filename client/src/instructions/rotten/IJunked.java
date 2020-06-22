@@ -10,5 +10,4 @@ import entities.Organization;
  * @param <D>
  */
 public interface IJunked {
-    Organization Params();
 }

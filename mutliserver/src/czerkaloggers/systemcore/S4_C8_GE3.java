@@ -1,11 +1,12 @@
 package czerkaloggers.systemcore;
 
-import communication.Component;
-import communication.Mediator;
+
 import czerkaloggers.HawkPDroid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import systemcore.ServerController;
+import patterns.mediator.Component;
+import patterns.mediator.Controllers;
+import servercore.ServerController;
 
 /**
  *
@@ -14,7 +15,7 @@ public final class S4_C8_GE3 extends HawkPDroid<ServerController> implements Com
 
   private static final Logger log = LoggerFactory.getLogger(S4_C8_GE3.class);
 
-  public S4_C8_GE3(Mediator controller) {
+  public S4_C8_GE3(Controllers controller) {
     super((ServerController) controller);
   }
 

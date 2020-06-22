@@ -1,13 +1,11 @@
 package czerkaloggers.perusal;
 
-import communication.Component;
-import communication.Mediator;
 import communication.Report;
-import communication.wrappers.AlertBag;
 import czerkaloggers.HawkPDroid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import perusal.QueryReader;
+import patterns.mediator.Component;
+import patterns.mediator.Controllers;
 
 import java.nio.channels.SocketChannel;
 
@@ -18,7 +16,7 @@ import java.nio.channels.SocketChannel;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  */
-public final class C9_T9_GE3 extends HawkPDroid<QueryReader> implements Component {
+public final class C9_T9_GE3 extends HawkPDroid<Controllers> implements Component {
 
   private static final Logger log = LoggerFactory.getLogger(C9_T9_GE3.class);
 
@@ -27,7 +25,7 @@ public final class C9_T9_GE3 extends HawkPDroid<QueryReader> implements Componen
    * отправителя сообщений для логирования
    * @param controller отправитель логов
    */
-  public C9_T9_GE3(Mediator controller) { super((QueryReader) controller); }
+  public C9_T9_GE3(Controllers controller) { super(controller); }
 
   /**
    * Помимо логгирования, еще и составляет протокол действий.
@@ -35,11 +33,11 @@ public final class C9_T9_GE3 extends HawkPDroid<QueryReader> implements Componen
    * @param message   отправляемое сообщение
    */
   @Override
-  public void notify(Integer errorCode, String message) {
+  public void notify(Integer errorCode, String message) {//TODO: написать реализацию
     logboard(errorCode, message);
-    SocketChannel client = MAGIV.ClientChannel();
-    AlertBag alert = new AlertBag(client, new Report(errorCode, message));
-    MAGIV.notify(this, alert);
+//    SocketChannel client = MAGIV.ClientChannel();
+//    AlertBag alert = new AlertBag(client, new Report(errorCode, message));
+//    MAGIV.notify(this, alert);
   }
   /**
    * Выполняет логгирование всех действий

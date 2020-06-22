@@ -37,7 +37,10 @@ public class OrganizationsTableInteractor implements TablesInteractor {
                 .prepareStatement("DELETE FROM " + DB_TABLE_NAME + " WHERE user_login LIKE ?;");
         clearing.setString(1, user.getLogin());
         int result = clearing.executeUpdate();
-        return (length == result)? ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod()) : ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
+        if (length == result){
+            return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
+        }else throw new SQLException();
+//        return (length == result)? ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod()) : ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
     }
     public Report insertUserOrganization(Integer key, OrganizationWithUId organizationWithUId) throws SQLException {
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
@@ -60,7 +63,8 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         int result = insertion.executeUpdate();
         if (result == 1)
             return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
-        else return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
+        else throw new SQLException();
+//        return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 
     public Report removeUserOrganizationByKey(User user, Integer key) throws SQLException {
@@ -70,7 +74,8 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         removing.setInt(2, key);
         int result = removing.executeUpdate();
         if (result != 1)
-            return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
+            throw new SQLException();
+            //            return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
         else return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 
@@ -95,8 +100,11 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         replacing.setString(13, organizationWithUId.getUserLogin());
         replacing.setString(14, organizationWithUId.getName());
         int replaced = replacing.executeUpdate();
-        return (replaced == length)? ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod())
-                : ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
+        if (replaced == length) {
+            return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
+        }else throw new SQLException();
+//        return (replaced == length)? ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod())
+//                : ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 
     public Report replaceUserOrganizationIfGreater(User user, Integer key, OrganizationWithUId organizationWithUId) throws SQLException{
@@ -120,8 +128,11 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         replacing.setString(13, organizationWithUId.getUserLogin());
         replacing.setString(14, organizationWithUId.getName());
         int replaced = replacing.executeUpdate();
-        return (replaced == length)? ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod())
-                : ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
+        if(replaced == length){
+            return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
+        }else throw new SQLException();
+//        return (replaced == length)? ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod())
+//                : ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 
     public Report removeLowerUserOrganization(User user, OrganizationWithUId organizationWithUId) throws SQLException {
@@ -131,8 +142,11 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         removing.setString(1, user.getLogin());
         removing.setString(2, organizationWithUId.getName());
         int removed = removing.executeUpdate();
-        return (removed == length)? ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod())
-                : ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
+        if (removed == length) {
+            return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
+        }else throw new SQLException();
+//        return (removed == length)? ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod())
+//                : ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
 
     }
 
