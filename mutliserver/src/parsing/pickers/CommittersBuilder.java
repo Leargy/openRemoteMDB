@@ -46,8 +46,9 @@ public final class CommittersBuilder {
           else if (c instanceof RawRemoveLower)
               return new DBRemoveLower(r, organizationWithUId, organizationsTableInteractor, user);
 //          return new RemoveLower(r, organizationWithUId);
-          else if (c instanceof RawRemoveLower)
-              return new DBRemoveLower(r,organizationWithUId,organizationsTableInteractor,user);
+      }
+      else if (c instanceof RawRemoveLower) {
+          return new DBRemoveLower(r,organizationWithUId,organizationsTableInteractor,user);
       }
       return new Help(r);
   }

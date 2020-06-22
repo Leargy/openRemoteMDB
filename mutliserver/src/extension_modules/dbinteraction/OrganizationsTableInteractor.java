@@ -46,8 +46,8 @@ public class OrganizationsTableInteractor implements TablesInteractor {
     public Report insertUserOrganization(Integer key, OrganizationWithUId organizationWithUId) throws SQLException {
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         PreparedStatement insertion = currentConnection
-                .prepareStatement("INSERT INTO " + DB_TABLE_NAME
-                        + " VALUES (nextval('Organizations_Id_Cycle'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                .prepareStatement("INSERT INTO " + DB_TABLE_NAME + "(name, fullname, type, employeescount, annualturnover, creationdate, coordinates_x, coordinates_y, zipcode, location_x, location_y, location_z, user_login)"
+                        + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
         insertion.setString(1, organizationWithUId.getName());
         insertion.setString(2, organizationWithUId.getFullname());
         insertion.setString(3, organizationWithUId.getType().name());
@@ -77,7 +77,12 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         PreparedStatement removing = currentConnection.prepareStatement("DELETE FROM s284733." + DB_TABLE_NAME + " WHERE user_login LIKE ?;");
         removing.setString(1, user.getLogin());
-        int result = removing.executeUpdate();
+        int result = 0;
+        try {
+            result= removing.executeUpdate();
+        }catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
         if (result != 1)
             throw new SQLException();
             //            return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());

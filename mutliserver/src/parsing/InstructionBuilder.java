@@ -57,8 +57,10 @@ public final class InstructionBuilder implements Component {
    */
   public void make(TransportableBag rawDecreeBag, LimboKeeper receiver) {
     RawDecree command = ((RawDecreeBag)rawDecreeBag).UNINVOKABLE_COMMAND;
-    if (command instanceof IJunked)
-    SUB_PROCESS_CONTROLLER.notify(this, new ExecuteBag(((RawDecreeBag) rawDecreeBag).getChannel(), COMMITERS_BUILDER.make((RawCommitter) command, receiver,organizationsTableInteractor,((RawDecreeBag)rawDecreeBag).USER)));
-    else SUB_PROCESS_CONTROLLER.notify(this, new ExecuteBag(((RawDecreeBag) rawDecreeBag).getChannel(), COMMON_COMMAND_BUILDER.make(command, receiver,((RawDecreeBag)rawDecreeBag).getChannel(),organizationsTableInteractor,((RawDecreeBag)rawDecreeBag).USER)));
+    if (command instanceof IJunked) {
+      SUB_PROCESS_CONTROLLER.notify(this, new ExecuteBag(((RawDecreeBag) rawDecreeBag).getChannel(), COMMITERS_BUILDER.make((RawCommitter) command, receiver, organizationsTableInteractor, ((RawDecreeBag) rawDecreeBag).USER)));
+    }else {
+      SUB_PROCESS_CONTROLLER.notify(this, new ExecuteBag(((RawDecreeBag) rawDecreeBag).getChannel(), COMMON_COMMAND_BUILDER.make(command, receiver,((RawDecreeBag)rawDecreeBag).getChannel(),organizationsTableInteractor,((RawDecreeBag)rawDecreeBag).USER)));
+    }
   }
 }

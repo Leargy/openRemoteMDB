@@ -20,4 +20,5 @@ public final class RawRemoveLower extends RawCommitter implements IJunked, Seria
     public RawRemoveLower(Organization organization) {
         super(organization);
     }
+
 }
