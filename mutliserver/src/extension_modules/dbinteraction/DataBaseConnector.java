@@ -83,6 +83,7 @@ public final class DataBaseConnector {
             currentSession.setPassword(password);
             currentSession.setConfig(props);
             currentSession.connect();
+            int assigned_port = currentSession.setPortForwardingL(5432, "pg", 2222);
         } catch (JSchException e) {
             LOG.error("Unable to create secure session");
             return null;
