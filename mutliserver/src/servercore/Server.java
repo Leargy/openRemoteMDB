@@ -1,5 +1,6 @@
 package servercore;
 
+import extension_modules.dbinteraction.DataBaseConnector;
 import parameters.server.ConfiguredServerParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,7 @@ public class Server {
             synchronized (Server.class) {
                 if (instance == null) {
                     instance = new Server(params);
+                    DataBaseConnector.getInstance().setLocalPort(params.getPort());
                 }
             }
         return instance;

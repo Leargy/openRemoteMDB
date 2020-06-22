@@ -23,6 +23,7 @@ public final class DataBaseConnector {
     private final Logger LOG = LoggerFactory.getLogger(DataBaseConnector.class);
     private volatile Connection CURRENT_CONNECTION = null;
     private static volatile DataBaseConnector instance;
+    private volatile int LOCAL_PORT = 0xdead;
 
     public static DataBaseConnector getInstance() {
         if (instance == null)
@@ -31,6 +32,10 @@ public final class DataBaseConnector {
                     instance = new DataBaseConnector();
             }
         return instance;
+    }
+
+    public int setLocalPort(int port) {
+        return LOCAL_PORT = port;
     }
 
     private DataBaseConnector() { }
@@ -83,7 +88,7 @@ public final class DataBaseConnector {
             currentSession.setPassword(password);
             currentSession.setConfig(props);
             currentSession.connect();
-            int assigned_port = currentSession.setPortForwardingL(5432, "pg", 2222);
+            int assigned_port = currentSession.setPortForwardingL(LOCAL_PORT, "pg", 5432);
         } catch (JSchException e) {
             LOG.error("Unable to create secure session");
             return null;
@@ -92,7 +97,7 @@ public final class DataBaseConnector {
         Connection currentConnection = null;
         LOG.info("Trying connection to database");
         try {
-            currentConnection = DriverManager.getConnection(url, username, password);
+            currentConnection = DriverManager.getConnection(url + ":" + LOCAL_PORT + "/studs", username, password);
         } catch (SQLException sqlException) {
             LOG.error("Happened errors while get connection to database");
             return currentConnection;
