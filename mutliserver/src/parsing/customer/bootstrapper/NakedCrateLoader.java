@@ -33,7 +33,7 @@ public final class NakedCrateLoader implements LoaferLoader<OrganizationWithUId>
   private static final String TEST_MODE = "DEBUG"; // маркер для определения подгрузки тестовой коллекции
   private static final String CAL_FOLDER = "storage"; // директория, хранящая все коллекции
   private String birthDay = ZonedDateTime.now().toString(); // дата создания загрузчика коллекции или файла с коллекцией
-  private String environment; // название переменной окружения
+  private String environment = "DBPATH"; // название переменной окружения
   private boolean loaded = false; // признак того, что коллекция уже загружена
   /**
    * Метод подгрузки коллекции из локального хранилища,
@@ -94,7 +94,7 @@ public final class NakedCrateLoader implements LoaferLoader<OrganizationWithUId>
         // хорошее исключение (одно за всех) - и сообщения интересные (нет, чаще это null'ы)
         // TODO: высрать этот null логгеру, пока срем по ГОСТУ
         System.err.println(e.getMessage());
-        System.err.println(e.getStackTrace());
+        e.printStackTrace();
         System.err.println("Произошла критическая ошибка при загрузке с помощью этой\n" +
                 "тупой библиотеки, которая не умеет предотвращать никакие ошибки");
         // здесь уже медицина бессильна, поэтому остается только уйти незаметно
@@ -237,8 +237,13 @@ public final class NakedCrateLoader implements LoaferLoader<OrganizationWithUId>
     }else {
       return false;
     }
-    base = Pattern.compile("</organizations>.*<organizations>");
-    if (base.matcher(stringBuilder).find()){
+    base = Pattern.compile("<organizations>.*</organizations>");
+    if (!base.matcher(stringBuilder).find()){
+      return false;
+    }
+    base = Pattern.compile("user-name=\"\"");
+    if (base.matcher(stringBuilder).find()) {
+      System.err.println("unidentified organization");
       return false;
     }
     String[] dictinary = new String[]{"id=\"\"","name=\"\""};

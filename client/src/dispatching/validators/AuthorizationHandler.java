@@ -1,11 +1,9 @@
 package dispatching.validators;
 
 import communication.Segment;
-import dataSection.CommandList;
-import dataSection.Commands;
-import dataSection.Encrepted;
-import dataSection.Encryptor;
-import dispatching.Dispatcher;
+import data_section.Commands;
+import data_section.Encrepted;
+import data_section.Encryptor;
 import exceptions.CommandSyntaxException;
 import instructions.rotten.RawDecree;
 import instructions.rotten.base.*;

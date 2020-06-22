@@ -1,17 +1,15 @@
 package сlient;
 
 import communication.Report;
-import dataSection.enumSection.Markers;
+import data_section.enumSection.Markers;
 import communication.Mediating;
 import communication.Segment;
 import dispatching.validators.Filters;
 
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**

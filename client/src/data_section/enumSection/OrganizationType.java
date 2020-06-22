@@ -1,4 +1,4 @@
-package dataSection.enumSection;
+package data_section.enumSection;
 
 /**
  * Класс enum хронящий типы организаций.

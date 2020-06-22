@@ -22,10 +22,13 @@ public class HashMax<K, V extends OrganizationWithUId> extends ConcurrentHashMap
      */
     public synchronized LinkedHashMap<Integer, OrganizationWithUId>  sortByNameOfOrganization() {
         ArrayList<OrganizationWithUId> organizationArrayList = new ArrayList<>();
+        HashMap<Integer,Integer> key2keyMap = new HashMap<>();
         LinkedHashMap<Integer, OrganizationWithUId> newOrganizationHashMap = new LinkedHashMap<>();
         Iterator<Entry<Integer, OrganizationWithUId>> iter1 = ((ConcurrentHashMap<Integer,OrganizationWithUId>)this).entrySet().iterator();
         while (iter1.hasNext()) {
-            organizationArrayList.add(iter1.next().getValue());
+            Entry<Integer, OrganizationWithUId> tempEntry = iter1.next();
+            key2keyMap.put(tempEntry.getValue().getKey(),tempEntry.getKey()); //remind keys to organizations in collection
+            organizationArrayList.add(tempEntry.getValue());
         }
 
         organizationArrayList.sort(new Comparator<OrganizationWithUId>() {
@@ -38,7 +41,7 @@ public class HashMax<K, V extends OrganizationWithUId> extends ConcurrentHashMap
         Iterator<OrganizationWithUId> iter2 = organizationArrayList.iterator();
         while (iter2.hasNext()) {
             OrganizationWithUId organization = iter2.next();
-            newOrganizationHashMap.put(organization.getKey(),organization);
+            newOrganizationHashMap.put(key2keyMap.get(organization.getKey()),organization); //setting real collection keys back to organizations
         }
         return newOrganizationHashMap;
     }

@@ -1,26 +1,21 @@
-package dispatching.scriptHandler;
+package dispatching.script_handler;
 
-import communication.Report;
 import communication.Segment;
-import dataSection.enumSection.Markers;
+import data_section.enumSection.Markers;
 import dispatching.Dispatcher;
-import entities.Descriptor;
 import entities.Junker;
 import entities.Organization;
 import entities.organizationFactory.OrganizationBuilder;
-import exceptions.ScriptHandlerException;
 import instructions.rotten.RawDecree;
 import instructions.rotten.base.*;
 import instructions.rotten.extended.*;
 
 
-import java.io.IOException;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.concurrent.ExecutionException;
 
 public class ExecuteScript {
     private String executed = "";
