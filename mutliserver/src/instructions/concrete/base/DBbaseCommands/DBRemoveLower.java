@@ -30,7 +30,7 @@ public class DBRemoveLower extends RemoveLower {
     public Report execute() {
         Report dbReport = null;
         try {
-            dbReport = ORGANIZATION_TABLE_INTERACTOR.removeLoweUserOrganization(TEMP_USER, super.EMBEDDED);
+            dbReport = ORGANIZATION_TABLE_INTERACTOR.removeLowerUserOrganization(TEMP_USER, super.EMBEDDED);
         } catch (SQLException ex) {
             return new Report(12, "Failed to remove lower organization!\n" + dbReport);
         }

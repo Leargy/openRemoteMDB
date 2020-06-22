@@ -31,7 +31,7 @@ public class ServerParameters implements Parameters {
     }
 
     public static boolean checkIPv4Address(String address) {
-        return (address == null || address.isEmpty() || !address.matches(CORRECT_IP_PATTERN))? false : true;
+        return (address != null && !address.isEmpty() && !address.matches(CORRECT_IP_PATTERN));
     }
 
     public static boolean checkFreePort(int port) {

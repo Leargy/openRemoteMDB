@@ -10,30 +10,26 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType (XmlAccessType.FIELD)
 public class OrganizationWithUId implements Mappable<Integer>{
     @XmlElement(name = "organization")
-    private final Organization ORGANIZATION;
+    private Organization ORGANIZATION;
     @XmlAttribute(name = "user-name")
-    private final String userLogin;
+    private String UID;
     private Integer collectionKey;
 
     public OrganizationWithUId() {
-        ORGANIZATION = new Organization();
-        userLogin = "";
+//        ORGANIZATION = new Organization();
+//        UID = "";
     }
     public OrganizationWithUId(Organization organization, String Uid) {
         ORGANIZATION = organization;
-        userLogin = Uid;
+        UID = Uid;
     }
 
-    public String getUserLogin() {
-        return userLogin;
+    public String getUID() {
+        return UID;
     }
 
     public Organization getOrganization() {
         return ORGANIZATION;
-    }
-
-    public float getAnnualTurnover() {
-        return ORGANIZATION.getAnnualTurnOver();
     }
 
     public void setCollectionKey(Integer collectionKey) {
