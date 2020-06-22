@@ -17,22 +17,7 @@ public final class RawRemoveLower extends RawCommitter implements IJunked, Seria
     public static final String SYNTAX = NAME + " {element}";
     public static final int ARGNUM = 1;
 
-    /**
-     * Конструктор, устанавливающий параметры
-     * добавляемого объекта
-     * @param junk
-     */
-//    public RawRemoveLowere(Organization organization) { super(organization); }
-//    public RawRemoveLowere(Organization organization) { super(organization);}
-
     public RawRemoveLower(Organization organization) {
         super(organization);
     }
-
-    /**
-     * Возвращает объект, содержащий данные об объекте коллекции.
-     * @return Organization
-     */
-    @Override
-    public final Organization Params() { return ORGANIZATION; }
 }
