@@ -1,8 +1,7 @@
 package instructions.concrete.extended;
 
 import communication.Report;
-import entities.Organization;
-import entities.OrganizationWithUId;
+import organization.OrganizationWithUId;
 import entities.comparator.OrganizationTitleComparator;
 import parsing.customer.Indicator;
 import parsing.customer.local.TotalCommander;

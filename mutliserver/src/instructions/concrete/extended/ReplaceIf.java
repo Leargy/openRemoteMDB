@@ -1,7 +1,6 @@
 package instructions.concrete.extended;
 
-import entities.Organization;
-import entities.OrganizationWithUId;
+import organization.OrganizationWithUId;
 import instructions.concrete.base.Committer;
 import patterns.command.Receiver;
 

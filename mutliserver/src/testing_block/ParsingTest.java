@@ -1,13 +1,11 @@
 package testing_block;
 
-import base_modules.processors.SubProcessorController;
 import czerkaloggers.customer.B_4D4_GE3;
-import entities.*;
 import instructions.concrete.base.*;
 import instructions.concrete.extended.*;
+import organization.*;
 import parsing.customer.bootstrapper.NakedCrateLoader;
 import parsing.customer.distro.ShedBlock;
-import parsing.customer.local.TotalCommander;
 
 import static org.junit.Assert.*;
 
@@ -27,7 +25,7 @@ public class ParsingTest {
     }
 
     public void commandsTest() {
-        OrganizationWithUId organizationWithUId = new OrganizationWithUId(new Organization("removers",new Coordinates(12, new Float(54)),123,"",2,OrganizationType.PUBLIC,new Address("suck",new Location(41,new Long(123),53))),"Nekit");
+        OrganizationWithUId organizationWithUId = new OrganizationWithUId(new Organization("removers",new Coordinates(12, new Float(54)),123,"",2, OrganizationType.PUBLIC,new Address("suck",new Location(41,new Long(123),53))),"Nekit");
         Show showCommand = new Show(totalCommander);
         System.out.println(showCommand.execute().Message());
         Insert insertCommand = new Insert(totalCommander,13, organizationWithUId);

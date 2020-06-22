@@ -40,7 +40,6 @@ public class LilyInvoker extends FondleEmulator {
   @Override
   public void invoke(ExecuteBag executeBag) {
     ConcreteDecree concreteCommand = executeBag.getConcreteDecree();
-    System.out.println(Thread.currentThread().getName() + " my command is " + concreteCommand.toString());
     Report result = concreteCommand.execute();
 //    if (concmd instanceof ExecuteScript) {
 //      result = shell.read(cmd);

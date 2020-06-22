@@ -1,8 +1,8 @@
-package parameters.entities;
+package organization;
 
-import entities.OrganizationType;
+import java.io.Serializable;
 
-public class OrganizationTypeParameter {
+public class OrganizationTypeParameter implements Serializable {
     private final String TYPE;
 
     public OrganizationTypeParameter(String type) {

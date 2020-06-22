@@ -1,7 +1,6 @@
 package instructions.concrete.base;
 
-import entities.Organization;
-import entities.OrganizationWithUId;
+import organization.OrganizationWithUId;
 import instructions.concrete.ConcreteDecree;
 import patterns.command.Receiver;
 

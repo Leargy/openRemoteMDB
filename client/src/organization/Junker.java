@@ -1,4 +1,4 @@
-package parameters;
+package organization;
 
 import java.io.Serializable;
 

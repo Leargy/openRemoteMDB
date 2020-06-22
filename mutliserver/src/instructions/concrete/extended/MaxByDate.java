@@ -1,12 +1,9 @@
 package instructions.concrete.extended;
 
-import entities.Organization;
-import entities.OrganizationWithUId;
+import organization.OrganizationWithUId;
 import patterns.command.Receiver;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.util.function.Function;
 
 /**
  * Конкретная команда поиска

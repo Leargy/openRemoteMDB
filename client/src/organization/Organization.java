@@ -1,8 +1,7 @@
-package entities;
+package organization;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
-import parameters.entities.OrganizationParameters;
 
 import javax.xml.bind.annotation.*;
 import java.time.LocalDateTime;

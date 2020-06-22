@@ -1,5 +1,6 @@
 package communication;
 
+
 import instructions.rotten.RawDecree;
 
 import java.io.Serializable;

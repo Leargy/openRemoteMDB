@@ -1,8 +1,6 @@
 package instructions.rotten;
 
-import entities.Organization;
-import instructions.Command;
-import instructions.rotten.RawDecree;
+import organization.Organization;
 
 import java.io.Serializable;
 
@@ -13,8 +11,6 @@ import java.io.Serializable;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  * @see RawDecree
- * @see Decree
- * @see Command
  */
 public abstract class RawCommitter extends RawDecree implements Serializable {
     protected final Organization ORGANIZATION;
@@ -25,5 +21,9 @@ public abstract class RawCommitter extends RawDecree implements Serializable {
      */
     protected RawCommitter(Organization organization) {
         ORGANIZATION = organization;
+    }
+
+    public Organization getOrganization() {
+        return ORGANIZATION;
     }
 }

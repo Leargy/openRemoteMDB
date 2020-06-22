@@ -1,6 +1,6 @@
 package parsing.customer;
 
-import entities.Mappable;
+import organization.Mappable;
 
 /**
  * Лакмусовая бумажка этого казино,

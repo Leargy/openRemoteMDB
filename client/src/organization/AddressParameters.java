@@ -1,6 +1,4 @@
-package parameters.entities;
-
-import parameters.Junker;
+package organization;
 
 public final class AddressParameters extends EntityParameters {
     private final LocationParameters LOCATION_PARAMETERS;

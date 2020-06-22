@@ -1,7 +1,4 @@
-package parameters.entities;
-
-import parameters.Junker;
-import parameters.Parameters;
+package organization;
 
 public abstract class EntityParameters implements Parameters {
     protected final Junker UNSORTED_PARAMETERS;

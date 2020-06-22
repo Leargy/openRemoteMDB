@@ -2,7 +2,7 @@ package parsing.customer.local;
 
 import czerkaloggers.RadioLogger;
 import entities.HashMax;
-import entities.Mappable;
+import organization.Mappable;
 import parsing.customer.bootstrapper.LoaferLoader;
 import patterns.command.Receiver;
 

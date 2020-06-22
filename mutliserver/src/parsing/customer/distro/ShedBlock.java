@@ -1,9 +1,7 @@
 package parsing.customer.distro;
 
 import czerkaloggers.HawkPDroid;
-import czerkaloggers.RadioLogger;
-import entities.Organization;
-import entities.OrganizationWithUId;
+import organization.OrganizationWithUId;
 import parsing.customer.bootstrapper.LoaferLoader;
 
 /**

@@ -1,7 +1,6 @@
 package instructions.concrete.extended;
 
-import entities.Organization;
-import entities.OrganizationWithUId;
+import organization.OrganizationWithUId;
 import patterns.command.Receiver;
 
 public final class FilterContainsName extends FilterContains<Integer, OrganizationWithUId, String> {

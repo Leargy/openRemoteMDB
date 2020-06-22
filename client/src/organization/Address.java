@@ -1,15 +1,15 @@
-package entities;
+package organization;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
-import parameters.entities.AddressParameters;
 
 import javax.xml.bind.annotation.*;
+import java.io.Serializable;
 
 
 @XmlRootElement(name = "address")
 @XmlAccessorType(XmlAccessType.FIELD)
-public final class Address {
+public final class Address implements Serializable {
 
   @XmlAttribute(name = "zipcode")
   @NotNull

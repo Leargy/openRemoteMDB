@@ -1,6 +1,6 @@
 package parsing.customer.bootstrapper;
 
-import entities.Mappable;
+import organization.Mappable;
 
 import java.io.File;
 import java.io.IOException;

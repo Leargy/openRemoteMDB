@@ -1,7 +1,6 @@
 package parsing;
 
 import base_modules.processors.processing_tasks.AuthenticationTask;
-import entities.OrganizationWithUId;
 import extension_modules.dbinteraction.OrganizationsTableInteractor;
 import instructions.rotten.IJunked;
 import instructions.rotten.RawCommitter;

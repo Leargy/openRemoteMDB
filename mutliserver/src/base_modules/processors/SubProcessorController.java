@@ -4,8 +4,8 @@ import base_modules.processors.processing_tasks.AuthenticationTask;
 import base_modules.processors.processing_tasks.QueryHandlingTask;
 import communication.Report;
 import communication.ReportsFormatter;
-import entities.Organization;
-import entities.OrganizationWithUId;
+import czerkaloggers.customer.B_4D4_GE3;
+import organization.OrganizationWithUId;
 import extension_modules.ClassUtils;
 import parsing.FondleEmulator;
 import parsing.InstructionBuilder;
@@ -36,8 +36,9 @@ public final class SubProcessorController implements Processors {
         AUTHENTICATION_TASK = new AuthenticationTask(this);
         INSTRUCTION_BUILDER = new InstructionBuilder(this, AUTHENTICATION_TASK); //adding link to authentication task to set in in authorization commands
         NAKED_CREATE_LOADER = new NakedCrateLoader();
-        TOTAL_COMMANDER = new ShedBlock(NAKED_CREATE_LOADER,null); //TODO: нужен логгер
+        TOTAL_COMMANDER = new ShedBlock(NAKED_CREATE_LOADER,new B_4D4_GE3(this)); //TODO: нужен логгер
         LILY_INVOKER = new LilyInvoker(this);
+        TOTAL_COMMANDER.DataRebase(NAKED_CREATE_LOADER.load());
     }
 
     @Override

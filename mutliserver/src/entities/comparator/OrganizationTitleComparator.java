@@ -1,7 +1,7 @@
 package entities.comparator;
 
 
-import entities.Organization;
+import organization.Organization;
 
 import java.util.Comparator;
 

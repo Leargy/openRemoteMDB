@@ -1,5 +1,5 @@
 package patterns.factory;
-import parameters.Parameters;
+import organization.Parameters;
 
 public interface Factory<T extends Creatable> {
     T makeInstance(Parameters params);

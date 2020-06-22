@@ -3,7 +3,7 @@ package instructions.concrete;
 import communication.Report;
 import communication.Valuable;
 import instructions.Decree;
-import patterns.command.Command;
+import instructions.Command;
 import patterns.command.Receiver;
 
 public class ConcreteDecree extends Decree implements Command, Valuable {

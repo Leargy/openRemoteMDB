@@ -2,7 +2,7 @@ package instructions.concrete.base;
 
 
 import communication.Report;
-import entities.Organization;
+import organization.Organization;
 import instructions.concrete.ConcreteDecree;
 import patterns.command.Receiver;
 

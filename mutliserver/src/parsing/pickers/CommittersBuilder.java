@@ -1,17 +1,11 @@
 package parsing.pickers;
 
-import entities.Organization;
-import entities.OrganizationWithUId;
+import organization.OrganizationWithUId;
 import entities.User;
 import extension_modules.dbinteraction.OrganizationsTableInteractor;
 import instructions.concrete.ConcreteDecree;
 import instructions.concrete.base.DBbaseCommands.*;
 import instructions.concrete.base.Help;
-import instructions.concrete.base.Insert;
-import instructions.concrete.base.Update;
-import instructions.concrete.extended.RemoveLower;
-import instructions.concrete.extended.ReplaceIfGreater;
-import instructions.concrete.extended.ReplaceIfLower;
 import instructions.rotten.IClued;
 import instructions.rotten.RawCommitter;
 import instructions.rotten.base.RawInsert;

@@ -2,7 +2,7 @@ package extension_modules.dbinteraction;
 
 import communication.Report;
 import communication.ReportsFormatter;
-import entities.OrganizationWithUId;
+import organization.OrganizationWithUId;
 import entities.User;
 import extension_modules.ClassUtils;
 
@@ -37,6 +37,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
                 .prepareStatement("DELETE FROM " + DB_TABLE_NAME + " WHERE user_login LIKE ?;");
         clearing.setString(1, user.getLogin());
         int result = clearing.executeUpdate();
+        System.out.println(length);
         if (length == result){
             return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
         }else throw new SQLException();
@@ -60,7 +61,12 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         insertion.setLong(11, organizationWithUId.getAddress().getTown().getY());
         insertion.setDouble(12, organizationWithUId.getAddress().getTown().getZ());
         insertion.setString(13, organizationWithUId.getUserLogin());
-        int result = insertion.executeUpdate();
+        int result = 0;
+        try {
+            result = insertion.executeUpdate();
+        }catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
         if (result == 1)
             return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
         else throw new SQLException();
@@ -69,9 +75,8 @@ public class OrganizationsTableInteractor implements TablesInteractor {
 
     public Report removeUserOrganizationByKey(User user, Integer key) throws SQLException {
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
-        PreparedStatement removing = currentConnection.prepareStatement("DELETE FROM s284733." + DB_TABLE_NAME + " WHERE user_login LIKE ? AND id = ?;");
+        PreparedStatement removing = currentConnection.prepareStatement("DELETE FROM s284733." + DB_TABLE_NAME + " WHERE user_login LIKE ?;");
         removing.setString(1, user.getLogin());
-        removing.setInt(2, key);
         int result = removing.executeUpdate();
         if (result != 1)
             throw new SQLException();
@@ -99,7 +104,12 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         replacing.setDouble(12, organizationWithUId.getAddress().getTown().getZ());
         replacing.setString(13, organizationWithUId.getUserLogin());
         replacing.setString(14, organizationWithUId.getName());
-        int replaced = replacing.executeUpdate();
+        int replaced = 0;
+        try {
+            replaced = replacing.executeUpdate();
+        }catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
         if (replaced == length) {
             return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
         }else throw new SQLException();
@@ -154,7 +164,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         PreparedStatement updating = currentConnection.prepareStatement("UPDATE " + DB_TABLE_NAME + " SET name = ?,"
                 + " fullname = ?, type = ?, employeescount = ?, annualturnover = ?, creationdate = ?, coordinates_x = ?, coordinates_y = ?, zipcode = ?, location_x = ?,"
-                + "location_y = ?, location_z = ? WHERE user_login = ? AND id = ?;");
+                + "location_y = ?, location_z = ? WHERE user_login = ?;");
         updating.setString(1, organizationWithUId.getName());
         updating.setString(2, organizationWithUId.getFullname());
         updating.setString(3, organizationWithUId.getType().name());
@@ -168,7 +178,6 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         updating.setLong(11, organizationWithUId.getAddress().getTown().getY());
         updating.setDouble(12, organizationWithUId.getAddress().getTown().getZ());
         updating.setString(13, organizationWithUId.getUserLogin());
-        updating.setInt(14, key);
         updating.executeUpdate();
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }

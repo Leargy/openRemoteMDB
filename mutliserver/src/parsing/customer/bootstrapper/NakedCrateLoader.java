@@ -1,8 +1,7 @@
 package parsing.customer.bootstrapper;
 
-import entities.Organization;
-import entities.OrganizationWithUId;
-import entities.Organizations;
+import organization.OrganizationWithUId;
+import organization.Organizations;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

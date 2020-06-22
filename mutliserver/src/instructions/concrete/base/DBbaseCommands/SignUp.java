@@ -18,7 +18,7 @@ public class SignUp extends ConcreteDecree{
     public final AuthenticationTask AUTHENTICATION_TASK;
     //TODO: Написать реализацию signUp
     public static final String NAME = "sign_up";
-    public static final String BRIEF = "Регистрация пользователя.";
+    public static final String BRIEF = "Регистрация пользователя и последующая его авторизация.";
     public static final String SYNTAX = NAME + " [login]"+" [password]";
     public static final int ARGNUM = 2;
     private String userLogin;
@@ -44,11 +44,11 @@ public class SignUp extends ConcreteDecree{
             dbReport = USER_TABLE_INTERACTOR.addNewUser(new UsersParameters(new String[] {userLogin,userPassword}));
         }catch (SQLException ex) {
             /*If DB method throws exception then only send the report of failure*/
-            return new Report(10, "Failed to add new account to Data Base!\n");
+            return new Report(10, "Account with this \"login\" is already exist!\n");
         }
         Report report = new Report(0,"New account was registered.");
         report.setIsConfirmed(true);
-//        AUTHENTICATION_TASK.addAuthorizedUser(userSocketChannel,new User(new UsersParameters(new String[]{userLogin, userPassword})));
+        AUTHENTICATION_TASK.addAuthorizedUser(userSocketChannel,new User(new UsersParameters(new String[]{userLogin, userPassword})));
         return report;
     }
 

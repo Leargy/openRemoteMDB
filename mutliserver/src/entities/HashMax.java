@@ -1,5 +1,7 @@
 package entities;
 
+import organization.OrganizationWithUId;
+
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 

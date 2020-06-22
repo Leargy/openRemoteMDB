@@ -99,7 +99,8 @@ public class Dispatcher extends ADispatcher {
                         passCheck.setPassword("");
                     }
                 }
-                else if (tempCommand instanceof RawSignIn){
+//                else if (tempCommand instanceof RawSignIn){
+                    else {
                     passCheck.setLogin(((Accessible) tempCommand).getLogin());
                     passCheck.setPassword(((Accessible) tempCommand).getPassword());
                 }
@@ -168,6 +169,7 @@ public class Dispatcher extends ADispatcher {
     @Override
     public synchronized void confirm(boolean isConfirmed) {
         if (passCheck != null) {
+            System.out.println(isConfirmed);
             ((AuthorizationHandler)dataHandler).setIsConfirmed(isConfirmed);
             passCheck.setIsConfirmed(isConfirmed);
         }

@@ -1,7 +1,7 @@
 package instructions.concrete.extended;
 
 import communication.Report;
-import entities.Mappable;
+import organization.Mappable;
 import instructions.concrete.ConcreteDecree;
 import patterns.command.Receiver;
 

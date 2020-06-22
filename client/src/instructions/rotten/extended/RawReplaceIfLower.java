@@ -1,6 +1,6 @@
 package instructions.rotten.extended;
 
-import entities.Organization;
+import organization.Organization;
 
 import java.io.Serializable;
 

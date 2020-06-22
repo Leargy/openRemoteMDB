@@ -1,7 +1,7 @@
 package instructions.concrete.base.DBbaseCommands;
 
 import communication.Report;
-import entities.OrganizationWithUId;
+import organization.OrganizationWithUId;
 import entities.User;
 import extension_modules.dbinteraction.OrganizationsTableInteractor;
 import instructions.concrete.extended.ReplaceIfLower;

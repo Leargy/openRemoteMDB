@@ -1,7 +1,7 @@
 package entities.organizationFactory;
 
 
-import entities.Junker;
+import organization.Junker;
 
 /**
  * Обобщенный интерфейс Factory (Фабрика), не задумывался

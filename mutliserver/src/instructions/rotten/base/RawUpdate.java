@@ -1,6 +1,6 @@
 package instructions.rotten.base;
 
-import entities.Organization;
+import organization.Organization;
 import instructions.rotten.IClued;
 import instructions.rotten.IJunked;
 import instructions.rotten.RawCommitter;

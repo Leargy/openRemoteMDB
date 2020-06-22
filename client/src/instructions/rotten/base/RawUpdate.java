@@ -1,6 +1,6 @@
 package instructions.rotten.base;
 
-import entities.Organization;
+import organization.Organization;
 import instructions.rotten.IClued;
 import instructions.rotten.IJunked;
 import instructions.rotten.RawCommitter;
@@ -40,7 +40,4 @@ public final class RawUpdate extends RawCommitter implements IClued, IJunked, Se
      * Возвращает объект, содержащий данные об объекте коллекции.
      * @return Junker
      */
-    @Override
-    public final Organization Params() { return ORGANIZATION;}
-
 }

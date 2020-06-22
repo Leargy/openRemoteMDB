@@ -1,9 +1,7 @@
 package instructions.concrete.base.DBbaseCommands;
 
 import communication.Report;
-import entities.Organization;
-import entities.OrganizationWithUId;
-import entities.User;
+import organization.OrganizationWithUId;
 import extension_modules.dbinteraction.OrganizationsTableInteractor;
 import instructions.concrete.base.Insert;
 import patterns.command.Receiver;

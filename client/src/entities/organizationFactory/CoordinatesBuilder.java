@@ -1,8 +1,8 @@
 package entities.organizationFactory;
 
 
-import entities.Coordinates;
-import entities.Junker;
+import organization.Coordinates;
+import organization.Junker;
 
 /**
  * Фабрика координат

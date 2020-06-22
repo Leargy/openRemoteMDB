@@ -1,16 +1,16 @@
-package entities;
+package organization;
 
 import com.sun.istack.internal.NotNull;
-import parameters.entities.LocationParameters;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @XmlRootElement(name = "location")
 @XmlAccessorType(XmlAccessType.FIELD)
-public final class Location {
+public final class Location implements Serializable {
 
   @XmlAttribute(name = "x")
   private final long x;

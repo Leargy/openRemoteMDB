@@ -1,6 +1,4 @@
-package parameters.entities;
-
-import parameters.Junker;
+package organization;
 
 public final class LocationParameters extends EntityParameters {
     public LocationParameters(Junker unsortedParameters) { super(unsortedParameters); }

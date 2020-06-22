@@ -2,9 +2,7 @@ package instructions.concrete.base.DBbaseCommands;
 
 import base_modules.processors.processing_tasks.AuthenticationTask;
 import communication.Report;
-import entities.Organization;
 import instructions.concrete.ConcreteDecree;
-import instructions.rotten.RawCommitter;
 import patterns.command.Receiver;
 
 import java.nio.channels.SocketChannel;

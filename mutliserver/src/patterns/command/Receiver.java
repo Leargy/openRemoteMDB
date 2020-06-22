@@ -1,7 +1,6 @@
 package patterns.command;
 
-import entities.Mappable;
-import entities.User;
+import organization.Mappable;
 import parsing.customer.Indicator;
 
 import java.util.List;

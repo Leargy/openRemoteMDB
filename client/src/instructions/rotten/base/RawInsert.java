@@ -1,6 +1,7 @@
 package instructions.rotten.base;
 
-import entities.Organization;
+
+import organization.Organization;
 import instructions.rotten.IClued;
 import instructions.rotten.IJunked;
 import instructions.rotten.RawCommitter;
@@ -37,9 +38,4 @@ public final class RawInsert extends RawCommitter implements IClued, IJunked, Se
     public final Integer Key() {
         return KEY;
     }
-
-    /**
-     * Возвращает объект, содержащий данные об объекте коллекции.
-     * @return Junker
-     */
 }

@@ -1,4 +1,4 @@
-package entities;
+package organization;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;

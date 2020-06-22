@@ -1,8 +1,9 @@
-package entities;
+package organization;
 
 //TODO: add annotations for parsing to XML
 
 import com.sun.istack.internal.NotNull;
+import organization.*;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -17,6 +18,11 @@ public class OrganizationWithUId implements Mappable<Integer> {
     @XmlAttribute(name = "user-name")
     @NotNull
     private final String userLogin;
+
+    public OrganizationWithUId() {
+        ORGANIZATION = new Organization();
+        userLogin = "debug";
+    }
 
     public OrganizationWithUId(Organization organization, String Uid) {
         ORGANIZATION = organization;

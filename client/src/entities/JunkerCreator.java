@@ -1,7 +1,8 @@
 package entities;
 
-import data_section.enumSection.OrganizationType;
 import dispatching.validators.Filters;
+import organization.Junker;
+import organization.OrganizationType;
 
 import java.util.Scanner;
 
@@ -89,8 +90,7 @@ public class JunkerCreator {
         OrganizationType organizationType = null;
         String clientSuggestion = "";
         do {
-            System.out.print(OrganizationType.getValues());
-            clientSuggestion = Filters.scanLine((line) -> (true),"Your organization type:",scanner);
+            clientSuggestion = Filters.scanLine((line) -> (true),"Your organization type:" + OrganizationType.getValues(),scanner);
             for (OrganizationType tempType : OrganizationType.values()) {
                 if (tempType.toString().equals(clientSuggestion.toUpperCase())) {
                     organizationType = tempType;

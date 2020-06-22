@@ -1,8 +1,8 @@
 package entities.organizationFactory;
 
 
-import entities.Junker;
-import entities.Location;
+import organization.Junker;
+import organization.Location;
 
 /**
  * Фабрика местоположений

@@ -1,7 +1,5 @@
 package instructions.rotten;
 
-import entities.Organization;
-
 /**
  * Обобщение для т.н. "сырых"
  * комманд, которые имеют дополнительный

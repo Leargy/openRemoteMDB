@@ -1,6 +1,6 @@
 package parameters.server;
 
-import parameters.Parameters;
+import organization.Parameters;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

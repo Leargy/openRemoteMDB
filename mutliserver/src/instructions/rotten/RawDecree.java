@@ -12,9 +12,7 @@ import java.io.Serializable;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  * @see Decree
- * @see Command
  */
 public abstract class RawDecree extends Decree implements Serializable {
-
 
 }
