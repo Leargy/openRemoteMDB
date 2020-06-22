@@ -1,5 +1,8 @@
 package extension_modules.dbinteraction;
 
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
 import communication.Report;
 import communication.ReportsFormatter;
 import extension_modules.ClassUtils;
@@ -50,6 +53,7 @@ public final class DataBaseConnector {
         Path userDir = Paths.get(System.getProperty("user.dir"));
         Path propertiesWay = userDir.resolve(filename);
         Properties props = new Properties();
+        props.put("StrictHostKeyChecking", "no");
         LOG.info("Trying get properties from file " + filename);
         try (InputStream in = Files.newInputStream(propertiesWay)) {
             props.load(in);
@@ -61,16 +65,29 @@ public final class DataBaseConnector {
         String drivers = props.getProperty("jdbc.drivers");
         if (drivers != null) System.setProperty("jdbc.drivers", drivers);
         else System.setProperty("jdbc.drivers", DATABASE_DRIVER_NAME);
-        String host = props.getProperty("jdbc.host");
         String url = props.getProperty("jdbc.url");
         String username = props.getProperty("jdbc.username");
         String password = props.getProperty("jdbc.password");
+        LOG.info("Trying installing ssh connection");
+        JSch jsch = new JSch();
+        Session currentSession = null;
+        try {
+            currentSession = jsch.getSession(username, "se.ifmo.ru", 2222);
+            currentSession.setPassword(password);
+            currentSession.setConfig(props);
+            currentSession.connect();
+        } catch (JSchException e) {
+            LOG.error("Unable to create secure session");
+            return null;
+        }
+        LOG.info("Successful secure session opening");
         Connection currentConnection = null;
         LOG.info("Trying connection to database");
         try {
             currentConnection = DriverManager.getConnection(url, username, password);
         } catch (SQLException sqlException) {
             LOG.error("Happened errors while get connection to database");
+            return currentConnection;
         }
         LOG.info("Connection installed successfully");
         return currentConnection;
