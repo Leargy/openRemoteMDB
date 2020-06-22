@@ -43,6 +43,9 @@ public class OrganizationWithUId implements Mappable<Integer>{
         }
         return collectionKey;
     }
+    public void help() {
+        System.out.println("ay hochu piccy");
+    }
 
     @Override
     public String getName() {
