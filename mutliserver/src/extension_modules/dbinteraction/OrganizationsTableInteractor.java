@@ -34,7 +34,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         int length = countUsersOrganizations(user);
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         PreparedStatement clearing = currentConnection
-                .prepareStatement("DELETE FROM s284733." + DB_TABLE_NAME + " WHERE user_login LIKE ?;");
+                .prepareStatement("DELETE FROM " + DB_TABLE_NAME + " WHERE user_login LIKE ?;");
         clearing.setString(1, user.getLogin());
         int result = clearing.executeUpdate();
         return (length == result)? ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod()) : ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
@@ -43,7 +43,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         PreparedStatement insertion = currentConnection
                 .prepareStatement("INSERT INTO " + DB_TABLE_NAME
-                        + " VALUES (nextval('Organizations_Id_Cycle'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                        + " VALUES (nextval('Organizations_Id_Cycle'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
         insertion.setString(1, organizationWithUId.getName());
         insertion.setString(2, organizationWithUId.getFullname());
         insertion.setString(3, organizationWithUId.getType().name());
@@ -77,7 +77,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
     public Report replaceUserOrganizationIfLower(User user, Integer key, OrganizationWithUId organizationWithUId) throws SQLException{
         int length = countLowerUsersOrganizations(user, organizationWithUId);
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
-        PreparedStatement replacing = currentConnection.prepareStatement("UPDATE s284733." + DB_TABLE_NAME + " SET name = ?,"
+        PreparedStatement replacing = currentConnection.prepareStatement("UPDATE " + DB_TABLE_NAME + " SET name = ?,"
                 + " fullname = ?, type = ?, employeescount = ?, annualturnover = ?, creationdate = ?, coordinates_x = ?, coordinates_y = ?, zipcode = ?, location_x = ?,"
                 + "location_y = ?, location_z = ? WHERE user_login = ? AND name < ?;");
         replacing.setString(1, organizationWithUId.getName());
@@ -102,7 +102,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
     public Report replaceUserOrganizationIfGreater(User user, Integer key, OrganizationWithUId organizationWithUId) throws SQLException{
         int length = countGreaterUsersOrganizations(user, organizationWithUId);
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
-        PreparedStatement replacing = currentConnection.prepareStatement("UPDATE s284733." + DB_TABLE_NAME + " SET name = ?,"
+        PreparedStatement replacing = currentConnection.prepareStatement("UPDATE " + DB_TABLE_NAME + " SET name = ?,"
                 + " fullname = ?, type = ?, employeescount = ?, annualturnover = ?, creationdate = ?, coordinates_x = ?, coordinates_y = ?, zipcode = ?, location_x = ?,"
                 + "location_y = ?, location_z = ? WHERE user_login = ? AND name > ?;");
         replacing.setString(1, organizationWithUId.getName());
