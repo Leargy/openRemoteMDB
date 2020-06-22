@@ -36,4 +36,6 @@ public class DBInsert extends Insert {
         }
         return super.execute();
     }
+    @Override
+    public String toString() { return NAME; }
 }

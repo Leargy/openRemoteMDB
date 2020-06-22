@@ -61,7 +61,8 @@ public class UsersTableInteractor implements TablesInteractor {
                 + DB_TABLE_NAME + " WHERE login = "
                 + prepareStringParameter(params.getLogin()) + " AND "
                 + "password = " + prepareStringParameter(params.getPassword()) + " AND "
-                + "environment = " + prepareStringParameter(params.getEnvironmentVariableName()) + ";";
+//                + "environment = " + prepareStringParameter(params.getEnvironmentVariableName())
+                + ";";
         LOG.info("Connecting to database");
         Report connectionResults = DataBaseConnector
                 .getInstance()
@@ -132,8 +133,8 @@ public class UsersTableInteractor implements TablesInteractor {
                 + String.join(
                         ", ",
                 prepareStringParameter(params.getLogin()),
-                prepareStringParameter(params.getPassword()),
-                prepareStringParameter(params.getEnvironmentVariableName())
+                prepareStringParameter(params.getPassword())
+//                prepareStringParameter(params.getEnvironmentVariableName())
                 )
                 + ")";
     }

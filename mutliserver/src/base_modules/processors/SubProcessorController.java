@@ -16,10 +16,9 @@ import parsing.customer.distro.LimboKeeper;
 import parsing.customer.distro.ShedBlock;
 import patterns.mediator.Component;
 import patterns.mediator.Controllers;
-import uplink_bags.ExecuteBag;
-import uplink_bags.RawDecreeBag;
-import uplink_bags.TransportableBag;
+import uplink_bags.*;
 
+import java.nio.channels.SocketChannel;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -37,14 +36,18 @@ public final class SubProcessorController implements Processors {
         AUTHENTICATION_TASK = new AuthenticationTask(this);
         INSTRUCTION_BUILDER = new InstructionBuilder(this, AUTHENTICATION_TASK); //adding link to authentication task to set in in authorization commands
         NAKED_CREATE_LOADER = new NakedCrateLoader();
-        TOTAL_COMMANDER = new ShedBlock(NAKED_CREATE_LOADER);
+        TOTAL_COMMANDER = new ShedBlock(NAKED_CREATE_LOADER,null); //TODO: нужен логгер
         LILY_INVOKER = new LilyInvoker(this);
     }
 
     @Override
     public Report notify(Component sender, TransportableBag parcel) {
-        if (sender == SERVER_CONTROLLER) AUTHENTICATION_TASK.identify(parcel); //sending to determine, if temp client was authorized
-        if (sender == AUTHENTICATION_TASK) INSTRUCTION_BUILDER.make(parcel,TOTAL_COMMANDER); // sending to determine the concrete command
+//        System.out.println(parcel.getClass().getSimpleName());
+        if (sender == SERVER_CONTROLLER && parcel.getClass().getSimpleName().equals("ChanneledBag") ) {
+            AUTHENTICATION_TASK.removeAuthorizedUser((SocketChannel) ((ChanneledBag) parcel).getChannel());
+        } else if (sender == SERVER_CONTROLLER && parcel.getClass().getSimpleName().equals("ClientPackBag")) AUTHENTICATION_TASK.identify(parcel); //sending to determine, if temp client was authorized
+        if (sender == AUTHENTICATION_TASK && parcel.getClass().getSimpleName().equals("NotifyBag")){ SERVER_CONTROLLER.notify(this, parcel);
+        } else if (sender == AUTHENTICATION_TASK && parcel.getClass().getSimpleName().equals("RawDecreeBag")) INSTRUCTION_BUILDER.make(parcel,TOTAL_COMMANDER); // sending to determine the concrete command
         if (sender == INSTRUCTION_BUILDER) ((LilyInvoker)LILY_INVOKER).invoke((ExecuteBag) parcel); //sending to execute command
         if (sender == LILY_INVOKER) SERVER_CONTROLLER.notify(this, parcel); //sending to dispatcher
         if (sender instanceof QueryHandlingTask) SERVER_CONTROLLER.notify(this, parcel);

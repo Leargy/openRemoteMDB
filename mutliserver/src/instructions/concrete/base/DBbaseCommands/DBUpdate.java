@@ -39,4 +39,6 @@ public class DBUpdate extends Update {
         }
         return super.execute();
     }
+    @Override
+    public String toString() { return NAME; }
 }

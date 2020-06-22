@@ -38,4 +38,7 @@ public class SignOut extends ConcreteDecree {
     public void setTempUserParametrs(SocketChannel socketChannel) {
         this.userSocketChannel = socketChannel;
     }
+
+    @Override
+    public String toString() { return NAME; }
 }

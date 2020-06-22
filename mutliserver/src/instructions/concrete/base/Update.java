@@ -3,6 +3,7 @@ package instructions.concrete.base;
 import communication.Report;
 import entities.Organization;
 import entities.OrganizationWithUId;
+import parsing.customer.local.TotalCommander;
 import patterns.command.Receiver;
 
 /**
@@ -38,28 +39,32 @@ public class Update extends Committer {
   public Report execute() {
     //TODO: адаптировать логику обновления объекта коллекции для обертки организации
     if (SIEVE == null)
-      return new Report(1, "Ссылка на коллекцию не была обнаружена, пожалуйста, свяжитесь с Вашим системным администратором");
+      return new Report(1, "Ссылка на коллекцию не была обнаружена, пожалуйста, свяжитесь с Вашим системным администратором.");
     if (id == null)
-      return new Report(1, "Неправильный формат идентификатора обновляемого элемента");
+      return new Report(1, "Неправильный формат идентификатора обновляемого элемента.");
     if (EMBEDDED == null)
-      return new Report(1, "Обнаружена попытка добавить неопределенный элемент");
+      return new Report(1, "Обнаружена попытка добавить неопределенный элемент.");
     Receiver<Integer, OrganizationWithUId> realSiever = (Receiver<Integer, OrganizationWithUId>) SIEVE;
     Integer key = null;
     Integer[] keys = new Integer[]{id};
-    realSiever.search(keys, new OrganizationWithUId[]{null}, (org)->(org.getKey().equals(id)));
+    OrganizationWithUId[] findedOrganization = new OrganizationWithUId[]{null};
+    realSiever.search(keys, findedOrganization, (org)->(org.getKey().equals(id)));
     key = keys[0];
 //    System.out.println(key);
     if (key != null) {
       OrganizationWithUId litmus = EMBEDDED;
       OrganizationWithUId[] buffers = new OrganizationWithUId[]{litmus};
+      if (!((TotalCommander)realSiever).checkIfYours(findedOrganization[0],litmus)) {
+        return new Report(3, "Заменяемая организация не пренадлежит взаимодействующему пользователю.");
+      }
       realSiever.add(keys, buffers, (org)->(true));
       if (buffers[0] != null)
-        return new Report(0, "Элемент успешно обновлен");
-      else return new Report(0xCCCF, "Возникли ошибки при добавлении элемента");
-    } else return new Report(0xCCCF, "Элемент с заданным идентификатором не найден");
+        return new Report(0, "Элемент успешно обновлен.");
+      else return new Report(0xCCCF, "Возникли ошибки при добавлении элемента.");
+    } else return new Report(0xCCCF, "Элемент с заданным идентификатором не найден.");
   }
   public static final String NAME = "update";
-  public static final String BRIEF = "Обновляет значение элемента, id которого равен заданному";
+  public static final String BRIEF = "Обновляет значение элемента, id которого равен заданному.";
   public static final String SYNTAX = NAME + " [id] {element}";
   public static final int ARGNUM = 2;
 

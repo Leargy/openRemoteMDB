@@ -13,7 +13,7 @@ public class Descriptor {
      * Конструктор, в котором формируется путь к скриптам.
      */
     public Descriptor() {
-        SCRIPTS_PATH = System.getProperty("user.dir") + System.getProperty("file.separator") + "client" + System.getProperty("file.separator") + "scripts";
+        SCRIPTS_PATH = System.getProperty("user.dir") + System.getProperty("file.separator") + System.getProperty("file.separator") + "scripts";
     }
 
     /**

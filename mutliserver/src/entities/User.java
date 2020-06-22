@@ -8,12 +8,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.UUID;
 
 public final class User {
-    private final UUID ID;
+//    private final UUID ID;
     private final String LOGIN;
     private final String PASSWORD;
 //    private final String ENVIRONMENT_VARIABLE_NAME;
 
-    public UUID getID() { return ID; }
+//    public UUID getID() { return ID; }
 
     public String getLogin() {
         return LOGIN;
@@ -28,7 +28,7 @@ public final class User {
 //    }
 
     public User(UsersParameters userParams) {
-        ID =  userParams.getID();
+//        ID =  userParams.getID();
         LOGIN = userParams.getLogin();
         PASSWORD = userParams.getPassword();
 //        ENVIRONMENT_VARIABLE_NAME = userParams.getEnvironmentVariableName();

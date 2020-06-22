@@ -44,9 +44,9 @@ public final class B_4D4_GE3 extends HawkPDroid<Resolver> implements Component {
   @Override
   public void notify(Integer errorCode, String message) {
     logboard(errorCode, message);
-    SocketChannel client = MAGIV.ClientChannel();
-    AlertBag alert = new AlertBag(client, new Report(errorCode, message));
-    MAGIV.notify(this, alert);
+//    SocketChannel client = MAGIV.ClientChannel();
+//    AlertBag alert = new AlertBag(client, new Report(errorCode, message));
+//    MAGIV.notify(this, alert);
   }
 
   /**

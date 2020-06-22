@@ -16,6 +16,7 @@ import instructions.rotten.base.RawExit;
 import instructions.rotten.base.RawHelp;
 import instructions.rotten.base.RawSignIn;
 import instructions.rotten.base.RawSignOut;
+import instructions.rotten.extended.RawExecuteScript;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -47,6 +48,7 @@ public class Dispatcher extends ADispatcher {
         commandHandler.setNext(argumentHandler);
         authorizationHandler.setNext(commandHandler);
 
+        authorizationHandler.setDispatcher(this);
         argumentHandler.setDispatcher(this);
 
         dataHandler = authorizationHandler;
@@ -87,7 +89,7 @@ public class Dispatcher extends ADispatcher {
             if (tempCommand instanceof Accessible) {
                 if (tempCommand instanceof RawSignOut) {
                     if (!passCheck.isConfirmed()) {
-                        System.err.println("You haven't authorised yet");
+                        System.err.println("You haven't authorised yet.");
                         mediator.notify(this, new Segment(Markers.BADINPUTCONDITION));
                         return;
                     }else {
@@ -102,13 +104,14 @@ public class Dispatcher extends ADispatcher {
                     passCheck.setPassword(((Accessible) tempCommand).getPassword());
                 }
             }
-            if (tempCommand == null) {
-                System.err.println("You haven't authorised yet");
+            if (tempCommand instanceof RawExecuteScript) {
+//                System.err.println("You haven't authorised yet.");
                 mediator.notify(this, new Segment(Markers.BADINPUTCONDITION));
                 return;
             }
             parcel.setCommandData(tempCommand);
         }
+        System.out.println(parcel.getCommandData().toString());
         send(parcel);
     }
 
@@ -152,12 +155,14 @@ public class Dispatcher extends ADispatcher {
 
     // Method to set status of combination of Login and Pass (confirmed/rejected)
     // Which comes from receiver module.
-    public synchronized void Confirm(boolean isConfirmed) {
+    @Override
+    public synchronized void confirm(boolean isConfirmed) {
         if (passCheck != null) {
             ((AuthorizationHandler)dataHandler).setIsConfirmed(isConfirmed);
             passCheck.setIsConfirmed(isConfirmed);
         }
     }
+
     public synchronized boolean switchOrder() {
         if (!scriptOrder) {
             return scriptOrder = true;

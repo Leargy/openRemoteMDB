@@ -55,7 +55,7 @@ public class Mediator implements Mediating {
     @Override
     public void notify(Component component, Segment parcel) {
 //        if (component == receiver && parcel.getMarker() == Markers.INTERRUPTED) client.dropReceives();
-        if (component == receiver && parcel.getMarker() == Markers.WRITE) servant.setIsReplying(true);
+//        if (component == receiver && parcel.getMarker() == Markers.WRITE) servant.setIsReplying(true);
         if (component == client && parcel.getMarker() == Markers.INTERRUPTED) {
 //            System.out.println(Thread.currentThread().getName() + " from client");
             ((Servant)servant).setIsIncoming(true);
@@ -79,6 +79,7 @@ public class Mediator implements Mediating {
         if (component == client && parcel.getMarker() == Markers.WRITE) servant.order(parcel);
         if (component == client && parcel.getMarker() == Markers.READ) receiver.receive(parcel);
         if (component == receiver && parcel.getMarker() == Markers.INTERRUPTED) {
+            dispatcher.confirm(false);
 //            System.out.println(Thread.currentThread().getName() + " from receiver");
             client.killSocket();
             ((Servant)servant).setIsIncoming(true);
@@ -92,8 +93,8 @@ public class Mediator implements Mediating {
         }
         if (component == receiver && parcel.getMarker() == Markers.CONFIRMING) {
             dispatcher.confirm(parcel.getClientPackage().getReport().isSuccessful());
-            ((Servant)servant).setIsIncoming(true);
-            servant.notification(parcel);
+//            ((Servant)servant).setIsIncoming(true);
+//            servant.notification(parcel);
         }
     }
 }

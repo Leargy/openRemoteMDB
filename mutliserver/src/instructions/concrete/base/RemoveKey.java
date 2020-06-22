@@ -2,6 +2,7 @@ package instructions.concrete.base;
 
 import communication.Report;
 import entities.Organization;
+import entities.OrganizationWithUId;
 import instructions.concrete.ConcreteDecree;
 import patterns.command.Receiver;
 
@@ -37,15 +38,15 @@ public class RemoveKey extends ConcreteDecree {
       return new Report(1, "Ссылка на коллекцию не была обнаружена, пожалуйста, свяжитесь со своим системным администратором");
     if (key == null)
       return new Report(1, "Неправильный формат ключа удаляемого элемента");
-    Receiver<Integer, Organization> realSiever = SIEVE;
-    Organization buffer = null;
-    Organization[] buffers = new Organization[]{buffer};
+    Receiver<Integer, OrganizationWithUId> realSiever = SIEVE;
+    OrganizationWithUId buffer = null;
+    OrganizationWithUId[] buffers = new OrganizationWithUId[]{buffer};
     Integer[] keys = new Integer[]{key};
     realSiever.search(keys, buffers, (org)->(true));
     if (buffers[0] == null)
       return new Report(0xCCCF, "Элемента по заданному ключу не существует");
     else {
-      realSiever.remove(keys, new Organization[]{buffer}, (org)->(true));
+      realSiever.remove(keys, new OrganizationWithUId[]{buffer}, (org)->(true));
       return new Report(0, "Элемент успешно удален");
     }
   }

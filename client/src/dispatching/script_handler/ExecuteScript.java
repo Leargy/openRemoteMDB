@@ -77,6 +77,7 @@ public class ExecuteScript {
             // если длина массива два, то это либо команда с одним аргументом,
             // либо с двумя
             case 2: return cmdDeaf.define(1, lineParts);
+            case 3: return cmdDeaf.define(1, lineParts);
             // иначе какая-то неопределенная команда
             default: return null;
         }
@@ -116,6 +117,9 @@ public class ExecuteScript {
             // тут все норм, свич юзает иквалз и все хорошо
             // солнышко светит, команды определяются
             switch (command_name) {
+                case "sign_out": {
+                    return new RawSignOut();
+                }
                 case "help": {
 //                    executed += "Выполнена команда: " + command_name + "\n";
                     return new RawHelp();
@@ -161,6 +165,12 @@ public class ExecuteScript {
             try {
                 if (!junkedCommands.contains(command_name)) {
                     switch (command_name) {
+                        case "sign_in": {
+                            return new RawSignIn(command_n_args[1],command_n_args[2]);
+                        }
+                        case "sign_up": {
+                            return new RawSignUp(command_n_args[1],command_n_args[2]);
+                        }
                         case "remove_key": {
                             Integer key = Integer.valueOf(argument); // переводим аргумент в число
                             if (key == null) return null; // если вышло null, то и команда не определена

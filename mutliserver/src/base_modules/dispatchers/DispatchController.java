@@ -32,7 +32,6 @@ public class DispatchController implements Dispatchers {
     @Override
     public Report notify(Component sender, TransportableBag parcel) {
         //TODO: make logging
-        System.out.println("me under dispatching");
         if (sender == MAIN_SERVER_CONTROLLER) this.sendResults2Client((NotifyBag) parcel);
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }

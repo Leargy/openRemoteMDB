@@ -1,4 +1,4 @@
-package entities.comparators;
+package entities.comparator;
 
 
 import entities.Organization;
@@ -26,6 +26,6 @@ public final class OrganizationTitleComparator implements Comparator<Organizatio
    */
   @Override
   public int compare(Organization o1, Organization o2) {
-    return Comparator.comparing(Organization::Name).compare(o1, o2);
+    return Comparator.comparing(Organization::getName).compare(o1, o2);
   }
 }

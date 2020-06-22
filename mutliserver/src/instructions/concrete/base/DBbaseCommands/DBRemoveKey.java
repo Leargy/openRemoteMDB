@@ -35,4 +35,6 @@ public class DBRemoveKey extends RemoveKey {
         }
         return super.execute();
     }
+    @Override
+    public String toString() { return NAME; }
 }

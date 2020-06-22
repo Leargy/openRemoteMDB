@@ -56,7 +56,7 @@ public class MaxBy<K extends Integer, V extends Mappable<K>, R extends Comparabl
     Integer[] maxim_keys = new Integer[]{maxim_key};
     SIEVE.search(maxim_keys, recologys, (element)->true);
     // вернуть информацию об элементе
-    return new Report(0, recologys[0].toString());
+    return new Report(0, "\tKEY: " + maxim_keys[0] + ";\n\tVALUE: " + recologys[0].getOrganization().toString() + ";\n\tOWNER: " + recologys[0].getUserLogin() + "\n");
   }
 
   @Override

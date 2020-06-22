@@ -1,10 +1,13 @@
 package parsing.pickers;
 
 import base_modules.processors.processing_tasks.AuthenticationTask;
+import entities.User;
+import extension_modules.dbinteraction.TablesInteractor;
 import extension_modules.dbinteraction.UsersTableInteractor;
 import instructions.concrete.ConDecree;
 import instructions.concrete.ConcreteDecree;
 import instructions.concrete.base.*;
+import instructions.concrete.base.DBbaseCommands.DBClear;
 import instructions.concrete.base.DBbaseCommands.SignIn;
 import instructions.concrete.base.DBbaseCommands.SignOut;
 import instructions.concrete.base.DBbaseCommands.SignUp;
@@ -38,7 +41,7 @@ public final class JustCommandBuilder {
    * @param receiver LimboKeeper
    * @return ConDecree
    */
-  public ConcreteDecree make(RawDecree c, LimboKeeper receiver, SocketChannel tempSocketChannel) {
+  public ConcreteDecree make(RawDecree c, LimboKeeper receiver, SocketChannel tempSocketChannel, TablesInteractor organizationTablesInteractor, User user) {
     if (c instanceof ITitled) {
       String name = ((ITitled) c).Name();
       return new FilterContainsName(receiver, name);
@@ -46,8 +49,7 @@ public final class JustCommandBuilder {
       Integer key = ((IClued) c).Key();
       return new RemoveKey(receiver, key);
     } else {
-      if (c instanceof RawHelp) return new Help(receiver);
-      else if (c instanceof RawSignUp) {
+        if (c instanceof RawSignUp) {
         SignUp signUp = new SignUp(receiver,USER_TABLE_INTERACTOR,AUTHENTICATION_TASK);
         signUp.setTempUserParametrs(((RawSignUp)c).getLogin(), ((RawSignUp)c).getPassword(),tempSocketChannel);
         return signUp;
@@ -63,12 +65,12 @@ public final class JustCommandBuilder {
         return signOut;
       }
       else if (c instanceof RawNotAuthorizedHelp) return new NotAuthorizedHelp(receiver);
-      else if (c instanceof RawClear) return new Clear(receiver,((RawSignUp)c).getLogin());
+      else if (c instanceof RawClear) return new DBClear(receiver,organizationTablesInteractor,user);
       else if (c instanceof RawInfo) return new Info(receiver);
       else if (c instanceof RawSave) return new Save(receiver);
       else if (c instanceof RawShow) return new Show(receiver);
-//      else if (c instanceof RawMaxByDate) return new MaxByDate(receiver);
-//      else if (c instanceof RawSumOfAnnualTurnover) return new SumOfAnnualTurnover(receiver); //TODO: поработать над командами
+      else if (c instanceof RawMaxByDate) return new MaxByDate(receiver);
+      else if (c instanceof RawSumOfAnnualTurnover) return new SumOfAnnualTurnover(receiver); //TODO: поработать над командами
       else if (c instanceof RawExit) return new Exit(receiver);
       else return new Help(receiver);
     }

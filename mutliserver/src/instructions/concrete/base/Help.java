@@ -4,6 +4,7 @@ import communication.Report;
 
 import instructions.concrete.ConcreteDecree;
 import instructions.concrete.base.DBbaseCommands.SignOut;
+import instructions.concrete.extended.*;
 import patterns.command.Receiver;
 
 import java.util.ArrayList;
@@ -25,13 +26,13 @@ public final class Help extends ConcreteDecree {
     CMDS.add(new String[]{ Show.NAME, Show.BRIEF, Show.SYNTAX });
     CMDS.add(new String[]{ Update.NAME, Update.BRIEF, Update.SYNTAX });
     //TODO: дописать команды
-//    CMDS.add(new String[]{ ExecuteScript.NAME, ExecuteScript.BRIEF, ExecuteScript.SYNTAX });
-//    CMDS.add(new String[]{ FilterContainsName.NAME, FilterContainsName.BRIEF, FilterContainsName.SYNTAX });
-//    CMDS.add(new String[]{ MaxByDate.NAME, MaxByDate.BRIEF, MaxByDate.SYNTAX });
-//    CMDS.add(new String[]{ RemoveLower.NAME, RemoveLower.BRIEF, RemoveLower.SYNTAX });
-//    CMDS.add(new String[]{ ReplaceIfGreater.NAME, ReplaceIfGreater.BRIEF, ReplaceIfGreater.SYNTAX });
-//    CMDS.add(new String[]{ ReplaceIfLower.NAME, ReplaceIfLower.BRIEF, ReplaceIfLower.SYNTAX });
-//    CMDS.add(new String[]{ SumOfAnnualTurnover.NAME, SumOfAnnualTurnover.BRIEF, SumOfAnnualTurnover.SYNTAX });
+    CMDS.add(new String[]{ ExecuteScript.NAME, ExecuteScript.BRIEF, ExecuteScript.SYNTAX });
+    CMDS.add(new String[]{ FilterContainsName.NAME, FilterContainsName.BRIEF, FilterContainsName.SYNTAX });
+    CMDS.add(new String[]{ MaxByDate.NAME, MaxByDate.BRIEF, MaxByDate.SYNTAX });
+    CMDS.add(new String[]{ RemoveLower.NAME, RemoveLower.BRIEF, RemoveLower.SYNTAX });
+    CMDS.add(new String[]{ ReplaceIfGreater.NAME, ReplaceIfGreater.BRIEF, ReplaceIfGreater.SYNTAX });
+    CMDS.add(new String[]{ ReplaceIfLower.NAME, ReplaceIfLower.BRIEF, ReplaceIfLower.SYNTAX });
+    CMDS.add(new String[]{ SumOfAnnualTurnover.NAME, SumOfAnnualTurnover.BRIEF, SumOfAnnualTurnover.SYNTAX });
   }
   /**
    * Конструктор, устанавливающий ссылку на

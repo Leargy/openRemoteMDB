@@ -90,6 +90,7 @@ public class ArgumentHandler extends DataHandler{
                 case RawUpdate.NAME: return new RawUpdate(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
                 case RawReplaceIfLower.NAME: return new RawReplaceIfLower(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
                 case RawReplaceIfGreater.NAME: return new RawReplaceIfGreater(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
+                default: return new RawExecuteScript(null);
             }
         }else {
             switch (foundedCommand.getKey()) {
@@ -97,15 +98,14 @@ public class ArgumentHandler extends DataHandler{
                     try{
 //                        return new RawExecuteScript(fileDescriptor.discript(stringArgument));
                         executeScript.read(fileDescriptor.discript(stringArgument),parcel.getSocketChannel());
+                        return new RawExecuteScript(null);
                     }catch (IOException ex) {
                         throw new CommandSyntaxException(ex.getMessage());
                     }
-                    break;
                 case RawFilterContainsName.NAME: return new RawFilterContainsName(stringArgument);
-                default: return null;
+                default: return new RawExecuteScript(null);
                 //case RawRemoveLower.NAME: return new RawRemoveLower(junkerCreator.prepareJunker());
             }
         }
-        return null;
     }
 }

@@ -1,7 +1,8 @@
 package instructions.concrete.extended;
 
 import entities.Organization;
-import parsing.customer.Receiver;
+import entities.OrganizationWithUId;
+import patterns.command.Receiver;
 
 /**
  * Команда суммирования по
@@ -9,7 +10,7 @@ import parsing.customer.Receiver;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  */
-public final class SumOfAnnualTurnover extends SumOfAnnual<Integer, Organization, Float> {
+public final class SumOfAnnualTurnover extends SumOfAnnual<Integer, OrganizationWithUId, Float> {
   public static final String NAME = "sum_of_annual_turnover";
   public static final String BRIEF = "выводит сумму поля \"turnover\" всех элементов коллекции";
   public static final String SYNTAX = NAME;
@@ -21,7 +22,7 @@ public final class SumOfAnnualTurnover extends SumOfAnnual<Integer, Organization
    * @param sieve текущий управленец коллекцией
    */
   public SumOfAnnualTurnover(Receiver sieve) {
-    super(sieve, Organization::getAnnualTurnOver);
+    super(sieve, OrganizationWithUId::getAnnualTurnover);
   }
 
   @Override

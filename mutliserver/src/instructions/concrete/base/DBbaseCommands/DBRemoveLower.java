@@ -36,4 +36,6 @@ public class DBRemoveLower extends RemoveLower {
         }
         return super.execute();
     }
+    @Override
+    public String toString() { return NAME; }
 }

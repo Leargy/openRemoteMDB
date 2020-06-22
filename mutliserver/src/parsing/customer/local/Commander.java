@@ -6,7 +6,7 @@ import entities.Mappable;
 import parsing.customer.bootstrapper.LoaferLoader;
 import patterns.command.Receiver;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -22,7 +22,7 @@ import java.util.function.Function;
  */
 public abstract class Commander<K, V extends Mappable<K>> implements Receiver<K, V> {
   protected final Map<K, V> database = new HashMax<>(); // хранимое отображение
-  protected String creationDate = ZonedDateTime.now().toString(); // дата создания
+  protected String creationDate = LocalDateTime.now().toString(); // дата создания
   protected final LoaferLoader<V> breadLoader; // буханка-загрузчик xml-коллекций
   protected final RadioLogger whistleblower; // ссылка на логгер
 

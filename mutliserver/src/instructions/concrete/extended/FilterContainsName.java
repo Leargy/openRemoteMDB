@@ -4,7 +4,7 @@ import entities.Organization;
 import entities.OrganizationWithUId;
 import patterns.command.Receiver;
 
-public final class FilterContainsName extends FilterContains<Integer, Organization, String> {
+public final class FilterContainsName extends FilterContains<Integer, OrganizationWithUId, String> {
   /**
    * Обычный конструктор, связывающий
    * команду с исполнителем и геттером,
@@ -14,7 +14,7 @@ public final class FilterContainsName extends FilterContains<Integer, Organizati
    * @param filter поле, которое ищем
    */
   public FilterContainsName(Receiver sieve, String filter) {
-    super(sieve, filter, Organization::getName);
+    super(sieve, filter, OrganizationWithUId::getName);
   }
 
   public static final String NAME = "filter_contains_name";

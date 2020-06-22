@@ -13,14 +13,14 @@ public final class Organization implements Mappable<Integer> {
   @XmlTransient
   private static int count = 1;
   @XmlAttribute(name = "id")
-  private final int id;
+  public final int id;
   @XmlAttribute(name = "name")
   @NotNull
-  private final String name;
+  public final String name;
 
   @XmlElement(name = "coordinates")
   @NotNull
-  private final Coordinates coordinates;
+  public final Coordinates coordinates;
 
   public Coordinates getCoordinates() { return coordinates; }
   @XmlTransient

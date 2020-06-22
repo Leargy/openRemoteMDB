@@ -29,5 +29,6 @@ public class DBReplaceIfGreater extends ReplaceIfGreater {
         }
         return super.execute();
     }
-
+    @Override
+    public String toString() { return NAME; }
 }

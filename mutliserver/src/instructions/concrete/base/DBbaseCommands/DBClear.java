@@ -28,4 +28,7 @@ public class DBClear extends Clear {
         }
         return super.execute();
     }
+
+    @Override
+    public String toString() { return NAME; }
 }

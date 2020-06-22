@@ -1,6 +1,7 @@
 package parsing.customer.distro;
 
 import czerkaloggers.HawkPDroid;
+import czerkaloggers.RadioLogger;
 import entities.Organization;
 import entities.OrganizationWithUId;
 import parsing.customer.bootstrapper.LoaferLoader;
@@ -24,7 +25,7 @@ public final class ShedBlock extends LimboKeeper {
    * но и отправлять его модулю разбора запросов клиента
    * @param logger логгер, взаимодействующий с контроллером
    */
-  public ShedBlock(LoaferLoader<OrganizationWithUId> loader) {
-    super(loader, null);
+  public ShedBlock(LoaferLoader<OrganizationWithUId> loader, HawkPDroid logger) {
+    super(loader, logger);
   } //TODO: туту нужег логгер
 }
