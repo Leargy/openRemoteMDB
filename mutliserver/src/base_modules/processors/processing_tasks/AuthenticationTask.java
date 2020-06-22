@@ -4,11 +4,13 @@ import base_modules.processors.processing_tasks.handlers.AuthorizedHandler;
 import base_modules.processors.processing_tasks.handlers.Handling;
 import base_modules.processors.processing_tasks.handlers.NotAuthorizedHandler;
 import communication.ClientPackage;
+import communication.Report;
 import entities.User;
 import exceptions.NotAuthorizedException;
 import patterns.mediator.Component;
 import patterns.mediator.Controllers;
 import uplink_bags.ClientPackBag;
+import uplink_bags.NotifyBag;
 import uplink_bags.RawDecreeBag;
 import uplink_bags.TransportableBag;
 
@@ -44,6 +46,7 @@ public class AuthenticationTask implements Component {
                     //Catch the exception if user tried to use commands according to authorization
                     //TODO: send the report back to user
                     System.err.println(ex.getMessage());
+                    SUB_PROCESS_CONTROLLER.notify(this,new NotifyBag(tempClientSocket, new Report(66, ex.toString())));
                 }
             }else {
                 //do something if user wasn't identified
@@ -54,6 +57,7 @@ public class AuthenticationTask implements Component {
             }catch (NotAuthorizedException ex) {
                 //Catch the exception if user tried to execute commands, forbidden for not authorized users
                 //TODO: send the report back to user
+                SUB_PROCESS_CONTROLLER.notify(this,new NotifyBag(tempClientSocket, new Report(66, ex.toString())));
                 System.err.println(ex.getMessage());
             }
         }

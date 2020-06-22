@@ -42,14 +42,18 @@ public class LilyInvoker extends FondleEmulator {
   @Override
   public void invoke(ExecuteBag executeBag) {
     ConcreteDecree concreteCommand = executeBag.getConcreteDecree();
-    System.out.println(Thread.currentThread().getName() + " my command is " + concreteCommand);
+    System.out.println(Thread.currentThread().getName() + " my command is " + concreteCommand.toString());
     Report result = concreteCommand.execute();
 //    if (concmd instanceof ExecuteScript) {
 //      result = shell.read(cmd);
 //    } else {
 //      result = concmd.execute();
 //    }
-    Report respond = new Report(0, "Команда " + concreteCommand + " выполнена с результатом:\n\t" + result.Message());
+    Report respond = new Report(0, "Команда " + concreteCommand.toString() + " выполнена с результатом:\n\t" + result.Message());
+    if (result.getIsConfirmed()){
+      respond.setIsConfirmed(true);
+    }
+//    respond.setIsConfirmed(result.getIsConfirmed());
 //    if (concmd instanceof ExecuteScript) {
 //      respond = new Report(0,respond.Message() + collectorReports.Message());
 //      collectorReports = new Report(0,"");

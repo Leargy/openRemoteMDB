@@ -3,8 +3,9 @@ package instructions.concrete.extended;
 import communication.Report;
 import entities.Organization;
 import entities.OrganizationWithUId;
-import entities.comparators.OrganizationTitleComparator;
+import entities.comparator.OrganizationTitleComparator;
 import parsing.customer.Indicator;
+import parsing.customer.local.TotalCommander;
 import patterns.command.Receiver;
 
 import java.util.Map;
@@ -43,9 +44,10 @@ public class RemoveLower extends RemoveThan {
               OrganizationWithUId[] takens = new OrganizationWithUId[]{taken}; //там где OrganizationWithUId было Organization
               REAL.search(new Integer[]{e.getKey()}, takens, (org)->(true));
               OrganizationTitleComparator cmp = new OrganizationTitleComparator();
+              if (!((TotalCommander)REAL).checkIfYours(EMBEDDED, takens[0])) return;
               REAL.remove(new Integer[]{e.getKey()}, new OrganizationWithUId[]{takens[0]}, MENACE);
                   if (MENACE.verify(takens[0])) {
-                      result.append("Элемент " + takens[0] + " по ключу " + e.getKey() + " удален\n");
+                      result.append("Элемент " + takens[0].getOrganization().toString() + "\n по ключу " + e.getKey() + " удален\n");
                       deletedNumber[0]++;
                   }
             });

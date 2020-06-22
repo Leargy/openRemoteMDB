@@ -5,7 +5,7 @@ import entities.OrganizationWithUId;
 import entities.User;
 import extension_modules.dbinteraction.OrganizationsTableInteractor;
 import instructions.concrete.ConcreteDecree;
-import instructions.concrete.base.DBbaseCommands.DBInsert;
+import instructions.concrete.base.DBbaseCommands.*;
 import instructions.concrete.base.Help;
 import instructions.concrete.base.Insert;
 import instructions.concrete.base.Update;
@@ -18,6 +18,7 @@ import instructions.rotten.base.RawInsert;
 import instructions.rotten.base.RawUpdate;
 import instructions.rotten.extended.RawRemoveLower;
 import instructions.rotten.extended.RawReplaceIfGreater;
+import instructions.rotten.extended.RawReplaceIfLower;
 import parsing.customer.distro.LimboKeeper;
 
 /**
@@ -34,20 +35,26 @@ public final class CommittersBuilder {
    * @return ConDecree
    */
   public final ConcreteDecree make(RawCommitter c, LimboKeeper r, OrganizationsTableInteractor organizationsTableInteractor, User user) {
-    OrganizationWithUId organizationWithUId = new OrganizationWithUId(c.getOrganization(),user.getLogin());
-    if (c instanceof IClued) {
-      Integer p = ((IClued) c).Key();
-      if (c instanceof RawInsert)
-          return new DBInsert(r,p,organizationWithUId,organizationsTableInteractor);
-//        return new Insert(r, p,);
-      else if (c instanceof RawUpdate)
-          return new Update(r, p, organizationWithUId);
-//        return new Update(r, p,organization);
-      else if (c instanceof RawReplaceIfGreater)
-          return new ReplaceIfGreater(r, p, organizationWithUId);
-//          return new ReplaceIfGreater(r, p, organization );
-      else return new ReplaceIfLower(r, p, organizationWithUId);
-    } else if (c instanceof RawRemoveLower) return new RemoveLower(r, organizationWithUId);
-    else return new Help(r);
+      OrganizationWithUId organizationWithUId = new OrganizationWithUId(c.getOrganization(), user.getLogin());
+      if (c instanceof IClued) {
+          Integer p = ((IClued) c).Key();
+          if (c instanceof RawInsert)
+              return new DBInsert(r, p, organizationWithUId, organizationsTableInteractor);
+//        return new Insert(r, p, organizationWithUId);
+          else if (c instanceof RawUpdate)
+              return new DBUpdate(r, p, organizationWithUId, organizationsTableInteractor, user);
+//          return new Update(r, p, organizationWithUId);
+          else if (c instanceof RawReplaceIfGreater)
+              return new DBReplaceIfGreater(r, p, organizationWithUId, organizationsTableInteractor, user);
+//          return new ReplaceIfGreater(r, p, organizationWithUId);
+          else if (c instanceof RawReplaceIfLower)
+              return new DBReplaceIfLower(r, p, organizationWithUId, organizationsTableInteractor, user);
+          else if (c instanceof RawRemoveLower)
+              return new DBRemoveLower(r, organizationWithUId, organizationsTableInteractor, user);
+//          return new RemoveLower(r, organizationWithUId);
+          else if (c instanceof RawRemoveLower)
+              return new DBRemoveLower(r,organizationWithUId,organizationsTableInteractor,user);
+      }
+      return new Help(r);
   }
 }

@@ -34,6 +34,7 @@ public class ClientPackageRetrievingTask implements Component,Runnable{
         while (!CLIENT_SOCKET_CHANNEL.socket().isClosed()) {
             getClientPackage();
         }
+        CONTROLLER.notify(this, new ChanneledBag(CLIENT_SOCKET_CHANNEL));
         logger.error("Client " + CLIENT_SOCKET_CHANNEL.socket().getInetAddress().getHostAddress() + ":" + CLIENT_SOCKET_CHANNEL.socket().getPort() + " disconnected");
     }
 

@@ -2,8 +2,8 @@ package instructions.concrete.extended;
 
 import communication.Report;
 import entities.Mappable;
-import instructions.concrete.ConDecree;
-import parsing.customer.Receiver;
+import instructions.concrete.ConcreteDecree;
+import patterns.command.Receiver;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @param <V> тип элементов коллекции
  * @param <R> тип поля, по которому суммируем
  */
-public class SumOfAnnual<K extends Number, V extends Mappable<K>, R extends Number> extends ConDecree {
+public class SumOfAnnual<K extends Number, V extends Mappable<K>, R extends Number> extends ConcreteDecree {
   protected final Function<? super V,? extends R> keySummator;
   /**
    * Конструктор, устанавливающий ссылку на

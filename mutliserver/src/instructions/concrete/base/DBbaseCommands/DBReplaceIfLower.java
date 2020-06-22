@@ -30,4 +30,6 @@ public class DBReplaceIfLower extends ReplaceIfLower {
         }
         return super.execute();
     }
+    @Override
+    public String toString() { return NAME; }
 }

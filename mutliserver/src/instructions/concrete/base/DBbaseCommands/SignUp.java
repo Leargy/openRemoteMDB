@@ -55,4 +55,7 @@ public class SignUp extends ConcreteDecree{
         this.userPassword = passWord;
         this.userSocketChannel = socketChannel;
     }
+
+    @Override
+    public String toString() { return NAME; }
 }

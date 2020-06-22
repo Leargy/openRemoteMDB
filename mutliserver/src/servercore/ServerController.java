@@ -13,6 +13,7 @@ import parameters.server.ConfiguredServerParameters;
 import patterns.mediator.Component;
 import patterns.mediator.Controllers;
 import servercore.servertasks.maintasks.MainServerTask;
+import uplink_bags.ChanneledBag;
 import uplink_bags.RegistrationBag;
 import uplink_bags.TransportableBag;
 
