@@ -69,4 +69,8 @@ public class OrganizationWithUId implements Mappable<Integer> {
         return ORGANIZATION.getType();
     }
 
+    @Override
+    public String toString() {
+        return ORGANIZATION.toString();
+    }
 }
