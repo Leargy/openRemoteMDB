@@ -17,20 +17,25 @@ public class OrganizationWithUId implements Mappable<Integer> {
     private final Organization ORGANIZATION;
     @XmlAttribute(name = "user-name")
     @NotNull
-    private final String userLogin;
+    public final String USER_LOGIN;
+    @XmlAttribute(name = "collection-key")
+    @NotNull
+    public final int  COLLECTION_KEY;
 
     public OrganizationWithUId() {
         ORGANIZATION = new Organization();
-        userLogin = "debug";
+        USER_LOGIN = "debug";
+        COLLECTION_KEY = 0xDEAD;
     }
 
-    public OrganizationWithUId(Organization organization, String Uid) {
+    public OrganizationWithUId(Organization organization, String user_login, int collectionKey) {
         ORGANIZATION = organization;
-        userLogin = Uid;
+        USER_LOGIN = user_login;
+        COLLECTION_KEY = collectionKey;
     }
 
     public String getUserLogin() {
-        return userLogin;
+        return USER_LOGIN;
     }
 
     public Organization getOrganization() {
@@ -39,7 +44,7 @@ public class OrganizationWithUId implements Mappable<Integer> {
 
     @Override
     public Integer getKey() {
-        return ORGANIZATION.getKey();
+        return COLLECTION_KEY;
     }
 
     @Override

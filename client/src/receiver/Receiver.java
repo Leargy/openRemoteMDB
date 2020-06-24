@@ -23,7 +23,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Receiver extends AReceiver{
     private ByteArrayInputStream byteArrayInputStream;
     private ObjectInputStream objectInputStream;
-    private ByteBuffer byteBuffer = ByteBuffer.allocate(3 * 1024);
+    private final ByteBuffer byteBuffer = ByteBuffer.allocate(3 * 1024);
     private Lock lock = new ReentrantLock();
 
     public Receiver(Mediating mediator){
@@ -48,10 +48,10 @@ public class Receiver extends AReceiver{
             byteArrayInputStream = new ByteArrayInputStream(byteBuffer.array());
             objectInputStream = new ObjectInputStream(byteArrayInputStream);
             Report query = (Report) objectInputStream.readObject();
-            parcel.setClientPackage(new ClientPackage(null,query));
+            parcel.setClientPackage(new ClientPackage(null, query));
             // Block of checking if user's login and pass was confirmed.
             lock.unlock();
-            if (query.getIsConfirmed()) {
+            if (query.getIsConfirmed() != null) {
                 parcel.setMarker(Markers.CONFIRMING);
                 mediator.notify(this, parcel);
             }

@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class Report implements Serializable {
     private final int ERROR_CODE; // Error code
     private final String MESSAGE; // Message
-    private boolean isConfirmed;
+    private Boolean isConfirmed;
 
     /**
      * Основной конструктор, устанавливающий
@@ -40,7 +40,7 @@ public class Report implements Serializable {
      * @return строка с сообщением
      */
     public String Message() { return MESSAGE; }
-    public boolean getIsConfirmed() {
+    public Boolean getIsConfirmed() {
         return isConfirmed;
     }
     public void setIsConfirmed(boolean isConfirmed) {

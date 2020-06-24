@@ -40,6 +40,7 @@ public class AuthorizationHandler extends DataHandler {
 
     @Override
     public RawDecree handle(Segment parcel) throws CommandSyntaxException {
+//        System.out.println("in handling " + isConfirmed);
         if (isConfirmed) {
             return nextHandler.handle(parcel);
         }else {

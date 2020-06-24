@@ -18,15 +18,15 @@ import java.io.IOException;
  */
 public class Mediator implements Mediating {
     private volatile Client client;
-    private final AReceiver receiver;
-    private final ADispatcher dispatcher;
-    private final AServant servant;
+    private final AReceiver RECEIVER;
+    private final ADispatcher DISPATCHER;
+    private final AServant SERVANT;
 
     public Mediator() {
         client = new Client(this);
-        receiver = new Receiver(this);
-        dispatcher = new Dispatcher(this);
-        servant = new Servant(this);
+        RECEIVER = new Receiver(this);
+        DISPATCHER = new Dispatcher(this);
+        SERVANT = new Servant(this);
     }
 
     /**
@@ -34,7 +34,7 @@ public class Mediator implements Mediating {
      * @return AServant
      */
     public AServant getServant() {
-        return servant;
+        return SERVANT;
     }
 
     /**
@@ -58,41 +58,41 @@ public class Mediator implements Mediating {
 //        if (component == receiver && parcel.getMarker() == Markers.WRITE) servant.setIsReplying(true);
         if (component == client && parcel.getMarker() == Markers.INTERRUPTED) {
 //            System.out.println(Thread.currentThread().getName() + " from client");
-            ((Servant)servant).setIsIncoming(true);
-            servant.resetConnection(true);
+            ((Servant)SERVANT).setIsIncoming(true);
+            SERVANT.resetConnection(true);
         }
-        if (component == servant && parcel.getMarker() == Markers.WRITE) dispatcher.giveOrder(parcel);
-        if (component == dispatcher && parcel.getMarker() == Markers.GOODINPUTCONDITION) {
-            servant.setIsReplying(true);
+        if (component == SERVANT && parcel.getMarker() == Markers.WRITE) DISPATCHER.giveOrder(parcel);
+        if (component == DISPATCHER && parcel.getMarker() == Markers.GOODINPUTCONDITION) {
+            SERVANT.setIsReplying(true);
             client.setInputCondition(true);
         }
-        if (component == dispatcher && parcel.getMarker() == Markers.BADINPUTCONDITION) {
-            servant.setIsReplying(false);
+        if (component == DISPATCHER && parcel.getMarker() == Markers.BADINPUTCONDITION) {
+            SERVANT.setIsReplying(false);
             client.setInputCondition(false);
         }
-        if (component == dispatcher && parcel.getMarker() == Markers.INTERRUPTED) {
+        if (component == DISPATCHER && parcel.getMarker() == Markers.INTERRUPTED) {
 //            System.out.println(Thread.currentThread().getName() + " from dispatcher");
-            ((Servant)servant).setIsIncoming(true);
-            servant.resetConnection(true);
+            ((Servant)SERVANT).setIsIncoming(true);
+            SERVANT.resetConnection(true);
         }
-        if ((component == dispatcher || component == servant) && parcel.getMarker() == Markers.STOP) client.stopAndClose();
-        if (component == client && parcel.getMarker() == Markers.WRITE) servant.order(parcel);
-        if (component == client && parcel.getMarker() == Markers.READ) receiver.receive(parcel);
-        if (component == receiver && parcel.getMarker() == Markers.INTERRUPTED) {
+        if ((component == DISPATCHER || component == SERVANT) && parcel.getMarker() == Markers.STOP) client.stopAndClose();
+        if (component == client && parcel.getMarker() == Markers.WRITE) SERVANT.order(parcel);
+        if (component == client && parcel.getMarker() == Markers.READ) RECEIVER.receive(parcel);
+        if (component == RECEIVER && parcel.getMarker() == Markers.INTERRUPTED) {
 //            System.out.println(Thread.currentThread().getName() + " from receiver");
 //            servant.setIsReplying(false);
-            ((Servant)servant).setIsIncoming(true);
+            ((Servant)SERVANT).setIsIncoming(true);
             client.killSocket();
-            servant.resetConnection(true);
-            dispatcher.confirm(false);
+            SERVANT.resetConnection(true);
+            DISPATCHER.confirm(false);
         }
-        if (component == receiver && parcel.getMarker() == Markers.WRITE) {
-            ((Servant)servant).setIsIncoming(true);
+        if (component == RECEIVER && parcel.getMarker() == Markers.WRITE) {
+            ((Servant)SERVANT).setIsIncoming(true);
 //            System.out.println(Thread.currentThread().getName() + " me incoming");
-            servant.notification(parcel);
+            SERVANT.notification(parcel);
         }
-        if (component == receiver && parcel.getMarker() == Markers.CONFIRMING) {
-            dispatcher.confirm(parcel.getClientPackage().getReport().isSuccessful());
+        if (component == RECEIVER && parcel.getMarker() == Markers.CONFIRMING) {
+            DISPATCHER.confirm(parcel.getClientPackage().getReport().getIsConfirmed());
 //            ((Servant)servant).setIsIncoming(true);
 //            servant.notification(parcel);
         }

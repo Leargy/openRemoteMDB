@@ -25,7 +25,8 @@ public class DBReplaceIfGreater extends ReplaceIfGreater {
         try {
             dbReport = ORGANIZATION_TABLE_INTERACTOR.replaceUserOrganizationIfGreater(TEMP_USER, super.KEY, super.EMBEDDED);
         } catch (SQLException ex) {
-            return new Report(12, "Failed to remove greater organization!\n");
+//            return new Report(12, "Failed to remove greater organization!\n");
+            return new Report(12, "Не удалось заменить организацию!\n");
         }
         return super.execute();
     }

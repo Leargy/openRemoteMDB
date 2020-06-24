@@ -1,8 +1,11 @@
 package parsing.customer.bootstrapper;
 
-import organization.OrganizationWithUId;
-import organization.Organizations;
+import extension_modules.dbinteraction.DataBaseConnector;
+import extension_modules.dbinteraction.OrganizationsTableInteractor;
+import extension_modules.dbinteraction.UsersTableInteractor;
+import organization.*;
 
+import javax.print.attribute.standard.MediaSize;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -11,7 +14,13 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -34,13 +43,19 @@ public final class NakedCrateLoader implements LoaferLoader<OrganizationWithUId>
   private String birthDay = ZonedDateTime.now().toString(); // дата создания загрузчика коллекции или файла с коллекцией
   private String environment = "DBPATH"; // название переменной окружения
   private boolean loaded = false; // признак того, что коллекция уже загружена
+  public final DataBaseConnector DATABASE_CONTROLLER;
+
+  public NakedCrateLoader(DataBaseConnector dataBaseConnector) {
+    DATABASE_CONTROLLER = dataBaseConnector;
+  }
   /**
    * Метод подгрузки коллекции из локального хранилища,
    * так, чтобы не бомбило сидалище.
    * Спойлер: бомбит
    * @return список элементов
    */
-  @Override public List<OrganizationWithUId> load() {
+
+  public List<OrganizationWithUId> loadFromXML() {
     // получаем файловый разделитель нашей OS
     // запоминаем детки, что для Windows - это \, а для Линуха - /,
     // а MacOS - это дерьмо для геев и его даже знать не надо
@@ -114,6 +129,74 @@ public final class NakedCrateLoader implements LoaferLoader<OrganizationWithUId>
     // TODO: желательно составить рапорт (Report) об успешности загрузки (дабы уведомить клиента) и подергать логгер, выше тоже проверить
     loaded = true;
     return companies.getCompanies();
+  }
+
+  @Override /*Method for loading collection from DB during preparing server*/
+  public List<OrganizationWithUId> load(){
+    List<OrganizationWithUId> companies = new ArrayList<>();
+    try {
+    if (countOrganizationsInDB() == 0) {
+      return companies;
+    }
+    String name, fullName, zipCode, userLogin, type;
+    int id, employsCount, coordinates_x, collectionKey;
+    Long location_x, location_y;
+    Double location_z;
+    Float coordinates_y, annualTurnover;
+    LocalDateTime creationDateTime;
+
+
+    Connection currentConnection = DATABASE_CONTROLLER.retrieveCurrentConnection();
+      PreparedStatement getTableFromDB = currentConnection.prepareStatement("SELECT * FROM " + OrganizationsTableInteractor.DB_TABLE_NAME + " ");
+      ResultSet resultSet = getTableFromDB.executeQuery();
+      while (resultSet.next()) {
+        name = resultSet.getString("name");
+        fullName = resultSet.getString("fullname");
+        zipCode = resultSet.getString("zipcode");
+        userLogin = resultSet.getString("user_login");
+        type = resultSet.getString("type");
+        id = resultSet.getInt("id");
+        employsCount = resultSet.getInt("employeescount");
+        coordinates_x = resultSet.getInt("coordinates_x");
+        collectionKey = resultSet.getInt("collection_key");
+        location_x = resultSet.getLong("location_x");
+        location_y = resultSet.getLong("location_y");
+        location_z = resultSet.getDouble("location_z");
+        coordinates_y = resultSet.getFloat("coordinates_y");
+        annualTurnover = resultSet.getFloat("annualturnover");
+        creationDateTime = LocalDateTime.parse(resultSet.getString("creationdate"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+        companies.add(new OrganizationWithUId(new Organization(name, new Coordinates(coordinates_x,coordinates_y),
+                 annualTurnover, fullName, employsCount,makeOutType(type),
+                new Address(zipCode,new Location(location_x, location_y, location_z)), id, creationDateTime),
+                userLogin, collectionKey));
+      }
+    }catch (SQLException ex) {
+      System.out.println(ex.getMessage()); //TODO:накинуть логгер если нада
+      System.exit(-10);
+    }
+
+    return companies;
+  }
+
+  public int countOrganizationsInDB() throws SQLException {
+    int result = 0;
+    Connection currentConnection = DATABASE_CONTROLLER.retrieveCurrentConnection();
+    PreparedStatement counting = currentConnection
+            .prepareStatement("SELECT COUNT(*) AS rowcount FROM " + OrganizationsTableInteractor.DB_TABLE_NAME);
+    ResultSet resultSet = counting.executeQuery();
+    resultSet.next();
+    result = resultSet.getInt("rowcount");
+    return result;
+  }
+
+  private OrganizationType makeOutType(String typeInSting) {
+    switch (typeInSting) {
+      case "public": return OrganizationType.PUBLIC;
+      case "trust": return  OrganizationType.TRUST;
+      case "private-limited-company": return OrganizationType.PRIVATE_LIMITED_COMPANY;
+      case "open-joint-stock-company": return OrganizationType.OPEN_JOINT_STOCK_COMPANY;
+      default: return OrganizationType.PUBLIC;
+    }
   }
 
   /**
@@ -241,10 +324,10 @@ public final class NakedCrateLoader implements LoaferLoader<OrganizationWithUId>
       return false;
     }
     base = Pattern.compile("user-name=\"\"");
-    if (base.matcher(stringBuilder).find()) {
-      System.err.println("unidentified organization");
-      return false;
-    }
+//    if (!base.matcher(stringBuilder).find()) {
+//      System.err.println("unidentified organization");
+//      return false;
+//    }
     String[] dictinary = new String[]{"id=\"\"","name=\"\""};
     String[] degradedXML = stringBuilder.toString().split(" ");
     stringBuilder = new StringBuilder();

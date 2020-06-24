@@ -29,9 +29,10 @@ public final class CommittersBuilder {
    * @return ConDecree
    */
   public final ConcreteDecree make(RawCommitter c, LimboKeeper r, OrganizationsTableInteractor organizationsTableInteractor, User user) {
-      OrganizationWithUId organizationWithUId = new OrganizationWithUId(c.getOrganization(), user.getLogin());
+      OrganizationWithUId organizationWithUId;
       if (c instanceof IClued) {
           Integer p = ((IClued) c).Key();
+          organizationWithUId = new OrganizationWithUId(c.getOrganization(), user.getLogin(), p);
           if (c instanceof RawInsert)
               return new DBInsert(r, p, organizationWithUId, organizationsTableInteractor);
 //        return new Insert(r, p, organizationWithUId);
@@ -48,6 +49,7 @@ public final class CommittersBuilder {
 //          return new RemoveLower(r, organizationWithUId);
       }
       else if (c instanceof RawRemoveLower) {
+          organizationWithUId = new OrganizationWithUId(c.getOrganization(), user.getLogin(), 999999999);
           return new DBRemoveLower(r,organizationWithUId,organizationsTableInteractor,user);
       }
       return new Help(r);

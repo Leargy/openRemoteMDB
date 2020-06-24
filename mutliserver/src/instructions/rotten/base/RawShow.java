@@ -1,7 +1,6 @@
 package instructions.rotten.base;
 
 import instructions.rotten.RawDecree;
-
 import java.io.Serializable;
 
 /**

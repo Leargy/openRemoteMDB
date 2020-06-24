@@ -24,6 +24,7 @@ public final class DataBaseConnector {
     private volatile Connection CURRENT_CONNECTION = null;
     private static volatile DataBaseConnector instance;
     private volatile int LOCAL_PORT = 5000;
+    //TODO:Организовать хранение коллекции в реляционной СУБД (PostgresQL). Убрать хранение коллекции в файле. АГА СОСУНОК, ГДЕ ГОВОРИШЬ ХРОНИШЬ КОЛЛЕКЦИЮ
 
     public static DataBaseConnector getInstance() {
         if (instance == null)

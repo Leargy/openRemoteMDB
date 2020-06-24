@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class UsersTableInteractor implements TablesInteractor {
     private final Logger LOG = LoggerFactory.getLogger(UsersTableInteractor.class);
-    private static final String DB_TABLE_NAME = "clients";
+    public static final String DB_TABLE_NAME = "clients";
     
     public Report addNewUser(UsersParameters params) throws SQLException{
         LOG.info("Adding new user to table");
@@ -29,8 +29,7 @@ public class UsersTableInteractor implements TablesInteractor {
                 + ";";
         LOG.info("Query prepared");
         LOG.info("Connecting to database...");
-        Report connectionResults = new Report(0,"");
-                DataBaseConnector
+        Report connectionResults = DataBaseConnector
                 .getInstance()
                 .connect2DBUsingProperties("database.properties");
         if (connectionResults.isSuccessful()) {

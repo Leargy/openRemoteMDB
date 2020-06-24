@@ -35,7 +35,8 @@ public class DBUpdate extends Update {
         try {
             dbReport = ORGANIZATION_TABLE_INTERACTOR.updateUserOrganization(TEMP_USER, super.id, super.EMBEDDED);
         } catch (SQLException ex) {
-            return new Report(12, "Failed to remove lower organization!\n");
+//            return new Report(12, "Failed to update your organization!\n");
+            return new Report(12, "Не удалось обновить данные вашей организации!\n");
         }
         return super.execute();
     }

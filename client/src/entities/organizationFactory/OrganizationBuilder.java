@@ -4,6 +4,7 @@ package entities.organizationFactory;
 import communication.Component;
 import organization.*;
 
+import java.time.LocalDateTime;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -118,7 +119,7 @@ public final class OrganizationBuilder implements Factory<Organization>, Compone
 //      System.out.println(ex.getMessage());
 //      /*NOPE*/
 //    }
-    return new Organization(name, cord, annualTurnover, fullname, employeesCount, type,  address);
+    return new Organization(name, cord, annualTurnover, fullname, employeesCount, type,  address, -1, LocalDateTime.now());
   }
 
   /**

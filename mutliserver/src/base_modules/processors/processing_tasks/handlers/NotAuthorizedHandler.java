@@ -23,6 +23,7 @@ public class NotAuthorizedHandler implements Handling{
         }else if (tempRawCommand instanceof RawHelp) {
             return new ClientPackage(new RawNotAuthorizedHelp(),clientPackage.getLogin(), clientPackage.getPassWord());
         }
-        throw new NotAuthorizedException("User wasn't authorized to execute this command: " + tempRawCommand.getClass());
+//        throw new NotAuthorizedException("User wasn't authorized to execute this command: " + tempRawCommand.getClass());
+        throw new NotAuthorizedException("Пользователь не авторезированн, чтобы выполнить команду: " + tempRawCommand.getClass());
     }
 }

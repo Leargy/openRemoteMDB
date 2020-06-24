@@ -3,11 +3,11 @@ package dispatching.script_handler;
 import communication.Segment;
 import data_section.enumSection.Markers;
 import dispatching.Dispatcher;
+import instructions.rotten.base.*;
 import organization.Junker;
 import organization.Organization;
 import entities.organizationFactory.OrganizationBuilder;
 import instructions.rotten.RawDecree;
-import instructions.rotten.base.*;
 import instructions.rotten.extended.*;
 
 

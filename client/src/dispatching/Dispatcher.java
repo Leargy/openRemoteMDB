@@ -94,7 +94,7 @@ public class Dispatcher extends ADispatcher {
                         return;
                     }else {
                         ((RawSignOut)tempCommand).setDeauthorizationData(passCheck.getLogin(),passCheck.getPassword());
-                        passCheck.setIsConfirmed(false);
+//                        confirm(false);
                         passCheck.setLogin("");
                         passCheck.setPassword("");
                     }
@@ -106,7 +106,7 @@ public class Dispatcher extends ADispatcher {
                 }
             }
             if (tempCommand instanceof RawExecuteScript) {
-//                System.err.println("You haven't authorised yet.");
+                System.err.println("You haven't authorised yet.");
                 mediator.notify(this, new Segment(Markers.BADINPUTCONDITION));
                 return;
             }
@@ -169,7 +169,7 @@ public class Dispatcher extends ADispatcher {
     @Override
     public synchronized void confirm(boolean isConfirmed) {
         if (passCheck != null) {
-            System.out.println(isConfirmed);
+//            System.out.println("in confirming method " + isConfirmed);
             ((AuthorizationHandler)dataHandler).setIsConfirmed(isConfirmed);
             passCheck.setIsConfirmed(isConfirmed);
         }

@@ -31,7 +31,8 @@ public class DBRemoveKey extends RemoveKey {
         try {
             dbReport = ORGANIZATION_TABLE_INTERACTOR.removeUserOrganizationByKey(TEMP_USER, super.key);
         } catch (SQLException ex) {
-            return new Report(12, "Failed to remover organization!\n");
+//            return new Report(12, "Failed to remover organization!\n");
+            return new Report(12, "Не удалось удалить организацию по заданному ключу!\n");
         }
         return super.execute();
     }

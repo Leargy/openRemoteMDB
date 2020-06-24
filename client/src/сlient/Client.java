@@ -12,6 +12,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -24,7 +25,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Client extends AClient implements Component, Runnable {
     private volatile SocketChannel socketChannel;
-    private Selector selector;
+//    private Selector selector;
     private ExecutorService fixedTP;
     private ExecutorService cachedTP;
     private Lock lock = new ReentrantLock();
@@ -42,9 +43,9 @@ public class Client extends AClient implements Component, Runnable {
      */
     public Client(Mediating mediator) {
         super(mediator);
-        try {
-            selector = Selector.open();
-        } catch (IOException ex) {/*NOPE*/}
+//        try {
+//            selector = Selector.open();
+//        } catch (IOException ex) {/*NOPE*/}
         cachedTP = Executors.newCachedThreadPool();
         fixedTP = Executors.newFixedThreadPool(3);
     }
@@ -74,9 +75,9 @@ public class Client extends AClient implements Component, Runnable {
             System.out.println("──────>Setting connection...");
             socketChannel = SocketChannel.open(new InetSocketAddress(hostName,serverPort));
             //socketChannel.configureBlocking(false);
-            while (!socketChannel.finishConnect()){
-                System.out.println("Waiting for connection...");
-            }
+//            while (!socketChannel.finishConnect()){
+//                System.out.println("Waiting for connection...");
+//            }
             System.out.println("──────>Connection is set<──────");
             System.out.println("Server ip: " + socketChannel.socket().getInetAddress().getHostAddress() + "\n"
                     + "Server port: " + socketChannel.socket().getPort());
@@ -86,9 +87,8 @@ public class Client extends AClient implements Component, Runnable {
         } catch (UnknownHostException e) {
             return false;
         } catch (IOException e) {
-            System.err.println("──────>Connection is lost< <─w──");
+//            System.err.println("──────>Connection is lost< <─w──");
             return false;
-        }finally {
         }
     }
 
@@ -98,7 +98,7 @@ public class Client extends AClient implements Component, Runnable {
     public synchronized void killSocket() {
         try {
             socketChannel.socket().close();
-            System.out.println(socketChannel.socket());
+//            System.out.println(socketChannel.socket());
         } catch (IOException ex) {
             new IOException("Something went wrong during closing \"socket channel\"", ex);
         }
@@ -111,6 +111,7 @@ public class Client extends AClient implements Component, Runnable {
     public void run() {
         while (socketChannel.isConnected()) {
             lock.lock();
+//            System.out.println("sending ask-task");
             //socket is not transmitted because of synchronization purposes
             fixedTP.submit(() -> mediator.notify(this, new Segment(Markers.WRITE)));
             try {
@@ -124,6 +125,7 @@ public class Client extends AClient implements Component, Runnable {
             } finally {
                 lock.unlock();
             }
+            //TODO: Где-то происходит дедлок, найти исправить (после переподключения клиента к серверу)
 
 //            try {
 //                if(socketChannel.read(byteBuffer) == -1) {

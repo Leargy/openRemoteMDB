@@ -2,14 +2,12 @@ package parsing.pickers;
 
 import base_modules.processors.processing_tasks.AuthenticationTask;
 import entities.User;
+import extension_modules.dbinteraction.OrganizationsTableInteractor;
 import extension_modules.dbinteraction.TablesInteractor;
 import extension_modules.dbinteraction.UsersTableInteractor;
 import instructions.concrete.ConcreteDecree;
 import instructions.concrete.base.*;
-import instructions.concrete.base.DBbaseCommands.DBClear;
-import instructions.concrete.base.DBbaseCommands.SignIn;
-import instructions.concrete.base.DBbaseCommands.SignOut;
-import instructions.concrete.base.DBbaseCommands.SignUp;
+import instructions.concrete.base.DBbaseCommands.*;
 import instructions.concrete.extended.ExecuteScript;
 import instructions.concrete.extended.FilterContainsName;
 import instructions.concrete.extended.MaxByDate;
@@ -46,7 +44,7 @@ public final class JustCommandBuilder {
       return new FilterContainsName(receiver, name);
     } else if (c instanceof IClued) {
       Integer key = ((IClued) c).Key();
-      return new RemoveKey(receiver, key);
+      return new DBRemoveKey(receiver, key, (OrganizationsTableInteractor) organizationTablesInteractor, user);
     } else {
         if (c instanceof RawSignUp) {
         SignUp signUp = new SignUp(receiver,USER_TABLE_INTERACTOR,AUTHENTICATION_TASK);

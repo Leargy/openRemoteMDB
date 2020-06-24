@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import servercore.installers.LoggedServerInstaller;
 import servercore.servertasks.inputtasks.InputServerTask;
+import servercore.servertasks.inputtasks.LoggedInputTasks;
 import servercore.servertasks.installtasks.InstallServerTask;
 import servercore.servertasks.installtasks.LoggedInstallTask;
 import servercore.servertasks.maintasks.MainServerTask;
@@ -20,7 +21,7 @@ public class Server {
     private static volatile Server instance;
 
     private static final InstallServerTask INSTALL_TASK = new LoggedInstallTask(new LoggedServerInstaller());
-    private static final InputServerTask INPUT_TASK = new InputServerTask();
+    private static InputServerTask INPUT_TASK;
     private final ConfiguredServerParameters PARAMETERS;
 
     private static ServerController SERVER_CONTROLLER;
@@ -28,6 +29,7 @@ public class Server {
     private Server(ConfiguredServerParameters params) {
         PARAMETERS = params;
         SERVER_CONTROLLER = new ServerController(params);
+        INPUT_TASK = new LoggedInputTasks(SERVER_CONTROLLER);
     }
 
     public static Server getInstance(ConfiguredServerParameters params) {
@@ -83,5 +85,6 @@ public class Server {
         mainTaskThread.start();
         logger.info("Client service starts");
         logger.info("Server successfully launched");
+        Thread thread = new Thread();
     }
 }

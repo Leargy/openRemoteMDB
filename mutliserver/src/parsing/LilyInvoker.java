@@ -8,6 +8,8 @@ import patterns.mediator.Controllers;
 import uplink_bags.ExecuteBag;
 import uplink_bags.NotifyBag;
 
+import javax.print.attribute.standard.NumberUp;
+
 /**
  * Эмулятор клиента, что вызывает приходящие
  * от него команды и вызывает их. Пародия на LilyTerm
@@ -47,8 +49,9 @@ public class LilyInvoker extends FondleEmulator {
 //      result = concmd.execute();
 //    }
     Report respond = new Report(0, "Команда " + concreteCommand.toString() + " выполнена с результатом:\n\t" + result.Message());
-    if (result.getIsConfirmed()){
-      respond.setIsConfirmed(true);
+    if (result.getIsConfirmed() != null){
+      if (result.getIsConfirmed()) respond.setIsConfirmed(true);
+      else respond.setIsConfirmed(false);
     }
 //    respond.setIsConfirmed(result.getIsConfirmed());
 //    if (concmd instanceof ExecuteScript) {

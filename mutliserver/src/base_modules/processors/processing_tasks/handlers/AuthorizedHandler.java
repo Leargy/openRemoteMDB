@@ -11,7 +11,8 @@ public class AuthorizedHandler implements Handling {
     public ClientPackage handle(ClientPackage clientPackage) throws NotAuthorizedException {
         RawDecree tempCommand = clientPackage.getCommand();
         if (tempCommand instanceof RawSignUp || tempCommand instanceof RawSignIn){
-            throw new NotAuthorizedException("You have already been authorized.");
+//            throw new NotAuthorizedException("You have already been authorized.");
+            throw new NotAuthorizedException("Вы уже авторезированны.");
         }else {
             return clientPackage;
         }

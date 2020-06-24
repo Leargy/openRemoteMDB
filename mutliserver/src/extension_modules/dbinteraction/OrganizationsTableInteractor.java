@@ -6,10 +6,7 @@ import organization.OrganizationWithUId;
 import entities.User;
 import extension_modules.ClassUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 
 // Organizations Table Structure:
 // 1  id integer
@@ -34,10 +31,9 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         int length = countUsersOrganizations(user);
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         PreparedStatement clearing = currentConnection
-                .prepareStatement("DELETE FROM " + DB_TABLE_NAME + " WHERE user_login LIKE ?;");
+                .prepareStatement("DELETE FROM " + DB_TABLE_NAME + " WHERE user_login = ?;");
         clearing.setString(1, user.getLogin());
         int result = clearing.executeUpdate();
-        System.out.println(length);
         if (length == result){
             return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
         }else throw new SQLException();
@@ -46,8 +42,8 @@ public class OrganizationsTableInteractor implements TablesInteractor {
     public Report insertUserOrganization(Integer key, OrganizationWithUId organizationWithUId) throws SQLException {
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         PreparedStatement insertion = currentConnection
-                .prepareStatement("INSERT INTO " + DB_TABLE_NAME + "(name, fullname, type, employeescount, annualturnover, creationdate, coordinates_x, coordinates_y, zipcode, location_x, location_y, location_z, user_login)"
-                        + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                .prepareStatement("INSERT INTO " + DB_TABLE_NAME + "(name, fullname, type, employeescount, annualturnover, creationdate, coordinates_x, coordinates_y, zipcode, location_x, location_y, location_z, user_login, collection_key)"
+                        + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
         insertion.setString(1, organizationWithUId.getName());
         insertion.setString(2, organizationWithUId.getFullname());
         insertion.setString(3, organizationWithUId.getType().name());
@@ -57,10 +53,11 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         insertion.setInt(7, organizationWithUId.getCoordinates().getX());
         insertion.setFloat(8, organizationWithUId.getCoordinates().getY());
         insertion.setString(9, organizationWithUId.getAddress().getZipCode());
-        insertion.setLong(10, organizationWithUId.getAddress().getTown().getX());
+        insertion.setDouble(10, organizationWithUId.getAddress().getTown().getX());
         insertion.setLong(11, organizationWithUId.getAddress().getTown().getY());
         insertion.setDouble(12, organizationWithUId.getAddress().getTown().getZ());
         insertion.setString(13, organizationWithUId.getUserLogin());
+        insertion.setInt(14, key);
         int result = 0;
         try {
             result = insertion.executeUpdate();
@@ -75,14 +72,16 @@ public class OrganizationsTableInteractor implements TablesInteractor {
 
     public Report removeUserOrganizationByKey(User user, Integer key) throws SQLException {
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
-        PreparedStatement removing = currentConnection.prepareStatement("DELETE FROM s284733." + DB_TABLE_NAME + " WHERE user_login LIKE ?;");
+        PreparedStatement removing = currentConnection.prepareStatement("DELETE FROM " + DB_TABLE_NAME + " WHERE user_login = ? AND collection_key = ?;");
         removing.setString(1, user.getLogin());
+        removing.setInt(2, key);
         int result = 0;
         try {
             result= removing.executeUpdate();
         }catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        System.out.println(result);
         if (result != 1)
             throw new SQLException();
             //            return ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
@@ -94,7 +93,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         PreparedStatement replacing = currentConnection.prepareStatement("UPDATE " + DB_TABLE_NAME + " SET name = ?,"
                 + " fullname = ?, type = ?, employeescount = ?, annualturnover = ?, creationdate = ?, coordinates_x = ?, coordinates_y = ?, zipcode = ?, location_x = ?,"
-                + "location_y = ?, location_z = ? WHERE user_login = ? AND name < ?;");
+                + "location_y = ?, location_z = ?, collection_key = ? WHERE user_login = ? AND name < ?;");
         replacing.setString(1, organizationWithUId.getName());
         replacing.setString(2, organizationWithUId.getFullname());
         replacing.setString(3, organizationWithUId.getType().name());
@@ -104,11 +103,12 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         replacing.setInt(7, organizationWithUId.getCoordinates().getX());
         replacing.setFloat(8, organizationWithUId.getCoordinates().getY());
         replacing.setString(9, organizationWithUId.getAddress().getZipCode());
-        replacing.setLong(10, organizationWithUId.getAddress().getTown().getX());
+        replacing.setDouble(10, organizationWithUId.getAddress().getTown().getX());
         replacing.setLong(11, organizationWithUId.getAddress().getTown().getY());
         replacing.setDouble(12, organizationWithUId.getAddress().getTown().getZ());
-        replacing.setString(13, organizationWithUId.getUserLogin());
-        replacing.setString(14, organizationWithUId.getName());
+        replacing.setInt(13,key);
+        replacing.setString(14, organizationWithUId.getUserLogin());
+        replacing.setString(15, organizationWithUId.getName());
         int replaced = 0;
         try {
             replaced = replacing.executeUpdate();
@@ -127,7 +127,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         PreparedStatement replacing = currentConnection.prepareStatement("UPDATE " + DB_TABLE_NAME + " SET name = ?,"
                 + " fullname = ?, type = ?, employeescount = ?, annualturnover = ?, creationdate = ?, coordinates_x = ?, coordinates_y = ?, zipcode = ?, location_x = ?,"
-                + "location_y = ?, location_z = ? WHERE user_login = ? AND name > ?;");
+                + "location_y = ?, location_z = ?, collection_key = ?  WHERE user_login = ? AND name > ?;");
         replacing.setString(1, organizationWithUId.getName());
         replacing.setString(2, organizationWithUId.getFullname());
         replacing.setString(3, organizationWithUId.getType().name());
@@ -137,11 +137,12 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         replacing.setInt(7, organizationWithUId.getCoordinates().getX());
         replacing.setFloat(8, organizationWithUId.getCoordinates().getY());
         replacing.setString(9, organizationWithUId.getAddress().getZipCode());
-        replacing.setLong(10, organizationWithUId.getAddress().getTown().getX());
+        replacing.setDouble(10, organizationWithUId.getAddress().getTown().getX());
         replacing.setLong(11, organizationWithUId.getAddress().getTown().getY());
         replacing.setDouble(12, organizationWithUId.getAddress().getTown().getZ());
-        replacing.setString(13, organizationWithUId.getUserLogin());
-        replacing.setString(14, organizationWithUId.getName());
+        replacing.setInt(13,key);
+        replacing.setString(14, organizationWithUId.getUserLogin());
+        replacing.setString(15, organizationWithUId.getName());
         int replaced = replacing.executeUpdate();
         if(replaced == length){
             return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
@@ -169,7 +170,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         PreparedStatement updating = currentConnection.prepareStatement("UPDATE " + DB_TABLE_NAME + " SET name = ?,"
                 + " fullname = ?, type = ?, employeescount = ?, annualturnover = ?, creationdate = ?, coordinates_x = ?, coordinates_y = ?, zipcode = ?, location_x = ?,"
-                + "location_y = ?, location_z = ? WHERE user_login = ?;");
+                + "location_y = ?, location_z = ?, collection_key = ? WHERE user_login = ?;");
         updating.setString(1, organizationWithUId.getName());
         updating.setString(2, organizationWithUId.getFullname());
         updating.setString(3, organizationWithUId.getType().name());
@@ -179,10 +180,11 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         updating.setInt(7, organizationWithUId.getCoordinates().getX());
         updating.setFloat(8, organizationWithUId.getCoordinates().getY());
         updating.setString(9, organizationWithUId.getAddress().getZipCode());
-        updating.setLong(10, organizationWithUId.getAddress().getTown().getX());
+        updating.setDouble(10, organizationWithUId.getAddress().getTown().getX());
         updating.setLong(11, organizationWithUId.getAddress().getTown().getY());
         updating.setDouble(12, organizationWithUId.getAddress().getTown().getZ());
-        updating.setString(13, organizationWithUId.getUserLogin());
+        updating.setInt(13,key);
+        updating.setString(14, organizationWithUId.getUserLogin());
         updating.executeUpdate();
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }
@@ -190,29 +192,38 @@ public class OrganizationsTableInteractor implements TablesInteractor {
     public int countUsersOrganizations(User user) throws SQLException {
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         PreparedStatement selection = currentConnection
-                .prepareStatement("SELECT COUNT(*) FROM " + DB_TABLE_NAME + " WHERE user_login LIKE ?;");
+                .prepareStatement("SELECT COUNT(*) AS rowcount FROM " + DB_TABLE_NAME + " WHERE user_login = ?;");
         selection.setString(1, user.getLogin());
-        int length = selection.executeUpdate();
-        return length;
+        ResultSet resultSet = selection.executeQuery();
+        int result = 0;
+        resultSet.next();
+        result = resultSet.getInt("rowcount");
+        return result;
     }
 
     public int countGreaterUsersOrganizations(User user, OrganizationWithUId organizationWithUId) throws SQLException{
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         PreparedStatement counting = currentConnection
-                .prepareStatement("SELECT COUNT(*) FROM " + DB_TABLE_NAME + " WHERE user_login LIKE ? AND name > ?;");
+                .prepareStatement("SELECT COUNT(*) AS rowcount FROM " + DB_TABLE_NAME + " WHERE user_login = ? AND name > ?;");
         counting.setString(1, user.getLogin());
         counting.setString(2, organizationWithUId.getName());
-        int result = counting.executeUpdate();
+        ResultSet resultSet = counting.executeQuery();
+        int result = 0;
+        resultSet.next();
+        result = resultSet.getInt("rowcount");
         return result;
     }
 
     public int countLowerUsersOrganizations(User user, OrganizationWithUId organizationWithUId) throws SQLException {
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         PreparedStatement counting = currentConnection
-                .prepareStatement("SELECT COUNT(*) FROM " + DB_TABLE_NAME + " WHERE user_login LIKE ? AND name < ?;");
+                .prepareStatement("SELECT COUNT(*) AS rowcount FROM " + DB_TABLE_NAME + " WHERE user_login LIKE ? AND name < ?;");
         counting.setString(1, user.getLogin());
         counting.setString(2, organizationWithUId.getName());
-        int result = counting.executeUpdate();
+        ResultSet resultSet = counting.executeQuery();
+        int result = 0;
+        resultSet.next();
+        result = resultSet.getInt("rowcount");
         return result;
     }
 

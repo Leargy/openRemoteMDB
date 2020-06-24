@@ -12,6 +12,7 @@ import communication.Report;
 import parameters.server.ConfiguredServerParameters;
 import patterns.mediator.Component;
 import patterns.mediator.Controllers;
+import servercore.servertasks.inputtasks.InputServerTask;
 import servercore.servertasks.maintasks.MainServerTask;
 import uplink_bags.ChanneledBag;
 import uplink_bags.RegistrationBag;
@@ -31,10 +32,20 @@ public class ServerController implements Controllers, Component {
         PERUSALER = new PerusalController(this);
         SUBPROCESSOR = new SubProcessorController(this);
         DISPATCHER = new DispatchController(this, MAX_SIMULTANEOUS_SENDS);
+
     }
 
     @Override
     public Report notify(Component sender, TransportableBag parcel) {
+        if (parcel == null) {
+            Thread killer = new Thread(() -> {
+                SUBPROCESSOR.notify(this,parcel);
+            });
+            try {
+                killer.join();
+            }catch (InterruptedException ex) { /*NOPE*/}
+                MAIN_SERVER_TASK.closeServerSocketChannel();
+            }
         if (sender == MAIN_SERVER_TASK) REGISTER.register((RegistrationBag) parcel);
         if (sender == REGISTER) ((PerusalController)PERUSALER).notify(this, parcel);
         if (sender == PERUSALER) SUBPROCESSOR.notify(this,parcel);

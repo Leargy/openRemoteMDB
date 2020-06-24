@@ -4,6 +4,7 @@ import organization.Mappable;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  *  @author Leargy aka Anton Sushkevich
  */
 public interface LoaferLoader<V extends Mappable> {
-  List<V> load();
+  List<V> load() ;
   void unload(List<V> elements);
   /**
    * Метод выполняющий проверку на правильное заполнение файла или наличие кошачьего наполнителя в файле.

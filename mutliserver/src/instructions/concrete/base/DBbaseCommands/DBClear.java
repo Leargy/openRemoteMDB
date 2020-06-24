@@ -24,7 +24,8 @@ public class DBClear extends Clear {
         try {
             dbReport = ORGANIZATION_TABLE_INTERACTOR.clearUserOrganization(TEMP_USER);
         }catch (SQLException ex) {
-            return new Report(12,"Failed to clear user's organization!\n");
+//            return new Report(12,"Failed to clear user's organization!\n");
+            return new Report(12,"Не удалось удалить ваши организации!\n ");
         }
         return super.execute();
     }

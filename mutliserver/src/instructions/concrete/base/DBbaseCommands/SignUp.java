@@ -44,9 +44,11 @@ public class SignUp extends ConcreteDecree{
             dbReport = USER_TABLE_INTERACTOR.addNewUser(new UsersParameters(new String[] {userLogin,userPassword}));
         }catch (SQLException ex) {
             /*If DB method throws exception then only send the report of failure*/
-            return new Report(10, "Account with this \"login\" is already exist!\n");
+//            return new Report(10, "Account with this \"login\" is already exist!\n");
+            return new Report(10, "Аккаунт с таким логином уже существует!\n");
         }
-        Report report = new Report(0,"New account was registered.");
+//        Report report = new Report(0,"New account was registered.");
+        Report report = new Report(0,"Аккаунт был успешно зарегестривован.");
         report.setIsConfirmed(true);
         AUTHENTICATION_TASK.addAuthorizedUser(userSocketChannel,new User(new UsersParameters(new String[]{userLogin, userPassword})));
         return report;

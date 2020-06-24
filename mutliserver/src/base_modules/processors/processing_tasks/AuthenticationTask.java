@@ -14,7 +14,9 @@ import uplink_bags.NotifyBag;
 import uplink_bags.RawDecreeBag;
 import uplink_bags.TransportableBag;
 
+import java.io.IOException;
 import java.nio.channels.SocketChannel;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -34,6 +36,7 @@ public class AuthenticationTask implements Component {
     }
 
     public void identify(TransportableBag clientPackBag) {
+        System.out.println(LOGGED_USERS.size());
 //        Future<ConcreteDecree> recognizedCommand = cachedTP.execute(); // Use this thread to recognize the command
         ClientPackage tempClientPackage = ((ClientPackBag)clientPackBag).getClientPacket();
         SocketChannel tempClientSocket = ((ClientPackBag)clientPackBag).getChannel();
@@ -77,5 +80,14 @@ public class AuthenticationTask implements Component {
     }
     public synchronized void removeAuthorizedUser(SocketChannel socketChannel) {
         LOGGED_USERS.remove(socketChannel);
+    }
+    public synchronized void killExistConnections() {
+        for (Map.Entry<SocketChannel,User> tempVictim : LOGGED_USERS.entrySet()) {
+            try {
+                tempVictim.getKey().socket().close();
+            }catch (IOException ex) {
+                System.out.println("Unabled to close socket: " +tempVictim.getKey().socket().toString());
+            }
+        }
     }
 }

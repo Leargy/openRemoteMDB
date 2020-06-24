@@ -30,7 +30,10 @@ public class SignOut extends ConcreteDecree {
     @Override
     public Report execute() {
         AUTHENTICATION_TASK.removeAuthorizedUser(userSocketChannel);
-        return new Report(0,"You successfully deauthorized.");
+//        return new Report(0,"You successfully deauthorized.");
+        Report report = new Report(0,"Вы успешно деавторезировались.");
+        report.setIsConfirmed(false);
+        return report;
     }
 
     public void setTempUserParametrs(SocketChannel socketChannel) {

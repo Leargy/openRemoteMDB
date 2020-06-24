@@ -30,4 +30,8 @@ public final class OrganizationParameters extends EntityParameters {
     public AddressParameters getAddress() {
         return ADDRESS_PARAMETERS;
     }
+
+    public int getId() {
+        return Math.abs(UNSORTED_PARAMETERS.hashCode());
+    }
 }

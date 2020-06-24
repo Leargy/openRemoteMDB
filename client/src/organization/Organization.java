@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 @XmlRootElement(name = "organization")
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class Organization implements Mappable<Integer> {
-  @XmlTransient
-  private static int count = 1;
+//  @XmlTransient
+//  private static int count = 1;
   @XmlAttribute(name = "id")
-  public final int id;
+  public int id;
   @XmlAttribute(name = "name")
   @NotNull
   public final String name;
@@ -24,7 +24,7 @@ public final class Organization implements Mappable<Integer> {
   public Coordinates getCoordinates() { return coordinates; }
   @XmlTransient
   @NotNull
-  private final LocalDateTime creationDate = LocalDateTime.now();
+  private final LocalDateTime creationDate;
 
   public LocalDateTime getCreationDate() { return creationDate; }
 
@@ -64,12 +64,13 @@ public final class Organization implements Mappable<Integer> {
     employeesCount = 0;
     type = OrganizationType.PUBLIC;
     officialAddress = new Address();
-    id = Math.abs(hashCode()) + count++;
+    id = Math.abs(hashCode());
+    creationDate = LocalDateTime.now();
   }
 
   public Organization(String name, Coordinates coordinates,
                       float annualTurnover, String fullname,
-                      int employeesCount, OrganizationType type, Address officialAddress) {
+                      int employeesCount, OrganizationType type, Address officialAddress, int id, LocalDateTime creationDate) {
     this.name = (name.isEmpty() || (name == null))? "SampleOrganization" : name;
     this.fullname = (fullname == null)? "" : fullname;
     this.coordinates = (coordinates == null)? new Coordinates() : coordinates;
@@ -77,14 +78,14 @@ public final class Organization implements Mappable<Integer> {
     this.employeesCount = employeesCount > 0? employeesCount : 1;
     this.type = type;
     this.officialAddress = officialAddress;
-    int buffer = hashCode() + count++;
-    id = (buffer == Integer.MIN_VALUE)? --buffer : Math.abs(buffer);
+    this.id = id;
+    this.creationDate = creationDate;
   }
 
   public Organization(OrganizationParameters params) {
     this(params.getName(), new Coordinates(params.getCoordinates()),
             params.getAnnualTurnOver(), params.getFullName(),
-            params.getEmployeesCount(), params.getType(), new Address(params.getAddress()));
+            params.getEmployeesCount(), params.getType(), new Address(params.getAddress()), params.getId(), LocalDateTime.now());
   }
 
   public int getID() {return id;}

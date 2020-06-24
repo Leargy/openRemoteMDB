@@ -62,7 +62,7 @@ public class Servant extends AServant {
     public boolean resetConnection(boolean droppedConnection) {
         try {
             lock.lock();
-            Thread.sleep(100);
+//            Thread.sleep(100);
 //            System.out.println(Thread.currentThread().getName() + " cl:" + client.isConnected());
             if (!client.isConnected()) {
 //                System.out.println(counter.get());
@@ -102,7 +102,7 @@ public class Servant extends AServant {
                     }
                 }
             }
-        }catch (InterruptedException ex){
+//        }catch (InterruptedException ex){
             /*NOPE*/
         }finally {
 //            System.out.println(Thread.currentThread().getName() + " cl:" + client.isConnected());
@@ -139,7 +139,8 @@ public class Servant extends AServant {
     public String debrief() {
         String stringData = "";
         try {
-            semaphore.acquire();
+//            semaphore.acquire();
+            Thread.sleep(100);
             lock.lock();
 //            System.out.println(Thread.currentThread().getName() + " 1 " + isReplying);
             if (isReplying) receiveCondition.await();
@@ -160,7 +161,7 @@ public class Servant extends AServant {
         }finally {
             counter.getAndSet(0);
             isReplying = true;
-            semaphore.release();
+//            semaphore.release();
             lock.unlock();
         }
         return stringData;

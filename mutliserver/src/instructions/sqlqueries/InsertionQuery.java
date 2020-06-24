@@ -52,7 +52,7 @@ public class InsertionQuery implements Command {
                 Integer.toString(embedded.getCoordinates().getX()),
                 embedded.getCoordinates().getY().toString(),
                 prepareLineArgument(embedded.getAddress().getZipCode()),
-                Long.toString(embedded.getAddress().getTown().getX()),
+                Double.toString(embedded.getAddress().getTown().getX()),
                 embedded.getAddress().getTown().getY().toString(),
                 Double.toString(embedded.getAddress().getTown().getZ()),
                 user_id.toString()
