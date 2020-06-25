@@ -1,25 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <organizations>
-    <reserved-organization user-name="anton" collection-key="66">
-        <organization id="252" name="congr" annual-turnover="7.0" employees-count="1">
-            <coordinates x="7" y="7.0"/>
-            <fullname>atulaation</fullname>
-            <organization-type>public</organization-type>
-            <official-address zipcode="13">
-                <town x="31" y="1" z="1.0"/>
-            </official-address>
-        </organization>
-    </reserved-organization>
-    <reserved-organization user-name="anton" collection-key="54">
-        <organization id="238" name="test" annual-turnover="1.0" employees-count="1">
-            <coordinates x="1" y="1.0"/>
-            <fullname>hf</fullname>
-            <organization-type>public</organization-type>
-            <official-address zipcode="usa">
-                <town x="1" y="1" z="1.0"/>
-            </official-address>
-        </organization>
-    </reserved-organization>
     <reserved-organization user-name="test4" collection-key="3113">
         <organization id="280" name="testing" annual-turnover="90.0" employees-count="1">
             <coordinates x="32223" y="7.0"/>
@@ -30,13 +10,13 @@
             </official-address>
         </organization>
     </reserved-organization>
-    <reserved-organization user-name="anton" collection-key="77">
-        <organization id="266" name="test" annual-turnover="1.0" employees-count="1">
-            <coordinates x="1" y="2.0"/>
-            <fullname>not</fullname>
+    <reserved-organization user-name="nick" collection-key="45">
+        <organization id="294" name="gege" annual-turnover="14.0" employees-count="65">
+            <coordinates x="3" y="3.0"/>
+            <fullname>hf</fullname>
             <organization-type>public</organization-type>
             <official-address zipcode="usa">
-                <town x="8" y="8" z="8.0"/>
+                <town x="1" y="2" z="1.0"/>
             </official-address>
         </organization>
     </reserved-organization>

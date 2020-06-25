@@ -60,8 +60,11 @@ public class AuthenticationTask implements Component {
             }else {
                 //do something if user wasn't identified
             }
-        }else { //if user wasn't authorized
+        }else{ //if user wasn't authorized
             try {
+            for (Map.Entry<SocketChannel, User> tempEntry : LOGGED_USERS.entrySet()) {
+                if (tempEntry.getValue().getLogin().equals(tempClientPackage.getLogin())) throw new NotAuthorizedException("Этот аккаунт уже используется!");
+            }
                 SUB_PROCESS_CONTROLLER.notify(this,new RawDecreeBag(tempClientSocket, ALLOWED_NA_COMMAND_HANDLER.handle(tempClientPackage).getCommand(),null));
             }catch (NotAuthorizedException ex) {
                 logger.error(ex.getMessage());
@@ -86,7 +89,8 @@ public class AuthenticationTask implements Component {
     public synchronized void addAuthorizedUser(SocketChannel socketChannel, User user) {
         for (Map.Entry<SocketChannel, User> tempEntry : LOGGED_USERS.entrySet()) {
             UsersAlarmThread.submit(() -> {
-                SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0,tempEntry.getValue().getLogin() + " connected to the server!")));
+//                SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0,tempEntry.getValue().getLogin() + " connected to the server!")));
+                SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0,tempEntry.getValue().getLogin() + " зашел на сервер!")));
             });
         }
         LOGGED_USERS.putIfAbsent(socketChannel, user);
@@ -99,7 +103,8 @@ public class AuthenticationTask implements Component {
             LOGGED_USERS.remove(socketChannel);
             for (Map.Entry<SocketChannel, User> tempEntry : LOGGED_USERS.entrySet()) {
                 UsersAlarmThread.submit(() -> {
-                    SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0, tempEntry.getValue().getLogin() + " disconnected from the server!")));
+//                    SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0, tempEntry.getValue().getLogin() + " disconnected from the server!")));
+                    SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0, tempEntry.getValue().getLogin() + " вышел с сервера!")));
             });
             }
         }catch (NullPointerException ex) {/*NOPE*/}
