@@ -151,7 +151,7 @@ public final class NakedCrateLoader implements LoaferLoader<OrganizationWithUId>
       while (resultSet.next()) {
         name = resultSet.getString("name");
         fullName = resultSet.getString("fullname");
-        zipCode = resultSet.getString("zipcode");
+        zipCode = resultSet.getString("zipcode").trim();
         userLogin = resultSet.getString("user_login");
         type = resultSet.getString("type");
         id = resultSet.getInt("id");
@@ -163,7 +163,7 @@ public final class NakedCrateLoader implements LoaferLoader<OrganizationWithUId>
         location_z = resultSet.getDouble("location_z");
         coordinates_y = resultSet.getFloat("coordinates_y");
         annualTurnover = resultSet.getFloat("annualturnover");
-        creationDateTime = LocalDateTime.parse(resultSet.getString("creationdate"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+        creationDateTime = LocalDateTime.parse(resultSet.getString("creationdate").subSequence(0,19), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         companies.add(new OrganizationWithUId(new Organization(name, new Coordinates(coordinates_x,coordinates_y),
                  annualTurnover, fullName, employsCount,makeOutType(type),
                 new Address(zipCode,new Location(location_x, location_y, location_z)), id, creationDateTime),

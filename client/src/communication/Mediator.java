@@ -56,6 +56,8 @@ public class Mediator implements Mediating {
     public void notify(Component component, Segment parcel) {
 //        if (component == receiver && parcel.getMarker() == Markers.INTERRUPTED) client.dropReceives();
 //        if (component == receiver && parcel.getMarker() == Markers.WRITE) servant.setIsReplying(true);
+        if (component == RECEIVER && parcel.getMarker() == Markers.WAIKUP) client.setInputCondition(true);
+        if (component == RECEIVER && parcel.getMarker() == Markers.HASSERVERKEY) ((Dispatcher)DISPATCHER).setServerKey(parcel.getClientPackage().getReport().Message());
         if (component == client && parcel.getMarker() == Markers.INTERRUPTED) {
 //            System.out.println(Thread.currentThread().getName() + " from client");
             ((Servant)SERVANT).setIsIncoming(true);
@@ -63,11 +65,11 @@ public class Mediator implements Mediating {
         }
         if (component == SERVANT && parcel.getMarker() == Markers.WRITE) DISPATCHER.giveOrder(parcel);
         if (component == DISPATCHER && parcel.getMarker() == Markers.GOODINPUTCONDITION) {
-            SERVANT.setIsReplying(true);
+//            SERVANT.setIsReplying(true);
             client.setInputCondition(true);
         }
         if (component == DISPATCHER && parcel.getMarker() == Markers.BADINPUTCONDITION) {
-            SERVANT.setIsReplying(false);
+//            SERVANT.setIsReplying(false);
             client.setInputCondition(false);
         }
         if (component == DISPATCHER && parcel.getMarker() == Markers.INTERRUPTED) {

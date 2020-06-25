@@ -58,9 +58,9 @@ public abstract class AServant implements Component {
     public String debrief() { return "";}
     public void notification(Segment parcel) { }
 
-    public void setIsReplying(boolean isReplying) {
-        this.isReplying = isReplying;
-    }
+//    public void setIsReplying(boolean isReplying) {
+//        this.isReplying = isReplying;
+//    }
 //    public void setIsIncoming(boolean isIncoming) {
 //        this.isIncoming = isIncoming;
 //    }

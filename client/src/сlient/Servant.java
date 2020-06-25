@@ -33,6 +33,7 @@ public class Servant extends AServant {
     private volatile AtomicInteger counter = new AtomicInteger();
     private ExecutorService executorService = Executors.newCachedThreadPool();
     private Future<String> future ;
+    private boolean onExit = false;
 
     /**
      * Конструктор принимающий ссылку на посредника.
@@ -53,6 +54,7 @@ public class Servant extends AServant {
                 ,"Enter server's ip: ",scanner);
         port = Filters.scanInt((x)->(x > 2400 && x < 65536),"Enter server's port: ", scanner); //48654
         client = mediator.getClient();
+        counter.getAndIncrement();
         if (resetConnection(true)) {
             new Thread(client).start();
             return true;
@@ -66,13 +68,16 @@ public class Servant extends AServant {
      */
     @Override
     public boolean resetConnection(boolean droppedConnection) {
+        if (onExit) return false;
         try {
             try {
                 future.cancel(true);
             }catch (NullPointerException ex) {/*NOPE*/}
             lock.lock();
 //            scanner.reset();
-//            Thread.sleep(100);
+//            try {
+//                Thread.sleep(200);
+//            }catch (InterruptedException ex) { /*NOPE*/}
 //            System.out.println(Thread.currentThread().getName() + " cl:" + client.isConnected());
             if (!client.isConnected()) {
 //                System.out.println(counter.get());
@@ -136,6 +141,7 @@ public class Servant extends AServant {
         // segment is not used because of the socketchannel sinhronization
         String orderData = debrief();
         if (orderData.equals("")) return;
+        if (orderData.equals("exit")) onExit = true;
         Segment parcel = new Segment(client.getSocketChannel(),Markers.WRITE);
         parcel.setStringData(orderData.split(" "));
         //после получения пользовательской строки происходит обращение к модулю валидации введенных данных
@@ -151,8 +157,8 @@ public class Servant extends AServant {
         String stringData = "";
         try {
 //            semaphore.acquire();
-//            Thread.sleep(100);
             lock.lock();
+            receiveCondition.await(100,TimeUnit.MILLISECONDS);
 //            System.out.println(Thread.currentThread().getName() + " 1 " + isReplying);
             if (isReplying) receiveCondition.await();
 //            System.out.println(Thread.currentThread().getName() + " 1 " + isReplying);
@@ -171,13 +177,14 @@ public class Servant extends AServant {
 //            }
         }
         catch (Exception ex) {
+//            future = null;
+//            lock.unlock();
             return "";
 //            System.out.println(ex.getMessage());
         }finally {
 //            tempThreadTuskQueue.poll();
             future = null;
-            counter.getAndSet(0);
-            isReplying = true;
+//            isReplying = true;
 //            semaphore.release();
             lock.unlock();
         }
@@ -191,6 +198,9 @@ public class Servant extends AServant {
     @Override
     public void notification(Segment parcel) {
         try {
+            try {
+                future.cancel(true);
+            }catch (NullPointerException ex) { /*NOPE*/ }
 //            writingLock.lock();
             lock.lock();
             isReplying = true;

@@ -49,7 +49,7 @@ public final class SubProcessorController implements Processors {
         if (parcel == null) {
 
         }
-        if (sender == SERVER_CONTROLLER && parcel.getClass().getSimpleName().equals("ChanneledBag") ) {
+        if (sender == SERVER_CONTROLLER && parcel.getClass().getSimpleName().equals("ChanneledBag")) {
             AUTHENTICATION_TASK.removeAuthorizedUser((SocketChannel) ((ChanneledBag) parcel).getChannel());
             instaSave();
         } else if (sender == SERVER_CONTROLLER && parcel.getClass().getSimpleName().equals("ClientPackBag")) AUTHENTICATION_TASK.identify(parcel); //sending to determine, if temp client was authorized

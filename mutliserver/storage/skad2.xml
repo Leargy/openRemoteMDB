@@ -5,7 +5,7 @@
             <coordinates x="7" y="7.0"/>
             <fullname>atulaation</fullname>
             <organization-type>public</organization-type>
-            <official-address zipcode="13                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ">
+            <official-address zipcode="13">
                 <town x="31" y="1" z="1.0"/>
             </official-address>
         </organization>
@@ -15,8 +15,18 @@
             <coordinates x="1" y="1.0"/>
             <fullname>hf</fullname>
             <organization-type>public</organization-type>
-            <official-address zipcode="usa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ">
+            <official-address zipcode="usa">
                 <town x="1" y="1" z="1.0"/>
+            </official-address>
+        </organization>
+    </reserved-organization>
+    <reserved-organization user-name="test4" collection-key="3113">
+        <organization id="280" name="testing" annual-turnover="90.0" employees-count="1">
+            <coordinates x="32223" y="7.0"/>
+            <fullname>112</fullname>
+            <organization-type>public</organization-type>
+            <official-address zipcode="usa">
+                <town x="11" y="1" z="4.0"/>
             </official-address>
         </organization>
     </reserved-organization>
@@ -25,7 +35,7 @@
             <coordinates x="1" y="2.0"/>
             <fullname>not</fullname>
             <organization-type>public</organization-type>
-            <official-address zipcode="usa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ">
+            <official-address zipcode="usa">
                 <town x="8" y="8" z="8.0"/>
             </official-address>
         </organization>

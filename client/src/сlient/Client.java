@@ -93,7 +93,7 @@ public class Client extends AClient implements Component, Runnable {
     /**
      * Метод, закрывающий сокет(поток сокета) клиента.
      */
-    public synchronized void killSocket() {
+    public void killSocket() {
         try {
             socketChannel.socket().close();
 //            System.out.println(socketChannel.socket());

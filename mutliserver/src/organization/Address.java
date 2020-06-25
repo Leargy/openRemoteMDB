@@ -37,7 +37,7 @@ public final class Address implements Serializable {
 
   @Override
   public String toString() {
-    return "Address[zipCode: " + zipCode + "; town: " + town.toString() + "]";
+    return "Address[zipCode: " + zipCode.toString() + "; town: " + town.toString() + "]";
   }
 
   @Override

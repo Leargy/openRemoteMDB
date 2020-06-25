@@ -16,7 +16,7 @@ public class InterruptingInputTask implements Callable<String> {
             try {
                 // wait until we have data to complete a readLine()
                 while (!bufferedReader.ready()) {
-                    Thread.sleep(200);
+                    Thread.sleep(100);
                 }
                 input = bufferedReader.readLine();
             } catch (InterruptedException e) {

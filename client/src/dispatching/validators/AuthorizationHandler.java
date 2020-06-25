@@ -89,4 +89,5 @@ public class AuthorizationHandler extends DataHandler {
     public synchronized void setIsConfirmed(boolean isConfirmed) {
         this.isConfirmed = isConfirmed;
     }
+    public synchronized void setServerKey(String key) { ((Encryptor)encryptor).setTempPaper(key);}
 }

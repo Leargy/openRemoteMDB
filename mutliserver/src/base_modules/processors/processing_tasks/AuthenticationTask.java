@@ -93,14 +93,16 @@ public class AuthenticationTask implements Component {
         logger.info("User " + user.getLogin() + " was added to \"authorized\" list ");
     }
     public synchronized void removeAuthorizedUser(SocketChannel socketChannel) {
-        String disconnectedUserLogin = LOGGED_USERS.get(socketChannel).getLogin();
-        logger.info("User " + disconnectedUserLogin + " was deleted from \"authorized\" list");
-        LOGGED_USERS.remove(socketChannel);
-        for (Map.Entry<SocketChannel, User> tempEntry : LOGGED_USERS.entrySet()) {
-            UsersAlarmThread.submit(() -> {
-                SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0, tempEntry.getValue().getLogin() + " disconnected from the server!")));
+        try {
+            String disconnectedUserLogin = LOGGED_USERS.get(socketChannel).getLogin();
+            logger.info("User " + disconnectedUserLogin + " was deleted from \"authorized\" list");
+            LOGGED_USERS.remove(socketChannel);
+            for (Map.Entry<SocketChannel, User> tempEntry : LOGGED_USERS.entrySet()) {
+                UsersAlarmThread.submit(() -> {
+                    SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0, tempEntry.getValue().getLogin() + " disconnected from the server!")));
             });
-        }
+            }
+        }catch (NullPointerException ex) {/*NOPE*/}
     }
     public synchronized void killExistConnections() {
         for (Map.Entry<SocketChannel,User> tempVictim : LOGGED_USERS.entrySet()) {

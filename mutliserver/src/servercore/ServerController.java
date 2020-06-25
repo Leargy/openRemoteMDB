@@ -47,7 +47,11 @@ public class ServerController implements Controllers, Component {
                 MAIN_SERVER_TASK.closeServerSocketChannel();
             }
         if (sender == MAIN_SERVER_TASK) REGISTER.register((RegistrationBag) parcel);
-        if (sender == REGISTER) ((PerusalController)PERUSALER).notify(this, parcel);
+        if (sender == REGISTER) {
+//            System.out.println("me here");
+            ((PerusalController)PERUSALER).notify(this, parcel);
+            DISPATCHER.notify(this, parcel); //sending server_key
+        }
         if (sender == PERUSALER) SUBPROCESSOR.notify(this,parcel);
         if (sender == SUBPROCESSOR) DISPATCHER.notify(this,parcel);
         return new Report(0,"Sending successful");
