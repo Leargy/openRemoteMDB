@@ -23,7 +23,7 @@ public final class ShedBlock extends LimboKeeper {
    * но и отправлять его модулю разбора запросов клиента
    * @param logger логгер, взаимодействующий с контроллером
    */
-  public ShedBlock(LoaferLoader<OrganizationWithUId> loader, HawkPDroid logger) {
-    super(loader, logger);
+  public ShedBlock(LoaferLoader<OrganizationWithUId> loader) {
+    super(loader);
   } //TODO: туту нужег логгер
 }

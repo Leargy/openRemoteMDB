@@ -125,9 +125,9 @@ public class Dispatcher extends ADispatcher {
      */
     public synchronized void send(Segment parcel) {
         byteArrayOutputStream = new ByteArrayOutputStream();
-        try {
-            Thread.sleep(100);
-        }catch (InterruptedException ex) {/*NOPE*/}
+//        try {
+//            Thread.sleep(100);
+//        }catch (InterruptedException ex) {/*NOPE*/}
 
         if (passCheck.isConfirmed() || parcel.getCommandData() instanceof Accessible || parcel.getCommandData() instanceof RawHelp) {
             mediator.notify(this,new Segment(Markers.GOODINPUTCONDITION));

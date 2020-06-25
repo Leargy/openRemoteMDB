@@ -1,12 +1,15 @@
 package сlient;
 
+import communication.InterruptingInputTask;
 import communication.Report;
 import data_section.enumSection.Markers;
 import communication.Mediating;
 import communication.Segment;
 import dispatching.validators.Filters;
 
-import java.util.concurrent.Semaphore;
+import java.util.ArrayDeque;
+import java.util.Queue;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -20,13 +23,16 @@ import java.util.concurrent.locks.ReentrantLock;
  * @see AServant
  */
 public class Servant extends AServant {
-    private Semaphore semaphore = new Semaphore(2,true);
+//    private Semaphore semaphore = new Semaphore(2,true);
     private Lock lock = new ReentrantLock();
+//    private Lock writingLock = new ReentrantLock();
     private Condition receiveCondition = lock.newCondition();
-    private Condition waitingCondition = lock.newCondition();
+//    private Condition waitingCondition = lock.newCondition();
     private volatile String ip = "";
     private volatile int port = 0;
     private volatile AtomicInteger counter = new AtomicInteger();
+    private ExecutorService executorService = Executors.newCachedThreadPool();
+    private Future<String> future ;
 
     /**
      * Конструктор принимающий ссылку на посредника.
@@ -47,7 +53,7 @@ public class Servant extends AServant {
                 ,"Enter server's ip: ",scanner);
         port = Filters.scanInt((x)->(x > 2400 && x < 65536),"Enter server's port: ", scanner); //48654
         client = mediator.getClient();
-        if (resetConnection(false)) {
+        if (resetConnection(true)) {
             new Thread(client).start();
             return true;
         }
@@ -61,7 +67,11 @@ public class Servant extends AServant {
     @Override
     public boolean resetConnection(boolean droppedConnection) {
         try {
+            try {
+                future.cancel(true);
+            }catch (NullPointerException ex) {/*NOPE*/}
             lock.lock();
+//            scanner.reset();
 //            Thread.sleep(100);
 //            System.out.println(Thread.currentThread().getName() + " cl:" + client.isConnected());
             if (!client.isConnected()) {
@@ -125,6 +135,7 @@ public class Servant extends AServant {
     public synchronized void order(Segment segment) {
         // segment is not used because of the socketchannel sinhronization
         String orderData = debrief();
+        if (orderData.equals("")) return;
         Segment parcel = new Segment(client.getSocketChannel(),Markers.WRITE);
         parcel.setStringData(orderData.split(" "));
         //после получения пользовательской строки происходит обращение к модулю валидации введенных данных
@@ -140,25 +151,31 @@ public class Servant extends AServant {
         String stringData = "";
         try {
 //            semaphore.acquire();
-            Thread.sleep(100);
+//            Thread.sleep(100);
             lock.lock();
 //            System.out.println(Thread.currentThread().getName() + " 1 " + isReplying);
             if (isReplying) receiveCondition.await();
 //            System.out.println(Thread.currentThread().getName() + " 1 " + isReplying);
-            while (true) {
-                pipeOut.print(">");
-                stringData = scanner.nextLine();
-                if (stringData.equals("")) {
-                    continue;
-                }
-                else {
-                    break;
-                }
-            }
+            future = executorService.submit(new InterruptingInputTask());
+            stringData = future.get();
+            if (stringData.equals("")) Thread.currentThread().interrupt();
+//            while (true) {
+//                pipeOut.print(">");
+//                stringData = scanner.nextLine();
+//                if (stringData.equals("")) {
+//                    continue;
+//                }
+//                else {
+//                    break;
+//                }
+//            }
         }
-        catch (InterruptedException ex) {
-            System.out.println(ex.getMessage());
+        catch (Exception ex) {
+            return "";
+//            System.out.println(ex.getMessage());
         }finally {
+//            tempThreadTuskQueue.poll();
+            future = null;
             counter.getAndSet(0);
             isReplying = true;
 //            semaphore.release();
@@ -174,9 +191,10 @@ public class Servant extends AServant {
     @Override
     public void notification(Segment parcel) {
         try {
+//            writingLock.lock();
             lock.lock();
             isReplying = true;
-            Thread.sleep(125);
+//            Thread.sleep(125);
             Report serverReport = parcel.getClientPackage().getReport();
             if (serverReport.isSuccessful()) {
                 pipeOut.println("Server> " +serverReport.Message());
@@ -185,15 +203,19 @@ public class Servant extends AServant {
                 System.err.printf("Server error> " +serverReport.Message());
             }
         }
-        catch (InterruptedException ex) {
-        }
+//        catch (InterruptedException ex) {
+//        }
         finally {
             counter.getAndDecrement();
             if (counter.get() == 0) {
                 isReplying = false;
+//                System.out.println(scanner.hasNext());
+//                scanner.reset();
+
                 receiveCondition.signalAll();
             }
             lock.unlock();
+//            writingLock.unlock();
         }
     }
 

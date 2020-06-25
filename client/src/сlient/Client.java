@@ -10,9 +10,7 @@ import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -31,7 +29,7 @@ public class Client extends AClient implements Component, Runnable {
     private Lock lock = new ReentrantLock();
     private Condition replyCondition = lock.newCondition();
     private ByteBuffer byteBuffer = ByteBuffer.allocate(3 * 1024);
-    private volatile boolean inputCondition = false;
+    private volatile boolean inputCondition = true;
 
     public synchronized SocketChannel getSocketChannel() {
         return socketChannel;
@@ -109,6 +107,7 @@ public class Client extends AClient implements Component, Runnable {
      * Метод, использующий selector для определения дальнейшего вектора действий.
      */
     public void run() {
+        genereteReplayCheckingTread();
         while (socketChannel.isConnected()) {
             lock.lock();
 //            System.out.println("sending ask-task");
@@ -118,7 +117,8 @@ public class Client extends AClient implements Component, Runnable {
                 replyCondition.await();
                 if (!inputCondition) continue;
 //                System.out.println("replay catcher released");
-                cachedTP.submit(() -> mediator.notify(this, new Segment(socketChannel,Markers.READ)));
+                genereteReplayCheckingTread();
+//                cachedTP.submit(() -> mediator.notify(this, new Segment(socketChannel,Markers.READ)));
 
             }catch (InterruptedException ex ) {
                 /*NOPE*/
@@ -173,6 +173,9 @@ public class Client extends AClient implements Component, Runnable {
 //                iter.remove();
 //            }
         }
+    }
+    public void genereteReplayCheckingTread() {
+        cachedTP.submit(() -> mediator.notify(this, new Segment(socketChannel,Markers.READ)));
     }
 
     /**

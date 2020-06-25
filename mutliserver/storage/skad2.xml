@@ -1,62 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <organizations>
-    <reserved-organization user-name="anton" collection-key="65">
-        <organization id="168" name="test3" annual-turnover="3.0" employees-count="3">
-            <coordinates x="3" y="3.0"/>
-            <fullname>3</fullname>
+    <reserved-organization user-name="anton" collection-key="66">
+        <organization id="252" name="congr" annual-turnover="7.0" employees-count="1">
+            <coordinates x="7" y="7.0"/>
+            <fullname>atulaation</fullname>
             <organization-type>public</organization-type>
-            <official-address zipcode="1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ">
-                <town x="0" y="3" z="2.0"/>
+            <official-address zipcode="13                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ">
+                <town x="31" y="1" z="1.0"/>
             </official-address>
         </organization>
     </reserved-organization>
-    <reserved-organization user-name="anton" collection-key="321">
-        <organization id="196" name="ram" annual-turnover="2.0" employees-count="1">
+    <reserved-organization user-name="anton" collection-key="54">
+        <organization id="238" name="test" annual-turnover="1.0" employees-count="1">
             <coordinates x="1" y="1.0"/>
-            <fullname>rem</fullname>
+            <fullname>hf</fullname>
             <organization-type>public</organization-type>
             <official-address zipcode="usa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ">
-                <town x="0" y="1" z="1.0"/>
+                <town x="1" y="1" z="1.0"/>
             </official-address>
         </organization>
     </reserved-organization>
-    <reserved-organization user-name="new" collection-key="21">
-        <organization id="189" name="new porn" annual-turnover="1.0" employees-count="1">
+    <reserved-organization user-name="anton" collection-key="77">
+        <organization id="266" name="test" annual-turnover="1.0" employees-count="1">
             <coordinates x="1" y="2.0"/>
-            <fullname>xxxx</fullname>
+            <fullname>not</fullname>
             <organization-type>public</organization-type>
-            <official-address zipcode="523                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ">
-                <town x="0" y="21" z="12.0"/>
-            </official-address>
-        </organization>
-    </reserved-organization>
-    <reserved-organization user-name="anton" collection-key="123">
-        <organization id="154" name="test2" annual-turnover="2.0" employees-count="2">
-            <coordinates x="2" y="2.0"/>
-            <fullname>2</fullname>
-            <organization-type>public</organization-type>
-            <official-address zipcode="2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ">
-                <town x="0" y="2" z="2.0"/>
-            </official-address>
-        </organization>
-    </reserved-organization>
-    <reserved-organization user-name="anton" collection-key="332">
-        <organization id="210" name="gege" annual-turnover="3.0" employees-count="23">
-            <coordinates x="13" y="12.0"/>
-            <fullname>12</fullname>
-            <organization-type>public</organization-type>
-            <official-address zipcode="1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ">
-                <town x="0" y="1" z="1.0"/>
-            </official-address>
-        </organization>
-    </reserved-organization>
-    <reserved-organization user-name="anton" collection-key="989">
-        <organization id="224" name="sosi" annual-turnover="11.0" employees-count="22">
-            <coordinates x="64564" y="23423.0"/>
-            <fullname>blay</fullname>
-            <organization-type>public</organization-type>
-            <official-address zipcode="suck                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ">
-                <town x="9" y="8" z="7.0"/>
+            <official-address zipcode="usa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ">
+                <town x="8" y="8" z="8.0"/>
             </official-address>
         </organization>
     </reserved-organization>

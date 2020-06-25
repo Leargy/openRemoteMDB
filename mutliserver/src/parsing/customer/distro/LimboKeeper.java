@@ -22,5 +22,5 @@ public abstract class LimboKeeper extends TotalCommander {
    * но и отправлять его модулю разбора запросов клиента
    * @param logger логгер, взаимодействующий с контроллером
    */
-  protected LimboKeeper(LoaferLoader<OrganizationWithUId> loader, HawkPDroid logger) { super(loader, logger); }
+  protected LimboKeeper(LoaferLoader<OrganizationWithUId> loader) { super(loader); }
 }

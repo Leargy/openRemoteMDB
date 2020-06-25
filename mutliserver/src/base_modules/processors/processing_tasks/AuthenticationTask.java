@@ -22,6 +22,7 @@ import java.nio.channels.SocketChannel;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class AuthenticationTask implements Component {
@@ -31,6 +32,7 @@ public class AuthenticationTask implements Component {
     private final Handling ALLOWED_NA_COMMAND_HANDLER;
     private final Handling ALLOWED_A_COMMAND_HANDLER;
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    public final ExecutorService UsersAlarmThread = Executors.newCachedThreadPool();
 
     public AuthenticationTask(Controllers controller) {
         SUB_PROCESS_CONTROLLER = controller;
@@ -82,12 +84,23 @@ public class AuthenticationTask implements Component {
 
     // Synchronized method to make "Happens-before"
     public synchronized void addAuthorizedUser(SocketChannel socketChannel, User user) {
+        for (Map.Entry<SocketChannel, User> tempEntry : LOGGED_USERS.entrySet()) {
+            UsersAlarmThread.submit(() -> {
+                SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0,tempEntry.getValue().getLogin() + " connected to the server!")));
+            });
+        }
         LOGGED_USERS.putIfAbsent(socketChannel, user);
         logger.info("User " + user.getLogin() + " was added to \"authorized\" list ");
     }
     public synchronized void removeAuthorizedUser(SocketChannel socketChannel) {
+        String disconnectedUserLogin = LOGGED_USERS.get(socketChannel).getLogin();
+        logger.info("User " + disconnectedUserLogin + " was deleted from \"authorized\" list");
         LOGGED_USERS.remove(socketChannel);
-        logger.info("User was deleted from \"authorized\" list");
+        for (Map.Entry<SocketChannel, User> tempEntry : LOGGED_USERS.entrySet()) {
+            UsersAlarmThread.submit(() -> {
+                SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0, tempEntry.getValue().getLogin() + " disconnected from the server!")));
+            });
+        }
     }
     public synchronized void killExistConnections() {
         for (Map.Entry<SocketChannel,User> tempVictim : LOGGED_USERS.entrySet()) {

@@ -4,6 +4,7 @@ import data_section.enumSection.Markers;
 import instructions.rotten.RawDecree;
 
 import java.nio.channels.SocketChannel;
+import java.util.concurrent.Future;
 
 /**
  * Класс, объект которого используются для перемещения информации между модулями
@@ -19,6 +20,7 @@ public class Segment {
     private Markers marker;
     private String login;
     private String passWord;
+    private Future futureTask;
 
     /**
      * @param marker

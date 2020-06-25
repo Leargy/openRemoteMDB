@@ -90,6 +90,7 @@ public class Mediator implements Mediating {
             ((Servant)SERVANT).setIsIncoming(true);
 //            System.out.println(Thread.currentThread().getName() + " me incoming");
             SERVANT.notification(parcel);
+            client.setInputCondition(true);
         }
         if (component == RECEIVER && parcel.getMarker() == Markers.CONFIRMING) {
             DISPATCHER.confirm(parcel.getClientPackage().getReport().getIsConfirmed());
