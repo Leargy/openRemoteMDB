@@ -17,24 +17,24 @@ public class CommandList implements Commands {
      * Конструктор в котором происходи добавление сырых команд в список доступных.
      */
     public CommandList() {
-        commandMap.put(RawExit.NAME,RawExit.SYNTAX);
-        commandMap.put(RawClear.NAME,RawClear.SYNTAX);
+        commandMap.put(RawExit.NAME, RawExit.SYNTAX);
+        commandMap.put(RawShow.NAME, RawShow.SYNTAX);
         commandMap.put(RawHelp.NAME, RawHelp.SYNTAX);
         commandMap.put(RawInfo.NAME, RawInfo.SYNTAX);
-        commandMap.put(RawShow.NAME, RawShow.SYNTAX);
+        commandMap.put(RawClear.NAME, RawClear.SYNTAX);
         commandMap.put(RawInsert.NAME, RawInsert.SYNTAX);
-        commandMap.put(RawFilterContainsName.NAME, RawFilterContainsName.SYNTAX);
-        commandMap.put(RawMaxByDate.NAME, RawMaxByDate.SYNTAX);
-        commandMap.put(RawRemoveKey.NAME, RawRemoveKey.SYNTAX);
-        commandMap.put(RawRemoveLower.NAME, RawRemoveLower.SYNTAX);
-        commandMap.put(RawReplaceIfGreater.NAME, RawReplaceIfGreater.SYNTAX);
-        commandMap.put(RawReplaceIfLower.NAME, RawReplaceIfLower.SYNTAX);
-        commandMap.put(RawSumOfAnnualTurnover.NAME, RawSumOfAnnualTurnover.SYNTAX);
         commandMap.put(RawUpdate.NAME, RawUpdate.SYNTAX);
-        commandMap.put(RawExecuteScript.NAME, RawExecuteScript.SYNTAX);
         commandMap.put(RawSignUp.NAME, RawSignUp.SYNTAX);
         commandMap.put(RawSignIn.NAME, RawSignIn.SYNTAX);
         commandMap.put(RawSignOut.NAME, RawSignOut.SYNTAX);
+        commandMap.put(RawRemoveKey.NAME, RawRemoveKey.SYNTAX);
+        commandMap.put(RawMaxByDate.NAME, RawMaxByDate.SYNTAX);
+        commandMap.put(RawRemoveLower.NAME, RawRemoveLower.SYNTAX);
+        commandMap.put(RawExecuteScript.NAME, RawExecuteScript.SYNTAX);
+        commandMap.put(RawReplaceIfLower.NAME, RawReplaceIfLower.SYNTAX);
+        commandMap.put(RawReplaceIfGreater.NAME, RawReplaceIfGreater.SYNTAX);
+        commandMap.put(RawFilterContainsName.NAME, RawFilterContainsName.SYNTAX);
+        commandMap.put(RawSumOfAnnualTurnover.NAME, RawSumOfAnnualTurnover.SYNTAX);
     }
 
     /**

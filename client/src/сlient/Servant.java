@@ -157,7 +157,7 @@ public class Servant extends AServant {
             }
         }
         catch (InterruptedException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }finally {
             counter.getAndSet(0);
             isReplying = true;

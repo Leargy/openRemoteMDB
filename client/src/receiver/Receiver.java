@@ -58,6 +58,7 @@ public class Receiver extends AReceiver{
             parcel.setMarker(Markers.WRITE);
             mediator.notify(this, parcel);
         }catch (IOException ex) {
+            System.out.println(ex.getMessage());
             parcel.setMarker(Markers.INTERRUPTED);
             mediator.notify(this, parcel);
         }catch (ClassNotFoundException ex) {

@@ -28,6 +28,7 @@ public class DBReplaceIfGreater extends ReplaceIfGreater {
 //            return new Report(12, "Failed to remove greater organization!\n");
             return new Report(12, "Не удалось заменить организацию!\n");
         }
+        EMBEDDED.getOrganization().id = ORGANIZATION_TABLE_INTERACTOR.getDBOrganizationId(EMBEDDED);
         return super.execute();
     }
     @Override

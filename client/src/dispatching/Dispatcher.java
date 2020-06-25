@@ -95,8 +95,6 @@ public class Dispatcher extends ADispatcher {
                     }else {
                         ((RawSignOut)tempCommand).setDeauthorizationData(passCheck.getLogin(),passCheck.getPassword());
 //                        confirm(false);
-                        passCheck.setLogin("");
-                        passCheck.setPassword("");
                     }
                 }
 //                else if (tempCommand instanceof RawSignIn){
@@ -106,7 +104,7 @@ public class Dispatcher extends ADispatcher {
                 }
             }
             if (tempCommand instanceof RawExecuteScript) {
-                System.err.println("You haven't authorised yet.");
+//                System.err.println("You haven't authorised yet.");
                 mediator.notify(this, new Segment(Markers.BADINPUTCONDITION));
                 return;
             }
@@ -147,8 +145,9 @@ public class Dispatcher extends ADispatcher {
             } catch (IOException ex) {/*NOPE*/}
             try {
                 parcel.getSocketChannel().write(ByteBuffer.wrap(byteArrayOutputStream.toByteArray()));
+//                System.out.println(parcel.getCommandData().getClass());
             }catch (IOException ex) {
-                System.out.println(ex.getMessage());
+//                System.out.println(ex.getMessage());
                 parcel.setMarker(Markers.INTERRUPTED);
                 mediator.notify(this,parcel);
             }finally {
@@ -170,6 +169,10 @@ public class Dispatcher extends ADispatcher {
     public synchronized void confirm(boolean isConfirmed) {
         if (passCheck != null) {
 //            System.out.println("in confirming method " + isConfirmed);
+            if (!isConfirmed) {
+                passCheck.setLogin("");
+                passCheck.setPassword("");
+            }
             ((AuthorizationHandler)dataHandler).setIsConfirmed(isConfirmed);
             passCheck.setIsConfirmed(isConfirmed);
         }

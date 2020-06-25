@@ -50,4 +50,14 @@
             </official-address>
         </organization>
     </reserved-organization>
+    <reserved-organization user-name="anton" collection-key="989">
+        <organization id="224" name="sosi" annual-turnover="11.0" employees-count="22">
+            <coordinates x="64564" y="23423.0"/>
+            <fullname>blay</fullname>
+            <organization-type>public</organization-type>
+            <official-address zipcode="suck                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ">
+                <town x="9" y="8" z="7.0"/>
+            </official-address>
+        </organization>
+    </reserved-organization>
 </organizations>

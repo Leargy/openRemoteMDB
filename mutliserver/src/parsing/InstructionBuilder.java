@@ -5,6 +5,8 @@ import extension_modules.dbinteraction.OrganizationsTableInteractor;
 import instructions.rotten.IJunked;
 import instructions.rotten.RawCommitter;
 import instructions.rotten.RawDecree;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import parsing.customer.distro.LimboKeeper;
 import parsing.pickers.CommittersBuilder;
 import parsing.pickers.JustCommandBuilder;
@@ -29,6 +31,7 @@ public final class InstructionBuilder implements Component {
   public final CommittersBuilder COMMITERS_BUILDER = new CommittersBuilder();
   public final JustCommandBuilder COMMON_COMMAND_BUILDER = new JustCommandBuilder();
   public final OrganizationsTableInteractor organizationsTableInteractor = new OrganizationsTableInteractor();
+  protected final Logger logger = LoggerFactory.getLogger(this.getClass());
   /**
    * Конструктор устанавливающий
    * ссылку на контроллер и фабрику,
@@ -56,6 +59,7 @@ public final class InstructionBuilder implements Component {
    * @param receiver обработчик коллекции
    */
   public void make(TransportableBag rawDecreeBag, LimboKeeper receiver) {
+    logger.info("Making out what client's command is");
     RawDecree command = ((RawDecreeBag)rawDecreeBag).UNINVOKABLE_COMMAND;
     if (command instanceof IJunked) {
       SUB_PROCESS_CONTROLLER.notify(this, new ExecuteBag(((RawDecreeBag) rawDecreeBag).getChannel(), COMMITERS_BUILDER.make((RawCommitter) command, receiver, organizationsTableInteractor, ((RawDecreeBag) rawDecreeBag).USER)));

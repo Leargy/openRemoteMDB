@@ -3,10 +3,13 @@ package base_modules.processors.processing_tasks;
 import base_modules.processors.processing_tasks.handlers.AuthorizedHandler;
 import base_modules.processors.processing_tasks.handlers.Handling;
 import base_modules.processors.processing_tasks.handlers.NotAuthorizedHandler;
+import base_modules.readers.readertasks.ClientPackageRetrievingTask;
 import communication.ClientPackage;
 import communication.Report;
 import entities.User;
 import exceptions.NotAuthorizedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import patterns.mediator.Component;
 import patterns.mediator.Controllers;
 import uplink_bags.ClientPackBag;
@@ -27,6 +30,7 @@ public class AuthenticationTask implements Component {
     private final ConcurrentHashMap<SocketChannel, User> LOGGED_USERS; //the collection for authorized users
     private final Handling ALLOWED_NA_COMMAND_HANDLER;
     private final Handling ALLOWED_A_COMMAND_HANDLER;
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public AuthenticationTask(Controllers controller) {
         SUB_PROCESS_CONTROLLER = controller;
@@ -36,7 +40,7 @@ public class AuthenticationTask implements Component {
     }
 
     public void identify(TransportableBag clientPackBag) {
-        System.out.println(LOGGED_USERS.size());
+        logger.info("User entered the authentication block");
 //        Future<ConcreteDecree> recognizedCommand = cachedTP.execute(); // Use this thread to recognize the command
         ClientPackage tempClientPackage = ((ClientPackBag)clientPackBag).getClientPacket();
         SocketChannel tempClientSocket = ((ClientPackBag)clientPackBag).getChannel();
@@ -46,9 +50,9 @@ public class AuthenticationTask implements Component {
                 try {
                     SUB_PROCESS_CONTROLLER.notify(this, new RawDecreeBag(tempClientSocket, ALLOWED_A_COMMAND_HANDLER.handle(tempClientPackage).getCommand(),LOGGED_USERS.get(tempClientSocket))); // make the command of the user
                 }catch (NotAuthorizedException ex) {
+                    logger.error(ex.getMessage());
                     //Catch the exception if user tried to use commands according to authorization
-                    //TODO: send the report back to user
-                    System.err.println(ex.getMessage());
+//                    System.err.println(ex.getMessage());
                     SUB_PROCESS_CONTROLLER.notify(this,new NotifyBag(tempClientSocket, new Report(66, ex.toString())));
                 }
             }else {
@@ -58,10 +62,10 @@ public class AuthenticationTask implements Component {
             try {
                 SUB_PROCESS_CONTROLLER.notify(this,new RawDecreeBag(tempClientSocket, ALLOWED_NA_COMMAND_HANDLER.handle(tempClientPackage).getCommand(),null));
             }catch (NotAuthorizedException ex) {
+                logger.error(ex.getMessage());
                 //Catch the exception if user tried to execute commands, forbidden for not authorized users
-                //TODO: send the report back to user
+//                System.err.println(ex.getMessage());
                 SUB_PROCESS_CONTROLLER.notify(this,new NotifyBag(tempClientSocket, new Report(66, ex.toString())));
-                System.err.println(ex.getMessage());
             }
         }
     }
@@ -69,24 +73,29 @@ public class AuthenticationTask implements Component {
     //Returns "true" if authorized-user data is equals to temp-user data
     protected boolean checkIdentificationData(User userData, ClientPackage tempClientPackage) {
         if (userData.getLogin().equals(tempClientPackage.getLogin()) && userData.getPassword().equals(tempClientPackage.getPassWord())) {
+            logger.info("Provided data from client package was confirmed");
             return true;
         }
+        logger.error("Provided data from client package wasn't confirmed");
         return false;
     }
 
     // Synchronized method to make "Happens-before"
     public synchronized void addAuthorizedUser(SocketChannel socketChannel, User user) {
         LOGGED_USERS.putIfAbsent(socketChannel, user);
+        logger.info("User " + user.getLogin() + " was added to \"authorized\" list ");
     }
     public synchronized void removeAuthorizedUser(SocketChannel socketChannel) {
         LOGGED_USERS.remove(socketChannel);
+        logger.info("User was deleted from \"authorized\" list");
     }
     public synchronized void killExistConnections() {
         for (Map.Entry<SocketChannel,User> tempVictim : LOGGED_USERS.entrySet()) {
             try {
                 tempVictim.getKey().socket().close();
             }catch (IOException ex) {
-                System.out.println("Unabled to close socket: " +tempVictim.getKey().socket().toString());
+                logger.error("Unabled to close socket: " +tempVictim.getKey().socket().toString());
+//                System.out.println("Unabled to close socket: " +tempVictim.getKey().socket().toString());
             }
         }
     }

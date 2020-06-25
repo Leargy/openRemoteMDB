@@ -29,6 +29,7 @@ public class DBReplaceIfLower extends ReplaceIfLower {
 //            return new Report(12, "Failed to replace organization!\n");
             return new Report(12, "Не удалось заменить органийзацию!\n");
         }
+        EMBEDDED.getOrganization().id = ORGANIZATION_TABLE_INTERACTOR.getDBOrganizationId(EMBEDDED);
         return super.execute();
     }
     @Override

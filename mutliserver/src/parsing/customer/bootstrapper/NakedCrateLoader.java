@@ -145,7 +145,6 @@ public final class NakedCrateLoader implements LoaferLoader<OrganizationWithUId>
     Float coordinates_y, annualTurnover;
     LocalDateTime creationDateTime;
 
-
     Connection currentConnection = DATABASE_CONTROLLER.retrieveCurrentConnection();
       PreparedStatement getTableFromDB = currentConnection.prepareStatement("SELECT * FROM " + OrganizationsTableInteractor.DB_TABLE_NAME + " ");
       ResultSet resultSet = getTableFromDB.executeQuery();

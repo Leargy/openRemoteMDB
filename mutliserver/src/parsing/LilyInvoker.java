@@ -4,6 +4,8 @@ import communication.Report;
 import instructions.concrete.ConcreteDecree;
 import instructions.concrete.base.Save;
 import instructions.concrete.extended.ExecuteScript;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import patterns.mediator.Controllers;
 import uplink_bags.ExecuteBag;
 import uplink_bags.NotifyBag;
@@ -18,6 +20,7 @@ import javax.print.attribute.standard.NumberUp;
  */
 public class LilyInvoker extends FondleEmulator {
   private Report collectorReports = new Report(0,"");
+  protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   /**
    * Конструктор, устанавливающий
@@ -42,6 +45,7 @@ public class LilyInvoker extends FondleEmulator {
   @Override
   public void invoke(ExecuteBag executeBag) {
     ConcreteDecree concreteCommand = executeBag.getConcreteDecree();
+    logger.info("Executing clients command " + concreteCommand);
     Report result = concreteCommand.execute();
 //    if (concmd instanceof ExecuteScript) {
 //      result = shell.read(cmd);
@@ -53,6 +57,7 @@ public class LilyInvoker extends FondleEmulator {
       if (result.getIsConfirmed()) respond.setIsConfirmed(true);
       else respond.setIsConfirmed(false);
     }
+    logger.info("Reply is ready to be sent to client");
 //    respond.setIsConfirmed(result.getIsConfirmed());
 //    if (concmd instanceof ExecuteScript) {
 //      respond = new Report(0,respond.Message() + collectorReports.Message());

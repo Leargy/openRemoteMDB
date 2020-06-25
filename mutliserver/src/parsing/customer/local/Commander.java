@@ -2,6 +2,8 @@ package parsing.customer.local;
 
 import czerkaloggers.RadioLogger;
 import entities.HashMax;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import organization.Mappable;
 import parsing.customer.bootstrapper.LoaferLoader;
 import patterns.command.Receiver;
@@ -24,17 +26,20 @@ public abstract class Commander<K, V extends Mappable<K>> implements Receiver<K,
   protected final Map<K, V> database = new HashMax<>(); // хранимое отображение
   protected String creationDate = LocalDateTime.now().toString(); // дата создания
   protected final LoaferLoader<V> breadLoader; // буханка-загрузчик xml-коллекций
-  protected final RadioLogger whistleblower; // ссылка на логгер
-
+//  protected final RadioLogger whistleblower; // ссылка на логгер
+  protected final Logger logger = LoggerFactory.getLogger(this.getClass());
   /**
    * Конструктор, принимающий
    * загрузчик коллекции и элемент,
    * ведущий летопись
    * @param logger логирующий элемент
    */
-  public Commander(LoaferLoader<V> loader, RadioLogger logger) {
+//  public Commander(LoaferLoader<V> loader, RadioLogger logger) {
+//    breadLoader = loader;
+//    whistleblower = logger;
+//  }
+  public Commander(LoaferLoader<V> loader) {
     breadLoader = loader;
-    whistleblower = logger;
   }
 
   /**

@@ -73,13 +73,13 @@ public class JunkerCreator {
      * @return Junker класс содержащий доп информацию для доп. параметра.
      */
     protected Junker getLocation() {
-        Double x = null;
+        long x = 0;
         int y = 0;
         float z = 0;
-        x = Filters.scanDouble((number) -> (true), "Enter a long integer Location.x: ",scanner);
+        x = Filters.scanLong((number) -> (true), "Enter a long integer Location.x: ",scanner);
         y = Filters.scanLong((number) -> (true), "Enter a long integer Location.y: ",scanner).intValue();
         z = Filters.scanDouble((number) -> (true), "Enter a double fraction Location.z: ",scanner).floatValue();
-        return new Junker(new long[]{y}, new double[]{x,z},null,null);
+        return new Junker(new long[]{x,y}, new double[]{z},null,null);
     }
 
     /**

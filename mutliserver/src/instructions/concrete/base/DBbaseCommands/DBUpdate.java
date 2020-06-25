@@ -38,6 +38,7 @@ public class DBUpdate extends Update {
 //            return new Report(12, "Failed to update your organization!\n");
             return new Report(12, "Не удалось обновить данные вашей организации!\n");
         }
+        EMBEDDED.getOrganization().id = ORGANIZATION_TABLE_INTERACTOR.getDBOrganizationId(EMBEDDED);
         return super.execute();
     }
     @Override

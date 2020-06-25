@@ -33,6 +33,7 @@ public class DBInsert extends Insert {
 //            return new Report(12,"Failed to insert user's organization!\n");
             return new Report(12,"Не удалось добавить организацию пользователя!\n");
         }
+        EMBEDDED.getOrganization().id = ORGANIZATION_TABLE_INTERACTOR.getDBOrganizationId(EMBEDDED);
         return super.execute();
     }
     @Override

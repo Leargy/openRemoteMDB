@@ -68,9 +68,10 @@ public class ClientPackageRetrievingTask implements Component,Runnable{
     protected ByteBuffer readFromClientChannel(SocketChannel readyClientChannel) throws IOException {
         BYTE_BUFFER.clear();
         try {
-            if (readyClientChannel.read(BYTE_BUFFER) == -1)
-                throw new IOException("disconnected");
+            if (readyClientChannel.read(BYTE_BUFFER) == -1);
+//                throw new IOException("disconnected");
         }catch (IOException ex) {
+//            System.out.println(ex.getMessage());
             CLIENT_SOCKET_CHANNEL.close();
 //            logger.error("Client " + CLIENT_SOCKET_CHANNEL.socket().getInetAddress().getHostAddress() + ":" + CLIENT_SOCKET_CHANNEL.socket().getPort() + " disconnected");
             throw new IOException("client disconnected");
