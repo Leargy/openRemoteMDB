@@ -31,14 +31,16 @@ public class Clear extends ConcreteDecree {
    */
   @Override
   public Report execute() {
+    int numOfDeletedArguments = 0;
     if (SIEVE == null)
       return new Report(1, "Ссылка на коллекцию не была обнаружена, пожалуйста, свяжитесь с Вашим системным администратором");
     try {
-      SIEVE.clear(userLogin); //clear concrete user's organizations
+      numOfDeletedArguments = SIEVE.clear(userLogin); //clear concrete user's organizations
     } catch (UnsupportedOperationException e) {
       return new Report(0xBAD, "Извините, но данный тип коллекции не поддерживает операцию очистки");
     }
-    return new Report(0, "Очистка коллекции успешна");
+    if (numOfDeletedArguments == 0) return new Report(0,"Ваших элементов в коллекции не было найдено.\n\t Удалено элементов: " + numOfDeletedArguments);
+    return new Report(0, "Очистка коллекции успешна.\n\t Удалено элементов: " + numOfDeletedArguments);
   }
 
 //  public void setUserLogin(String userLogin) {

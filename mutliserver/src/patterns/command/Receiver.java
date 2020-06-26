@@ -77,8 +77,9 @@ public interface Receiver<K, V extends Mappable<K>> {
 
     /**
      * Убирать за собой - тоже нужно уметь
+     * Возвращает кол-во убранных элементов
      */
-    void clear(String userLogin);
+    int clear(String userLogin);
 
     /**
      * Метод получения коллекции полей

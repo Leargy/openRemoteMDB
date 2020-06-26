@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 public class MainServerTask implements Runnable, Component {
     private  ConfiguredServerParameters CSP ;
     private final ServerController SERVER_CONTROLLER;
-    private ExecutorService fixedTP = Executors.newFixedThreadPool(2);
+    private ExecutorService fixedTP = Executors.newFixedThreadPool(4);
 
     public MainServerTask (ConfiguredServerParameters CSP, ServerController serverController) {
         this.SERVER_CONTROLLER = serverController;

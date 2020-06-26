@@ -52,7 +52,7 @@ public class Servant extends AServant {
     public boolean setConnection() {
         ip = Filters.scanLine((x)->(x.matches("(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"))
                 ,"Enter server's ip: ",scanner);
-        port = Filters.scanInt((x)->(x > 50000 && x < 65536),"Enter server's port: ", scanner); //48654
+        port = Filters.scanInt((x)->(x > 49680 && x < 65536),"Enter server's port: ", scanner); //48654
         client = mediator.getClient();
         counter.getAndIncrement();
         if (resetConnection(true)) {

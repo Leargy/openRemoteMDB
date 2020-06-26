@@ -78,7 +78,6 @@ public abstract class Filters {
         do {
             try {
                 System.out.print(message);
-                System.out.print(":");
                 line = scanner.nextLine();
                 if (!requests.test(line)) {
                     throw new NonComplianceException("\nLine isn't match the demand.");

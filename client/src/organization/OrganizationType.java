@@ -20,7 +20,7 @@ public enum OrganizationType implements Serializable {
     value.append("----------- " + TRUST + " -------------\n");
     value.append("--- " + PRIVATE_LIMITED_COMPANY + " ---\n");
     value.append("--- " + OPEN_JOINT_STOCK_COMPANY + " --\n");
-    value.append("───────────────────────────────\n");
+    value.append("───────────────────────────────\n:");
     return value.toString();
   }
 }

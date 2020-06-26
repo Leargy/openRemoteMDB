@@ -90,7 +90,7 @@ public class AuthenticationTask implements Component {
         for (Map.Entry<SocketChannel, User> tempEntry : LOGGED_USERS.entrySet()) {
             UsersAlarmThread.submit(() -> {
 //                SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0,tempEntry.getValue().getLogin() + " connected to the server!")));
-                SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0,tempEntry.getValue().getLogin() + " зашел на сервер!")));
+                SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0,user.getLogin() + " зашел на сервер!")));
             });
         }
         LOGGED_USERS.putIfAbsent(socketChannel, user);
@@ -104,7 +104,7 @@ public class AuthenticationTask implements Component {
             for (Map.Entry<SocketChannel, User> tempEntry : LOGGED_USERS.entrySet()) {
                 UsersAlarmThread.submit(() -> {
 //                    SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0, tempEntry.getValue().getLogin() + " disconnected from the server!")));
-                    SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0, tempEntry.getValue().getLogin() + " вышел с сервера!")));
+                    SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0, disconnectedUserLogin + " вышел с сервера!")));
             });
             }
         }catch (NullPointerException ex) {/*NOPE*/}

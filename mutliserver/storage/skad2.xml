@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <organizations>
+    <reserved-organization user-name="nick" collection-key="66">
+        <organization id="315" name="fuher" annual-turnover="2.0" employees-count="2">
+            <coordinates x="32" y="12.0"/>
+            <fullname>haver</fullname>
+            <organization-type>public</organization-type>
+            <official-address zipcode="usa">
+                <town x="88" y="12" z="2.0"/>
+            </official-address>
+        </organization>
+    </reserved-organization>
+    <reserved-organization user-name="nick" collection-key="54">
+        <organization id="322" name="futher" annual-turnover="2.0" employees-count="2">
+            <coordinates x="32" y="12.0"/>
+            <fullname>haver</fullname>
+            <organization-type>public</organization-type>
+            <official-address zipcode="usa">
+                <town x="88" y="12" z="2.0"/>
+            </official-address>
+        </organization>
+    </reserved-organization>
     <reserved-organization user-name="test4" collection-key="3113">
         <organization id="280" name="testing" annual-turnover="90.0" employees-count="1">
             <coordinates x="32223" y="7.0"/>
