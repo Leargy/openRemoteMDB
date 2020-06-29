@@ -64,7 +64,7 @@ public final class JustCommandBuilder {
 //      else if (c instanceof RawSave) return new Save(receiver);
       else if (c instanceof RawShow) return new Show(receiver);
       else if (c instanceof RawMaxByDate) return new MaxByDate(receiver);
-      else if (c instanceof RawSumOfAnnualTurnover) return new SumOfAnnualTurnover(receiver); //TODO: поработать над командами
+      else if (c instanceof RawSumOfAnnualTurnover) return new SumOfAnnualTurnover(receiver);
       else if (c instanceof RawExit) return new Exit(receiver);
       else return new Help(receiver);
     }
