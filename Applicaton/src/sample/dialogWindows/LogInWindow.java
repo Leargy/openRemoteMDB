@@ -11,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import sample.buttons.IButton;
 
 public class LogInWindow extends Dialog {
@@ -42,7 +41,7 @@ public class LogInWindow extends Dialog {
     }
     @Override
     public void renderWindow() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/sample/assets/windows/logIn.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/sample/asserts/windows/logIn.fxml"));
         thisStage.setTitle("RemoteMDB");
         thisStage.setScene(new Scene(root, 320, 400));
         thisStage.setResizable(false);

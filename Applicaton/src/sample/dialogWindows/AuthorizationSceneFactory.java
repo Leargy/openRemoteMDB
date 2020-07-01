@@ -12,7 +12,7 @@ public class AuthorizationSceneFactory implements WindowsFactory {
     public Scene createScene() {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/sample/assets/windows/logIn.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/sample/asserts/windows/logIn.fxml"));
         }catch (IOException ex) {
             System.out.println(ex.getMessage());
         }

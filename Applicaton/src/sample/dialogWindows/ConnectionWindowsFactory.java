@@ -12,7 +12,7 @@ public class ConnectionWindowsFactory implements WindowsFactory {
     public Scene createScene() {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/sample/assets/windows/ipAndPort.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/sample/asserts/windows/ipAndPort.fxml"));
         }catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
