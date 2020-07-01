@@ -34,7 +34,7 @@
                   </Button>
                   <ImageView fitHeight="20.0" fitWidth="24.0" layoutX="684.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@asserts/iconfinder_magnifying-glass_226571.png" />
+                        <Image url="@../images/iconfinder_magnifying-glass_226571.png" />
                      </image>
                   </ImageView>
                   <ComboBox layoutX="342.0" layoutY="4.0" minHeight="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="104.0" promptText="Фильтр" style="-fx-background-color: #73ACE6;">

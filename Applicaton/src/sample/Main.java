@@ -1,19 +1,29 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sample.dialogWindows.IpAndPortInputWindow;
+
+import java.io.IOException;
 
 public class Main extends Application {
+    private IpAndPortInputWindow ipAndPortInputWindow;
+    private Stage mainStage;
+    {
+        ipAndPortInputWindow = new IpAndPortInputWindow();
+
+    }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("RemoteMDB");
-        primaryStage.setScene(new Scene(root, 320, 400));
-        primaryStage.show();
+    public void start(Stage primaryStage){
+        mainStage = primaryStage;
+        try {
+            ipAndPortInputWindow.renderWindow();
+        }catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }finally {
+            mainStage.close();
+        }
     }
 
 
