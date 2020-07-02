@@ -1,17 +1,16 @@
 package sample.buttons;
 
-import javafx.scene.control.TextField;
-import sample.dialogWindows.LogInWindow;
 
-import java.io.IOException;
+import sample.dialog_windows.Commander;
+import sample.dialog_windows.communication.Parcel;
 
 public class ConnectionIButton implements IButton {
-    private LogInWindow logInWindow;
+    private Commander commander;
     private String ip;
     private String port;
 
-    public ConnectionIButton() {
-        logInWindow = new LogInWindow();
+    public ConnectionIButton(Commander commander) {
+        this.commander = commander;
     }
 
     public void setIp(String ip) {
@@ -24,10 +23,6 @@ public class ConnectionIButton implements IButton {
 
     @Override
     public void click() {
-//        try {
-//            logInWindow.renderWindow();
-//        }catch (IOException ex) {
-//            System.err.println(ex.getMessage());
-//        }
+        commander.setConnection(new Parcel("ip=, port="));
     }
 }

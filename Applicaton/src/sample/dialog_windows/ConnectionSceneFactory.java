@@ -1,4 +1,4 @@
-package sample.dialogWindows;
+package sample.dialog_windows;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -6,16 +6,16 @@ import javafx.scene.Scene;
 
 import java.io.IOException;
 
-public class AuthorizationSceneFactory implements WindowsFactory {
+public class ConnectionSceneFactory implements WindowsFactory {
 
     @Override
     public Scene createScene() {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/sample/asserts/windows/logIn.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/sample/assets/windows/connectionScene.fxml"));
         }catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-        return new Scene(root, 332, 412);
+        return new Scene(root, 320, 400);
     }
 }

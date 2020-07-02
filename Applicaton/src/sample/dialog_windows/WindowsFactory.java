@@ -1,7 +1,7 @@
-package sample.dialogWindows;
+package sample.dialog_windows;
 
 import javafx.scene.Scene;
 
 public interface WindowsFactory {
-    Scene createScene();
+     Scene createScene();
 }

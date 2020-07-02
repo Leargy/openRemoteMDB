@@ -1,4 +1,4 @@
-package sample.dialogWindows;
+package sample.dialog_windows;
 
 public class ConnectionScene {
 }

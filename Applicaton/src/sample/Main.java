@@ -2,28 +2,24 @@ package sample;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import sample.dialogWindows.IpAndPortInputWindow;
-
-import java.io.IOException;
+import sample.dialog_windows.IpAndPortInputWindow;
+import sample.dialog_windows.communication.ButtonMediator;
 
 public class Main extends Application {
-    private IpAndPortInputWindow ipAndPortInputWindow;
-    private Stage mainStage;
+    private ButtonMediator buttonMediator;
+//    private IpAndPortInputWindow ipAndPortInputWindow;
+//    private Stage mainStage;
     {
-        ipAndPortInputWindow = new IpAndPortInputWindow();
-
+        buttonMediator = new ButtonMediator();
+//        ipAndPortInputWindow = new IpAndPortInputWindow();
     }
 
     @Override
     public void start(Stage primaryStage){
-        mainStage = primaryStage;
-        try {
-            ipAndPortInputWindow.renderWindow();
-        }catch (IOException ex) {
-            System.err.println(ex.getMessage());
-        }finally {
-            mainStage.close();
-        }
+        buttonMediator.start();
+//        mainStage = primaryStage;
+//        ipAndPortInputWindow.renderWindow();
+//        mainStage.close();
     }
 
 
