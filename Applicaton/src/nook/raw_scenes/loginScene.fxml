@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="413.0" prefWidth="334.0" style="-fx-background-color: #434459;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nook.scenes_controllers.LoginSceneController">
+    <children>
+        <AnchorPane layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="322.0" prefWidth="334.0" style="-fx-background-color: #E6E6E6;">
+            <children>
+                <TextField fx:id="login_login_field" layoutX="74.0" layoutY="70.0" />
+                <Text fx:id="login_login_text" layoutX="72.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Логин">
+                    <font>
+                        <Font name="Georgia" size="15.0" />
+                    </font>
+                </Text>
+                <Text fx:id="login_pass_text" layoutX="74.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пароль" wrappingWidth="54.50732421875">
+                    <font>
+                        <Font name="Georgia" size="15.0" />
+                    </font>
+                </Text>
+            <Button fx:id="login_signin_btn" layoutX="131.0" layoutY="200.0" mnemonicParsing="false" onAction="#signInBtnClickHandle" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Войти">
+               <font>
+                  <Font name="Georgia Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="login_signup_btn" layoutX="79.0" layoutY="250.0" mnemonicParsing="false" onAction="#signUpBtnClickHandle" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Зарегистрироваться">
+               <font>
+                  <Font name="Georgia Italic" size="15.0" />
+               </font>
+            </Button>
+            <PasswordField fx:id="login_pass_field" layoutX="74.0" layoutY="135.0" />
+            </children></AnchorPane>
+        <Label layoutX="90.0" layoutY="14.0" prefHeight="26.0" prefWidth="155.0" text="RemoteMDB" textFill="WHITE">
+            <font>
+                <Font name="Georgia Bold Italic" size="23.0" />
+            </font>
+        </Label>
+      <AnchorPane layoutY="51.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="334.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <MenuBar fx:id="login_lang_menu" layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="77.0" style="-fx-background-color: #73ACE6;">
+               <menus>
+                   <Menu fx:id="login_lang_choser" mnemonicParsing="false" text="Язык">
+                       <items>
+                           <MenuItem fx:id="login_change_ru" mnemonicParsing="false" onAction="#changeLanguage" text="Русский ru_RU" />
+                           <MenuItem fx:id="login_change_es" mnemonicParsing="false" onAction="#changeLanguage" text="Español es_PA" />
+                           <MenuItem fx:id="login_change_sl" mnemonicParsing="false" onAction="#changeLanguage" text="Slovenščina sl_SL" />
+                           <MenuItem fx:id="login_change_uk" mnemonicParsing="false" onAction="#changeLanguage" text="Український uk_UA" />
+                       </items>
+                   </Menu>
+               </menus>
+               <padding>
+                  <Insets bottom="2.0" left="14.0" right="14.0" top="2.0" />
+               </padding>
+            </MenuBar>
+            <Button fx:id="login_exit_btn" layoutX="250.0" layoutY="4.0" mnemonicParsing="false" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Выйти">
+               <font>
+                  <Font name="Georgia Bold" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+    </children>
+</AnchorPane>

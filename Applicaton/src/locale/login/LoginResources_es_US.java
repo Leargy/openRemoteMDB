@@ -8,7 +8,8 @@ public class LoginResources_es_US extends java.util.ListResourceBundle {
             {"Login", "Sesion"},
             {"Password", "Contrasena"},
             {"Sign In", "Inicio de sesion"},
-            {"Sign Up", "Registrese"}
+            {"Sign Up", "Registrese"},
+            {"Exit", "Salida"}
             // ENDING OF INTERNATIONALIZATION
     };
 

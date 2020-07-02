@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="413.0" prefWidth="334.0" style="-fx-background-color: #434459;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nook.scenes_controllers.ConnectionSceneController">
+   <children>
+      <AnchorPane layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="324.0" prefWidth="334.0" style="-fx-background-color: #E6E6E6;">
+         <children>
+            <TextField id="connect_ip" fx:id="connect_ip" layoutX="74.0" layoutY="70.0" onAction="#validateIP" promptText="127.0.0.1" />
+            <TextField id="connect_port" fx:id="connect_port" layoutX="74.0" layoutY="135.0" onAction="#validatePort" promptText="57005" />
+            <Text fx:id="connect_ip_text" layoutX="74.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
+               <font>
+                  <Font name="Georgia" size="15.0" />
+               </font>
+            </Text>
+            <Text fx:id="connect_port_text" layoutX="75.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Порт">
+               <font>
+                  <Font name="Georgia" size="15.0" />
+               </font>
+            </Text>
+            <Button fx:id="connect_btn" layoutX="74.0" layoutY="200.0" mnemonicParsing="false" onAction="#connect" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Подключиться" AnchorPane.leftAnchor="80.0">
+               <font>
+                  <Font name="Georgia Bold" size="15.0" />
+               </font></Button>
+            <Label fx:id="connect_ip_sign" layoutX="231.0" layoutY="74.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" text="Empty" textFill="GOLDENROD" AnchorPane.leftAnchor="232.0">
+               <font>
+                  <Font name="Lucida Console" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="connect_port_sign" layoutX="233.0" layoutY="139.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" text="Empty" textFill="GOLDENROD" AnchorPane.leftAnchor="232.0">
+               <font>
+                  <Font name="Lucida Console" size="12.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <Label layoutX="90.0" layoutY="14.0" prefHeight="26.0" prefWidth="155.0" text="RemoteMDB" textFill="WHITE">
+         <font>
+            <Font name="Georgia Bold Italic" size="23.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="334.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <MenuBar fx:id="language_menu_button" layoutX="7.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #73ACE6;">
+               <menus>
+                  <Menu fx:id="connect_lang_choser" mnemonicParsing="false" text="Язык">
+                     <items>
+                        <MenuItem fx:id="connect_change_ru" mnemonicParsing="false" onAction="#changeLanguage" text="Русский ru_RU" />
+                        <MenuItem fx:id="connect_change_es" mnemonicParsing="false" onAction="#changeLanguage" text="Español es_PA" />
+                        <MenuItem fx:id="connect_change_sl" mnemonicParsing="false" onAction="#changeLanguage" text="Slovenščina sl_SL" />
+                        <MenuItem fx:id="connect_change_uk" mnemonicParsing="false" onAction="#changeLanguage" text="Український uk_UA" />
+                     </items>
+                  </Menu>
+               </menus>
+               <padding>
+                  <Insets bottom="2.0" left="14.0" right="14.0" top="2.0" />
+               </padding>
+            </MenuBar>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

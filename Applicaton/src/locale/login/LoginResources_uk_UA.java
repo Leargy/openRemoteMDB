@@ -8,7 +8,8 @@ public class LoginResources_uk_UA extends java.util.ListResourceBundle {
             {"Login", "Авторизувати"},
             {"Password", "Пароль"},
             {"Sign In", "Увійти в систему"},
-            {"Sign Up", "Зареєструватися"}
+            {"Sign Up", "Зареєструватися"},
+            {"Exit", "Вихід"}
             // ENDING OF INTERNATIONALIZATION
     };
 

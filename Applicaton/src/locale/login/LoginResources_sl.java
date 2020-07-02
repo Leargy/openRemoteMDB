@@ -8,7 +8,8 @@ public class LoginResources_sl extends java.util.ListResourceBundle {
             {"Login", "Prijava"},
             {"Password", "Geslo"},
             {"Sign In", "Vpišite Se."},
-            {"Sign Up", "Prijavi Se."}
+            {"Sign Up", "Prijavi Se."},
+            {"Exit", "Izhod"}
             // ENDING OF INTERNATIONALIZATION
     };
 

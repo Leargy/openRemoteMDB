@@ -8,7 +8,8 @@ public class LoginResources_uk_US extends java.util.ListResourceBundle {
             {"Login", "ABTopN3yBaTN"},
             {"Password", "hapoL"},
             {"Sign In", "YBiNTN B cNcTemy"},
-            {"Sign Up", "3ape€cTpyBaTNcR"}
+            {"Sign Up", "3ape€cTpyBaTNcR"},
+            {"Exit", "BNxiD"}
             // ENDING OF INTERNATIONALIZATION
     };
 

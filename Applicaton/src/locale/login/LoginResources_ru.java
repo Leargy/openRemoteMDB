@@ -11,7 +11,8 @@ public class LoginResources_ru extends java.util.ListResourceBundle {
             {"Login", "Логин"},
             {"Password", "Пароль"},
             {"Sign In", "Войти"},
-            {"Sign Up", "Зарегистрироваться"}
+            {"Sign Up", "Зарегистрироваться"},
+            {"Exit", "Выход"}
             // ENDING OF INTERNATIONALIZATION
     };
 
