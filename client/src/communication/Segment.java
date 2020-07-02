@@ -12,7 +12,7 @@ import java.util.concurrent.Future;
  * @author Leargy aka Anton Sushkevich
  */
 //возможно логичнее было бы освободить этот класс от socketChannel и отправлять объекты этого класса,чтобы не плодить лишний класс.
-public class Segment {
+public class Segment implements Parcel{
     private String[] stringData;
     private RawDecree commandData;
     private ClientPackage clientPackage;
@@ -40,7 +40,7 @@ public class Segment {
     public void setMarker(Markers marker) { this.marker = marker; }
     public void setPassWord(String passWord) { this.passWord = passWord; }
     public void setCommandData(RawDecree commandData) { this.commandData = commandData; }
-    public void setStringData(final String[] stringData) { this.stringData = stringData; }
+    public void setStringData(String[] stringData) { this.stringData = stringData; }
     public void setClientPackage(ClientPackage clientPackage) { this.clientPackage = clientPackage; }
 
     public SocketChannel getSocketChannel() { return this.socketChannel; }

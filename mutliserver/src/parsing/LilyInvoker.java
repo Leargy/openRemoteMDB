@@ -52,7 +52,7 @@ public class LilyInvoker extends FondleEmulator {
 //    } else {
 //      result = concmd.execute();
 //    }
-    Report respond = new Report(0, "Команда " + concreteCommand.toString() + " выполнена с результатом:\n\t" + result.Message());
+    Report respond = new Report(result.isSuccessful() ? 0 : 1, "Команда " + concreteCommand.toString() + " выполнена с результатом:\n\t" + result.Message());
     if (result.getIsConfirmed() != null){
       if (result.getIsConfirmed()) respond.setIsConfirmed(true);
       else respond.setIsConfirmed(false);

@@ -12,4 +12,5 @@ import java.io.IOException;
 public interface Mediating {
     void notify(Component component, Segment parcel);
     Client getClient();
+    void setApplicationMediator(sample.dialog_windows.communication.Mediating applicationMediator);
 }

@@ -6,13 +6,23 @@ package data_section.enumSection;
  * @author Come_1LL_F00 aka Lenar Khannanov
  */
 public enum Markers {
-    READ,
-    WRITE,
-    STOP,
-    INTERRUPTED,
-    CONFIRMING,
-    BADINPUTCONDITION,
-    GOODINPUTCONDITION,
-    HASSERVERKEY,
-    WAIKUP;
+    READ("READ"),
+    WRITE("WRITE"),
+    STOP("STOP"),
+    INTERRUPTED("INTERRUPTED"),
+    CONFIRMING("CONFIRMING"),
+    BADINPUTCONDITION("BADINPUTCONDITION"),
+    GOODINPUTCONDITION("GOODINPUTCONDITION"),
+    HASSERVERKEY("HASSERVERKEY"),
+    WAIKUP("WAIKUP");
+
+    private String name;
+    Markers(String name){
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

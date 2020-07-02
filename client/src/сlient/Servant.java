@@ -49,14 +49,20 @@ public class Servant extends AServant {
      * @return boolean
      */
     @Override
-    public boolean setConnection() {
-        ip = Filters.scanLine((x)->(x.matches("(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"))
-                ,"Enter server's ip: ",scanner);
-        port = Filters.scanInt((x)->(x > 49680 && x < 65536),"Enter server's port: ", scanner); //48654
+    public boolean setConnection(String ip, Integer port) {
+        if (ip == null && port == null) {
+            this.ip = Filters.scanLine((x) -> (x.matches("(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"))
+                    , "Enter server's ip: ", scanner);
+            this.port = Filters.scanInt((x) -> (x > 49680 && x < 65536), "Enter server's port: ", scanner); //48654
+        }else {
+            this.ip = ip;
+            this.port = port;
+        }
         client = mediator.getClient();
         counter.getAndIncrement();
         if (resetConnection(true)) {
             new Thread(client).start();
+            mediator.notify(this,new Segment(Markers.GOODINPUTCONDITION));
             return true;
         }
         return false;
@@ -90,7 +96,7 @@ public class Servant extends AServant {
                     if (--tick == -1) {
                         System.err.println("Server time out! \n" +
                                 "Enter \"ip\" and \"port\" again.");
-                        setConnection();
+                        setConnection(null,null);
                     }
                     String answer;
                     if (droppedConnection) {
@@ -134,7 +140,6 @@ public class Servant extends AServant {
 
     /**
      * Метод, принимающий сообщение от клиента и уведомление посредника для выполнения следующего действия.
-     * @param parcel
      */
     @Override
     public synchronized void order(Segment segment) {

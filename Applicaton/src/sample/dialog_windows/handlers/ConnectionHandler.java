@@ -1,10 +1,9 @@
 package sample.dialog_windows.handlers;
 
-import sample.assets.exceptions.CommonHandlerException;
-import sample.assets.exceptions.ParsingException;
-import sample.dialog_windows.communication.Parcel;
+import sample.dialog_windows.communication.ApplicationParcel;
 import sample.dialog_windows.dataSection.ConnectionDataParser;
 import sample.dialog_windows.dataSection.Parsing;
+import sample.dialog_windows.handlers.exceptions.*;
 
 public class ConnectionHandler implements Handler {
     private Handler nextHandler;
@@ -20,12 +19,12 @@ public class ConnectionHandler implements Handler {
     }
 
     @Override
-    public boolean handle(Parcel parcel) throws CommonHandlerException {
+    public ApplicationParcel handle(ApplicationParcel applicationParcel) throws CommonHandlerException {
         try {
-            ipAndPortParser.pars(parcel);
+            applicationParcel = ipAndPortParser.pars(applicationParcel);
         }catch (ParsingException ex) {
             throw new CommonHandlerException(ex.getMessage());
         }
-        return true;
+        return applicationParcel;
     }
 }

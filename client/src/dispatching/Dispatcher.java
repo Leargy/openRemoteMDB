@@ -70,9 +70,11 @@ public class Dispatcher extends ADispatcher {
                 tempCommand = dataHandler.handle(parcel);
             } catch (CommandSyntaxException ex) {
                 //exception will be thrown if entered command doesn't pass the verification.
-                ex.getMessage();
+//                ex.getMessage();
+                Segment segment = new Segment(Markers.BADINPUTCONDITION);
+                segment.setStringData(new String[]{ex.getMessage()});
                 System.out.println("For more information use \"help\" command.");
-                mediator.notify(this, new Segment(Markers.BADINPUTCONDITION));
+                mediator.notify(this, segment);
                 return;
             }
 

@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Applicaton.iml" filepath="$PROJECT_DIR$/Applicaton.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../client/client.iml" filepath="$PROJECT_DIR$/../client/client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../mutliserver/mutliserver.iml" filepath="$PROJECT_DIR$/../mutliserver/mutliserver.iml" />
     </modules>
   </component>
 </project>

@@ -2,8 +2,8 @@ package sample;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import sample.dialog_windows.IpAndPortInputWindow;
 import sample.dialog_windows.communication.ButtonMediator;
+import сlient.KickStarter;
 
 public class Main extends Application {
     private ButtonMediator buttonMediator;

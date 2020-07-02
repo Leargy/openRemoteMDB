@@ -10,27 +10,29 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="413.0" prefWidth="334.0" style="-fx-background-color: #434459;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.dialog_windows.IpAndPortInputWindow" >
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="415.0" prefWidth="336.0" style="-fx-background-color: #434459; -fx-border-color: #8F8F8F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.dialog_windows.Controllers.IpAndPortInputWindowController">
    <children>
-      <AnchorPane layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="322.0" prefWidth="334.0" style="-fx-background-color: #E6E6E6;">
+      <AnchorPane layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="326.0" prefWidth="334.0" style="-fx-background-color: #E6E6E6;">
          <children>
-            <TextField fx:id="ip_field" layoutX="74.0" layoutY="70.0" />
-            <TextField fx:id="port_field" layoutX="74.0" layoutY="135.0" />
-            <Text layoutX="74.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
+            <TextField fx:id="ip_field" layoutX="65.0" layoutY="69.0" prefHeight="31.0" prefWidth="205.0" />
+            <TextField fx:id="port_field" layoutX="65.0" layoutY="147.0" prefHeight="31.0" prefWidth="205.0" />
+            <Text layoutX="68.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
             </Text>
-            <Text layoutX="75.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Port">
+            <Text layoutX="68.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Port">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
             </Text>
-            <Button fx:id="connectionButton" layoutX="96.0" layoutY="200.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Подключиться">
+            <Button fx:id="connectionButton" layoutX="95.0" layoutY="223.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Подключиться">
                <font>
                   <Font name="Georgia Bold" size="15.0" />
-               </font></Button>
-         </children></AnchorPane>
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
       <Label layoutX="90.0" layoutY="14.0" prefHeight="26.0" prefWidth="155.0" text="RemoteMDB" textFill="WHITE">
          <font>
             <Font name="Georgia Bold Italic" size="23.0" />

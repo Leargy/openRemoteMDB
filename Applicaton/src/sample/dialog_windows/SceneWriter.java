@@ -2,6 +2,9 @@ package sample.dialog_windows;
 
 import sample.buttons.AbstractButtonsFactory;
 import sample.buttons.ButtonFactory;
+import sample.dialog_windows.Controllers.IpAndPortInputWindowController;
+import sample.dialog_windows.Controllers.LogInWindowController;
+import sample.dialog_windows.Controllers.MainWindowController;
 import sample.dialog_windows.communication.Component;
 import sample.dialog_windows.communication.Mediating;
 
@@ -16,10 +19,17 @@ public class SceneWriter implements SceneWriterActions, Component {
         mediator = owner.mediator;
         windowOwner = owner;
         buttonFactory = new AbstractButtonsFactory(totalCommander);
+        IpAndPortInputWindowController ipAndPortInputWindowController = new IpAndPortInputWindowController();
+        ipAndPortInputWindowController.setCommander(totalCommander);
+        MainWindowController mainWindowController = new MainWindowController();
+        mainWindowController.setCommander(totalCommander);
+        LogInWindowController logInWindowController = new LogInWindowController();
+        logInWindowController.setCommander(totalCommander).setPropertyListner(mainWindowController.nickForDisplaying);
 
         scenes = new Dialog[] {
-                new IpAndPortInputWindow().setButtonActioner(buttonFactory.createConnectionButton()),
-                new LogInWindow(),
+                ipAndPortInputWindowController,
+                logInWindowController,
+                mainWindowController
         };
     }
 

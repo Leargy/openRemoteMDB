@@ -1,13 +1,13 @@
-package sample.assets.exceptions;
+package sample.dialog_windows.handlers.exceptions;
 
-public class CommonHandlerException extends Exception {
+public class ParsingException extends Exception {
     private String message;
 
     /**
      * Конструктор, принимающий контекст ошибки.
      * @param message
      */
-    public CommonHandlerException(String message) {
+    public ParsingException(String message) {
         this.message = message;
     }
 
@@ -16,7 +16,6 @@ public class CommonHandlerException extends Exception {
      * @return String
      */
     public String getMessage(){
-        System.err.println(message);
         return message;
     }
 }

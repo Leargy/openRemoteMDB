@@ -44,7 +44,7 @@ public abstract class AServant implements Component {
      * метод установки соединения
      * @return boolean
      */
-    public boolean setConnection() { return false;}
+    public boolean setConnection(String ip, Integer port) { return false;}
     /**
      * Метод, реализующий переустановку подключения к серверу.
      * @return boolean

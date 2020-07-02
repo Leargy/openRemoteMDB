@@ -1,8 +1,8 @@
 package sample.dialog_windows.dataSection;
 
-import sample.assets.exceptions.ParsingException;
-import sample.dialog_windows.communication.Parcel;
+import sample.dialog_windows.handlers.exceptions.*;
+import sample.dialog_windows.communication.ApplicationParcel;
 
 public interface Parsing {
-    void pars(Parcel parcel) throws ParsingException;
+    ApplicationParcel pars(ApplicationParcel applicationParcel) throws ParsingException;
 }

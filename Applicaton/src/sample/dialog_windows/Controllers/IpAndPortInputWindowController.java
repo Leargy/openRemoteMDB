@@ -1,4 +1,4 @@
-package sample.dialog_windows;
+package sample.dialog_windows.Controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -8,21 +8,30 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
-import sample.buttons.ConnectionIButton;
 import sample.buttons.IButton;
+import sample.dialog_windows.Commander;
+import sample.dialog_windows.ConnectionSceneFactory;
+import sample.dialog_windows.Dialog;
+import sample.dialog_windows.communication.ApplicationParcel;
 
-public class IpAndPortInputWindow extends Dialog{
+public class IpAndPortInputWindowController extends Dialog {
     private static IButton buttonActioner;
     private ConnectionSceneFactory connectionSceneFactory;
+    private static Commander totalCommander;
 
-    public IpAndPortInputWindow() {
+    public IpAndPortInputWindowController() {
         connectionSceneFactory = new ConnectionSceneFactory();
     }
-    public IpAndPortInputWindow setButtonActioner(IButton button) {
-        buttonActioner = button;
+
+//    public IpAndPortInputWindow setButtonActioner(IButton button) {
+//        buttonActioner = button;
+//        return this;
+//    }
+
+    public IpAndPortInputWindowController setCommander(Commander totalCommander) {
+        this.totalCommander = totalCommander;
         return this;
     }
-
 
     @FXML
     private ResourceBundle resources;
@@ -45,17 +54,22 @@ public class IpAndPortInputWindow extends Dialog{
     @FXML
     void initialize() {
         connectionButton.setOnAction(event -> {
-            buttonActioner.click();
-            ((ConnectionIButton)buttonActioner).setIp(ip_field.getText());
-            ((ConnectionIButton)buttonActioner).setPort(port_field.getText());
+//            ((ConnectionIButton)buttonActioner).setIp(ip_field.getText());
+//            ((ConnectionIButton)buttonActioner).setPort(port_field.getText());
+//            buttonActioner.click();
+            totalCommander.setConnection(new ApplicationParcel("ip=" + ip_field.getText() + " " + "port=" + port_field.getText()));
 //            ((Stage) connectionButton.getScene().getWindow()).close();
         });
     }
 
     @Override
     public void renderWindow() {
+        thisStage.hide();
+//        thisStage.setResizable(true);
         thisStage.setScene(getScene());
+//        thisStage.setResizable(false);
         thisStage.show();
+
     }
 
     @Override

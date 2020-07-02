@@ -7,6 +7,8 @@ public abstract class Dialog {
     protected static Stage thisStage = new Stage();
     static {
         thisStage.setTitle("RemoteMDB");
+        thisStage.setMaxWidth(340.0);
+        thisStage.setMaxHeight(430.0);
         thisStage.setResizable(false);
     }
 
