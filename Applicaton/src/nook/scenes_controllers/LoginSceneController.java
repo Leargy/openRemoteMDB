@@ -31,13 +31,13 @@ public class LoginSceneController {
     @FXML
     public void initialize() {
         // initialize menu items with images
-        ImageView rusView = new ImageView(new Image("nook\\assets\\images\\misc\\ussr.png"));
+        ImageView rusView = new ImageView(new Image("sample/assets/images/ussr.png"));
         login_change_ru.setGraphic(rusView);
-        ImageView espView = new ImageView(new Image("nook\\assets\\images\\misc\\panama.gif"));
+        ImageView espView = new ImageView(new Image("sample/assets/images/panama.gif"));
         login_change_es.setGraphic(espView);
-        ImageView slvView = new ImageView(new Image("nook\\assets\\images\\misc\\slovain.gif"));
+        ImageView slvView = new ImageView(new Image("sample/assets/images/slovain.gif"));
         login_change_sl.setGraphic(slvView);
-        ImageView ukrView = new ImageView(new Image("nook\\assets\\images\\misc\\ukrain.gif"));
+        ImageView ukrView = new ImageView(new Image("sample/assets/images/ukrain.gif"));
         login_change_uk.setGraphic(ukrView);
     }
 

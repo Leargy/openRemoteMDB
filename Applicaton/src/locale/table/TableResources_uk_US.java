@@ -9,6 +9,7 @@ public class TableResources_uk_US extends java.util.ListResourceBundle {
             {"Search", "Poshuk"},
             {"Insert", "Dodavshi"},
             {"Clear", "Ochistivshi"},
+            {"Info", "Informaciya"},
             {"Table", "Tablicya"},
             {"Map", "Vizualizaciya"},
             {"Name", "Іm'ya"},

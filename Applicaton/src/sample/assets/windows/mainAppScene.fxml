@@ -1,26 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.TextFlow?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1160.0" style="-fx-background-color: #434459; -fx-border-color: #8F8F8F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.dialog_windows.Controllers.MainWindowController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1160.0" style="-fx-background-color: #434459; -fx-border-color: #8F8F8F;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.dialog_windows.Controllers.MainWindowController">
     <children>
         <AnchorPane layoutY="53.0" prefHeight="547.0" prefWidth="1160.0" style="-fx-background-color: #E6E6E6;">
             <children>
@@ -38,9 +26,19 @@
                      </image>
                   </ImageView>
                   <ComboBox fx:id="filter_button" layoutX="342.0" layoutY="4.0" minHeight="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="104.0" promptText="Фильтр" style="-fx-background-color: #73ACE6;">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
+                      <items>
+                          <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Name" />
+                              <String fx:value="Fullname" />
+                              <String fx:value="Type" />
+                              <String fx:value="Employees count" />
+                              <String fx:value="Annual turnover" />
+                              <String fx:value="Zip code" />
+                              <String fx:value="Creation date" />
+                              <String fx:value="Owner" />
+                              <String fx:value="ID" />
+                          </FXCollections>
+                      </items>
                   </ComboBox>
                   <Button fx:id="insert_button" layoutX="910.0" layoutY="4.0" mnemonicParsing="false" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Добавить">
                      <font>
@@ -49,10 +47,13 @@
                   </Button>
                   <MenuBar fx:id="language_menu" layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="77.0" style="-fx-background-color: #73ACE6;">
                     <menus>
-                      <Menu mnemonicParsing="false" text="Язык">
-                        <items>
-                          <MenuItem mnemonicParsing="false" text="Close" />
-                        </items>
+                      <Menu fx:id="main_lang_choser" mnemonicParsing="false" text="Язык">
+                          <items>
+                              <MenuItem fx:id="main_change_ru" mnemonicParsing="false" onAction="#changeLanguage" text="Русский ru_RU" />
+                              <MenuItem fx:id="main_change_es" mnemonicParsing="false" onAction="#changeLanguage" text="Español es_PA" />
+                              <MenuItem fx:id="main_change_sl" mnemonicParsing="false" onAction="#changeLanguage" text="Slovenščina sl_SL" />
+                              <MenuItem fx:id="main_change_uk" mnemonicParsing="false" onAction="#changeLanguage" text="Український uk_UA" />
+                          </items>
                       </Menu>
                     </menus>
                   </MenuBar>
@@ -71,16 +72,16 @@
                            <children>
                               <TableView fx:id="tabl" prefHeight="457.0" prefWidth="1081.0" style="-fx-border-color: #8F8F8F;">
                                 <columns>
-                                  <TableColumn prefWidth="65.0" text="Имя" />
-                                  <TableColumn prefWidth="124.0" text="Полное имя" />
-                                    <TableColumn prefWidth="97.0" text="Тип" />
-                                    <TableColumn minWidth="9.0" prefWidth="153.0" text="Число сотрудников" />
-                                    <TableColumn prefWidth="136.0" text="Годовой оборот" />
-                                    <TableColumn prefWidth="85.0" text="Индекс" />
-                                    <TableColumn prefWidth="136.0" text="Дата создания" />
-                                    <TableColumn prefWidth="96.0" text="Владелец" />
-                                    <TableColumn prefWidth="55.0" text="ID" />
-                                    <TableColumn prefWidth="132.0" text="Взаимодействие" />
+                                    <TableColumn fx:id="main_table_name" prefWidth="65.0" text="Имя" />
+                                    <TableColumn fx:id="main_table_fullname" prefWidth="124.0" text="Полное имя" />
+                                    <TableColumn fx:id="main_table_type" prefWidth="97.0" text="Тип" />
+                                    <TableColumn fx:id="main_table_employees" minWidth="9.0" prefWidth="153.0" text="Число сотрудников" />
+                                    <TableColumn fx:id="main_table_annual" prefWidth="136.0" text="Годовой оборот" />
+                                    <TableColumn fx:id="main_table_zipcode" prefWidth="85.0" text="Индекс" />
+                                    <TableColumn fx:id="main_table_creation_date" prefWidth="136.0" text="Дата создания" />
+                                    <TableColumn fx:id="main_table_owner" prefWidth="96.0" text="Владелец" />
+                                    <TableColumn fx:id="main_table_id" prefWidth="55.0" text="ID" />
+                                    <TableColumn fx:id="main_table_interact" prefWidth="132.0" text="Взаимодействие" />
                                 </columns>
                               </TableView>
                            </children>

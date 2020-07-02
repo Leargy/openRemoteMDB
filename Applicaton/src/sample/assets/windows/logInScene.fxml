@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="413.0" prefWidth="334.0" style="-fx-background-color: #434459; -fx-border-color: #8F8F8F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.dialog_windows.Controllers.LogInWindowController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="413.0" prefWidth="334.0" style="-fx-background-color: #434459; -fx-border-color: #8F8F8F;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.dialog_windows.Controllers.LogInWindowController">
     <children>
         <AnchorPane layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="324.0" prefWidth="334.0" style="-fx-background-color: #E6E6E6;">
             <children>
                 <TextField fx:id="login_field" layoutX="65.0" layoutY="69.0" prefHeight="31.0" prefWidth="205.0" />
-                <Text layoutX="67.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Логин">
+                <Text fx:id="login_login_text" layoutX="67.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Логин">
                     <font>
                         <Font name="Georgia" size="15.0" />
                     </font>
                 </Text>
-                <Text layoutX="67.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пароль" wrappingWidth="54.50732421875">
+                <Text fx:id="login_pass_text" layoutX="67.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пароль" wrappingWidth="54.50732421875">
                     <font>
                         <Font name="Georgia" size="15.0" />
                     </font>
@@ -47,10 +40,13 @@
          <children>
             <MenuBar fx:id="laguage_menu" layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="77.0" style="-fx-background-color: #73ACE6;">
                <menus>
-                  <Menu mnemonicParsing="false" text="Язык">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Close" />
-                     </items>
+                  <Menu fx:id="login_lang_choser" mnemonicParsing="false" text="Язык">
+                      <items>
+                          <MenuItem fx:id="login_change_ru" mnemonicParsing="false" onAction="#changeLanguage" text="Русский ru_RU" />
+                          <MenuItem fx:id="login_change_es" mnemonicParsing="false" onAction="#changeLanguage" text="Español es_PA" />
+                          <MenuItem fx:id="login_change_sl" mnemonicParsing="false" onAction="#changeLanguage" text="Slovenščina sl_SL" />
+                          <MenuItem fx:id="login_change_uk" mnemonicParsing="false" onAction="#changeLanguage" text="Український uk_UA" />
+                      </items>
                   </Menu>
                </menus>
             </MenuBar>

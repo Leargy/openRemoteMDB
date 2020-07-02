@@ -9,6 +9,7 @@ public class TableResources_es_US extends java.util.ListResourceBundle {
             {"Search", "Busqueda"},
             {"Insert", "Insertar"},
             {"Clear", "Claro"},
+            {"Info", "Informacion"},
             {"Table", "Tabla"},
             {"Map", "Mapeo"},
             {"Name", "Nombre"},

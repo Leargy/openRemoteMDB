@@ -1,36 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="415.0" prefWidth="336.0" style="-fx-background-color: #434459; -fx-border-color: #8F8F8F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.dialog_windows.Controllers.IpAndPortInputWindowController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="415.0" prefWidth="336.0" style="-fx-background-color: #434459; -fx-border-color: #8F8F8F;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.dialog_windows.Controllers.IpAndPortInputWindowController">
    <children>
       <AnchorPane layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="326.0" prefWidth="334.0" style="-fx-background-color: #E6E6E6;">
          <children>
             <TextField fx:id="ip_field" layoutX="65.0" layoutY="69.0" prefHeight="31.0" prefWidth="205.0" />
             <TextField fx:id="port_field" layoutX="65.0" layoutY="147.0" prefHeight="31.0" prefWidth="205.0" />
-            <Text layoutX="68.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
+            <Text fx:id="connect_ip_text" layoutX="68.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
             </Text>
-            <Text layoutX="68.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Port">
+            <Text fx:id="connect_port_text" layoutX="68.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Port">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
             </Text>
-            <Button fx:id="connectionButton" layoutX="95.0" layoutY="223.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Подключиться">
-               <font>
-                  <Font name="Georgia Bold" size="15.0" />
-               </font>
-            </Button>
+            <HBox layoutX="95.0" layoutY="223.0">
+               <children>
+                  <Button fx:id="connectionButton" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Подключиться">
+                     <font>
+                        <Font name="Georgia Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
       <Label layoutX="90.0" layoutY="14.0" prefHeight="26.0" prefWidth="155.0" text="RemoteMDB" textFill="WHITE">
@@ -42,9 +40,12 @@
          <children>
             <MenuBar fx:id="language_menu_button" layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="77.0" style="-fx-background-color: #73ACE6;">
                <menus>
-                  <Menu mnemonicParsing="false" text="Язык">
+                  <Menu fx:id="connect_lang_choser" mnemonicParsing="false" text="Язык">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem fx:id="connect_change_ru" mnemonicParsing="false" onAction="#changeLanguage" text="Русский ru_RU" />
+                        <MenuItem fx:id="connect_change_es" mnemonicParsing="false" onAction="#changeLanguage" text="Español es_PA" />
+                        <MenuItem fx:id="connect_change_sl" mnemonicParsing="false" onAction="#changeLanguage" text="Slovenščina sl_SL" />
+                        <MenuItem fx:id="connect_change_uk" mnemonicParsing="false" onAction="#changeLanguage" text="Український uk_UA" />
                      </items>
                   </Menu>
                </menus>
