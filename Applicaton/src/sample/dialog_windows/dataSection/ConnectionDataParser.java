@@ -1,25 +1,29 @@
 package sample.dialog_windows.dataSection;
 
-import sample.assets.exceptions.ParsingException;
-import sample.dialog_windows.communication.Parcel;
+import sample.dialog_windows.communication.ApplicationParcel;
+import sample.dialog_windows.handlers.exceptions.*;
 
 public class ConnectionDataParser implements Parsing {
     private String ip;
     private String port;
 
     @Override
-    public void pars(Parcel parcel) throws ParsingException {
+    public ApplicationParcel pars(ApplicationParcel applicationParcel) throws ParsingException {
         String rawData;
-        rawData = parcel.getMessage();
+        rawData = applicationParcel.getMessage();
         ip = ipPars(rawData);
         port = portPars(rawData);
         if(checkIpFormat(ip) == false) {
             throw new ParsingException("Wrong ip format!");
         }
-        if (checkPortFormat(port) == false) {
-            throw new ParsingException("Not available port number!");
+        try {
+            if (checkPortFormat(port) == false) {
+                throw new ParsingException("Not available port number!");
+            }
+        }catch (NumberFormatException ex) {
+            throw new ParsingException("Port should be a number!");
         }
-
+        return new ApplicationParcel(ip + " " + port);
     }
 
     public String getIp() {

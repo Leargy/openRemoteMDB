@@ -1,9 +1,9 @@
 package sample.dialog_windows.handlers;
 
-import sample.assets.exceptions.CommonHandlerException;
-import sample.dialog_windows.communication.Parcel;
+import sample.dialog_windows.handlers.exceptions.*;
+import sample.dialog_windows.communication.ApplicationParcel;
 
 public interface Handler {
     void setNext(Handler nextHandler);
-    boolean handle(Parcel parcel) throws CommonHandlerException;
+    ApplicationParcel handle(ApplicationParcel applicationParcel) throws CommonHandlerException;
 }

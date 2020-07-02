@@ -2,7 +2,7 @@ package sample.buttons;
 
 
 import sample.dialog_windows.Commander;
-import sample.dialog_windows.communication.Parcel;
+import sample.dialog_windows.communication.ApplicationParcel;
 
 public class ConnectionIButton implements IButton {
     private Commander commander;
@@ -23,6 +23,6 @@ public class ConnectionIButton implements IButton {
 
     @Override
     public void click() {
-        commander.setConnection(new Parcel("ip=, port="));
+        commander.setConnection(new ApplicationParcel("ip=" + ip + " " + "port=" + port));
     }
 }

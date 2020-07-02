@@ -6,16 +6,15 @@ import javafx.scene.Scene;
 
 import java.io.IOException;
 
-public class ConnectionSceneFactory implements WindowsFactory {
-
+public class MainWindowFactory implements WindowsFactory {
     @Override
     public Scene createScene() {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/sample/assets/windows/connectionScene.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/sample/assets/windows/mainAppScene.fxml"));
         }catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-        return new Scene(root, 336.0, 413.0);
+        return new Scene(root, 1180, 640);
     }
 }

@@ -20,14 +20,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1160.0" style="-fx-background-color: #434459; -fx-border-color: #8F8F8F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1160.0" style="-fx-background-color: #434459; -fx-border-color: #8F8F8F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.dialog_windows.Controllers.MainWindowController">
     <children>
         <AnchorPane layoutY="53.0" prefHeight="547.0" prefWidth="1160.0" style="-fx-background-color: #E6E6E6;">
             <children>
             <AnchorPane layoutY="-1.0" prefHeight="40.0" prefWidth="1160.0" style="-fx-background-color: #FFFFFF;">
                <children>
-                      <TextField layoutX="454.0" layoutY="4.0" prefHeight="31.0" prefWidth="252.0" />
-                  <Button layoutX="713.0" layoutY="4.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="83.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Искать">
+                      <TextField fx:id="serchin_field" layoutX="454.0" layoutY="4.0" prefHeight="31.0" prefWidth="252.0" />
+                  <Button fx:id="search_button" layoutX="713.0" layoutY="4.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="83.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Искать">
                      <font>
                         <Font name="Georgia Bold" size="15.0" />
                      </font>
@@ -37,17 +37,17 @@
                         <Image url="@../images/iconfinder_magnifying-glass_226571.png" />
                      </image>
                   </ImageView>
-                  <ComboBox layoutX="342.0" layoutY="4.0" minHeight="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="104.0" promptText="Фильтр" style="-fx-background-color: #73ACE6;">
+                  <ComboBox fx:id="filter_button" layoutX="342.0" layoutY="4.0" minHeight="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="104.0" promptText="Фильтр" style="-fx-background-color: #73ACE6;">
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />
                      </cursor>
                   </ComboBox>
-                  <Button layoutX="910.0" layoutY="4.0" mnemonicParsing="false" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Добавить">
+                  <Button fx:id="insert_button" layoutX="910.0" layoutY="4.0" mnemonicParsing="false" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Добавить">
                      <font>
                         <Font name="Georgia Bold" size="15.0" />
                      </font>
                   </Button>
-                  <MenuBar layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="77.0" style="-fx-background-color: #73ACE6;">
+                  <MenuBar fx:id="language_menu" layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="77.0" style="-fx-background-color: #73ACE6;">
                     <menus>
                       <Menu mnemonicParsing="false" text="Язык">
                         <items>
@@ -56,7 +56,7 @@
                       </Menu>
                     </menus>
                   </MenuBar>
-                  <Button layoutX="1039.0" layoutY="4.0" mnemonicParsing="false" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Очистить">
+                  <Button fx:id="clear_button" layoutX="1039.0" layoutY="4.0" mnemonicParsing="false" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Очистить">
                      <font>
                         <Font name="Georgia Bold" size="15.0" />
                      </font>
@@ -65,36 +65,36 @@
             </AnchorPane>
             <TabPane layoutX="71.0" layoutY="39.0" prefHeight="506.0" prefWidth="1081.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Таблица">
+                <Tab fx:id="table_selector" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Таблица">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="468.0" prefWidth="1009.0">
                            <children>
-                              <TableView layoutX="7.0" prefHeight="457.0" prefWidth="1066.0">
+                              <TableView fx:id="tabl" prefHeight="457.0" prefWidth="1081.0" style="-fx-border-color: #8F8F8F;">
                                 <columns>
                                   <TableColumn prefWidth="65.0" text="Имя" />
                                   <TableColumn prefWidth="124.0" text="Полное имя" />
-                                    <TableColumn prefWidth="86.0" text="Тип" />
-                                    <TableColumn minWidth="9.0" prefWidth="155.0" text="Число сотрудников" />
-                                    <TableColumn prefWidth="135.0" text="Годовой оборот" />
-                                    <TableColumn prefWidth="86.0" text="Индекс" />
-                                    <TableColumn prefWidth="134.0" text="Дата создания" />
-                                    <TableColumn prefWidth="94.0" text="Владелец" />
-                                    <TableColumn prefWidth="51.0" text="ID" />
-                                    <TableColumn prefWidth="135.0" text="Взаимодействие" />
+                                    <TableColumn prefWidth="97.0" text="Тип" />
+                                    <TableColumn minWidth="9.0" prefWidth="153.0" text="Число сотрудников" />
+                                    <TableColumn prefWidth="136.0" text="Годовой оборот" />
+                                    <TableColumn prefWidth="85.0" text="Индекс" />
+                                    <TableColumn prefWidth="136.0" text="Дата создания" />
+                                    <TableColumn prefWidth="96.0" text="Владелец" />
+                                    <TableColumn prefWidth="55.0" text="ID" />
+                                    <TableColumn prefWidth="132.0" text="Взаимодействие" />
                                 </columns>
                               </TableView>
                            </children>
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Визуализация">
+                <Tab fx:id="vizualization_selector" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Визуализация">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-color: #8F8F8F;" />
                   </content>
                 </Tab>
               </tabs>
             </TabPane>
-            <Button layoutX="-51.0" layoutY="154.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="134.0" rotate="90.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Информация">
+            <Button fx:id="info_button" layoutX="-51.0" layoutY="154.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="134.0" rotate="90.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Информация">
                <font>
                   <Font name="Georgia Bold" size="15.0" />
                </font>
@@ -105,8 +105,8 @@
                 <Font name="Georgia Bold Italic" size="30.0" />
             </font>
         </Label>
-      <TextFlow layoutX="860.0" layoutY="11.0" prefHeight="31.0" prefWidth="183.0" />
-      <Button layoutX="1050.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Выйти">
+      <TextFlow fx:id="nick_name_panel" layoutX="860.0" layoutY="11.0" prefHeight="31.0" prefWidth="183.0" />
+      <Button fx:id="sign_out_button" layoutX="1050.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Выйти">
          <font>
             <Font name="Georgia Bold" size="15.0" />
          </font>

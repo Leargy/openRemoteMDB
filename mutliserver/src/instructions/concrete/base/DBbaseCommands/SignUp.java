@@ -50,7 +50,7 @@ public class SignUp extends ConcreteDecree{
 //        Report report = new Report(0,"New account was registered.");
         Report report = new Report(0,"Аккаунт был успешно зарегестривован.\n");
         report.setIsConfirmed(true);
-//        AUTHENTICATION_TASK.addAuthorizedUser(userSocketChannel,new User(new UsersParameters(new String[]{userLogin, userPassword})));
+        AUTHENTICATION_TASK.addAuthorizedUser(userSocketChannel,new User(new UsersParameters(new String[]{userLogin, userPassword})));
         return report;
     }
 

@@ -1,12 +1,13 @@
 package sample.dialog_windows;
 
-import sample.dialog_windows.communication.Parcel;
+import sample.dialog_windows.communication.ApplicationParcel;
 
 public interface Commander {
-    void setConnection(Parcel parcel);
-    void signIn();
+    void setConnection(ApplicationParcel applicationParcel);
+    void back();
+    void signIn(String login, String password);
     void signOut();
-    void signUp();
+    void signUp(String login, String password);
     void clear();
     void insert();
     void update();
