@@ -1,23 +1,20 @@
 package dispatching.validators;
 
 import communication.Segment;
-import dataSection.Commands;
+import data_section.Commands;
+import dispatching.Dispatcher;
+import dispatching.script_handler.ExecuteScript;
 import entities.Descriptor;
 import entities.JunkerCreator;
+import entities.organizationFactory.OrganizationBuilder;
 import exceptions.CommandSyntaxException;
 import instructions.rotten.base.*;
 import instructions.rotten.extended.*;
 import instructions.rotten.RawDecree;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 /**
  * Звено проверки аргументов команд.Реализация паттерна "Цепочка обязанностей" (Chain of Responsibility)
@@ -27,6 +24,9 @@ import java.util.stream.StreamSupport;
 public class ArgumentHandler extends DataHandler{
     private final HashMap<String,String> commandMap;
     private final Descriptor fileDescriptor;
+    private ExecuteScript executeScript;
+    private Dispatcher dispatcher;
+    private OrganizationBuilder organizationBuilder;
     /**
      * Конструктор принимающий список команд относительно которых будет производиться проверка.
      * @param commandList
@@ -37,6 +37,11 @@ public class ArgumentHandler extends DataHandler{
         fileDescriptor = new Descriptor();
     }
 
+    public void setDispatcher(Dispatcher dispatcher) {
+        organizationBuilder = new OrganizationBuilder();
+        executeScript = new ExecuteScript(dispatcher,organizationBuilder);
+    };
+
     /**
      * Метод седержащий логику проверки аргументной части команды.
      * @param parcel
@@ -44,16 +49,16 @@ public class ArgumentHandler extends DataHandler{
      * @throws CommandSyntaxException
      */
     @Override
-    public RawDecree handle(Segment parcel) throws CommandSyntaxException {
+    public RawDecree handle(Segment parcel) throws CommandSyntaxException{
         String tempCommand = parcel.getStringData()[0];
 
-        boolean isLimited = true;
-        Map.Entry<String,String> foundedCommand = commandMap.entrySet().stream().filter((a) -> (a.getValue().equals(tempCommand))).findFirst().get();
-        if (foundedCommand.getKey().matches(".*\\s*\\[(key|id)\\].*")) {
-            isLimited = false;
+        boolean isLimited = false;
+        Map.Entry<String,String> foundedCommand = commandMap.entrySet().stream().filter((a) -> (a.getKey().equals(tempCommand))).findFirst().get();
+        if (foundedCommand.getValue().matches(".*\\s*\\[(key|id)\\].*")) {
+            isLimited = true;
         }
         if (tempCommand.equals(RawRemoveLower.NAME)) {
-            return new RawRemoveLower(junkerCreator.prepareJunker());
+            return new RawRemoveLower(organizationBuilder.make(junkerCreator.prepareJunker()));
         }
         String stringArgument = "";
         try {
@@ -68,7 +73,7 @@ public class ArgumentHandler extends DataHandler{
             throw new CommandSyntaxException("Command should have at list one argument!");
         }
 
-        if (!isLimited) {
+        if (isLimited) {
             Integer intArgument = null;
             try {
                 intArgument = Integer.valueOf(stringArgument);
@@ -79,25 +84,28 @@ public class ArgumentHandler extends DataHandler{
             } catch (NumberFormatException e) {
                 throw new CommandSyntaxException("Entered argument should be one positive integer!");
             }
-            switch (foundedCommand.getValue()) {
+            switch (foundedCommand.getKey()) {
                 case RawRemoveKey.NAME: return new RawRemoveKey(intArgument);
-                case RawInsert.NAME: return new RawInsert(intArgument, junkerCreator.prepareJunker());
-                case RawUpdate.NAME: return new RawUpdate(intArgument, junkerCreator.prepareJunker());
-                case RawReplaceIfLower.NAME: return new RawReplaceIfLower(intArgument, junkerCreator.prepareJunker());
-                case RawReplaceIfGreater.NAME: return new RawReplaceIfGreater(intArgument, junkerCreator.prepareJunker());
+                case RawInsert.NAME: return new RawInsert(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
+                case RawUpdate.NAME: return new RawUpdate(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
+                case RawReplaceIfLower.NAME: return new RawReplaceIfLower(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
+                case RawReplaceIfGreater.NAME: return new RawReplaceIfGreater(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
+                default: return new RawExecuteScript(null);
             }
         }else {
-            switch (foundedCommand.getValue()) {
+            switch (foundedCommand.getKey()) {
                 case RawExecuteScript.NAME:
                     try{
-                        return new RawExecuteScript(fileDescriptor.discript(stringArgument));
+//                        return new RawExecuteScript(fileDescriptor.discript(stringArgument));
+                        executeScript.read(fileDescriptor.discript(stringArgument),parcel.getSocketChannel());
+                        return new RawExecuteScript(null);
                     }catch (IOException ex) {
                         throw new CommandSyntaxException(ex.getMessage());
                     }
                 case RawFilterContainsName.NAME: return new RawFilterContainsName(stringArgument);
+                default: return new RawExecuteScript(null);
                 //case RawRemoveLower.NAME: return new RawRemoveLower(junkerCreator.prepareJunker());
             }
         }
-        return null;
     }
 }

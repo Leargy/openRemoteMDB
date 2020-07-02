@@ -20,4 +20,5 @@ public abstract class ADispatcher implements Component {
      * @throws IOException
      */
     public void giveOrder(Segment parcel) {}
+    public synchronized void confirm(boolean isConfirmed) {}
 }

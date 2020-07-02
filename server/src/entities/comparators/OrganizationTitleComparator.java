@@ -1,5 +1,6 @@
 package entities.comparators;
 
+
 import entities.Organization;
 
 import java.util.Comparator;

@@ -5,13 +5,14 @@ import communication.Mediating;
 import communication.Segment;
 
 import java.io.IOException;
+import java.security.Key;
 
 /**
  * Абстрактный класс модуля получения сообщений от сервера.
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  */
-public abstract class AReceiver implements Component {
+public abstract class AReceiver  implements Component {
     protected Mediating mediator;
 
     /**

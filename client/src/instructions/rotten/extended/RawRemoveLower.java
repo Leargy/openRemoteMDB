@@ -1,6 +1,6 @@
 package instructions.rotten.extended;
 
-import entities.Junker;
+import organization.Organization;
 import instructions.rotten.IJunked;
 import instructions.rotten.RawCommitter;
 
@@ -17,17 +17,7 @@ public final class RawRemoveLower extends RawCommitter implements IJunked, Seria
     public static final String SYNTAX = NAME + " {element}";
     public static final int ARGNUM = 1;
 
-    /**
-     * Конструктор, устанавливающий параметры
-     * добавляемого объекта
-     * @param junk
-     */
-    public RawRemoveLower(Junker junk) { super(junk); }
-
-    /**
-     * Возвращает объект, содержащий данные об объекте коллекции.
-     * @return Junker
-     */
-    @Override
-    public final Junker Params() { return JUNK; }
+    public RawRemoveLower(Organization organization) {
+        super(organization);
+    }
 }

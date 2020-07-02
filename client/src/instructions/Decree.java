@@ -1,4 +1,5 @@
 package instructions;
+
 /**
  * Абстрактный класс комманд, расширяющий интерфейс
  * комманд основными полями и данными о команде.
@@ -7,11 +8,11 @@ package instructions;
  */
 public abstract class Decree {
   // every command must have information about itself [name, syntax, brief description, argument number, has arguments]
-  public static final String NAME = "debug";
-  public static final String BRIEF = "enables developer mode";
-  public static final String SYNTAX = "debug";
-  public static final int ARGNUM = 0;
-  public static boolean isArgumented() { return ARGNUM > 0; }
+    public static final String NAME = "debug";
+    public static final String BRIEF = "enables developer mode";
+    public static final String SYNTAX = "debug";
+    public static final int ARGNUM = 0;
+    public static boolean isArgumented() { return ARGNUM > 0; }
 
-  public String toString() { return NAME; }
+    public String toString() { return NAME; }
 }

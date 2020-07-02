@@ -13,7 +13,7 @@ public class Descriptor {
      * Конструктор, в котором формируется путь к скриптам.
      */
     public Descriptor() {
-        SCRIPTS_PATH = System.getProperty("user.dir") + System.getProperty("file.separator") + "scripts";
+        SCRIPTS_PATH = System.getProperty("user.dir") + System.getProperty("file.separator") + System.getProperty("file.separator") + "scripts";
     }
 
     /**
@@ -41,7 +41,7 @@ public class Descriptor {
                 }
             }
         }catch (FileNotFoundException e) {
-            throw new FileNotFoundException("Не удалось найти файл по указанному имени");
+            throw new FileNotFoundException("Не удалось найти файл по указанному имени " + fileName);
         } catch (IOException e) {
             throw  new IOException("Не удалось получить доступ к потоку ввода для чтения файла",e);
         }

@@ -23,11 +23,6 @@ public final class ServerRun {
      * @param args аргументы командной строки
      */
     public static void main(String[] args) {
-        Thread serverInputThread = new Thread(
-                ()->{
-
-                }
-        );
         // вызвали настройщика
         SystemAdmin AndrewBot = SystemAdmin.summon("Андрей");
         // установили сервер на нужный хост и порт
@@ -60,9 +55,9 @@ public final class ServerRun {
             } catch (NumberFormatException e) {
                 System.out.println("Некорректный формат числа");
             }
-            if (newport < 48654)
+            if (newport < 48654 || newport > 65536)
                 System.out.println("Задан неправильный порт: осталось " + tryies + " попыток на ввод");
-        } while (newport < 48654 && tryies-- != 0);
+        } while ((newport < 48654 || newport > 65536) && tryies-- != 0);
         if (tryies <= 0) {
             System.out.println("Попытки ввода адреса окончились -- сервер будет настроен на порт " + port);
         } else {

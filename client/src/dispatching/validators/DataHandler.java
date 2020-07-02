@@ -4,6 +4,7 @@ import communication.Mediating;
 import communication.Segment;
 import exceptions.CommandSyntaxException;
 import entities.JunkerCreator;
+import exceptions.ScriptHandlerException;
 import instructions.rotten.RawDecree;
 
 /**

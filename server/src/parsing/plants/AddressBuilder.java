@@ -9,7 +9,7 @@ import entities.Location;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  */
-public final class AddressBuilder implements Factory<Address> {
+public final class AddressBuilder implements Factory<Address>{
   private final Factory<Location> locateBuilder = new LocationBuilder();
   /**
    * Метод, создающий экземпляр адреса

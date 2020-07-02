@@ -17,12 +17,13 @@ import java.io.Serializable;
  */
 public final class Report implements Serializable {
   // fields
-  private final int ERROR_CODE; // код ошибки
-  private final String MESSAGE; // сообщение
+  private final int ERROR_CODE; // Error code
+  private final String MESSAGE; // Message
+  private boolean isConfirmed;
 
   // builders
 
-  // главный конструктор
+  // Main builder
   /**
    * Основной конструктор, устанавливающий
    * параметры отправляемого ответа
@@ -47,4 +48,11 @@ public final class Report implements Serializable {
    * @return строка с сообщением
    */
   public String Message() { return MESSAGE; }
+
+  public boolean getIsConfirmed() {
+    return isConfirmed;
+  }
+  public void setIsConfirmed(boolean isConfirmed) {
+    this.isConfirmed = isConfirmed;
+  }
 }
