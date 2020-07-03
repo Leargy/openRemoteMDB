@@ -13,7 +13,7 @@ public class InteractionResources_sl_US extends java.util.ListResourceBundle {
             {"Official Address", "Uradni Naslov"},
             {"Zip Code", "Postna Stevilka"},
             {"Coordinates", "Koordinate"},
-            {"Position", "Polozaj"},
+            {"Position", "polozaj"},
             {"Confirm", "Nastavi"},
             {"Delete", "Zbrisi"}
             // ENDING OF INTERNATIONALIZATION

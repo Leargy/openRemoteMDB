@@ -13,7 +13,7 @@ public class InteractionResources_uk extends java.util.ListResourceBundle {
             {"Official Address", "Офіційна адреса"},
             {"Zip Code", "Поштовий Індекс"},
             {"Coordinates", "Координата"},
-            {"Position", "Положення"},
+            {"Position", "положення"},
             {"Confirm", "Підтвердивши"},
             {"Delete", "Видалити"}
             // ENDING OF INTERNATIONALIZATION
