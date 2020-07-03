@@ -13,7 +13,7 @@ public class InteractionResources_es_PA extends java.util.ListResourceBundle {
             {"Official Address", "Dirección oficial"},
             {"Zip Code", "Código Postal"},
             {"Coordinates", "Coordinar"},
-            {"Position", "Posición"},
+            {"Position", "posición"},
             {"Confirm", "Confirmar"},
             {"Delete", "Eliminar"}
             // ENDING OF INTERNATIONALIZATION

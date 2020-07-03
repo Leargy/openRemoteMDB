@@ -13,7 +13,7 @@ public class InteractionResources_ru extends java.util.ListResourceBundle {
             {"Official Address", "Официальный адрес"},
             {"Zip Code", "Почтовый Индекс"},
             {"Coordinates", "Координаты"},
-            {"Position", "Положение"},
+            {"Position", "положение"},
             {"Confirm", "Подтвердить"},
             {"Delete", "Удалить"}
             // ENDING OF INTERNATIONALIZATION

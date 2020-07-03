@@ -1,100 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="400.0" style="-fx-background-color: #434459; -fx-border-color: #8F8F8F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.dialog_windows.Controllers.InteractSceneController">
     <children>
         <AnchorPane layoutY="53.0" prefHeight="427.0" prefWidth="400.0" style="-fx-background-color: #E6E6E6;">
             <children>
-                <TextField fx:id="name_field" layoutX="14.0" layoutY="70.0" prefHeight="31.0" prefWidth="103.0" />
-                <TextField fx:id="full_name_field" layoutX="14.0" layoutY="127.0" prefHeight="31.0" prefWidth="136.0" />
-                <Text layoutX="14.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Имя">
+                <TextField layoutX="14.0" layoutY="70.0" prefHeight="31.0" prefWidth="103.0" />
+                <TextField layoutX="14.0" layoutY="127.0" prefHeight="31.0" prefWidth="136.0" />
+                <Text fx:id="interact_name" layoutX="14.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Имя">
                     <font>
                         <Font name="Georgia" size="15.0" />
                     </font>
                 </Text>
-                <Text layoutX="14.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Полное имя">
+                <Text fx:id="interact_fullname" layoutX="14.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Полное имя">
                     <font>
                         <Font name="Georgia" size="15.0" />
                     </font>
                 </Text>
                 <AnchorPane prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #FFFFFF;">
                     <children>
-                        <MenuBar fx:id="laguage_menu" layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="77.0" style="-fx-background-color: #73ACE6;">
+                        <MenuBar layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="77.0" style="-fx-background-color: #73ACE6;">
                             <menus>
-                                <Menu mnemonicParsing="false" text="Язык">
+                                <Menu fx:id="interact_lang_choser" mnemonicParsing="false" text="Язык">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" text="Close" />
+                                        <MenuItem fx:id="interact_change_ru" mnemonicParsing="false" onAction="#changeLanguage" text="Русский ru_RU" />
+                                        <MenuItem fx:id="interact_change_es" mnemonicParsing="false" onAction="#changeLanguage" text="Español es_PA" />
+                                        <MenuItem fx:id="interact_change_sl" mnemonicParsing="false" onAction="#changeLanguage" text="Slovenščina sl_SL" />
+                                        <MenuItem fx:id="interact_change_uk" mnemonicParsing="false" onAction="#changeLanguage" text="Український uk_UA" />
                                     </items>
                                 </Menu>
                             </menus>
                         </MenuBar>
                     </children>
                 </AnchorPane>
-            <Text layoutX="14.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Тип">
+            <Text fx:id="interact_type" layoutX="14.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Тип">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
             </Text>
-            <Text layoutX="14.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Число сотрудников">
+            <TextField layoutX="14.0" layoutY="184.0" prefHeight="31.0" prefWidth="136.0" />
+            <Text fx:id="interact_employees" layoutX="14.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Число сотрудников">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
             </Text>
-            <TextField fx:id="employees_number_field" layoutX="14.0" layoutY="242.0" prefHeight="31.0" prefWidth="136.0" />
-            <Text layoutX="14.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Годовой оборот">
+            <TextField layoutX="14.0" layoutY="242.0" prefHeight="31.0" prefWidth="136.0" />
+            <Text fx:id="interact_annual" layoutX="14.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Годовой оборот">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
             </Text>
-            <TextField fx:id="annual_turnover_field" layoutX="14.0" layoutY="301.0" prefHeight="31.0" prefWidth="136.0" />
-            <Button fx:id="confirm_button" layoutX="53.0" layoutY="381.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Подтвердить">
+            <TextField layoutX="14.0" layoutY="301.0" prefHeight="31.0" prefWidth="136.0" />
+            <Button fx:id="interact_confirm_btn" layoutX="53.0" layoutY="381.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Подтвердить">
                <font>
                   <Font name="Georgia Bold" size="15.0" />
                </font>
             </Button>
-                <Button fx:id="delete_button" layoutX="254.0" layoutY="381.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Удалить">
+                <Button fx:id="interact_delete_btn" layoutX="254.0" layoutY="381.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Удалить">
                     <font>
                         <Font name="Georgia Bold" size="15.0" />
                     </font>
             </Button>
             <Pane layoutX="181.0" layoutY="52.0" prefHeight="200.0" prefWidth="211.0" style="-fx-border-color: #8F8F8F;">
                <children>
-                  <TextField fx:id="location_z" layoutX="102.0" layoutY="160.0" prefHeight="31.0" prefWidth="103.0" />
+                  <TextField layoutX="102.0" layoutY="160.0" prefHeight="31.0" prefWidth="103.0" />
                   <Text layoutX="72.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Z">
                      <font>
                         <Font name="Georgia" size="15.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="location_y" layoutX="102.0" layoutY="120.0" prefHeight="31.0" prefWidth="103.0" />
+                  <TextField layoutX="102.0" layoutY="120.0" prefHeight="31.0" prefWidth="103.0" />
                   <Text layoutX="72.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Y">
                      <font>
                         <Font name="Georgia" size="15.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="location_x" layoutX="102.0" layoutY="80.0" prefHeight="31.0" prefWidth="103.0" />
+                  <TextField layoutX="102.0" layoutY="80.0" prefHeight="31.0" prefWidth="103.0" />
                   <Text layoutX="71.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X">
                      <font>
                         <Font name="Georgia" size="15.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="index_field" layoutX="102.0" layoutY="41.0" prefHeight="31.0" prefWidth="103.0" />
-                  <Text layoutX="29.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Индекс">
+                  <TextField layoutX="102.0" layoutY="41.0" prefHeight="31.0" prefWidth="103.0" />
+                  <Text fx:id="interact_zip_code" layoutX="29.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Индекс">
                      <font>
                         <Font name="Georgia" size="15.0" />
                      </font>
                   </Text>
-                  <Label layoutX="14.0" layoutY="4.0" text="Адрес организации">
+                  <Label fx:id="interact_address_title" layoutX="14.0" layoutY="4.0" text="Адрес организации">
                      <font>
                         <Font name="Georgia Bold Italic" size="18.0" />
                      </font>
@@ -103,19 +99,19 @@
             </Pane>
             <Pane layoutX="181.0" layoutY="258.0" prefHeight="107.0" prefWidth="211.0" style="-fx-border-color: #8F8F8F;">
                <children>
-                  <TextField fx:id="coordinates_y" layoutX="102.0" layoutY="71.0" prefHeight="31.0" prefWidth="103.0" />
-                  <Text layoutX="6.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="положение Y">
+                  <TextField layoutX="102.0" layoutY="71.0" prefHeight="31.0" prefWidth="103.0" />
+                  <Text fx:id="interact_map_y" layoutX="6.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="положение Y">
                      <font>
                         <Font name="Georgia" size="15.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="coordinates_x" layoutX="102.0" layoutY="27.0" prefHeight="31.0" prefWidth="103.0" />
-                  <Text layoutX="7.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="положение X" wrappingWidth="94.99999260902405">
+                  <TextField layoutX="102.0" layoutY="27.0" prefHeight="31.0" prefWidth="103.0" />
+                  <Text fx:id="interact_map_x" layoutX="7.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="положение X" wrappingWidth="94.99999260902405">
                      <font>
                         <Font name="Georgia" size="15.0" />
                      </font>
                   </Text>
-                  <Label layoutX="33.0" layoutY="4.0" prefHeight="21.0" prefWidth="146.0" text="Визуализация" textOverrun="WORD_ELLIPSIS">
+                  <Label fx:id="interact_map_title" layoutX="33.0" layoutY="4.0" prefHeight="21.0" prefWidth="146.0" text="Визуализация" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="Georgia Bold Italic" size="18.0" />
                      </font>
@@ -124,7 +120,7 @@
             </Pane>
             <ComboBox fx:id="type_combo_box" layoutX="14.0" layoutY="183.0" prefHeight="31.0" prefWidth="136.0" />
             </children></AnchorPane>
-        <Label layoutX="52.0" layoutY="14.0" prefHeight="26.0" prefWidth="297.0" text="Редактор организаций" textFill="WHITE">
+        <Label fx:id="interact_title" layoutX="52.0" layoutY="14.0" prefHeight="26.0" prefWidth="297.0" text="Редактор организаций" textFill="WHITE">
             <font>
                 <Font name="Georgia Bold Italic" size="23.0" />
             </font>
