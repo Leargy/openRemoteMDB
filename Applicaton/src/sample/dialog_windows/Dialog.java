@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public abstract class Dialog {
-    protected static Stage thisStage = new Stage();
+    public static final Stage thisStage = new Stage();
     static {
         thisStage.setTitle("RemoteMDB");
         thisStage.setMaxWidth(340.0);

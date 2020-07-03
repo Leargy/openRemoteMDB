@@ -12,8 +12,10 @@ import receiver.Receiver;
 import сlient.AServant;
 
 import java.io.IOException;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Класс организации обращений разных частей программы друг к другу.(паттерн "Посредник")
@@ -91,7 +93,7 @@ public class Mediator implements Mediating {
             ((Servant)SERVANT).setIsIncoming(true);
             SERVANT.resetConnection(true);
         }
-        if ((component == DISPATCHER || component == SERVANT ) && parcel.getMarker() == Markers.STOP) client.stopAndClose();
+        if ((component == DISPATCHER || component == SERVANT || component == null ) && parcel.getMarker() == Markers.STOP) client.stopAndClose();
         if (component == client  && parcel.getMarker() == Markers.WRITE) SERVANT.order(parcel);
         if (component == client && parcel.getMarker() == Markers.READ) RECEIVER.receive(parcel);
         if (component == RECEIVER && parcel.getMarker() == Markers.INTERRUPTED) {
@@ -101,21 +103,24 @@ public class Mediator implements Mediating {
             DISPATCHER.confirm(false);
         }
         if (component == RECEIVER && parcel.getMarker() == Markers.WRITE) {
-            if (parcel.getClientPackage().getReport().isSuccessful() == false) { parcel.setMarker(Markers.BADINPUTCONDITION);}
-            else parcel.setMarker(Markers.GOODINPUTCONDITION);
-            ApplicationParcel applicationParcel =  borderConverter.convertToApplicationPackage(parcel);
-            System.out.println(applicationParcel.getMarker());
-            Thread appThread = new Thread(() -> applicationMediator.notify(null, applicationParcel));
-            appThread.setDaemon(true);
-            appThread.start();
+            if (parcel.getClientPackage().getReport().isSuccessful() == false) {
+                parcel.setMarker(Markers.BADINPUTCONDITION);
+                ApplicationParcel applicationParcel =  borderConverter.convertToApplicationPackage(parcel);
+                Thread appThread = new Thread(() -> applicationMediator.notify(null, applicationParcel));
+                appThread.setDaemon(true);
+                appThread.start();
+            }
 
-//            System.out.println(parcel.getClientPackage().getReport().isSuccessful());
             ((Servant)SERVANT).setIsIncoming(true);
             SERVANT.notification(parcel);
             client.setInputCondition(true);
         }
-        if (component == RECEIVER && parcel.getMarker() == Markers.CONFIRMING) {
-            DISPATCHER.confirm(parcel.getClientPackage().getReport().getIsConfirmed());
+        if ((component == SERVANT || component == RECEIVER) && parcel.getMarker() == Markers.CONFIRMING) {
+            ApplicationParcel applicationParcel = borderConverter.convertToApplicationPackage(parcel);
+            if (applicationParcel != null) {
+                applicationMediator.notify(null, applicationParcel);
+            }
         }
+        if (component == RECEIVER  && parcel.getMarker() == Markers.CONFIRMING) DISPATCHER.confirm(parcel.getClientPackage().getReport().getIsConfirmed());
     }
 }

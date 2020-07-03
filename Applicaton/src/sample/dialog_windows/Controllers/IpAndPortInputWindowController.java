@@ -17,17 +17,9 @@ import sample.dialog_windows.ConnectionSceneFactory;
 import sample.dialog_windows.Dialog;
 import sample.dialog_windows.communication.ApplicationParcel;
 
-import javax.annotation.Resource;
 
 public class IpAndPortInputWindowController extends Dialog {
     private static IButton buttonActioner;
-    @FXML private Text connect_port_text;
-    @FXML private Text connect_ip_text;
-    @FXML private Menu connect_lang_choser;
-    @FXML private MenuItem connect_change_ru;
-    @FXML private MenuItem connect_change_es;
-    @FXML private MenuItem connect_change_sl;
-    @FXML private MenuItem connect_change_uk;
     private ConnectionSceneFactory connectionSceneFactory;
     private static Commander totalCommander;
 
@@ -37,33 +29,22 @@ public class IpAndPortInputWindowController extends Dialog {
         connectionSceneFactory = new ConnectionSceneFactory();
     }
 
-//    public IpAndPortInputWindow setButtonActioner(IButton button) {
-//        buttonActioner = button;
-//        return this;
-//    }
-
     public IpAndPortInputWindowController setCommander(Commander totalCommander) {
         this.totalCommander = totalCommander;
         return this;
     }
 
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private TextField ip_field;
-
-    @FXML
-    private TextField port_field;
-
-    @FXML
-    private Button connectionButton;
-
-    @FXML
-    private MenuBar language_menu_button;
+    @FXML private TextField ip_field;
+    @FXML private TextField port_field;
+    @FXML private Button connectionButton;
+    @FXML private MenuBar language_menu_button;
+    @FXML private Text connect_port_text;
+    @FXML private Text connect_ip_text;
+    @FXML private Menu connect_lang_choser;
+    @FXML private MenuItem connect_change_ru;
+    @FXML private MenuItem connect_change_es;
+    @FXML private MenuItem connect_change_sl;
+    @FXML private MenuItem connect_change_uk;
 
     @FXML
     void initialize() {
@@ -78,17 +59,13 @@ public class IpAndPortInputWindowController extends Dialog {
         connect_change_uk.setGraphic(ukrView);
 
         connectionButton.setOnAction(event -> {
-//            ((ConnectionIButton)buttonActioner).setIp(ip_field.getText());
-//            ((ConnectionIButton)buttonActioner).setPort(port_field.getText());
-//            buttonActioner.click();
             totalCommander.setConnection(new ApplicationParcel("ip=" + ip_field.getText() + " " + "port=" + port_field.getText()));
-//            ((Stage) connectionButton.getScene().getWindow()).close();
         });
     }
 
     @Override
     public void renderWindow() {
-        thisStage.hide();
+//        thisStage.hide();
 //        thisStage.setResizable(true);
         thisStage.setScene(getScene());
 //        thisStage.setResizable(false);
@@ -109,11 +86,16 @@ public class IpAndPortInputWindowController extends Dialog {
     @Override
     public void initAlertBox(String alertMessage) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        ResourceBundle bundle = Localizator.changeLocale("locale.connection.alerts.AlertsResources", currentLocale);
-        alert.setTitle("Connection");
-        alert.setHeaderText((String) bundle.getObject("Invalid input data"));
-        alert.setContentText((String) bundle.getObject("Invalid IP or Port"));
+        alert.setTitle("Authorization");
+        alert.setHeaderText(null);
+        alert.setContentText(alertMessage);
         alert.showAndWait();
+//        Alert alert = new Alert(Alert.AlertType.ERROR);
+//        ResourceBundle bundle = Localizator.changeLocale("locale.connection.alerts.AlertsResources", currentLocale);
+//        alert.setTitle("Connection");
+//        alert.setHeaderText((String) bundle.getObject("Invalid input data"));
+//        alert.setContentText((String) bundle.getObject("Invalid IP or Port"));
+//        alert.showAndWait();
     }
 
     @FXML

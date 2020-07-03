@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="415.0" prefWidth="336.0" style="-fx-background-color: #434459; -fx-border-color: #8F8F8F;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.dialog_windows.Controllers.IpAndPortInputWindowController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="336.0" style="-fx-background-color: #434459; -fx-border-color: #8F8F8F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.dialog_windows.Controllers.IpAndPortInputWindowController">
    <children>
       <AnchorPane layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="326.0" prefWidth="334.0" style="-fx-background-color: #E6E6E6;">
          <children>
@@ -20,9 +27,9 @@
                   <Font name="Georgia" size="15.0" />
                </font>
             </Text>
-            <HBox layoutX="95.0" layoutY="223.0">
+            <HBox alignment="CENTER" layoutX="95.0" layoutY="223.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="144.0">
                <children>
-                  <Button fx:id="connectionButton" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Подключиться">
+                  <Button fx:id="connectionButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Подключиться">
                      <font>
                         <Font name="Georgia Bold" size="15.0" />
                      </font>
@@ -38,17 +45,15 @@
       </Label>
       <AnchorPane layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="334.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <MenuBar fx:id="language_menu_button" layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="77.0" style="-fx-background-color: #73ACE6;">
-               <menus>
-                  <Menu fx:id="connect_lang_choser" mnemonicParsing="false" text="Язык">
-                     <items>
-                        <MenuItem fx:id="connect_change_ru" mnemonicParsing="false" onAction="#changeLanguage" text="Русский ru_RU" />
-                        <MenuItem fx:id="connect_change_es" mnemonicParsing="false" onAction="#changeLanguage" text="Español es_PA" />
-                        <MenuItem fx:id="connect_change_sl" mnemonicParsing="false" onAction="#changeLanguage" text="Slovenščina sl_SL" />
-                        <MenuItem fx:id="connect_change_uk" mnemonicParsing="false" onAction="#changeLanguage" text="Український uk_UA" />
-                     </items>
-                  </Menu>
-               </menus>
+            <MenuBar fx:id="language_menu_button" layoutX="7.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="77.0" style="-fx-background-color: #73ACE6;">
+               <Menu fx:id="connect_lang_choser" mnemonicParsing="false" text="Язык">
+                  <items>
+                     <MenuItem fx:id="connect_change_ru" mnemonicParsing="false" onAction="#changeLanguage" text="Русский ru_RU" />
+                     <MenuItem fx:id="connect_change_es" mnemonicParsing="false" onAction="#changeLanguage" text="Español es_PA" />
+                     <MenuItem fx:id="connect_change_sl" mnemonicParsing="false" onAction="#changeLanguage" text="Slovenščina sl_SL" />
+                     <MenuItem fx:id="connect_change_uk" mnemonicParsing="false" onAction="#changeLanguage" text="Український uk_UA" />
+                  </items>
+               </Menu>
             </MenuBar>
          </children>
       </AnchorPane>

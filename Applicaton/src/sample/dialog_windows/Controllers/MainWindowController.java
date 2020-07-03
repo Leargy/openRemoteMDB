@@ -1,6 +1,7 @@
 package sample.dialog_windows.Controllers;
 
 import java.net.URL;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import instructions.Decree;
@@ -12,6 +13,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -25,6 +29,38 @@ import sample.dialog_windows.WindowsFactory;
 
 public class MainWindowController extends Dialog {
     private static IButton buttonActioner;
+
+    private WindowsFactory mainWindowFactory;
+    private static Commander totalCommander;
+    public static final StringProperty nickForDisplaying = new ReadOnlyStringWrapper("st");
+    private static boolean[] isOffseted;
+
+    public MainWindowController() {
+        isOffseted = new boolean[2];
+        mainWindowFactory = new MainWindowFactory();
+    }
+
+    public MainWindowController setCommander(Commander totalCommander) {
+        this.totalCommander = totalCommander;
+        return this;
+    }
+
+    private java.util.Locale currentLocale = Localizator.DEFAULT;
+
+    @FXML private TextField serchin_field;
+    @FXML private Button search_button;
+    @FXML private ComboBox<?> filter_button;
+    @FXML private Button insert_button;
+    @FXML private MenuBar language_menu;
+    @FXML private Button clear_button;
+    @FXML private Tab table_selector;
+    @FXML private TableView<?> tabl;
+    @FXML private Tab vizualization_selector;
+    @FXML private Button info_button;
+    @FXML private TextFlow nick_name_panel;
+    @FXML private Button sign_out_button;
+    @FXML private TextArea info_panel;
+
     @FXML private TableColumn main_table_name;
     @FXML private TableColumn main_table_fullname;
     @FXML private TableColumn main_table_type;
@@ -40,59 +76,17 @@ public class MainWindowController extends Dialog {
     @FXML private MenuItem main_change_es;
     @FXML private MenuItem main_change_ru;
     @FXML private Menu main_lang_choser;
-    private WindowsFactory mainWindowFactory;
-    private static Commander totalCommander;
-    public static final StringProperty nickForDisplaying = new ReadOnlyStringWrapper("st");;
-
-    public MainWindowController() {
-        mainWindowFactory = new MainWindowFactory();
-    }
-
-    public MainWindowController setCommander(Commander totalCommander) {
-        this.totalCommander = totalCommander;
-        return this;
-    }
-
-    private java.util.Locale currentLocale = Localizator.DEFAULT;
-
-    @FXML
-    private TextField serchin_field;
-
-    @FXML
-    private Button search_button;
-
-    @FXML
-    private ComboBox<?> filter_button;
-
-    @FXML
-    private Button insert_button;
-
-    @FXML
-    private MenuBar language_menu;
-
-    @FXML
-    private Button clear_button;
-
-    @FXML
-    private Tab table_selector;
-
-    @FXML
-    private TableView<?> tabl;
-
-    @FXML
-    private Tab vizualization_selector;
-
-    @FXML
-    private Button info_button;
-
-    @FXML
-    private TextFlow nick_name_panel;
-
-    @FXML
-    private Button sign_out_button;
 
     @FXML
     void initialize() {
+        Text nick = new Text(nickForDisplaying.get());
+        nick.setFill(Color.WHITE);
+//        Iterator iter = Font.getFontNames().iterator();
+//        while (iter.hasNext()) {
+//            System.out.println(iter.next());
+//        }
+        nick.setFont(Font.font("Georgia Italic", FontWeight.SEMI_BOLD, 20));
+        nick_name_panel.getChildren().add(nick);
         // initialize menu items with images
         ImageView rusView = new ImageView(new Image(getClass().getResource("../../assets/images/ussr.png").toString()));
         main_change_ru.setGraphic(rusView);
@@ -103,16 +97,19 @@ public class MainWindowController extends Dialog {
         ImageView ukrView = new ImageView(new Image(getClass().getResource("../../assets/images/ukrain.gif").toString()));
         main_change_uk.setGraphic(ukrView);
 
-        nick_name_panel.getChildren().add(new Text(nickForDisplaying.get()));
         insert_button.setOnAction(event -> {
-
             totalCommander.insert();
         });
         clear_button.setOnAction(event -> {
             totalCommander.clear();
         });
-
-
+        info_button.setOnAction(event -> {
+            offset(info_button, 160, 1,0);
+            offset(info_panel,160,1,1);
+        });
+        sign_out_button.setOnAction(event -> {
+            totalCommander.signOut();
+        });
 
     }
 
@@ -120,8 +117,9 @@ public class MainWindowController extends Dialog {
     public void renderWindow() {
         thisStage.hide();
         thisStage.setResizable(true);
-        thisStage.setMaxHeight(645);
-        thisStage.setMaxWidth(1178);
+        thisStage.setMaxHeight(635);
+        thisStage.setMaxWidth(1166);
+        thisStage.setResizable(false);
         thisStage.setScene(getScene());
         thisStage.show();
     }
@@ -145,6 +143,21 @@ public class MainWindowController extends Dialog {
         alert.showAndWait();
     }
 
+    private void offset(Control entity, double distance, double speed, int id) {
+        double start = entity.getLayoutX();
+        if (isOffseted[id] == false) {
+            for (double i = start; i < (start + distance); i += speed * Math.abs(1/start)) {
+                entity.setLayoutX(i);
+            }
+            isOffseted[id] = true;
+        }
+        else {
+            for (double i = start; i > (start - distance); i -= speed * Math.abs(1/start) ) {
+                entity.setLayoutX(i);
+            }
+            isOffseted[id] = false;
+        }
+    }
     @FXML
     public void changeLanguage(ActionEvent actionEvent) {
         Object menuItem = actionEvent.getSource();

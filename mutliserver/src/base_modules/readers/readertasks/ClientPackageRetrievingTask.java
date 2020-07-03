@@ -7,7 +7,6 @@ import patterns.mediator.Component;
 import patterns.mediator.Controllers;
 import uplink_bags.ChanneledBag;
 import uplink_bags.ClientPackBag;
-import uplink_bags.TransportableBag;
 
 import java.io.ByteArrayInputStream;
 import java.io.EOFException;

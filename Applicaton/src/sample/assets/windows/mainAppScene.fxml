@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1160.0" style="-fx-background-color: #434459; -fx-border-color: #8F8F8F;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.dialog_windows.Controllers.MainWindowController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1160.0" style="-fx-background-color: #434459; -fx-border-color: #8F8F8F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.dialog_windows.Controllers.MainWindowController">
     <children>
-        <AnchorPane layoutY="53.0" prefHeight="547.0" prefWidth="1160.0" style="-fx-background-color: #E6E6E6;">
+        <AnchorPane layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="547.0" prefWidth="1160.0" style="-fx-background-color: #E6E6E6;">
             <children>
             <AnchorPane layoutY="-1.0" prefHeight="40.0" prefWidth="1160.0" style="-fx-background-color: #FFFFFF;">
                <children>
@@ -20,7 +33,7 @@
                         <Font name="Georgia Bold" size="15.0" />
                      </font>
                   </Button>
-                  <ImageView fitHeight="20.0" fitWidth="24.0" layoutX="684.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="20.0" fitWidth="24.0" layoutX="682.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/iconfinder_magnifying-glass_226571.png" />
                      </image>
@@ -40,9 +53,9 @@
                           </FXCollections>
                       </items>
                   </ComboBox>
-                  <Button fx:id="insert_button" layoutX="910.0" layoutY="4.0" mnemonicParsing="false" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Добавить">
+                  <Button fx:id="insert_button" layoutX="940.0" layoutY="4.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Добавить">
                      <font>
-                        <Font name="Georgia Bold" size="15.0" />
+                        <Font name="Georgia" size="15.0" />
                      </font>
                   </Button>
                   <MenuBar fx:id="language_menu" layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="77.0" style="-fx-background-color: #73ACE6;">
@@ -57,9 +70,9 @@
                       </Menu>
                     </menus>
                   </MenuBar>
-                  <Button fx:id="clear_button" layoutX="1039.0" layoutY="4.0" mnemonicParsing="false" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Очистить">
+                  <Button fx:id="clear_button" layoutX="1050.0" layoutY="4.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Очистить">
                      <font>
-                        <Font name="Georgia Bold" size="15.0" />
+                        <Font name="Georgia" size="15.0" />
                      </font>
                   </Button>
                </children>
@@ -95,24 +108,24 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <Button fx:id="info_button" layoutX="-51.0" layoutY="154.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="134.0" rotate="90.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Информация">
-               <font>
-                  <Font name="Georgia Bold" size="15.0" />
-               </font>
-            </Button>
             </children></AnchorPane>
+      <TextArea fx:id="info_panel" layoutX="-205.0" layoutY="176.0" prefHeight="150.0" prefWidth="211.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" />
         <Label layoutX="95.0" layoutY="8.0" prefHeight="35.0" prefWidth="202.0" text="RemoteMDB" textFill="WHITE">
             <font>
                 <Font name="Georgia Bold Italic" size="30.0" />
             </font>
         </Label>
-      <TextFlow fx:id="nick_name_panel" layoutX="860.0" layoutY="11.0" prefHeight="31.0" prefWidth="183.0" />
-      <Button fx:id="sign_out_button" layoutX="1050.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Выйти">
+      <TextFlow fx:id="nick_name_panel" layoutX="921.0" layoutY="18.0" prefHeight="31.0" prefWidth="123.0" style="-fx-text-alignment: center;" textAlignment="JUSTIFY" />
+      <Button fx:id="sign_out_button" layoutX="1057.0" layoutY="16.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Выйти">
+         <font>
+            <Font name="Georgia Bold" size="14.0" />
+         </font>
+      </Button>
+      <Line endX="100.0" layoutX="943.0" layoutY="41.0" startX="-22.0" stroke="WHITE" />
+      <Button fx:id="info_button" layoutX="-59.0" layoutY="235.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="150.0" rotate="90.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Информация">
          <font>
             <Font name="Georgia Bold" size="15.0" />
          </font>
       </Button>
-      <Line endX="100.0" layoutX="943.0" layoutY="41.0" startX="-82.0" stroke="WHITE" />
-      <TextArea layoutX="-157.0" layoutY="154.0" prefHeight="134.0" prefWidth="154.0" />
     </children>
 </AnchorPane>

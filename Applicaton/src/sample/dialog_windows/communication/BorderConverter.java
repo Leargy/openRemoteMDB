@@ -25,9 +25,8 @@ public class BorderConverter implements Converting {
             segment.setStringData(parcel.getMessage().split(" "));
         }catch (NullPointerException ex) { /*NOPE*/ }
         switch (parcel.getMarker()) {
-            case NEXTSTAGE:
-            case SENDALLERT:
-            case PRIVIOUSSTAGE:
+            case STOP: segment.setMarker(Markers.STOP);
+                break;
             case SENDCOMMAND: segment.setMarker(Markers.WRITE);
                 break;
             case RESETCONNECCTION: segment.setMarker(Markers.INTERRUPTED);
@@ -38,18 +37,43 @@ public class BorderConverter implements Converting {
 
     @Override
     public ApplicationParcel convertToApplicationPackage(Segment segment) {
+        boolean withClientPackage = false;
+        if (segment.getClientPackage() != null) {
+            withClientPackage = true;
+        }
+
         ApplicationParcel applicationParcel = null;
         switch (segment.getMarker()) {
-            case INTERRUPTED:
-            case WRITE:
-            case WAIKUP:
             case BADINPUTCONDITION: {
-                String[] segregatedMessage = segment.getClientPackage().getReport().Message().split(":");
-                applicationParcel = new ApplicationParcel(segregatedMessage[1], sample.dialog_windows.communication.enum_section.Markers.SENDALLERT);
+                if (withClientPackage) {
+//                    System.out.println("gege");
+                    String[] segregatedMessage = segment.getClientPackage().getReport().Message().split(":");
+                    applicationParcel = new ApplicationParcel(segregatedMessage[1], sample.dialog_windows.communication.enum_section.Markers.SENDALLERT);
+                }else {
+//                    System.out.println("gege");
+                    applicationParcel = new ApplicationParcel(segment.getStringData()[0], sample.dialog_windows.communication.enum_section.Markers.SENDALLERT);
+                }
                 break;
             }
-            case GOODINPUTCONDITION: applicationParcel = new ApplicationParcel(sample.dialog_windows.communication.enum_section.Markers.NEXTSTAGE);
+            case GOODINPUTCONDITION:
                 break;
+            case CONFIRMING: {
+                if (withClientPackage){
+//                    System.out.println("gege");
+                    if (!segment.getClientPackage().getReport().getIsConfirmed() && segment.getClientPackage().getReport().isSuccessful()) {
+                        applicationParcel = new ApplicationParcel(sample.dialog_windows.communication.enum_section.Markers.PRIVIOUSSTAGE);
+                    }else if (!segment.getClientPackage().getReport().isSuccessful()) {
+                        break;
+//                        System.out.println("gege");
+//                        String[] segregatedMessage = segment.getClientPackage().getReport().Message().split(":");
+//                        applicationParcel = new ApplicationParcel(segregatedMessage[1], sample.dialog_windows.communication.enum_section.Markers.SENDALLERT);
+                    } else applicationParcel = new ApplicationParcel(sample.dialog_windows.communication.enum_section.Markers.NEXTSTAGE);
+                }else {
+//                    System.out.println("gege");
+                    applicationParcel = new ApplicationParcel(sample.dialog_windows.communication.enum_section.Markers.NEXTSTAGE);
+                }
+                break;
+            }
         }
         return applicationParcel;
     }

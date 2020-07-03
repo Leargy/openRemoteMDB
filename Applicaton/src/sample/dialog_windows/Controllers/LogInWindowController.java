@@ -22,13 +22,6 @@ import sample.dialog_windows.WindowsFactory;
 
 public class LogInWindowController extends Dialog {
     private static IButton buttonActioner;
-    @FXML private Menu login_lang_choser;
-    @FXML private MenuItem login_change_ru;
-    @FXML private MenuItem login_change_es;
-    @FXML private MenuItem login_change_sl;
-    @FXML private MenuItem login_change_uk;
-    @FXML private Text login_login_text;
-    @FXML private Text login_pass_text;
     private WindowsFactory authorizationWindowFactory;
     public static final StringProperty nickFromTextField = new SimpleStringProperty();;
 //    private Scene logInScene;
@@ -49,23 +42,19 @@ public class LogInWindowController extends Dialog {
 
     private java.util.Locale currentLocale = Localizator.DEFAULT;
 
-    @FXML
-    private TextField login_field;
-
-    @FXML
-    private MenuBar laguage_menu;
-
-    @FXML
-    private Button sign_in_button;
-
-    @FXML
-    private Button sign_up_button;
-
-    @FXML
-    private PasswordField password_field;
-
-    @FXML
-    private Button out_button;
+    @FXML private TextField login_field;
+    @FXML private MenuBar laguage_menu;
+    @FXML private Button sign_in_button;
+    @FXML private Button sign_up_button;
+    @FXML private PasswordField password_field;
+    @FXML private Button out_button;
+    @FXML private Menu login_lang_choser;
+    @FXML private MenuItem login_change_ru;
+    @FXML private MenuItem login_change_es;
+    @FXML private MenuItem login_change_sl;
+    @FXML private MenuItem login_change_uk;
+    @FXML private Text login_login_text;
+    @FXML private Text login_pass_text;
 
     @FXML
     void initialize() {

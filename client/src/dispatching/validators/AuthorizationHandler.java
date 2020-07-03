@@ -63,7 +63,7 @@ public class AuthorizationHandler extends DataHandler {
                     password = encryptor.encrypt(parcel.getStringData()[2]);
                 }catch (ArrayIndexOutOfBoundsException | NoSuchAlgorithmException ex) {
 //                    if (ex instanceof NoSuchAlgorithmException ) throw new CommandSyntaxException("Problems in encrypting the password");
-                    throw new CommandSyntaxException("Missed some command's arguments");
+                    throw new CommandSyntaxException("Missed some arguments");
                 }
                 switch (tempCommand) {
                     case RawSignUp.NAME: return new RawSignUp(login, password);

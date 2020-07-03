@@ -1,8 +1,12 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
+import sample.dialog_windows.Dialog;
+import sample.dialog_windows.communication.ApplicationParcel;
 import sample.dialog_windows.communication.ButtonMediator;
+import sample.dialog_windows.communication.enum_section.Markers;
 import сlient.KickStarter;
 
 public class Main extends Application {
@@ -16,6 +20,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage){
+        Dialog.thisStage.setOnCloseRequest(event -> {
+            buttonMediator.notify(null, new ApplicationParcel(Markers.STOP));
+        });
         buttonMediator.start();
 //        mainStage = primaryStage;
 //        ipAndPortInputWindow.renderWindow();

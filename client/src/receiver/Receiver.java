@@ -70,7 +70,10 @@ public class Receiver extends AReceiver{
                 mediator.notify(this, parcel);
             }
         }catch (IOException ex) {
-            if (!ex.getMessage().equals("null")) System.out.println(ex.getMessage());
+            if (!ex.getMessage().equals("null")){
+//                System.out.println(ex.getMessage());
+                parcel.setStringData(new String[]{ex.getMessage()});
+            }
             parcel.setMarker(Markers.INTERRUPTED);
             mediator.notify(this, parcel);
         }catch (ClassNotFoundException ex) {

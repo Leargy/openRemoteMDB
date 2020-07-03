@@ -62,7 +62,7 @@ public class Servant extends AServant {
         counter.getAndIncrement();
         if (resetConnection(true)) {
             new Thread(client).start();
-            mediator.notify(this,new Segment(Markers.GOODINPUTCONDITION));
+            mediator.notify(this,new Segment(Markers.CONFIRMING));
             return true;
         }
         return false;

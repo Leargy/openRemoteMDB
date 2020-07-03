@@ -41,9 +41,6 @@ public class TotalCommander implements Commander, Component {
 
     @Override
     public void signIn(String login, String password) {
-        if (login.equals("") || password.equals("")) {
-            mediator.notify(this,new ApplicationParcel("",Markers.SENDALLERT));
-        }
         ApplicationParcel applicationParcel = new ApplicationParcel(RawSignIn.NAME + " " + login + " " + password, Markers.SENDCOMMAND);
         mediator.notify(this,applicationParcel);
     }
@@ -53,6 +50,7 @@ public class TotalCommander implements Commander, Component {
     public void signOut() {
         ApplicationParcel applicationParcel = new ApplicationParcel(RawSignOut.NAME , Markers.SENDCOMMAND);
         mediator.notify(this,applicationParcel);
+//        mediator.notify(this, new ApplicationParcel(Markers.PRIVIOUSSTAGE));
     }
 
     @Override
