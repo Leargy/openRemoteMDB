@@ -23,17 +23,18 @@ import sample.dialog_windows.WindowsFactory;
 public class LogInWindowController extends Dialog {
     private static IButton buttonActioner;
     private WindowsFactory authorizationWindowFactory;
-    public static final StringProperty nickFromTextField = new SimpleStringProperty();;
+    public static final StringProperty nickFromTextField = new SimpleStringProperty();
 //    private Scene logInScene;
     private static Commander totalCommander;
 
     public LogInWindowController() {
         authorizationWindowFactory = new AuthorizationSceneFactory();
+        nickFromTextField.bindBidirectional(MainWindowController.nickForDisplaying);
     }
 
-    public void setPropertyListner(StringProperty mainWindowProperty) {
-        nickFromTextField.bindBidirectional(mainWindowProperty);
-    }
+//    public void setPropertyListner(StringProperty mainWindowProperty) {
+//        nickFromTextField.bindBidirectional(mainWindowProperty);
+//    }
 
     public LogInWindowController setCommander(Commander totalCommander) {
         this.totalCommander = totalCommander;

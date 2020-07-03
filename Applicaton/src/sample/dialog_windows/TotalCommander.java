@@ -1,10 +1,10 @@
 package sample.dialog_windows;
 
-import communication.Segment;
-import instructions.rotten.RawDecree;
+import instructions.rotten.base.RawInsertByStep;
 import instructions.rotten.base.RawSignIn;
 import instructions.rotten.base.RawSignOut;
 import instructions.rotten.base.RawSignUp;
+import organization.Organization;
 import sample.dialog_windows.communication.Component;
 import sample.dialog_windows.communication.Mediating;
 import sample.dialog_windows.communication.ApplicationParcel;
@@ -13,9 +13,13 @@ import sample.dialog_windows.handlers.ConnectionHandler;
 import sample.dialog_windows.handlers.Handler;
 import sample.dialog_windows.handlers.exceptions.*;
 
+import java.util.concurrent.Exchanger;
+
 public class TotalCommander implements Commander, Component {
     private Handler connectionHandler;
     public final Mediating mediator;
+    private final Exchanger<Organization> organizationExchanger = new Exchanger<>();
+
 
     public TotalCommander(Mediating mediator) {
         this.mediator = mediator;
@@ -66,8 +70,9 @@ public class TotalCommander implements Commander, Component {
     }
 
     @Override
-    public void insert() {
-
+    public void insert(String orgParametrs) {
+        ApplicationParcel applicationParcel = new ApplicationParcel(RawInsertByStep.NAME + 6666 + " " +orgParametrs, Markers.SENDCOMMAND);
+        mediator.notify(this,applicationParcel);
     }
 
     @Override
@@ -78,5 +83,19 @@ public class TotalCommander implements Commander, Component {
     @Override
     public void info() {
 
+    }
+
+    public boolean confirmAction(boolean isConfirmed) {
+
+        return false;
+    }
+
+    public Organization exchange(Organization organization) {
+        try {
+            return organizationExchanger.exchange(organization);
+        }catch (InterruptedException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
     }
 }

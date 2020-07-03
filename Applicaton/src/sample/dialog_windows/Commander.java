@@ -9,7 +9,7 @@ public interface Commander {
     void signOut();
     void signUp(String login, String password);
     void clear();
-    void insert();
+    void insert(String orgParams);
     void update();
     void info();
 }

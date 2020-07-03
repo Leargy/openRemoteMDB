@@ -30,4 +30,9 @@ public final class CoordinatesBuilder implements Factory<Coordinates> {
     y = (float) cogits[0];
     return new Coordinates(x, y);
   }
+
+  @Override
+  public Coordinates makeWithParsing(String rawData) {
+    return null;
+  }
 }

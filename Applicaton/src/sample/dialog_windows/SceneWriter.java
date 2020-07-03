@@ -24,7 +24,7 @@ public class SceneWriter implements SceneWriterActions, Component {
         MainWindowController mainWindowController = new MainWindowController();
         mainWindowController.setCommander(totalCommander);
         LogInWindowController logInWindowController = new LogInWindowController();
-        logInWindowController.setCommander(totalCommander).setPropertyListner(mainWindowController.nickForDisplaying);
+        logInWindowController.setCommander(totalCommander);
 
         scenes = new Dialog[] {
                 ipAndPortInputWindowController,

@@ -33,4 +33,9 @@ public final class AddressBuilder implements Factory<Address> {
     else zipCode = lines[0];
     return new Address(zipCode, locate);
   }
+
+  @Override
+  public Address makeWithParsing(String rawData) {
+    return null;
+  }
 }

@@ -23,12 +23,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1160.0" style="-fx-background-color: #434459; -fx-border-color: #8F8F8F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.dialog_windows.Controllers.MainWindowController">
     <children>
-        <AnchorPane layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="547.0" prefWidth="1160.0" style="-fx-background-color: #E6E6E6;">
+        <AnchorPane layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="1160.0" style="-fx-background-color: #E6E6E6;">
             <children>
             <AnchorPane layoutY="-1.0" prefHeight="40.0" prefWidth="1160.0" style="-fx-background-color: #FFFFFF;">
                <children>
                       <TextField fx:id="serchin_field" layoutX="454.0" layoutY="4.0" prefHeight="31.0" prefWidth="252.0" />
-                  <Button fx:id="search_button" layoutX="713.0" layoutY="4.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="83.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Искать">
+                  <Button fx:id="search_button" alignment="CENTER" contentDisplay="CENTER" layoutX="713.0" layoutY="4.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="104.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Искать" textAlignment="CENTER">
                      <font>
                         <Font name="Georgia Bold" size="15.0" />
                      </font>
@@ -53,12 +53,12 @@
                           </FXCollections>
                       </items>
                   </ComboBox>
-                  <Button fx:id="insert_button" layoutX="940.0" layoutY="4.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Добавить">
+                  <Button fx:id="insert_button" layoutX="937.0" layoutY="4.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Добавить">
                      <font>
                         <Font name="Georgia" size="15.0" />
                      </font>
                   </Button>
-                  <MenuBar fx:id="language_menu" layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="77.0" style="-fx-background-color: #73ACE6;">
+                  <MenuBar fx:id="language_menu" layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="82.0" style="-fx-background-color: #73ACE6;">
                     <menus>
                       <Menu fx:id="main_lang_choser" mnemonicParsing="false" text="Язык">
                           <items>
@@ -70,7 +70,7 @@
                       </Menu>
                     </menus>
                   </MenuBar>
-                  <Button fx:id="clear_button" layoutX="1050.0" layoutY="4.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Очистить">
+                  <Button fx:id="clear_button" layoutX="1045.0" layoutY="4.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="104.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Очистить">
                      <font>
                         <Font name="Georgia" size="15.0" />
                      </font>
@@ -116,7 +116,7 @@
             </font>
         </Label>
       <TextFlow fx:id="nick_name_panel" layoutX="921.0" layoutY="18.0" prefHeight="31.0" prefWidth="123.0" style="-fx-text-alignment: center;" textAlignment="JUSTIFY" />
-      <Button fx:id="sign_out_button" layoutX="1057.0" layoutY="16.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Выйти">
+      <Button fx:id="sign_out_button" alignment="CENTER" contentDisplay="CENTER" layoutX="1054.0" layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="28.0" prefWidth="83.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Выйти" textAlignment="CENTER">
          <font>
             <Font name="Georgia Bold" size="14.0" />
          </font>

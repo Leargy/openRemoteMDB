@@ -86,6 +86,7 @@ public class ArgumentHandler extends DataHandler{
             }
             switch (foundedCommand.getKey()) {
                 case RawRemoveKey.NAME: return new RawRemoveKey(intArgument);
+                case RawInsertByStep.NAME: return new RawInsert(intArgument, organizationBuilder.makeWithParsing(parcel.getStringData()[2]));
                 case RawInsert.NAME: return new RawInsert(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
                 case RawUpdate.NAME: return new RawUpdate(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
                 case RawReplaceIfLower.NAME: return new RawReplaceIfLower(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));

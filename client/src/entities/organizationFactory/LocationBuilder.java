@@ -38,4 +38,9 @@ public final class LocationBuilder implements Factory<Location> {
     }
     return new Location(x, y, z);
   }
+
+  @Override
+  public Location makeWithParsing(String rawData) {
+    return null;
+  }
 }

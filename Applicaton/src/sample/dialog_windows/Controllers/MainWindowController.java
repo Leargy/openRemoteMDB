@@ -3,6 +3,7 @@ package sample.dialog_windows.Controllers;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executor;
 
 import instructions.Decree;
 import javafx.beans.property.IntegerProperty;
@@ -33,11 +34,18 @@ public class MainWindowController extends Dialog {
     private WindowsFactory mainWindowFactory;
     private static Commander totalCommander;
     public static final StringProperty nickForDisplaying = new ReadOnlyStringWrapper("st");
+    public static final StringProperty organizationParams = new ReadOnlyStringWrapper("");
     private static boolean[] isOffseted;
+    public static InteractWindowController interactWindowController;
 
     public MainWindowController() {
         isOffseted = new boolean[2];
         mainWindowFactory = new MainWindowFactory();
+        interactWindowController = new InteractWindowController().setCommander(totalCommander);
+    }
+
+    public void setInteractionPropertys() {
+
     }
 
     public MainWindowController setCommander(Commander totalCommander) {
@@ -47,35 +55,36 @@ public class MainWindowController extends Dialog {
 
     private java.util.Locale currentLocale = Localizator.DEFAULT;
 
+
     @FXML private TextField serchin_field;
     @FXML private Button search_button;
     @FXML private ComboBox<?> filter_button;
     @FXML private Button insert_button;
     @FXML private MenuBar language_menu;
+    @FXML private Menu main_lang_choser;
+    @FXML private MenuItem main_change_ru;
+    @FXML private MenuItem main_change_es;
+    @FXML private MenuItem main_change_sl;
+    @FXML private MenuItem main_change_uk;
     @FXML private Button clear_button;
     @FXML private Tab table_selector;
     @FXML private TableView<?> tabl;
+    @FXML private TableColumn<?, ?> main_table_name;
+    @FXML private TableColumn<?, ?> main_table_fullname;
+    @FXML private TableColumn<?, ?> main_table_type;
+    @FXML private TableColumn<?, ?> main_table_employees;
+    @FXML private TableColumn<?, ?> main_table_annual;
+    @FXML private TableColumn<?, ?> main_table_zipcode;
+    @FXML private TableColumn<?, ?> main_table_creation_date;
+    @FXML private TableColumn<?, ?> main_table_owner;
+    @FXML private TableColumn<?, ?> main_table_id;
+    @FXML private TableColumn<?, ?> main_table_interact;
     @FXML private Tab vizualization_selector;
-    @FXML private Button info_button;
+    @FXML private TextArea info_panel;
     @FXML private TextFlow nick_name_panel;
     @FXML private Button sign_out_button;
-    @FXML private TextArea info_panel;
+    @FXML private Button info_button;
 
-    @FXML private TableColumn main_table_name;
-    @FXML private TableColumn main_table_fullname;
-    @FXML private TableColumn main_table_type;
-    @FXML private TableColumn main_table_employees;
-    @FXML private TableColumn main_table_annual;
-    @FXML private TableColumn main_table_zipcode;
-    @FXML private TableColumn main_table_creation_date;
-    @FXML private TableColumn main_table_owner;
-    @FXML private TableColumn main_table_id;
-    @FXML private TableColumn main_table_interact;
-    @FXML private MenuItem main_change_sl;
-    @FXML private MenuItem main_change_uk;
-    @FXML private MenuItem main_change_es;
-    @FXML private MenuItem main_change_ru;
-    @FXML private Menu main_lang_choser;
 
     @FXML
     void initialize() {
@@ -98,7 +107,13 @@ public class MainWindowController extends Dialog {
         main_change_uk.setGraphic(ukrView);
 
         insert_button.setOnAction(event -> {
-            totalCommander.insert();
+            interactWindowController.renderWindow();
+//            try {
+//                new Thread(() -> interactWindowController.getData()).join();
+//            }catch (InterruptedException ex) {
+//                System.err.println(ex.getMessage());
+//            }
+//            totalCommander.insert(organizationParams.get());
         });
         clear_button.setOnAction(event -> {
             totalCommander.clear();
@@ -184,7 +199,7 @@ public class MainWindowController extends Dialog {
         String search = (String) bundle.getObject("Search");
         String insert = (String) bundle.getObject("Insert");
         String clear = (String) bundle.getObject("Clear");
-        String info = (String) bundle.getObject("InfoTable");
+        String info = (String) bundle.getObject("Info");
         String table = (String) bundle.getObject("Table");
         String map = (String) bundle.getObject("Map");
         String name = (String) bundle.getObject("Name");

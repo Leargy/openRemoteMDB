@@ -30,6 +30,7 @@ public class CommandList implements Commands {
         commandMap.put(RawRemoveKey.NAME, RawRemoveKey.SYNTAX);
         commandMap.put(RawMaxByDate.NAME, RawMaxByDate.SYNTAX);
         commandMap.put(RawRemoveLower.NAME, RawRemoveLower.SYNTAX);
+        commandMap.put(RawInsertByStep.NAME, RawInsertByStep.SYNTAX);
         commandMap.put(RawExecuteScript.NAME, RawExecuteScript.SYNTAX);
         commandMap.put(RawReplaceIfLower.NAME, RawReplaceIfLower.SYNTAX);
         commandMap.put(RawReplaceIfGreater.NAME, RawReplaceIfGreater.SYNTAX);

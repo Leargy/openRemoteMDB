@@ -17,4 +17,5 @@ public interface Factory<T> {
    * @return объект типа T, где T - тип производимой продукции
    */
   T make(Junker parts);
+  T makeWithParsing(String rawData);
 }
