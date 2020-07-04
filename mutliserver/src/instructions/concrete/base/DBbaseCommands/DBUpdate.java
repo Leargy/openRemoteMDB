@@ -1,6 +1,7 @@
 package instructions.concrete.base.DBbaseCommands;
 
 import communication.Report;
+import organization.Organization;
 import organization.OrganizationWithUId;
 import entities.User;
 import extension_modules.dbinteraction.OrganizationsTableInteractor;
@@ -8,6 +9,7 @@ import instructions.concrete.base.Update;
 import patterns.command.Receiver;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DBUpdate extends Update {
     public final OrganizationsTableInteractor ORGANIZATION_TABLE_INTERACTOR;
@@ -39,7 +41,13 @@ public class DBUpdate extends Update {
             return new Report(12, "Не удалось обновить данные вашей организации!\n");
         }
         EMBEDDED.getOrganization().id = ORGANIZATION_TABLE_INTERACTOR.getDBOrganizationId(EMBEDDED);
-        return super.execute();
+
+        ArrayList<OrganizationWithUId> updated = new ArrayList<>();
+        updated.add(EMBEDDED);
+        Report report = super.execute();
+        report.setOrganizations(updated);
+
+        return report;
     }
     @Override
     public String toString() { return NAME; }

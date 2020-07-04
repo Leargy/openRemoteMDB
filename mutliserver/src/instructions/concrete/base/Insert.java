@@ -10,9 +10,6 @@ import patterns.command.Receiver;
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
  * @see Committer
- * @see ConDecree
- * @see parsing.instructions.Decree
- * @see Command
  */
 public class Insert extends Committer {
   protected final Integer key;
@@ -22,7 +19,6 @@ public class Insert extends Committer {
    * и ключ, по которому нужно добавить элемент
    * @param sieve текущий управленец коллекцией
    * @param key ключ добавляемого элемента
-   * @param added добавляемый элемент
    */
   public Insert(Receiver sieve, Integer key, OrganizationWithUId organizationWithUId) {
     super(sieve, organizationWithUId);
@@ -36,25 +32,28 @@ public class Insert extends Committer {
   @Override
   public Report execute() {
     if (SIEVE == null)
-      return new Report(1, "Ссылка на коллекцию не была обнаружена, пожалуйста, свяжитесь со своим системным администратором");
+      return new Report(1, "Ссылка на коллекцию не была обнаружена, пожалуйста, свяжитесь со своим системным администратором.");
     if (key == null)
-      return new Report(1, "Неправильный формат ключа добавляемого элемента");
+      return new Report(1, "Неправильный формат ключа добавляемого элемента.");
     if (EMBEDDED == null)
-      return new Report(1, "Обнаружена попытка добавить неопределенный элемент");
+      return new Report(1, "Обнаружена попытка добавить неопределенный элемент.");
     OrganizationWithUId buffer = null;
-    Integer[] keys = new Integer[]{key};
+//    Integer[] keys = new Integer[]{key};
+    Integer[] keys = new Integer[]{EMBEDDED.getOrganization().id};
     OrganizationWithUId[] buffers = new OrganizationWithUId[]{buffer};
     Receiver<Integer, OrganizationWithUId> realSiever = (Receiver<Integer, OrganizationWithUId>) SIEVE;
     realSiever.search(keys, buffers, (org)->(true));
     if (buffers[0] != null)
-      return new Report(3, "Обнаружена попытка добавить элемент по уже существующему ключу");
+//      return new Report(3, "Обнаружена попытка добавить элемент по уже существующему ключу");
+      return new Report(3, "Такой элемент уже существует.");
     buffers[0] = EMBEDDED;
     OrganizationWithUId[] added = new OrganizationWithUId[]{EMBEDDED};
-    keys = new Integer[]{key};
+//    keys = new Integer[]{EMBEDDED.getOrganization().key};
+    keys = new Integer[]{EMBEDDED.getOrganization().id};
     realSiever.add(keys, added, (org)->(true));
     if (added[0] == null)
-      return new Report(0, "Элемент успешно добавлен");
-    else return new Report(0xCCCF, "Возникли ошибки при попытки добавления элемента");
+      return new Report(0, "Элемент успешно добавлен.");
+    else return new Report(0xCCCF, "Возникли ошибки при попытки добавления элемента.");
   }
   public static final String NAME = "insert";
   public static final String BRIEF = "Добавляет элемент с указанным [key] в колекцию.";

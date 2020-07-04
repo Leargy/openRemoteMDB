@@ -14,11 +14,14 @@ import sample.dialog_windows.handlers.Handler;
 import sample.dialog_windows.handlers.exceptions.*;
 
 import java.util.concurrent.Exchanger;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class TotalCommander implements Commander, Component {
     private Handler connectionHandler;
     public final Mediating mediator;
     private final Exchanger<Organization> organizationExchanger = new Exchanger<>();
+    private final ExecutorService fixedThredPool = Executors.newFixedThreadPool(3);
 
 
     public TotalCommander(Mediating mediator) {
@@ -39,28 +42,28 @@ public class TotalCommander implements Commander, Component {
 
     @Override
     public void back() {
-        mediator.notify(this, new ApplicationParcel(Markers.RESETCONNECCTION));
+        fixedThredPool.submit(() -> mediator.notify(this, new ApplicationParcel(Markers.RESETCONNECCTION)));
         mediator.notify(this, new ApplicationParcel(Markers.PRIVIOUSSTAGE));
     }
 
     @Override
     public void signIn(String login, String password) {
         ApplicationParcel applicationParcel = new ApplicationParcel(RawSignIn.NAME + " " + login + " " + password, Markers.SENDCOMMAND);
-        mediator.notify(this,applicationParcel);
+        fixedThredPool.submit(() -> mediator.notify(this,applicationParcel));
     }
 
 
     @Override
     public void signOut() {
         ApplicationParcel applicationParcel = new ApplicationParcel(RawSignOut.NAME , Markers.SENDCOMMAND);
-        mediator.notify(this,applicationParcel);
+        fixedThredPool.submit(() -> mediator.notify(this,applicationParcel));
 //        mediator.notify(this, new ApplicationParcel(Markers.PRIVIOUSSTAGE));
     }
 
     @Override
     public void signUp(String login, String password) {
         ApplicationParcel applicationParcel = new ApplicationParcel(RawSignUp.NAME + " " + login + " " + password, Markers.SENDCOMMAND);
-        mediator.notify(this,applicationParcel);
+        fixedThredPool.submit(() -> mediator.notify(this,applicationParcel));
     }
 
 
@@ -71,8 +74,8 @@ public class TotalCommander implements Commander, Component {
 
     @Override
     public void insert(String orgParametrs) {
-        ApplicationParcel applicationParcel = new ApplicationParcel(RawInsertByStep.NAME + 6666 + " " +orgParametrs, Markers.SENDCOMMAND);
-        mediator.notify(this,applicationParcel);
+        ApplicationParcel applicationParcel = new ApplicationParcel(RawInsertByStep.NAME + " " + 666 + " " +orgParametrs, Markers.SENDCOMMAND);
+        fixedThredPool.submit(() -> mediator.notify(this,applicationParcel));
     }
 
     @Override
@@ -90,7 +93,7 @@ public class TotalCommander implements Commander, Component {
         return false;
     }
 
-    public Organization exchange(Organization organization) {
+    public Organization exchangeOrg(Organization organization) {
         try {
             return organizationExchanger.exchange(organization);
         }catch (InterruptedException ex) {

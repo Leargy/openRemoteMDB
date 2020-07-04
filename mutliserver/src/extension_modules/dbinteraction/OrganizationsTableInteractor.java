@@ -49,10 +49,11 @@ public class OrganizationsTableInteractor implements TablesInteractor {
 //        return (length == result)? ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod()) : ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
     }
     public Report insertUserOrganization(Integer key, OrganizationWithUId organizationWithUId) throws SQLException {
+        System.out.println(organizationWithUId.getOrganization().hashCode());
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         logger.info("Preparing SQL request");
         PreparedStatement insertion = currentConnection
-                .prepareStatement("INSERT INTO " + DB_TABLE_NAME + "(name, fullname, type, employeescount, annualturnover, creationdate, coordinates_x, coordinates_y, zipcode, location_x, location_y, location_z, user_login, collection_key)"
+                .prepareStatement("INSERT INTO " + DB_TABLE_NAME + "(name, fullname, type, employeescount, annualturnover, creationdate, coordinates_x, coordinates_y, zipcode, location_x, location_y, location_z, user_login, hash_cod)"
                         + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
         insertion.setString(1, organizationWithUId.getName());
         insertion.setString(2, organizationWithUId.getFullname());
@@ -67,7 +68,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         insertion.setLong(11, organizationWithUId.getAddress().getTown().getY());
         insertion.setDouble(12, organizationWithUId.getAddress().getTown().getZ());
         insertion.setString(13, organizationWithUId.getUserLogin());
-        insertion.setInt(14, key);
+        insertion.setInt(14, organizationWithUId.getOrganization().hashCode());
         int result = 0;
         try {
             logger.info("Executing SQL request \"insert\"");
@@ -90,7 +91,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
     public Report removeUserOrganizationByKey(User user, Integer key) throws SQLException {
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         logger.info("Preparing SQL request");
-        PreparedStatement removing = currentConnection.prepareStatement("DELETE FROM " + DB_TABLE_NAME + " WHERE user_login = ? AND collection_key = ?;");
+        PreparedStatement removing = currentConnection.prepareStatement("DELETE FROM " + DB_TABLE_NAME + " WHERE user_login = ? AND id = ?;");
         removing.setString(1, user.getLogin());
         removing.setInt(2, key);
         int result = 0;
@@ -119,7 +120,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         logger.info("Preparing SQL request");
         PreparedStatement replacing = currentConnection.prepareStatement("UPDATE " + DB_TABLE_NAME + " SET name = ?,"
                 + " fullname = ?, type = ?, employeescount = ?, annualturnover = ?, creationdate = ?, coordinates_x = ?, coordinates_y = ?, zipcode = ?, location_x = ?,"
-                + "location_y = ?, location_z = ?, collection_key = ? WHERE user_login = ? AND name < ?;");
+                + "location_y = ?, location_z = ?, hash_cod = ? WHERE user_login = ? AND name < ?;");
         replacing.setString(1, organizationWithUId.getName());
         replacing.setString(2, organizationWithUId.getFullname());
         replacing.setString(3, organizationWithUId.getType().name());
@@ -132,7 +133,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         replacing.setDouble(10, organizationWithUId.getAddress().getTown().getX());
         replacing.setLong(11, organizationWithUId.getAddress().getTown().getY());
         replacing.setDouble(12, organizationWithUId.getAddress().getTown().getZ());
-        replacing.setInt(13,key);
+        replacing.setInt(13,organizationWithUId.getOrganization().hashCode());
         replacing.setString(14, organizationWithUId.getUserLogin());
         replacing.setString(15, organizationWithUId.getName());
         int replaced = 0;
@@ -160,7 +161,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         logger.info("Preparing SQL request");
         PreparedStatement replacing = currentConnection.prepareStatement("UPDATE " + DB_TABLE_NAME + " SET name = ?,"
                 + " fullname = ?, type = ?, employeescount = ?, annualturnover = ?, creationdate = ?, coordinates_x = ?, coordinates_y = ?, zipcode = ?, location_x = ?,"
-                + "location_y = ?, location_z = ?, collection_key = ?  WHERE user_login = ? AND name > ?;");
+                + "location_y = ?, location_z = ? WHERE user_login = ? AND name > ?;");
         replacing.setString(1, organizationWithUId.getName());
         replacing.setString(2, organizationWithUId.getFullname());
         replacing.setString(3, organizationWithUId.getType().name());
@@ -173,9 +174,9 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         replacing.setDouble(10, organizationWithUId.getAddress().getTown().getX());
         replacing.setLong(11, organizationWithUId.getAddress().getTown().getY());
         replacing.setDouble(12, organizationWithUId.getAddress().getTown().getZ());
-        replacing.setInt(13,key);
-        replacing.setString(14, organizationWithUId.getUserLogin());
-        replacing.setString(15, organizationWithUId.getName());
+//        replacing.setInt(13,key);
+        replacing.setString(13, organizationWithUId.getUserLogin());
+        replacing.setString(14, organizationWithUId.getName());
         int replaced = -1;
         try {
             logger.info("Executing SQL request \"replace if greater\"");
@@ -225,7 +226,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         logger.info("Preparing SQL request");
         PreparedStatement updating = currentConnection.prepareStatement("UPDATE " + DB_TABLE_NAME + " SET name = ?,"
                 + " fullname = ?, type = ?, employeescount = ?, annualturnover = ?, creationdate = ?, coordinates_x = ?, coordinates_y = ?, zipcode = ?, location_x = ?,"
-                + "location_y = ?, location_z = ?, collection_key = ? WHERE user_login = ?;");
+                + "location_y = ?, location_z = ?, hash_cod = ? WHERE user_login = ?;");
         updating.setString(1, organizationWithUId.getName());
         updating.setString(2, organizationWithUId.getFullname());
         updating.setString(3, organizationWithUId.getType().name());
@@ -238,7 +239,7 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         updating.setDouble(10, organizationWithUId.getAddress().getTown().getX());
         updating.setLong(11, organizationWithUId.getAddress().getTown().getY());
         updating.setDouble(12, organizationWithUId.getAddress().getTown().getZ());
-        updating.setInt(13,key);
+        updating.setInt(13,organizationWithUId.getOrganization().hashCode());
         updating.setString(14, organizationWithUId.getUserLogin());
         try {
             logger.info("Executing SQL request \"update\"");
@@ -296,12 +297,13 @@ public class OrganizationsTableInteractor implements TablesInteractor {
     }
 
     public int getDBOrganizationId(OrganizationWithUId organizationWithUId) {
+        System.out.println(organizationWithUId.getOrganization().hashCode());
         int currentOrganizationId = -1;
         try {
             Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
             logger.info("Preparing SQL request");
-            PreparedStatement counting = currentConnection.prepareStatement("SELECT * FROM " + DB_TABLE_NAME + " WHERE collection_key = ?");
-            counting.setInt(1,organizationWithUId.getKey());
+            PreparedStatement counting = currentConnection.prepareStatement("SELECT * FROM " + DB_TABLE_NAME + " WHERE hash_cod = ?");
+            counting.setInt(1,organizationWithUId.getOrganization().hashCode());
             logger.info("Executing SQL request \"get organizations id\"");
             ResultSet resultSet = counting.executeQuery();
             resultSet.next();

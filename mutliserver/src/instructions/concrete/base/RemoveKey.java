@@ -1,17 +1,17 @@
 package instructions.concrete.base;
 
 import communication.Report;
+import organization.Organization;
 import organization.OrganizationWithUId;
 import instructions.concrete.ConcreteDecree;
 import patterns.command.Receiver;
+
+import java.util.ArrayList;
 
 /**
  * Команда удаления элемента по ключу
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
- * @see instructions.concrete.ConDecree
- * @see parsing.instructions.Decree
- * @see Command
  */
 public class RemoveKey extends ConcreteDecree {
   protected final Integer key;
@@ -46,7 +46,12 @@ public class RemoveKey extends ConcreteDecree {
       return new Report(0xCCCF, "Элемента по заданному ключу не существует");
     else {
       realSiever.remove(keys, new OrganizationWithUId[]{buffer}, (org)->(true));
-      return new Report(0, "Элемент успешно удален");
+
+      ArrayList<OrganizationWithUId> removed = new ArrayList<>();
+      removed.add(buffers[0]);
+      Report report = new Report(0, "Элемент успешно удален");
+      report.setOrganizations(removed);
+      return report;
     }
   }
   public static final String NAME = "remove_key";

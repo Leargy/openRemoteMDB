@@ -3,7 +3,6 @@ package organization;
 //TODO: add annotations for parsing to XML
 
 import com.sun.istack.internal.NotNull;
-import organization.*;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;

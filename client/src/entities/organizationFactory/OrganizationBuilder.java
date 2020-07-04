@@ -4,6 +4,7 @@ package entities.organizationFactory;
 import communication.Component;
 import exceptions.PartNotFoundException;
 import organization.*;
+import sample.dialog_windows.handlers.exceptions.ParsingException;
 
 import java.sql.PreparedStatement;
 import java.time.LocalDateTime;
@@ -128,38 +129,82 @@ public final class OrganizationBuilder implements Factory<Organization>, Compone
   }
 
   @Override
-  public Organization makeWithParsing(String rawData) {
-    try {
-      return new Organization(getName(rawData),new Coordinates(getCoordX(rawData),getCoordY(rawData)),getAnnualTurnover(rawData),getFullName(rawData),getEmploysCount(rawData),getType(rawData),new Address(getzipCod(rawData),new Location(getLocationX(rawData),getLocationY(rawData),getLocationZ(rawData))),0, getCreationData(rawData));
-    }catch (PartNotFoundException ex) {
-      return null;
+  public Organization makeWithParsing(String rawData) throws PartNotFoundException {
+    StringBuilder exceptionResult = new StringBuilder();
+    int coor_x = 0;
+    Float coord_y = null;
+    long loc_x = 0;
+    long loc_y = 0;
+    float loc_z = 0;
+    OrganizationType organizationType = null;
+    float annualTurnover = 0f; int employeesCount = 0;
+    String name = "";
+    String fullName = null;
+    String zip_cod = null;
+    LocalDateTime creation_date = null;
+
+    for (int i = 1; i <= 12; i++) {
+      try {
+        switch (i) {
+          case 1: name = getName(rawData);
+            break;
+          case 2: fullName = getFullName(rawData);
+            break;
+          case 3: coor_x = getCoordX(rawData);
+            break;
+          case 4: coord_y = getCoordY(rawData);
+            break;
+          case 5: employeesCount = getEmploysCount(rawData);
+            break;
+          case 6: annualTurnover = getAnnualTurnover(rawData);
+            break;
+          case 7: organizationType = getType(rawData);
+            break;
+          case 8: zip_cod = getzipCod(rawData);
+            break;
+          case 9: loc_x = getLocationX(rawData);
+            break;
+          case 10: loc_y = getLocationY(rawData);
+            break;
+          case 11: loc_z = (float) getLocationZ(rawData);
+            break;
+          case 12: creation_date = getCreationData(rawData);
+            break;
+        }
+      }catch (PartNotFoundException ex) {
+        exceptionResult.append(ex.getMessage() + "\n");
+      }
     }
+    if (exceptionResult.toString().isEmpty() == false) throw new PartNotFoundException(exceptionResult.toString());
+    return new Organization(name,new Coordinates(coor_x,coord_y),annualTurnover,fullName,employeesCount,organizationType,new Address(zip_cod,new Location(loc_x,loc_y,loc_z)),0, creation_date);
   }
 
   private String getName(String rawData) throws PartNotFoundException {
-    Pattern nameReg = Pattern.compile("name=.*;");
+    Pattern nameReg = Pattern.compile("name=[^;]*;");
     Matcher matcher = nameReg.matcher(rawData);
+    String name = "";
     while (matcher.find()) {
-      return rawData.substring(matcher.start() + 5, matcher.end());
+      name = rawData.substring(matcher.start() + 5, matcher.end() - 1);
     }
-    throw new PartNotFoundException("Name not found");
+    if (name.isEmpty()) throw new PartNotFoundException("Name shouldn't be empty");
+    return name;
   }
   private String getFullName(String rawData) {
-    Pattern nameReg = Pattern.compile("fullName=.*;");
+    Pattern nameReg = Pattern.compile("fullName=[^;]*;");
     Matcher matcher = nameReg.matcher(rawData);
     while (matcher.find()) {
-      return rawData.substring(matcher.start() + 9, matcher.end());
+      return rawData.substring(matcher.start() + 9, matcher.end() - 1);
     }
     return "";
   }
   private OrganizationType getType(String rawData) throws PartNotFoundException {
     String rawType = "";
-    Pattern nameReg = Pattern.compile("type=.*;");
+    Pattern nameReg = Pattern.compile("type=[^;]*;");
     Matcher matcher = nameReg.matcher(rawData);
     while (matcher.find()) {
-      rawType = rawData.substring(matcher.start() + 5, matcher.end());
+      rawType = rawData.substring(matcher.start() + 5, matcher.end() - 1);
     }
-    switch (rawType) {
+    switch (rawType.toLowerCase()) {
       case "public":
         return OrganizationType.PUBLIC;
       case "trust":
@@ -169,79 +214,145 @@ public final class OrganizationBuilder implements Factory<Organization>, Compone
       case "private_limited_company":
         return OrganizationType.PRIVATE_LIMITED_COMPANY;
     }
-    throw new PartNotFoundException("Type not found");
+    throw new PartNotFoundException("Type shouldn't be empty");
   }
   private int getEmploysCount(String rawData)  throws PartNotFoundException{
-    Pattern nameReg = Pattern.compile("employs=.*;");
+    Pattern nameReg = Pattern.compile("employs=[^;]*;");
     Matcher matcher = nameReg.matcher(rawData);
-    while (matcher.find()) {
-      return Integer.valueOf(rawData.substring(matcher.start() + 8, matcher.end()));
+    int employees = 0;
+    try {
+      while (matcher.find()) {
+        if (rawData.substring(matcher.start() + 8, matcher.end() - 1).isEmpty()) break;
+        employees = Integer.valueOf(rawData.substring(matcher.start() + 8, matcher.end() - 1));
+        break;
+      }
+    }catch (NumberFormatException ex) {
+      throw new PartNotFoundException("Wrong format for Employees");
     }
-    throw new PartNotFoundException("Employs number not found");
+    if (employees == 0) throw new PartNotFoundException("Employs number shouldn't be empty");
+    return employees;
   }
   private float getAnnualTurnover(String rawData)  throws PartNotFoundException{
-    Pattern nameReg = Pattern.compile("annual=.*;");
+    Pattern nameReg = Pattern.compile("annual=[^;]*[\\d.,]*;");
     Matcher matcher = nameReg.matcher(rawData);
-    while (matcher.find()) {
-      return Float.valueOf(rawData.substring(matcher.start() + 7, matcher.end()));
+    float annual = 0;
+    try {
+      while (matcher.find()) {
+        if (rawData.substring(matcher.start() + 7, matcher.end() - 1).isEmpty()) break;
+        annual = Float.valueOf(rawData.substring(matcher.start() + 7, matcher.end() - 1));
+        break;
+      }
+    }catch (NumberFormatException ex) {
+      throw new PartNotFoundException("Wrong format for Annual turnover");
     }
-    throw new PartNotFoundException("annual not found");
+    if (annual == 0) throw new PartNotFoundException("Annual turnover shouldn't be empty");
+    return annual;
   }
   private LocalDateTime getCreationData(String rawData)  throws PartNotFoundException{
-    Pattern nameReg = Pattern.compile("date=.*;");
+    Pattern nameReg = Pattern.compile("date=[^;]*[\\d,.'\'/]*;");
     Matcher matcher = nameReg.matcher(rawData);
+    LocalDateTime localDateTime = null;
+    String rawDate = "";
     while (matcher.find()) {
-      return LocalDateTime.parse(rawData.substring(matcher.start() + 5, matcher.end()), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+      if (rawData.substring(matcher.start() + 5, matcher.end() - 1).isEmpty()) break;
+        rawDate = rawData.substring(matcher.start() + 5, matcher.end() - 1).subSequence(0,19).toString();
     }
-    throw new PartNotFoundException("date not found");
+    rawDate = rawDate.replace("T"," ");
+    try {
+      localDateTime = LocalDateTime.parse(rawDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }catch (Exception ex) {
+      System.out.println(ex.getMessage());
+    }
+    if (localDateTime == null) throw new PartNotFoundException("Wrong data format");
+    return localDateTime;
   }
   private int getCoordX(String rawData)  throws PartNotFoundException{
-    Pattern nameReg = Pattern.compile("cordx=.*;");
+    Pattern nameReg = Pattern.compile("cordx=[^;]*[\\d,.]*;");
     Matcher matcher = nameReg.matcher(rawData);
-    while (matcher.find()) {
-      return Integer.valueOf(rawData.substring(matcher.start() + 6, matcher.end()));
+    int x = 0;
+    try {
+      while (matcher.find()) {
+        if (rawData.substring(matcher.start() + 6, matcher.end() - 1).isEmpty()) break;
+        x = Integer.valueOf(rawData.substring(matcher.start() + 6, matcher.end() - 1));
+        break;
+      }
+    }catch (NumberFormatException ex) {
+      throw new PartNotFoundException("Wrong format for coordinate X");
     }
-    throw new PartNotFoundException("Name not found");
+    if (x == 0) throw new PartNotFoundException("Coordinate X shouldn't be empty");
+    return x;
   }
-  private float getCoordY(String rawData)  throws PartNotFoundException{
-    Pattern nameReg = Pattern.compile("cordy=.*;");
+  private Float getCoordY(String rawData)  throws PartNotFoundException{
+    Pattern nameReg = Pattern.compile("cordy=[^;]*[\\d,.]*;");
     Matcher matcher = nameReg.matcher(rawData);
-    while (matcher.find()) {
-      return Float.valueOf(rawData.substring(matcher.start() + 6, matcher.end()));
+    Float y = null;
+    try {
+      while (matcher.find()) {
+        if (rawData.substring(matcher.start() + 6, matcher.end() - 1).isEmpty()) break;
+        y = Float.valueOf(rawData.substring(matcher.start() + 6, matcher.end() - 1));
+        break;
+      }
+    }catch (NumberFormatException ex) {
+      throw new PartNotFoundException("Wrong format for coordinate Y");
     }
-    throw new PartNotFoundException("Name not found");
+    if (y == null) throw new PartNotFoundException("Coordinate Y shouldn't be empty");
+    return y;
   }
   private String getzipCod(String rawData) {
-    Pattern nameReg = Pattern.compile("zip=.*;");
+    Pattern nameReg = Pattern.compile("zip=[^;]*;");
     Matcher matcher = nameReg.matcher(rawData);
     while (matcher.find()) {
-      return rawData.substring(matcher.start() + 4, matcher.end());
+      return rawData.substring(matcher.start() + 4, matcher.end() - 1);
     }
     return "";
   }
   private long getLocationX(String rawData)  throws PartNotFoundException{
-    Pattern nameReg = Pattern.compile("locx=.*;");
+    Pattern nameReg = Pattern.compile("locx=[^;]*[\\d]*;");
     Matcher matcher = nameReg.matcher(rawData);
-    while (matcher.find()) {
-      return Long.valueOf(rawData.substring(matcher.start() + 5, matcher.end()));
+    long x = 0;
+    try {
+      while (matcher.find()) {
+        if (rawData.substring(matcher.start() + 5, matcher.end() - 1).isEmpty()) break;
+        x = Long.valueOf(rawData.substring(matcher.start() + 5, matcher.end() - 1));
+        break;
+      }
+    }catch (NumberFormatException ex) {
+      throw new PartNotFoundException("Wrong format for location coordinate X");
     }
-    throw new PartNotFoundException("location_x not found");
+    if (x == 0) throw new PartNotFoundException("Location coordinate X shouldn't be empty");
+    return x;
   }
   private long getLocationY(String rawData)  throws PartNotFoundException{
-    Pattern nameReg = Pattern.compile("locy=.*;");
+    Pattern nameReg = Pattern.compile("locy=[^;]*[\\d]*;");
     Matcher matcher = nameReg.matcher(rawData);
-    while (matcher.find()) {
-      return Long.valueOf(rawData.substring(matcher.start() + 5, matcher.end()));
+    long y = 0;
+    try {
+      while (matcher.find()) {
+        if (rawData.substring(matcher.start() + 5, matcher.end() - 1).isEmpty()) break;
+        y = Long.valueOf(rawData.substring(matcher.start() + 5, matcher.end() - 1));
+        break;
+      }
+    }catch (NumberFormatException ex) {
+      throw new PartNotFoundException("Wrong format for location coordinate Y");
     }
-    throw new PartNotFoundException("location_y not found");
+    if (y == 0) throw new PartNotFoundException("Location coordinate Y shouldn't be empty");
+    return y;
   }
   private double getLocationZ(String rawData) throws PartNotFoundException{
-    Pattern nameReg = Pattern.compile("locz=.*;");
+    Pattern nameReg = Pattern.compile("locz=[^;]*[\\d,.]*;");
     Matcher matcher = nameReg.matcher(rawData);
-    while (matcher.find()) {
-      return Double.valueOf(rawData.substring(matcher.start() + 5, matcher.end()));
+    double z = 0;
+    try {
+      while (matcher.find()) {
+        if (rawData.substring(matcher.start() + 5, matcher.end() - 1).isEmpty()) break;
+        z = Double.valueOf(rawData.substring(matcher.start() + 5, matcher.end() - 1));
+        break;
+      }
+    }catch (NumberFormatException ex) {
+      throw new PartNotFoundException("Wrong format for location coordinate Z");
     }
-    throw new PartNotFoundException("location_z not found");
+    if (z == 0) throw new PartNotFoundException("Location coordinate Z shouldn't be empty");
+    return z;
   }
 
 

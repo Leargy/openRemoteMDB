@@ -95,6 +95,7 @@ public class AuthenticationTask implements Component {
         }
         LOGGED_USERS.putIfAbsent(socketChannel, user);
         logger.info("User " + user.getLogin() + " was added to \"authorized\" list ");
+        SUB_PROCESS_CONTROLLER.notify(this, new ClientPackBag(socketChannel, new ClientPackage(null,null)));
     }
     public synchronized void removeAuthorizedUser(SocketChannel socketChannel) {
         try {
@@ -117,6 +118,14 @@ public class AuthenticationTask implements Component {
                 logger.error("Unabled to close socket: " +tempVictim.getKey().socket().toString());
 //                System.out.println("Unabled to close socket: " +tempVictim.getKey().socket().toString());
             }
+        }
+    }
+
+    public synchronized void notifyAllUsers(ClientPackBag clientPackBag) {
+        for (Map.Entry<SocketChannel,User> tempLoggedUser : LOGGED_USERS.entrySet()) {
+            UsersAlarmThread.submit(() -> {
+                SUB_PROCESS_CONTROLLER.notify(this, new ClientPackBag(tempLoggedUser.getKey(), clientPackBag.getClientPacket()));
+            });
         }
     }
 }

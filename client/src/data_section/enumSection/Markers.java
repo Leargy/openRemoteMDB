@@ -14,7 +14,12 @@ public enum Markers {
     BADINPUTCONDITION("BADINPUTCONDITION"),
     GOODINPUTCONDITION("GOODINPUTCONDITION"),
     HASSERVERKEY("HASSERVERKEY"),
-    WAIKUP("WAIKUP");
+    WAIKUP("WAIKUP"),
+
+    UPDATE("UPDATE"),
+    INSERT("INSERT"),
+    CLEAR("CLEAR"),
+    REMOVE("REMOVE");
 
     private String name;
     Markers(String name){

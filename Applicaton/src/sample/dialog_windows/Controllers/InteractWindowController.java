@@ -5,6 +5,8 @@ import java.util.ResourceBundle;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -21,6 +23,7 @@ public class InteractWindowController extends Dialog {
     public final InteructionSceneFactory inteructionSceneFactory;
     public static final Stage stage = new Stage();
     public static final StringProperty organizationParams = new SimpleStringProperty();
+    public static final ObservableList<String> langs = FXCollections.observableArrayList("Public", "Trust", "Open_join_stock_company", "Private_limited_company");
 
     public InteractWindowController() {
         inteructionSceneFactory = new InteructionSceneFactory();
@@ -60,14 +63,21 @@ public class InteractWindowController extends Dialog {
     @FXML private TextField coord_x_field;
     @FXML private Text interact_map_x;
     @FXML private Label interact_map_title;
-    @FXML private ComboBox<?> type_combo_box;
+    @FXML private ComboBox<String> type_combo_box;
     @FXML private Label interact_title;
 
     @FXML
     void initialize() {
+        type_combo_box.setItems(langs);
+        type_combo_box.setValue("");
         interact_confirm_btn.setOnAction(event -> {
+            totalCommander.insert(prepareParams());
 
         });
+        interact_delete_btn.setOnAction(event -> {
+        });
+
+
     }
 
     @Override
@@ -163,20 +173,21 @@ public class InteractWindowController extends Dialog {
         interact_map_y.setText(position + interact_y);
     }
 
-    private String prepareParaps() {
+    @FXML
+    private String prepareParams() {
         StringBuilder params = new StringBuilder();
-        params.append("name=" + name_field + ";");
-        params.append("fullName=" + full_name_field + ";");
-        params.append("type=" + type_combo_box + ";");
-        params.append("employs=" + employees_count_field + ";");
-        params.append("annual=" + annual_turnover_field + ";");
+        params.append("name=" + name_field.getText() + ";");
+        params.append("fullName=" + full_name_field.getText() + ";");
+        params.append("type=" + type_combo_box.getValue() + ";");
+        params.append("employs=" + employees_count_field.getText() + ";");
+        params.append("annual=" + annual_turnover_field.getText() + ";");
         params.append("date=" + LocalDateTime.now() + ";");
-        params.append("cordx=" + coord_x_field + ";");
-        params.append("cordy=" + coord_y_field + ";");
-        params.append("zip=" + zip_cod_field + ";");
-        params.append("locx=" + locate_x_field + ";");
-        params.append("locy=" + locate_y_field + ";");
-        params.append("locz=" + locate_z_field + ";");
+        params.append("cordx=" + coord_x_field.getText() + ";");
+        params.append("cordy=" + coord_y_field.getText() + ";");
+        params.append("zip=" + zip_cod_field.getText() + ";");
+        params.append("locx=" + locate_x_field.getText() + ";");
+        params.append("locy=" + locate_y_field.getText() + ";");
+        params.append("locz=" + locate_z_field.getText() + ";");
         return params.toString();
     }
 }

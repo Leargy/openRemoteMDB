@@ -1,6 +1,7 @@
 package base_modules.dispatchers;
 
 import base_modules.dispatchers.sending_tasks.SendingResultsTask;
+import communication.ClientPackage;
 import communication.Report;
 import communication.ReportsFormatter;
 import extension_modules.ClassUtils;
@@ -10,6 +11,7 @@ import patterns.mediator.Component;
 import patterns.mediator.Controllers;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import uplink_bags.ChanneledBag;
+import uplink_bags.ClientPackBag;
 import uplink_bags.NotifyBag;
 import uplink_bags.TransportableBag;
 
@@ -34,15 +36,21 @@ public class DispatchController implements Dispatchers {
 
     @Override
     public Report sendResults2Client(NotifyBag parcel) {
-        DISPATCHER.submit(new SendingResultsTask(this, parcel));
+//        DISPATCHER.submit(new SendingResultsTask(this, parcel));
 //        DISPATCHER.execute(new SendingResultsTask(this, parcel));
+        return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
+    }
+
+    public Report sendResults2Client(ClientPackBag parcel) {
+        DISPATCHER.submit(new SendingResultsTask(this, parcel));
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 
     @Override
     public Report notify(Component sender, TransportableBag parcel) {
-        if (parcel.getClass().getSimpleName().equals("ChanneledBag")) this.sendResults2Client(new NotifyBag((SocketChannel) ((ChanneledBag)parcel).getChannel(),new Report(0, SERVER_KEY)));
-        if (sender == MAIN_SERVER_CONTROLLER) this.sendResults2Client((NotifyBag) parcel);
+        if (parcel.getClass().getSimpleName().equals("ChanneledBag")) this.sendResults2Client(new ClientPackBag((SocketChannel) ((ChanneledBag)parcel).getChannel(),new ClientPackage(null,new Report(0, SERVER_KEY))));
+        if (sender == MAIN_SERVER_CONTROLLER && parcel.getClass().getSimpleName().equals("NotifyBag")) this.sendResults2Client(new ClientPackBag(((NotifyBag)parcel).getChannel(),new ClientPackage(null,((NotifyBag)parcel).getReport())));
+        if (sender == MAIN_SERVER_CONTROLLER && parcel.getClass().getSimpleName().equals("ClientPackBag")) this.sendResults2Client((ClientPackBag) parcel);
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 

@@ -14,14 +14,12 @@ import parsing.customer.bootstrapper.LoaferLoader;
  * @see LimboKeeper
  * @see parsing.customer.local.TotalCommander
  * @see parsing.customer.local.Commander
- * @see parsing.customer.Receiver
  */
 public final class ShedBlock extends LimboKeeper {
   /**
    * Конструктор, принимающий любой хороший загрузчик и
    * Логгер, который умеет не только составлять протокол,
    * но и отправлять его модулю разбора запросов клиента
-   * @param logger логгер, взаимодействующий с контроллером
    */
   public ShedBlock(LoaferLoader<OrganizationWithUId> loader) {
     super(loader);

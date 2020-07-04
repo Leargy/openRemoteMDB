@@ -7,6 +7,8 @@ import sample.dialog_windows.communication.enum_section.Markers;
 import sample.dialog_windows.TotalCommander;
 import сlient.KickStarter;
 
+import java.util.concurrent.CountDownLatch;
+
 public class ButtonMediator implements Mediating {
     public final SceneWriterActions sceneWriter;
     public final WindowOwner windowOwner;
@@ -14,6 +16,7 @@ public class ButtonMediator implements Mediating {
     public final communication.Mediating clientsMediator;
     public final BorderConverter borderConverter;
     public final KickStarter accessToAppFunctionality;
+    private CountDownLatch firstLoading = new CountDownLatch(2);
 
     public ButtonMediator() {
         accessToAppFunctionality = new KickStarter();
@@ -42,8 +45,16 @@ public class ButtonMediator implements Mediating {
             ((Mediator)clientsMediator).getServant().setConnection(ip, port);
         }
         if (applicationParcel.getMarker() == Markers.PRIVIOUSSTAGE) Platform.runLater(() -> sceneWriter.setPreviousScene());
-        if (applicationParcel.getMarker() == Markers.NEXTSTAGE)  Platform.runLater(() -> sceneWriter.setNextScene());
+        if (applicationParcel.getMarker() == Markers.NEXTSTAGE) {
+            Platform.runLater(() -> sceneWriter.setNextScene());
+        }
 
+        if (component == null && applicationParcel.getMarker() == Markers.UPDATE) Platform.runLater(() -> windowOwner.updateTable(applicationParcel));
+        if (component == null && applicationParcel.getMarker() == Markers.CLEAR) Platform.runLater(() -> windowOwner.clearTable(applicationParcel));
+        if (component == null && applicationParcel.getMarker() == Markers.INSERT) {
+            Platform.runLater(() -> windowOwner.insertInTable(applicationParcel));
+        }
+        if (component == null && applicationParcel.getMarker() == Markers.REMOVE) Platform.runLater(() -> windowOwner.removeFromTable(applicationParcel));
     }
 
     public void start() { sceneWriter.startShow();}

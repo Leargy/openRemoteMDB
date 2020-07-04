@@ -1,16 +1,24 @@
 package parsing;
 
+import communication.ClientPackage;
 import communication.Report;
 import instructions.concrete.ConcreteDecree;
 import instructions.concrete.base.Save;
 import instructions.concrete.extended.ExecuteScript;
+import instructions.rotten.base.RawClear;
+import instructions.rotten.base.RawInsert;
+import instructions.rotten.base.RawRemoveKey;
+import instructions.rotten.base.RawUpdate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import patterns.mediator.Controllers;
+import uplink_bags.ClientPackBag;
 import uplink_bags.ExecuteBag;
 import uplink_bags.NotifyBag;
 
 import javax.print.attribute.standard.NumberUp;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Эмулятор клиента, что вызывает приходящие
@@ -19,8 +27,9 @@ import javax.print.attribute.standard.NumberUp;
  * @author Leargy aka Anton Sushkevich
  */
 public class LilyInvoker extends FondleEmulator {
-  private Report collectorReports = new Report(0,"");
+//  private Report collectorReports = new Report(0,"");
   protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+  public final ExecutorService alarmPull = Executors.newFixedThreadPool(5);
 
   /**
    * Конструктор, устанавливающий
@@ -47,6 +56,19 @@ public class LilyInvoker extends FondleEmulator {
     ConcreteDecree concreteCommand = executeBag.getConcreteDecree();
     logger.info("Executing clients command " + concreteCommand);
     Report result = concreteCommand.execute();
+    if (result.isSuccessful()) {
+      if (concreteCommand.toString().equals("insert"))
+        alarmPull.submit(() -> MAGIV.notify(this, new ClientPackBag(executeBag.Channel(), new ClientPackage(new RawInsert(0, null), result))));
+      else if (concreteCommand.toString().equals("update"))
+        alarmPull.submit(() -> MAGIV.notify(this, new ClientPackBag(executeBag.Channel(), new ClientPackage(new RawUpdate(0, null), result))));
+      else if (concreteCommand.toString().equals("clear"))
+        alarmPull.submit(() -> MAGIV.notify(this, new ClientPackBag(executeBag.Channel(), new ClientPackage(new RawClear(), result))));
+      else if (concreteCommand.toString().equals("info"))
+        alarmPull.submit(() -> MAGIV.notify(this, new ClientPackBag(executeBag.Channel(), new ClientPackage(new RawClear(), result))));
+      else if (concreteCommand.toString().equals("remove_key"))
+        alarmPull.submit(() -> MAGIV.notify(this, new ClientPackBag(executeBag.Channel(), new ClientPackage(new RawRemoveKey(0), result))));
+    }
+
 //    if (concmd instanceof ExecuteScript) {
 //      result = shell.read(cmd);
 //    } else {

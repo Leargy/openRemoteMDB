@@ -122,7 +122,7 @@ public final class Organization implements Mappable<Integer> {
                     + (employeesCount + annualTurnover) % 2
                     + (coordinates.hashCode()
                     + ((officialAddress != null)? officialAddress.hashCode() : 0)) % 3
-                    + creationDate.hashCode()
+//                    + creationDate.hashCode()
                     + ((type == null)? 0 : type.hashCode())
     );
   }

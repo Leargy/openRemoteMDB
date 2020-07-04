@@ -8,9 +8,6 @@ import patterns.command.Receiver;
  * Команда очистки коллекции
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
- * @see instructions.concrete.ConDecree
- * @see parsing.instructions.Decree
- * @see Command
  */
 public class Clear extends ConcreteDecree {
   private String userLogin;

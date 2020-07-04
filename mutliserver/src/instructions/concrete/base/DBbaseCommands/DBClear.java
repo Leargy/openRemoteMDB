@@ -5,9 +5,11 @@ import entities.User;
 import extension_modules.dbinteraction.OrganizationsTableInteractor;
 import extension_modules.dbinteraction.TablesInteractor;
 import instructions.concrete.base.Clear;
+import parsing.customer.local.TotalCommander;
 import patterns.command.Receiver;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DBClear extends Clear {
     public final OrganizationsTableInteractor ORGANIZATION_TABLE_INTERACTOR;
@@ -27,7 +29,9 @@ public class DBClear extends Clear {
 //            return new Report(12,"Failed to clear user's organization!\n");
             return new Report(12,"Не удалось удалить ваши организации!\n ");
         }
-        return super.execute();
+        Report report = super.execute();
+        report.setOrganizations(((TotalCommander)SIEVE).getOrganizationList());
+        return report;
     }
 
     @Override

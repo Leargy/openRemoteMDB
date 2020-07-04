@@ -1,6 +1,7 @@
 package entities.organizationFactory;
 
 
+import exceptions.PartNotFoundException;
 import organization.Junker;
 
 /**
@@ -17,5 +18,5 @@ public interface Factory<T> {
    * @return объект типа T, где T - тип производимой продукции
    */
   T make(Junker parts);
-  T makeWithParsing(String rawData);
+  T makeWithParsing(String rawData) throws PartNotFoundException;
 }

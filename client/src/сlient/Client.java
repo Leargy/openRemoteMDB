@@ -45,7 +45,7 @@ public class Client extends AClient implements Component, Runnable {
 //            selector = Selector.open();
 //        } catch (IOException ex) {/*NOPE*/}
         cachedTP = Executors.newCachedThreadPool();
-        fixedTP = Executors.newFixedThreadPool(3);
+        fixedTP = Executors.newFixedThreadPool(4);
     }
 
     public synchronized boolean isConnected() {

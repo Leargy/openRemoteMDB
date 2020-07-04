@@ -1,6 +1,9 @@
 package communication;
 
+import organization.OrganizationWithUId;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Класс отчетов, хранящих информацию о результатах,
@@ -16,6 +19,7 @@ public class Report implements Serializable {
     private final int ERROR_CODE; // Error code
     private final String MESSAGE; // Message
     private Boolean isConfirmed;
+    private ArrayList<OrganizationWithUId> organizations;
 
     /**
      * Основной конструктор, устанавливающий
@@ -45,5 +49,10 @@ public class Report implements Serializable {
     }
     public void setIsConfirmed(boolean isConfirmed) {
         this.isConfirmed = isConfirmed;
+    }
+
+    public ArrayList<OrganizationWithUId> getOrganizations() { return organizations; }
+    public void setOrganizations(ArrayList<OrganizationWithUId> organizations) {
+        this.organizations = organizations;
     }
 }

@@ -1,4 +1,4 @@
-    package instructions.rotten.base;
+package instructions.rotten.base;
 
 
 import organization.Organization;
@@ -23,7 +23,6 @@ public final class RawInsert extends RawCommitter implements IClued, IJunked, Se
     /**
      * конструктор команды, принимающий "ключ" объекта коллекции и данные об объекте коллекции.
      * @param key
-     * @param junk
      */
     public RawInsert(Integer key, Organization organization) {
         super(organization);

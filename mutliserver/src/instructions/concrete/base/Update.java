@@ -10,9 +10,6 @@ import patterns.command.Receiver;
  * коллекции по идентификатору
  * @author Come_1LL_F00 aka Lenar Khannanov
  * @author Leargy aka Anton Sushkevich
- * @see parsing.instructions.concrete.ConDecree
- * @see parsing.instructions.Decree
- * @see parsing.instructions.Command
  */
 public class Update extends Committer {
   protected final Integer id;
@@ -24,7 +21,6 @@ public class Update extends Committer {
    * заменяем
    * @param sieve текущий управленец коллекцией
    * @param id идентификатор обновляемого элемента
-   * @param added заменитель
    */
   public Update(Receiver sieve, Integer id, OrganizationWithUId organizationWithUId) {
     super(sieve, organizationWithUId);
@@ -45,7 +41,8 @@ public class Update extends Committer {
       return new Report(1, "Обнаружена попытка добавить неопределенный элемент.");
     Receiver<Integer, OrganizationWithUId> realSiever = (Receiver<Integer, OrganizationWithUId>) SIEVE;
     Integer key = null;
-    Integer[] keys = new Integer[]{id};
+//    Integer[] keys = new Integer[]{id};
+    Integer[] keys = new Integer[]{EMBEDDED.getOrganization().id};
     OrganizationWithUId[] findedOrganization = new OrganizationWithUId[]{null};
     realSiever.search(keys, findedOrganization, (org)->(org.getKey().equals(id)));
     key = keys[0];

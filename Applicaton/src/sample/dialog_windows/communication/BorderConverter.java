@@ -44,6 +44,26 @@ public class BorderConverter implements Converting {
 
         ApplicationParcel applicationParcel = null;
         switch (segment.getMarker()) {
+            case CLEAR:{
+                applicationParcel = new ApplicationParcel("", sample.dialog_windows.communication.enum_section.Markers.CLEAR);
+                applicationParcel.setOrganizationArrayList(segment.getClientPackage().getReport().getOrganizations());
+                break;
+            }
+            case UPDATE: {
+                applicationParcel = new ApplicationParcel("", sample.dialog_windows.communication.enum_section.Markers.UPDATE);
+                applicationParcel.setOrganizationArrayList(segment.getClientPackage().getReport().getOrganizations());
+                break;
+            }
+            case INSERT:{
+                applicationParcel = new ApplicationParcel("", sample.dialog_windows.communication.enum_section.Markers.INSERT);
+                applicationParcel.setOrganizationArrayList(segment.getClientPackage().getReport().getOrganizations());
+                break;
+            }
+            case REMOVE:{
+                applicationParcel = new ApplicationParcel("", sample.dialog_windows.communication.enum_section.Markers.REMOVE);
+                applicationParcel.setOrganizationArrayList(segment.getClientPackage().getReport().getOrganizations());
+                break;
+            }
             case BADINPUTCONDITION: {
                 if (withClientPackage) {
 //                    System.out.println("gege");

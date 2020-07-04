@@ -157,7 +157,7 @@ public final class NakedCrateLoader implements LoaferLoader<OrganizationWithUId>
         id = resultSet.getInt("id");
         employsCount = resultSet.getInt("employeescount");
         coordinates_x = resultSet.getInt("coordinates_x");
-        collectionKey = resultSet.getInt("collection_key");
+//        collectionKey = resultSet.getInt("collection_key");
         location_x = resultSet.getLong("location_x");
         location_y = resultSet.getLong("location_y");
         location_z = resultSet.getDouble("location_z");
@@ -167,7 +167,7 @@ public final class NakedCrateLoader implements LoaferLoader<OrganizationWithUId>
         companies.add(new OrganizationWithUId(new Organization(name, new Coordinates(coordinates_x,coordinates_y),
                  annualTurnover, fullName, employsCount,makeOutType(type),
                 new Address(zipCode,new Location(location_x, location_y, location_z)), id, creationDateTime),
-                userLogin, collectionKey));
+                userLogin, id));
       }
     }catch (SQLException ex) {
       System.out.println(ex.getMessage()); //TODO:накинуть логгер если нада

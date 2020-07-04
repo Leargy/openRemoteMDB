@@ -1,12 +1,14 @@
 package instructions.concrete.base.DBbaseCommands;
 
 import communication.Report;
+import organization.Organization;
 import organization.OrganizationWithUId;
 import extension_modules.dbinteraction.OrganizationsTableInteractor;
 import instructions.concrete.base.Insert;
 import patterns.command.Receiver;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DBInsert extends Insert {
     public final OrganizationsTableInteractor ORGANIZATION_TABLE_INTERACTOR;
@@ -17,7 +19,6 @@ public class DBInsert extends Insert {
      *
      * @param sieve текущий управленец коллекцией
      * @param key   ключ добавляемого элемента
-     * @param added добавляемый элемент
      */
     public DBInsert(Receiver sieve, Integer key, OrganizationWithUId organizationWithUId, OrganizationsTableInteractor organizationsTableInteractor) {
         super(sieve, key, organizationWithUId);
@@ -34,7 +35,13 @@ public class DBInsert extends Insert {
             return new Report(12,"Не удалось добавить организацию пользователя!\n");
         }
         EMBEDDED.getOrganization().id = ORGANIZATION_TABLE_INTERACTOR.getDBOrganizationId(EMBEDDED);
-        return super.execute();
+        System.out.println(EMBEDDED.getOrganization().id);
+        ArrayList<OrganizationWithUId> inserted = new ArrayList<>();
+        inserted.add(EMBEDDED);
+        Report report = super.execute();
+        report.setOrganizations(inserted);
+
+        return report;
     }
     @Override
     public String toString() { return NAME; }

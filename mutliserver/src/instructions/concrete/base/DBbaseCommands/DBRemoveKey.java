@@ -4,9 +4,12 @@ import communication.Report;
 import entities.User;
 import extension_modules.dbinteraction.OrganizationsTableInteractor;
 import instructions.concrete.base.RemoveKey;
+import organization.Organization;
+import organization.OrganizationWithUId;
 import patterns.command.Receiver;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DBRemoveKey extends RemoveKey {
     public final OrganizationsTableInteractor ORGANIZATION_TABLE_INTERACTOR;

@@ -2,10 +2,12 @@ package base_modules.processors;
 
 import base_modules.processors.processing_tasks.AuthenticationTask;
 import base_modules.processors.processing_tasks.QueryHandlingTask;
+import communication.ClientPackage;
 import communication.Report;
 import communication.ReportsFormatter;
 import czerkaloggers.customer.B_4D4_GE3;
 import extension_modules.dbinteraction.DataBaseConnector;
+import instructions.rotten.base.RawInsert;
 import organization.OrganizationWithUId;
 import extension_modules.ClassUtils;
 import parsing.FondleEmulator;
@@ -38,7 +40,7 @@ public final class SubProcessorController implements Processors {
         AUTHENTICATION_TASK = new AuthenticationTask(this);
         INSTRUCTION_BUILDER = new InstructionBuilder(this, AUTHENTICATION_TASK); //adding link to authentication task to set in in authorization commands
         NAKED_CREATE_LOADER = new NakedCrateLoader(DataBaseConnector.getInstance());
-        TOTAL_COMMANDER = new ShedBlock(NAKED_CREATE_LOADER); //TODO: нужен логгер
+        TOTAL_COMMANDER = new ShedBlock(NAKED_CREATE_LOADER);
         LILY_INVOKER = new LilyInvoker(this);
         TOTAL_COMMANDER.DataRebase(NAKED_CREATE_LOADER.load());
     }
@@ -55,8 +57,25 @@ public final class SubProcessorController implements Processors {
         } else if (sender == SERVER_CONTROLLER && parcel.getClass().getSimpleName().equals("ClientPackBag")) AUTHENTICATION_TASK.identify(parcel); //sending to determine, if temp client was authorized
         if (sender == AUTHENTICATION_TASK && parcel.getClass().getSimpleName().equals("NotifyBag")){ SERVER_CONTROLLER.notify(this, parcel);
         } else if (sender == AUTHENTICATION_TASK && parcel.getClass().getSimpleName().equals("RawDecreeBag")) INSTRUCTION_BUILDER.make(parcel,TOTAL_COMMANDER); // sending to determine the concrete command
-        if (sender == INSTRUCTION_BUILDER) ((LilyInvoker)LILY_INVOKER).invoke((ExecuteBag) parcel); //sending to execute command
+        else if (sender == AUTHENTICATION_TASK && parcel.getClass().getSimpleName().equals("ClientPackBag") && ((ClientPackBag)parcel).getClientPacket().getReport() == null) {
+            if (((ClientPackBag) parcel).getClientPacket().getReport() == null) {
+                Report tempReport = new Report(0,"Полный список организаций");
+                tempReport.setOrganizations(TOTAL_COMMANDER.getOrganizationList());
+                SERVER_CONTROLLER.notify(this, new ClientPackBag(((ClientPackBag) parcel).getChannel(),new ClientPackage(new RawInsert(0,null),tempReport)));
+            }
+        }
+        else if (sender == AUTHENTICATION_TASK && parcel.getClass().getSimpleName().equals("ClientPackBag")) {
+            //КОСТЫЫЫЫЛЬЬЬ
+//            if (((ClientPackBag) parcel).getClientPacket().getReport() == null) {
+//                Report tempReport = new Report(0,"Полный список организаций");
+//                tempReport.setOrganizations(TOTAL_COMMANDER.getOrganizationList());
+//                SERVER_CONTROLLER.notify(this, new ClientPackBag(((ClientPackBag) parcel).getChannel(),new ClientPackage(null,tempReport)));
+//            }
+            SERVER_CONTROLLER.notify(this, parcel); // sending to determine the concrete command
+        }
+        if (sender == INSTRUCTION_BUILDER) (LILY_INVOKER).invoke((ExecuteBag) parcel); //sending to execute command
         if (sender == LILY_INVOKER) SERVER_CONTROLLER.notify(this, parcel); //sending to dispatcher
+        if (sender == LILY_INVOKER && parcel.getClass().getSimpleName().equals("ClientPackBag")) AUTHENTICATION_TASK.notifyAllUsers((ClientPackBag) parcel);
         if (sender instanceof QueryHandlingTask) SERVER_CONTROLLER.notify(this, parcel);
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }

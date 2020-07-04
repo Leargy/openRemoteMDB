@@ -11,7 +11,6 @@ public class PartNotFoundException extends Exception {
      * @return String
      */
     public String getMessage() {
-        System.err.println(exceptionMessage);
         return exceptionMessage;
     }
 }

@@ -1,15 +1,15 @@
 package sample.dialog_windows.Controllers;
 
 import java.net.URL;
-import java.util.Iterator;
-import java.util.ResourceBundle;
+import java.sql.Time;
+import java.util.*;
 import java.util.concurrent.Executor;
 
 import instructions.Decree;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
+import javafx.beans.value.ObservableSetValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -21,7 +21,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.util.Callback;
 import locale.Localizator;
+import organization.Organization;
+import organization.OrganizationWithUId;
+import sample.Main;
 import sample.buttons.IButton;
 import sample.dialog_windows.Commander;
 import sample.dialog_windows.Dialog;
@@ -37,6 +41,22 @@ public class MainWindowController extends Dialog {
     public static final StringProperty organizationParams = new ReadOnlyStringWrapper("");
     private static boolean[] isOffseted;
     public static InteractWindowController interactWindowController;
+
+    private static Timer timer = new Timer();
+    private static TimerTask timerTask ;
+
+    private StringProperty name = new SimpleStringProperty();
+    private StringProperty fullName = new SimpleStringProperty();
+    private StringProperty zipCod = new SimpleStringProperty();
+    private StringProperty type = new SimpleStringProperty();
+    private StringProperty owner = new SimpleStringProperty();
+    private StringProperty date = new SimpleStringProperty();
+    private FloatProperty annualTurnover = new SimpleFloatProperty();
+    private IntegerProperty employeesCount = new SimpleIntegerProperty();
+    private IntegerProperty id = new SimpleIntegerProperty();
+    //    private StringProperty annualTurnover = new SimpleStringProperty();
+//    private StringProperty employeesCount = new SimpleStringProperty();
+//    private StringProperty id = new SimpleStringProperty();
 
     public MainWindowController() {
         isOffseted = new boolean[2];
@@ -68,23 +88,22 @@ public class MainWindowController extends Dialog {
     @FXML private MenuItem main_change_uk;
     @FXML private Button clear_button;
     @FXML private Tab table_selector;
-    @FXML private TableView<?> tabl;
-    @FXML private TableColumn<?, ?> main_table_name;
-    @FXML private TableColumn<?, ?> main_table_fullname;
-    @FXML private TableColumn<?, ?> main_table_type;
-    @FXML private TableColumn<?, ?> main_table_employees;
-    @FXML private TableColumn<?, ?> main_table_annual;
-    @FXML private TableColumn<?, ?> main_table_zipcode;
-    @FXML private TableColumn<?, ?> main_table_creation_date;
-    @FXML private TableColumn<?, ?> main_table_owner;
-    @FXML private TableColumn<?, ?> main_table_id;
-    @FXML private TableColumn<?, ?> main_table_interact;
+    @FXML private TableView<OrganizationWithUId> tabl;
+    @FXML private TableColumn<OrganizationWithUId, String> main_table_name;
+    @FXML private TableColumn<OrganizationWithUId, String> main_table_fullname;
+    @FXML private TableColumn<OrganizationWithUId, String> main_table_type;
+    @FXML private TableColumn<OrganizationWithUId, Integer> main_table_employees;
+    @FXML private TableColumn<OrganizationWithUId, Float> main_table_annual;
+    @FXML private TableColumn<OrganizationWithUId, String> main_table_zipcode;
+    @FXML private TableColumn<OrganizationWithUId, String> main_table_creation_date;
+    @FXML private TableColumn<OrganizationWithUId, String> main_table_owner;
+    @FXML private TableColumn<OrganizationWithUId, Integer> main_table_id;
+    @FXML private TableColumn<OrganizationWithUId, Void> main_table_interact;
     @FXML private Tab vizualization_selector;
     @FXML private TextArea info_panel;
     @FXML private TextFlow nick_name_panel;
     @FXML private Button sign_out_button;
     @FXML private Button info_button;
-
 
     @FXML
     void initialize() {
@@ -125,6 +144,57 @@ public class MainWindowController extends Dialog {
         sign_out_button.setOnAction(event -> {
             totalCommander.signOut();
         });
+
+
+        tabl.refresh();
+        main_table_name.setCellValueFactory(celldata -> {
+            name.setValue(celldata.getValue().getName());
+            return name;
+        });
+        main_table_fullname.setCellValueFactory(celldata -> {
+            fullName.setValue(celldata.getValue().getFullname());
+            return fullName;
+        });
+        main_table_type.setCellValueFactory(celldata -> {
+            type.setValue(celldata.getValue().getType().toString());
+            return type;
+        });
+        main_table_employees.setCellValueFactory(celldata -> {
+            employeesCount.setValue(celldata.getValue().getEmployeesCount());
+            return employeesCount.asObject();
+        });
+        main_table_annual.setCellValueFactory(celldata -> {
+            annualTurnover.setValue(celldata.getValue().getAnnualTurnover());
+            return annualTurnover.asObject();
+        });
+        main_table_zipcode.setCellValueFactory(celldata -> {
+            zipCod.setValue(celldata.getValue().getAddress().getZipCode());
+            return zipCod;
+        });
+        main_table_creation_date.setCellValueFactory(celldata -> {
+            date.setValue(celldata.getValue().getCreationDate().toString());
+            return date;
+        });
+        main_table_owner.setCellValueFactory(celldata -> {
+            owner.setValue(celldata.getValue().getUserLogin());
+            return owner;
+        });
+        main_table_id.setCellValueFactory(celldata -> {
+            id.setValue(celldata.getValue().getKey());
+            return id.asObject();
+        });
+
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (organizationsToAdd != null) {
+                    organizationsToAdd.addAll(tabl.getItems());
+                    tabl.setItems(organizationsToAdd);
+                    organizationsToAdd = null;
+                }
+            }
+        };
+        timer.schedule(timerTask,0L,100L);
 
     }
 
@@ -231,4 +301,52 @@ public class MainWindowController extends Dialog {
         tabl.setPlaceholder(new Label(noContent));
         tabl.refresh();
     }
+
+    public void addInteructionButton() {
+        Callback<TableColumn<OrganizationWithUId, Void>, TableCell<OrganizationWithUId, Void>> cellFactory = new Callback<TableColumn<OrganizationWithUId, Void>, TableCell<OrganizationWithUId, Void>>() {
+            @Override
+            public TableCell<OrganizationWithUId, Void> call(final TableColumn<OrganizationWithUId, Void> param) {
+                final TableCell<OrganizationWithUId, Void> cell = new TableCell<OrganizationWithUId, Void>() {
+
+                    private final Button btn = new Button();
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            interactWindowController.renderWindow();
+//                            OrganizationWithUId organizationWithUId = getTableView().getItems().get(getIndex());
+//                            openSuck(organizationWithUId);
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        main_table_interact.setCellFactory(cellFactory);
+        tabl.getColumns().add(main_table_interact);
+    }
+
+//    private StringProperty name = new SimpleStringProperty();
+//    private StringProperty fullName = new SimpleStringProperty();
+//    private StringProperty zipCod = new SimpleStringProperty();
+//    private StringProperty type = new SimpleStringProperty();
+//    private StringProperty owner = new SimpleStringProperty();
+//    private StringProperty date = new SimpleStringProperty();
+//    private FloatProperty annualTurnover = new SimpleFloatProperty();
+//    private IntegerProperty employeesCount = new SimpleIntegerProperty();
+//    private IntegerProperty id = new SimpleIntegerProperty();
+
+
+
+
 }

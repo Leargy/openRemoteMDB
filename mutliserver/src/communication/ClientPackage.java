@@ -1,6 +1,5 @@
 package communication;
 
-
 import instructions.rotten.RawDecree;
 
 import java.io.Serializable;
@@ -59,7 +58,5 @@ public class ClientPackage implements Serializable {
     public Report getReport() { return report; }
     public String getLogin() { return login; }
 
-    public void setReport(Report report) {
-        this.report = report;
-    }
+    public void setReport(Report report) { this.report = report; }
 }

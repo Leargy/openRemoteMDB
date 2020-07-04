@@ -2,6 +2,9 @@ package communication;
 
 import data_section.enumSection.Markers;
 import dispatching.ADispatcher;
+import instructions.rotten.base.RawClear;
+import instructions.rotten.base.RawInsert;
+import instructions.rotten.base.RawRemoveKey;
 import receiver.AReceiver;
 import sample.dialog_windows.communication.ApplicationParcel;
 import sample.dialog_windows.communication.BorderConverter;
@@ -68,6 +71,14 @@ public class Mediator implements Mediating {
      */
     @Override
     public void notify(Component component, Segment parcel) {
+        if (component == RECEIVER && parcel.getMarker() == Markers.UPDATE) {
+            if (parcel.getClientPackage().getCommand() instanceof RawInsert) parcel.setMarker(Markers.INSERT);
+            else if (parcel.getClientPackage().getCommand() instanceof RawClear) parcel.setMarker(Markers.CLEAR);
+            else if (parcel.getClientPackage().getCommand() instanceof RawRemoveKey) parcel.setMarker(Markers.REMOVE);
+            ApplicationParcel applicationParcel = borderConverter.convertToApplicationPackage(parcel);
+            applicationMediator.notify(null, applicationParcel);
+
+        }
         if (component == null && parcel.getMarker() == Markers.WRITE) {
             Segment tempSegment = new Segment(client.getSocketChannel(),Markers.WRITE);
             tempSegment.setStringData(parcel.getStringData());

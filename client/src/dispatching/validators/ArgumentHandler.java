@@ -8,9 +8,11 @@ import entities.Descriptor;
 import entities.JunkerCreator;
 import entities.organizationFactory.OrganizationBuilder;
 import exceptions.CommandSyntaxException;
+import exceptions.PartNotFoundException;
 import instructions.rotten.base.*;
 import instructions.rotten.extended.*;
 import instructions.rotten.RawDecree;
+import organization.Organization;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -72,13 +74,12 @@ public class ArgumentHandler extends DataHandler{
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new CommandSyntaxException("Command should have at list one argument!");
         }
-
         if (isLimited) {
             Integer intArgument = null;
             try {
-                intArgument = Integer.valueOf(stringArgument);
+                intArgument = Integer.valueOf(stringArgument.split(" ")[0]);
                 if (intArgument < 0) throw new NumberFormatException();
-                if (parcel.getStringData().length > 2) {
+                if (parcel.getStringData().length > 3) {
                     throw new CommandSyntaxException("Argument should be only one number!");
                 }
             } catch (NumberFormatException e) {
@@ -86,7 +87,14 @@ public class ArgumentHandler extends DataHandler{
             }
             switch (foundedCommand.getKey()) {
                 case RawRemoveKey.NAME: return new RawRemoveKey(intArgument);
-                case RawInsertByStep.NAME: return new RawInsert(intArgument, organizationBuilder.makeWithParsing(parcel.getStringData()[2]));
+                case RawInsertByStep.NAME:{
+                    try {
+                        Organization organization = organizationBuilder.makeWithParsing(parcel.getStringData()[2]);
+                        return new RawInsert(intArgument, organization);
+                    }catch (PartNotFoundException ex) {
+                        throw new CommandSyntaxException(ex.getMessage());
+                    }
+                }
                 case RawInsert.NAME: return new RawInsert(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
                 case RawUpdate.NAME: return new RawUpdate(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
                 case RawReplaceIfLower.NAME: return new RawReplaceIfLower(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));

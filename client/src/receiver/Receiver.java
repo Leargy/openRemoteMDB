@@ -24,7 +24,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Receiver extends AReceiver{
     private ByteArrayInputStream byteArrayInputStream;
     private ObjectInputStream objectInputStream;
-    private final ByteBuffer byteBuffer = ByteBuffer.allocate(3 * 1024);
+    private final ByteBuffer byteBuffer = ByteBuffer.allocate(5 * 1024);
     private Lock lock = new ReentrantLock();
 
 
@@ -55,8 +55,15 @@ public class Receiver extends AReceiver{
             byteBuffer.flip();
             byteArrayInputStream = new ByteArrayInputStream(byteBuffer.array());
             objectInputStream = new ObjectInputStream(byteArrayInputStream);
-            Report query = (Report) objectInputStream.readObject();
-            parcel.setClientPackage(new ClientPackage(null, query));
+//            Report query = (Report) objectInputStream.readObject();
+            ClientPackage result = (ClientPackage) objectInputStream.readObject();
+            Report query = result.getReport();
+            parcel.setClientPackage(result);
+            if (result.getCommand() != null) {
+                parcel.setMarker(Markers.UPDATE);
+                mediator.notify(this,parcel);
+                return;
+            }
             // Block of checking if user's login and pass was confirmed.
 //            lock.unlock();
             if (query.Message().matches("SERVER_KEY:.*")) {
@@ -71,13 +78,13 @@ public class Receiver extends AReceiver{
             }
         }catch (IOException ex) {
             if (!ex.getMessage().equals("null")){
-//                System.out.println(ex.getMessage());
+                System.out.println(ex.getMessage());
                 parcel.setStringData(new String[]{ex.getMessage()});
             }
             parcel.setMarker(Markers.INTERRUPTED);
             mediator.notify(this, parcel);
         }catch (ClassNotFoundException ex) {
-//            System.out.println(ex.getException());
+            System.out.println(ex.getException());
             //TODO:write an handling to this type of error
         }
         finally {
