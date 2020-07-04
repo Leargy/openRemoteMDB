@@ -176,15 +176,15 @@ public class InteractWindowController extends Dialog {
     @FXML
     private String prepareParams() {
         StringBuilder params = new StringBuilder();
-        params.append("name=" + name_field.getText() + ";");
-        params.append("fullName=" + full_name_field.getText() + ";");
+        params.append("name=" + name_field.getText().replace(" ", "_") + ";");
+        params.append("fullName=" + full_name_field.getText().replace(" ", "_") + ";");
         params.append("type=" + type_combo_box.getValue() + ";");
         params.append("employs=" + employees_count_field.getText() + ";");
         params.append("annual=" + annual_turnover_field.getText() + ";");
         params.append("date=" + LocalDateTime.now() + ";");
         params.append("cordx=" + coord_x_field.getText() + ";");
         params.append("cordy=" + coord_y_field.getText() + ";");
-        params.append("zip=" + zip_cod_field.getText() + ";");
+        params.append("zip=" + zip_cod_field.getText().replace(" ", "_") + ";");
         params.append("locx=" + locate_x_field.getText() + ";");
         params.append("locy=" + locate_y_field.getText() + ";");
         params.append("locz=" + locate_z_field.getText() + ";");

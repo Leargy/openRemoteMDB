@@ -16,7 +16,8 @@ public abstract class Dialog {
         thisStage.setMaxHeight(430.0);
         thisStage.setResizable(false);
     }
-    protected static ObservableList<OrganizationWithUId> organizationsToAdd = null;
+    protected static volatile ObservableList<OrganizationWithUId> organizationsToAdd = FXCollections.observableArrayList();
+    protected static volatile boolean  hasChanges = false;
 
     public abstract void renderWindow();
 
@@ -27,10 +28,17 @@ public abstract class Dialog {
     public abstract void initAlertBox(String alertMessage);
 
     public void insertOrganizations(ArrayList<OrganizationWithUId> tempAddition) {
+//        System.out.println(System.currentTimeMillis() + " + " + Thread.currentThread().getName());
+        synchronized (organizationsToAdd){
+            System.out.println(tempAddition.size());
+            organizationsToAdd.addAll(tempAddition);
+//            System.out.println();
+            hasChanges = true;
+        }
+//        System.out.println(System.currentTimeMillis() + " - " + Thread.currentThread().getName());
+
 //        System.out.println(Thread.currentThread().getName());
-        System.out.println(tempAddition.size());
 //        ObservableList<OrganizationWithUId> organizationWithUIds = FXCollections.observableArrayList(tempAddition);
-        organizationsToAdd = FXCollections.observableArrayList(tempAddition);
 //        tabl.refresh();
 //        tabl.setItems(organizationWithUIds);
 // TODO: дописать инсерт и другие команды, добавить обработку отключающегося и недоступного сервера, добавить анимацию, добавить фильтрацию

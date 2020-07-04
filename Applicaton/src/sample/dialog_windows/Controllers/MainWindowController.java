@@ -41,6 +41,7 @@ public class MainWindowController extends Dialog {
     public static final StringProperty organizationParams = new ReadOnlyStringWrapper("");
     private static boolean[] isOffseted;
     public static InteractWindowController interactWindowController;
+    private static ObservableList<OrganizationWithUId> concatenationList = FXCollections.observableArrayList();
 
     private static Timer timer = new Timer();
     private static TimerTask timerTask ;
@@ -142,6 +143,10 @@ public class MainWindowController extends Dialog {
             offset(info_panel,160,1,1);
         });
         sign_out_button.setOnAction(event -> {
+            timerTask.cancel();
+//            timer.cancel();
+            tabl.getItems().clear();
+            organizationsToAdd.clear();
             totalCommander.signOut();
         });
 
@@ -184,18 +189,24 @@ public class MainWindowController extends Dialog {
             return id.asObject();
         });
 
+
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                if (organizationsToAdd != null) {
-                    organizationsToAdd.addAll(tabl.getItems());
-                    tabl.setItems(organizationsToAdd);
-                    organizationsToAdd = null;
+//                System.out.println(hasChanges);
+                if (hasChanges) {
+                    synchronized (organizationsToAdd) {
+                        tabl.getItems().clear();
+                        tabl.getItems().addAll(organizationsToAdd);
+//                            System.out.println("___" + concatenationList);
+//                            tabl.setItems(organizationsToAdd);
+                        tabl.refresh();
+                        hasChanges = false;
+                    }
                 }
             }
         };
-        timer.schedule(timerTask,0L,100L);
-
+        timer.schedule(timerTask,50L,100L);
     }
 
     @Override

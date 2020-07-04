@@ -72,6 +72,7 @@ public class Mediator implements Mediating {
     @Override
     public void notify(Component component, Segment parcel) {
         if (component == RECEIVER && parcel.getMarker() == Markers.UPDATE) {
+//            System.out.println(System.currentTimeMillis() + " " + Thread.currentThread().getName());
             if (parcel.getClientPackage().getCommand() instanceof RawInsert) parcel.setMarker(Markers.INSERT);
             else if (parcel.getClientPackage().getCommand() instanceof RawClear) parcel.setMarker(Markers.CLEAR);
             else if (parcel.getClientPackage().getCommand() instanceof RawRemoveKey) parcel.setMarker(Markers.REMOVE);
@@ -127,11 +128,16 @@ public class Mediator implements Mediating {
             client.setInputCondition(true);
         }
         if ((component == SERVANT || component == RECEIVER) && parcel.getMarker() == Markers.CONFIRMING) {
+            client.setInputCondition(true);
             ApplicationParcel applicationParcel = borderConverter.convertToApplicationPackage(parcel);
             if (applicationParcel != null) {
+//                System.out.println(System.currentTimeMillis() + " " + Thread.currentThread().getName());
                 applicationMediator.notify(null, applicationParcel);
             }
         }
-        if (component == RECEIVER  && parcel.getMarker() == Markers.CONFIRMING) DISPATCHER.confirm(parcel.getClientPackage().getReport().getIsConfirmed());
+        if (component == RECEIVER  && parcel.getMarker() == Markers.CONFIRMING) {
+//            client.setInputCondition(true);
+            DISPATCHER.confirm(parcel.getClientPackage().getReport().getIsConfirmed());
+        }
     }
 }

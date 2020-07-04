@@ -39,6 +39,7 @@ public class Receiver extends AReceiver{
     @Override
     public void receive(Segment parcel) {
         //System.out.println(Thread.currentThread().getName());
+        System.out.println(System.currentTimeMillis() + " " + Thread.currentThread().getName());
         lock.lock();
         if(parcel.getSocketChannel().toString().matches(".*\\[closed\\]")){
             parcel.setMarker(Markers.WAIKUP);

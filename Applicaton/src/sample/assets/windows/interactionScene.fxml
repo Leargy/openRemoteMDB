@@ -136,7 +136,7 @@
                </children>
             </Pane>
             <ComboBox fx:id="type_combo_box" layoutX="14.0" layoutY="183.0" prefHeight="31.0" prefWidth="136.0" />
-
+                
             </children></AnchorPane>
         <Label fx:id="interact_title" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="14.0" prefHeight="26.0" prefWidth="363.0" text="Редактор организаций" textAlignment="JUSTIFY" textFill="WHITE">
             <font>

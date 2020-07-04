@@ -28,7 +28,7 @@ public class Client extends AClient implements Component, Runnable {
     private ExecutorService cachedTP;
     private Lock lock = new ReentrantLock();
     private Condition replyCondition = lock.newCondition();
-    private ByteBuffer byteBuffer = ByteBuffer.allocate(3 * 1024);
+//    private ByteBuffer byteBuffer = ByteBuffer.allocate(3 * 1024);
     private volatile boolean inputCondition = true;
 
     public synchronized SocketChannel getSocketChannel() {
@@ -45,7 +45,7 @@ public class Client extends AClient implements Component, Runnable {
 //            selector = Selector.open();
 //        } catch (IOException ex) {/*NOPE*/}
         cachedTP = Executors.newCachedThreadPool();
-        fixedTP = Executors.newFixedThreadPool(4);
+        fixedTP = Executors.newFixedThreadPool(2);
     }
 
     public synchronized boolean isConnected() {
@@ -115,7 +115,8 @@ public class Client extends AClient implements Component, Runnable {
             fixedTP.submit(() -> mediator.notify(this, new Segment(Markers.WRITE)));
             try {
                 replyCondition.await();
-                if (!inputCondition) continue;
+//                System.out.println("replay");
+//                if (!inputCondition) continue;
 //                System.out.println("replay catcher released");
                 genereteReplayCheckingTread();
 //                cachedTP.submit(() -> mediator.notify(this, new Segment(socketChannel,Markers.READ)));

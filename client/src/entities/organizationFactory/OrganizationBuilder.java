@@ -187,13 +187,14 @@ public final class OrganizationBuilder implements Factory<Organization>, Compone
       name = rawData.substring(matcher.start() + 5, matcher.end() - 1);
     }
     if (name.isEmpty()) throw new PartNotFoundException("Name shouldn't be empty");
+    name.replace("_"," ");
     return name;
   }
   private String getFullName(String rawData) {
     Pattern nameReg = Pattern.compile("fullName=[^;]*;");
     Matcher matcher = nameReg.matcher(rawData);
     while (matcher.find()) {
-      return rawData.substring(matcher.start() + 9, matcher.end() - 1);
+      return rawData.substring(matcher.start() + 9, matcher.end() - 1).replace("_"," ");
     }
     return "";
   }
@@ -230,6 +231,7 @@ public final class OrganizationBuilder implements Factory<Organization>, Compone
       throw new PartNotFoundException("Wrong format for Employees");
     }
     if (employees == 0) throw new PartNotFoundException("Employs number shouldn't be empty");
+    if (employees < 0) throw new PartNotFoundException("Employs number should be positive");
     return employees;
   }
   private float getAnnualTurnover(String rawData)  throws PartNotFoundException{
@@ -243,9 +245,10 @@ public final class OrganizationBuilder implements Factory<Organization>, Compone
         break;
       }
     }catch (NumberFormatException ex) {
-      throw new PartNotFoundException("Wrong format for Annual turnover");
+      throw new PartNotFoundException("Wrong format for Annual turnover - Use \".\" instead \",\"");
     }
-    if (annual == 0) throw new PartNotFoundException("Annual turnover shouldn't be empty");
+    if (annual == 0) throw new PartNotFoundException("Annual turnover shouldn't be empty or 0");
+    if (annual < 0) throw new PartNotFoundException("Annual turnover should be positive");
     return annual;
   }
   private LocalDateTime getCreationData(String rawData)  throws PartNotFoundException{
@@ -277,7 +280,7 @@ public final class OrganizationBuilder implements Factory<Organization>, Compone
         break;
       }
     }catch (NumberFormatException ex) {
-      throw new PartNotFoundException("Wrong format for coordinate X");
+      throw new PartNotFoundException("Wrong format for coordinate X - It should be integer.");
     }
     if (x == 0) throw new PartNotFoundException("Coordinate X shouldn't be empty");
     return x;
@@ -293,16 +296,17 @@ public final class OrganizationBuilder implements Factory<Organization>, Compone
         break;
       }
     }catch (NumberFormatException ex) {
-      throw new PartNotFoundException("Wrong format for coordinate Y");
+      throw new PartNotFoundException("Wrong format for coordinate Y - Use \".\" instead \",\"");
     }
     if (y == null) throw new PartNotFoundException("Coordinate Y shouldn't be empty");
+    if (y < -538) throw new PartNotFoundException("Coordinate Y shouldn be > -538");
     return y;
   }
   private String getzipCod(String rawData) {
     Pattern nameReg = Pattern.compile("zip=[^;]*;");
     Matcher matcher = nameReg.matcher(rawData);
     while (matcher.find()) {
-      return rawData.substring(matcher.start() + 4, matcher.end() - 1);
+      return rawData.substring(matcher.start() + 4, matcher.end() - 1).replace("_"," ");
     }
     return "";
   }
@@ -317,7 +321,7 @@ public final class OrganizationBuilder implements Factory<Organization>, Compone
         break;
       }
     }catch (NumberFormatException ex) {
-      throw new PartNotFoundException("Wrong format for location coordinate X");
+      throw new PartNotFoundException("Wrong format for location coordinate X - It should be integer.");
     }
     if (x == 0) throw new PartNotFoundException("Location coordinate X shouldn't be empty");
     return x;
@@ -333,7 +337,7 @@ public final class OrganizationBuilder implements Factory<Organization>, Compone
         break;
       }
     }catch (NumberFormatException ex) {
-      throw new PartNotFoundException("Wrong format for location coordinate Y");
+      throw new PartNotFoundException("Wrong format for location coordinate Y - It should be integer.");
     }
     if (y == 0) throw new PartNotFoundException("Location coordinate Y shouldn't be empty");
     return y;
@@ -349,7 +353,7 @@ public final class OrganizationBuilder implements Factory<Organization>, Compone
         break;
       }
     }catch (NumberFormatException ex) {
-      throw new PartNotFoundException("Wrong format for location coordinate Z");
+      throw new PartNotFoundException("Wrong format for location coordinate Z - Use \".\" instead \",\"");
     }
     if (z == 0) throw new PartNotFoundException("Location coordinate Z shouldn't be empty");
     return z;

@@ -95,6 +95,9 @@ public class AuthenticationTask implements Component {
         }
         LOGGED_USERS.putIfAbsent(socketChannel, user);
         logger.info("User " + user.getLogin() + " was added to \"authorized\" list ");
+        try {
+            Thread.sleep(300);
+        }catch (InterruptedException ex) {/*NOPE*/}
         SUB_PROCESS_CONTROLLER.notify(this, new ClientPackBag(socketChannel, new ClientPackage(null,null)));
     }
     public synchronized void removeAuthorizedUser(SocketChannel socketChannel) {
