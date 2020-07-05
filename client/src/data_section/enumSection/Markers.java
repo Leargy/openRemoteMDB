@@ -22,7 +22,8 @@ public enum Markers {
     REMOVE("REMOVE"),
     INFO("INFO"),
     USER_CONNECTED("USER_CONNECTED"),
-    USER_DISCONNECTED("USER_DISCONNECTED");
+    USER_DISCONNECTED("USER_DISCONNECTED"),
+    SIGNALSTAGE("SIGNALSTAGE");
 
     private String name;
     Markers(String name){

@@ -32,6 +32,7 @@ public class SendingResultsTask implements Component, Runnable {
 
     @Override
     public void run() {
+        System.out.println(CLIENTPACKBAG.getClientPacket().getReport().Message());
         logger.info("Trying to create byte and object stream");
         try (
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -42,6 +43,8 @@ public class SendingResultsTask implements Component, Runnable {
             objectOutputStream.flush();
             logger.info("Trying sending data to client");
             CLIENTPACKBAG.getChannel().write(ByteBuffer.wrap(byteArrayOutputStream.toByteArray()));
+            CLIENTPACKBAG.getChannel().socket().getOutputStream().flush();
+            BYTE_BUFFER.clear();
         } catch (IOException ioException) {
             logger.error("Unable to complete transaction to client");
             return;

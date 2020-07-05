@@ -27,11 +27,13 @@ public class DispatchController implements Dispatchers {
     private final ExecutorService DISPATCHER;
     public final Logger logger = LoggerFactory.getLogger(DispatchController.class);
     private final String SERVER_KEY;
+//    private final SendingResultsTask sendingResultsTask = new SendingResultsTask(this);
 
     public DispatchController(Controllers controller, int poolSize) {
         MAIN_SERVER_CONTROLLER = controller;
         DISPATCHER = Executors.newFixedThreadPool(poolSize);
         SERVER_KEY = "SERVER_KEY:" + prepareServerKey();
+
     }
 
     @Override
@@ -41,8 +43,8 @@ public class DispatchController implements Dispatchers {
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }
 
-    public Report sendResults2Client(ClientPackBag parcel) {
-        if (parcel.getClientPacket().getCommand() != null) System.out.println(Thread.currentThread().getName() + " " + parcel.getClientPacket().getCommand().getClass());
+    public synchronized Report sendResults2Client(ClientPackBag parcel) {
+//        if (parcel.getClientPacket().getCommand() != null) System.out.println(Thread.currentThread().getName() + " " + parcel.getClientPacket().getCommand().getClass());
         DISPATCHER.submit(new SendingResultsTask(this, parcel));
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }

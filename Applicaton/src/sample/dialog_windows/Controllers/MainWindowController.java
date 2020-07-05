@@ -9,8 +9,11 @@ import com.sun.scenario.effect.LockableResource;
 import instructions.Decree;
 import javafx.application.Platform;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableSetValue;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,9 +47,9 @@ public class MainWindowController extends Dialog {
     public static final StringProperty organizationParams = new ReadOnlyStringWrapper("");
     private static boolean[] isOffseted;
     private static InteractWindowController interactWindowController;
-    private static ObservableList<OrganizationWithUId> concatenationList = FXCollections.observableArrayList();
+    private static ObservableList<OrganizationWithUId> filteredList = FXCollections.observableArrayList();
     private static final ArrayList<Button> tableButtons = new ArrayList<>();
-    private static final ObservableList<Label> onlineUsers = FXCollections.observableArrayList();
+    private static final ObservableList<String> onlineUsers = FXCollections.observableArrayList();
     private static int numberOfUsers = 1;
     private static boolean userCollectionModified = false;
 //    private static boolean firstLoad = true;
@@ -90,7 +93,7 @@ public class MainWindowController extends Dialog {
 
     @FXML private TextField serchin_field;
     @FXML private Button search_button;
-    @FXML private ComboBox<?> filter_button;
+    @FXML private ComboBox<String> filter_box;
     @FXML private Button insert_button;
     @FXML private MenuBar language_menu;
     @FXML private Menu main_lang_choser;
@@ -117,11 +120,22 @@ public class MainWindowController extends Dialog {
     @FXML private Button sign_out_button;
     @FXML private Button info_button;
     @FXML private Button online_button;
-    @FXML private VBox online_panel;
+    @FXML private TextArea online_panel;
 
     @FXML
     void initialize() {
-        addOnlineUser(nickForDisplaying.get());
+//        filter_box.setValue("Фильтр");
+        serchin_field.setText("");
+//        organizationsToAdd.addListener(new ListChangeListener<OrganizationWithUId>() {
+//            @Override
+//            public void onChanged(Change<? extends OrganizationWithUId> c) {
+//                System.out.println("adda");
+//                tabl.getItems().clear();
+//                tabl.getItems().addAll(organizationsToAdd);
+//                tabl.refresh();
+//            }
+//        });
+
 //        online_panel.setText(onlineUsers.getText());
         Text nick = new Text(nickForDisplaying.get());
         nick.setFill(Color.WHITE);
@@ -159,8 +173,8 @@ public class MainWindowController extends Dialog {
             offset(info_panel,569,1,1,"X");
         });
         online_button.setOnAction(event -> {
-            offset(online_button, 150, 1,2,"Y");
-            offset(online_panel,150,1,3, "Y");
+            offset(online_button, 200, 1,2,"Y");
+            offset(online_panel,200,1,3, "Y");
         });
 
         sign_out_button.setOnAction(event -> {
@@ -171,6 +185,11 @@ public class MainWindowController extends Dialog {
             tabl.getItems().clear();
             organizationsToAdd.clear();
             totalCommander.signOut();
+        });
+
+        search_button.setOnAction(event -> {
+            //filteredList.addAll(filter(filter_box.getValue(),serchin_field.getText()));
+            hasChanges = true;
         });
 
         tabl.refresh();
@@ -215,36 +234,49 @@ public class MainWindowController extends Dialog {
         tableTimerTask = new TimerTask() {
             @Override
             public void run() {
-//                if (hasChanges) {
+                if (hasChanges) {
                     synchronized (organizationsToAdd) {
+                        filteredList.clear();
+                        filteredList.addAll(filter(filter_box.getValue(),serchin_field.getText()));
 //                        System.out.println(organizationsToAdd);
                         tabl.getItems().clear();
-                        tabl.getItems().addAll(organizationsToAdd);
+                        tabl.getItems().addAll(filteredList);
                         tabl.refresh();
                         hasChanges = false;
                     }
-//                }
+                }
             }
         };
+
         infoTimerTask = new TimerTask() {
             @Override
             public void run() {
-                Platform.runLater(() -> {
-                    if (userCollectionModified) {
-                        online_panel.getChildren().clear();
-                        online_panel.getChildren().addAll(onlineUsers);
-                    }
-                    totalCommander.info();
-                    info_panel.setText(info.getText());
-                });
+                if (isOffseted[1]) {
+                    Platform.runLater(() -> {
+                        if (userCollectionModified) {
+//                            online_panel.getChildren().clear();
+//                            online_panel.getChildren().addAll(onlineUsers);
+                        }
+                        totalCommander.info();
+                        info_panel.setText(info.getText());
+                    });
+                }
             }
         };
 
-        tableTimer.schedule(tableTimerTask,100L,200L);
-        infoTimer.schedule(infoTimerTask,500L,2000L);
+        onlineUsers.addListener(new ListChangeListener<String>() {
+            @Override
+            public void onChanged(Change<? extends String> c) {
+                online_panel.clear();
+                online_panel.setText(prepareUsersList());
+            }
+        });
+
+        tableTimer.schedule(tableTimerTask,100L,300L);
+        infoTimer.schedule(infoTimerTask,100L,800L);
 
 
-
+        addOnlineUser(nickForDisplaying.get());
         addInteructionButton();
     }
 
@@ -279,14 +311,27 @@ public class MainWindowController extends Dialog {
         alert.showAndWait();
     }
 
+    @Override
+    public void changingSignal() { /*NOPE*/ }
+
     public void addOnlineUser(String userName) {
-        onlineUsers.add(prepareLabel(userName));
+//        onlineUsers.add(prepareLabel(userName));
+        onlineUsers.add(userName);
         userCollectionModified = true;
     }
 
     public void removeOnlineUser(String userName) {
-        onlineUsers.removeAll(prepareLabel(userName));
+//        onlineUsers.removeAll(prepareLabel(userName));
+        onlineUsers.removeAll(userName);
         userCollectionModified = true;
+    }
+
+    private String prepareUsersList() {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < onlineUsers.size(); i++) {
+            result.append("\t•    " + onlineUsers.get(i) + "\n");
+        }
+        return result.toString();
     }
 
     private void offset(Node entity, double distance, double speed, int id, String vector) {
@@ -364,7 +409,7 @@ public class MainWindowController extends Dialog {
         String editingButton = (String) bundle.getObject("Edit");
         sign_out_button.setText(exit);
         main_lang_choser.setText(language);
-        filter_button.setPromptText(filter);
+        filter_box.setPromptText(filter);
         search_button.setText(search);
         insert_button.setText(insert);
         clear_button.setText(clear);
@@ -424,4 +469,64 @@ public class MainWindowController extends Dialog {
         label.setText(textForLabel);
         return label;
     }
+
+    private ObservableList<OrganizationWithUId> filter(String findBy, String whatFind) {
+        ObservableList<OrganizationWithUId> result = FXCollections.observableArrayList();
+        List filtered = new ArrayList();
+        whatFind.toLowerCase();
+        if (whatFind.trim().equals("") == false) {
+            switch (findBy) {
+                case "Name": {
+                    filtered = Arrays.asList(organizationsToAdd.stream().filter((tempOrg) -> (tempOrg.getOrganization().getName().toLowerCase().contains(whatFind))).toArray());
+                }
+                break;
+                case "Fullname": {
+                    filtered = Arrays.asList(organizationsToAdd.stream().filter((tempOrg) -> (tempOrg.getOrganization().getFullname().toLowerCase().contains(whatFind))).toArray());
+                }
+                break;
+                case "Type": {
+                    filtered = Arrays.asList(organizationsToAdd.stream().filter((tempOrg) -> (tempOrg.getOrganization().getType().toString().toLowerCase().contains(whatFind))).toArray());
+                }
+                break;
+                case "Employees count": {
+                    filtered = Arrays.asList(organizationsToAdd.stream().filter((tempOrg) -> (String.valueOf(tempOrg.getOrganization().getEmployeesCount()).equals(whatFind))).toArray());
+                }
+                break;
+                case "Annual turnover": {
+                    filtered = Arrays.asList(organizationsToAdd.stream().filter((tempOrg) -> (String.valueOf(tempOrg.getOrganization().getAnnualTurnOver()).equals(whatFind))).toArray());
+                }
+                break;
+                case "Zip code": {
+                    filtered = Arrays.asList(organizationsToAdd.stream().filter((tempOrg) -> (tempOrg.getOrganization().getAddress().getZipCode().toLowerCase().contains(whatFind))).toArray());
+                }
+                break;
+                case "Creation date": {
+                    filtered = Arrays.asList(organizationsToAdd.stream().filter((tempOrg) -> (tempOrg.getOrganization().getCreationDate().toString().contains(whatFind))).toArray());
+                }
+                break;
+                case "Owner": {
+                    filtered = Arrays.asList(organizationsToAdd.stream().filter((tempOrg) -> (tempOrg.USER_LOGIN.toLowerCase().contains(whatFind))).toArray());
+                }
+                break;
+                case "ID": {
+                    filtered = Arrays.asList(organizationsToAdd.stream().filter((tempOrg) -> (String.valueOf(tempOrg.getOrganization().getID()).equals(whatFind))).toArray());
+                }
+                break;
+                default:
+                    filtered.addAll(organizationsToAdd);
+            }
+        }else filtered.addAll(organizationsToAdd);
+        result.addAll(filtered);
+        return result;
+    }
+
+//    <String fx:value="Name" />
+//                              <String fx:value="Fullname" />
+//                              <String fx:value="Type" />
+//                              <String fx:value="Employees count" />
+//                              <String fx:value="Annual turnover" />
+//                              <String fx:value="Zip code" />
+//                              <String fx:value="Creation date" />
+//                              <String fx:value="Owner" />
+//                              <String fx:value="ID" />
 }

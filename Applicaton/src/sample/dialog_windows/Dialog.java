@@ -37,8 +37,10 @@ public abstract class Dialog {
             organizationsToAdd.addAll(tempAddition);
             hasChanges = true;
         }
-// TODO: дописать инсерт и другие команды, добавить обработку отключающегося и недоступного сервера, добавить анимацию, добавить фильтрацию
     }
+
+    public abstract void changingSignal ();
+
     public void clearOrganizations(ArrayList<OrganizationWithUId> tempAddition) {
         synchronized (organizationsToAdd) {
             List result = Arrays.asList(organizationsToAdd.stream().filter((tempOrg) -> (tempOrg.USER_LOGIN.equals(tempAddition.get(0).USER_LOGIN))).toArray());

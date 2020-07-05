@@ -61,9 +61,15 @@ public class Servant extends AServant {
         client = mediator.getClient();
         counter.getAndIncrement();
         if (resetConnection(true)) {
-            new Thread(client).start();
-            mediator.notify(this,new Segment(Markers.CONFIRMING));
-            return true;
+            if(client.isConnected()) {
+                new Thread(client).start();
+                mediator.notify(this,new Segment(Markers.CONFIRMING));
+                return true;
+            }else {
+                Segment answer = new Segment(Markers.SIGNALSTAGE);
+                answer.setStringData(new String[]{"Connection time out!"});
+                mediator.notify(this, answer);
+            }
         }
         return false;
     }
@@ -88,41 +94,50 @@ public class Servant extends AServant {
             if (!client.isConnected()) {
 //                System.out.println(counter.get());
                 int tick = 3;
+                int resetTries = 5;
                 while (true) {
 //                    try {
 //                        client.killSocket();
 //                    } catch (NullPointerException e) { /*NOPE*/}
                     if (client.connect(ip, port)) break;
-                    if (--tick == -1) {
-                        System.err.println("Server time out! \n" +
-                                "Enter \"ip\" and \"port\" again.");
-                        setConnection(null,null);
-                    }
+//                    if (--tick == -1) {
+//                        System.err.println("Server time out! \n" +
+//                                "Enter \"ip\" and \"port\" again.");
+//                        setConnection(null,null);
+//                    }
                     String answer;
                     if (droppedConnection) {
                         System.err.println("────>Connection interrupted< <─w─");
                     }
-                    while (true) {
-//                        isReplying = false;
-                        pipeOut.println("Retry connection [y/n]?");
-//                        answer = debrief();
-                        while (true) {
-                            pipeOut.print(">");
-                            answer = scanner.nextLine();
-                            if (answer.equals("")) {
-                                continue;
-                            }
-                            else {
-                                break;
-                            }
-                        }
-                        if (answer.equals("y")) break;
-                        else if (answer.equals("n")) {
-                            mediator.notify(this, new Segment(Markers.STOP));
-                        } else continue;
+
+                    if (resetTries-- == 0) {
+                        break;
                     }
+                    try {
+                        Thread.sleep(200);
+                    }catch (InterruptedException ex) { /*NOPE*/ }
+//                    {
+
+//                        isReplying = false;
+//                        pipeOut.println("Retry connection [y/n]?");
+//                        answer = debrief();
+//                        while (true) {
+//                            pipeOut.print(">");
+//                            answer = scanner.nextLine();
+//                            if (answer.equals("")) {
+//                                continue;
+//                            }
+//                            else {
+//                                break;
+//                            }
+//                        }
+//                        if (answer.equals("y")) break;
+//                        else if (answer.equals("n")) {
+//                            mediator.notify(this, new Segment(Markers.STOP));
+//                        } else continue;
+//                    }
                 }
-            }
+            }else return false;
 //        }catch (InterruptedException ex){
             /*NOPE*/
         }finally {

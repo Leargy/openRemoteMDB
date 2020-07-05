@@ -176,6 +176,7 @@ public class Client extends AClient implements Component, Runnable {
         }
     }
     public void genereteReplayCheckingTread() {
+//        System.out.println("gogo");
         cachedTP.submit(() -> mediator.notify(this, new Segment(socketChannel,Markers.READ)));
     }
 
@@ -199,7 +200,7 @@ public class Client extends AClient implements Component, Runnable {
 
     public void setInputCondition(boolean inputCondition) {
         lock.lock();
-        this.inputCondition = inputCondition;
+//        this.inputCondition = inputCondition;
         replyCondition.signal();
         lock.unlock();
     }

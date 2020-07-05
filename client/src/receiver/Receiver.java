@@ -24,7 +24,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Receiver extends AReceiver{
     private ByteArrayInputStream byteArrayInputStream;
     private ObjectInputStream objectInputStream;
-    private final ByteBuffer byteBuffer = ByteBuffer.allocate(9 * 1024);
+    private final ByteBuffer byteBuffer = ByteBuffer.allocate(20 * 1024);
     private Lock lock = new ReentrantLock();
 
 
@@ -38,21 +38,22 @@ public class Receiver extends AReceiver{
      */
     @Override
     public void receive(Segment parcel) {
-        //System.out.println(Thread.currentThread().getName());
-        System.out.println(System.currentTimeMillis() + " " + Thread.currentThread().getName());
         lock.lock();
         if(parcel.getSocketChannel().toString().matches(".*\\[closed\\]")){
-            parcel.setMarker(Markers.WAIKUP);
-            mediator.notify(this, parcel);
+//            System.out.println(Thread.currentThread().getName());
+//            parcel.setMarker(Markers.WAIKUP);
+//            mediator.notify(this, parcel);
             lock.unlock();
             return;
         }
         byteBuffer.clear();
         try {
+//            System.out.println(System.currentTimeMillis() + " " + Thread.currentThread().getName());
             if(parcel.getSocketChannel().read(byteBuffer) == -1) {
-                mediator.notify(this, new Segment(Markers.WRITE));
-//                throw new EOFException();
+//                mediator.notify(this, new Segment(Markers.WRITE));
+                throw new EOFException();
             }
+            mediator.notify(this, new Segment(Markers.WAIKUP));
             byteBuffer.flip();
             byteArrayInputStream = new ByteArrayInputStream(byteBuffer.array());
             objectInputStream = new ObjectInputStream(byteArrayInputStream);
@@ -60,6 +61,10 @@ public class Receiver extends AReceiver{
             ClientPackage result = (ClientPackage) objectInputStream.readObject();
             Report query = result.getReport();
             parcel.setClientPackage(result);
+//            try {
+//                System.out.println(System.currentTimeMillis() + " " + Thread.currentThread().getName() + " " + result.getCommand().getClass());//+ result.getCommand().getClass());
+//                System.out.println(result.getReport().Message());//+ result.getCommand().getClass());
+//            }catch (NullPointerException ex) {/**/}
             if (result.getCommand() != null) {
                 parcel.setMarker(Markers.UPDATE);
                 mediator.notify(this,parcel);
@@ -79,16 +84,16 @@ public class Receiver extends AReceiver{
             }
         }catch (IOException ex) {
             if (!ex.getMessage().equals("null")){
-                System.out.println(ex.getMessage());
-                parcel.setStringData(new String[]{ex.getMessage()});
+                parcel.setStringData(new String[]{"Server closed connection!"});
             }
             parcel.setMarker(Markers.INTERRUPTED);
             mediator.notify(this, parcel);
         }catch (ClassNotFoundException ex) {
-            System.out.println(ex.getException());
+//            System.out.println(ex.getMessage());
             //TODO:write an handling to this type of error
         }
         finally {
+            byteBuffer.clear();
             lock.unlock();
         }
     }

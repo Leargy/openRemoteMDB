@@ -39,6 +39,7 @@ public class WindowOwner {
         tempWindow.setInfo(info);
     }
     public void setConnectedUser(String rawString) {
+        if (rawString.equals(" ")) return;
 //        for(int i = 0; i < 15; i++) {
 //            ((MainWindowController)tempWindow).addOnlineUser("sucker");
 //        }
@@ -51,5 +52,9 @@ public class WindowOwner {
     }
     public void removeDisconnectedUser(String rawString) {
         ((MainWindowController)tempWindow).removeOnlineUser(rawString.split(" ")[0]);
+    }
+
+    public void signalSceneInstantly() {
+        tempWindow.changingSignal();
     }
 }

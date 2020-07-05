@@ -52,4 +52,7 @@ public class InteractSceneController extends Dialog {
     public void initAlertBox(String alertMessage) {
 
     }
+
+    @Override
+    public void changingSignal() { /*NOPE*/ }
 }

@@ -20,7 +20,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage){
-        primaryStage.show();
         Dialog.thisStage.setOnCloseRequest(event -> {
             buttonMediator.notify(null, new ApplicationParcel(Markers.STOP));
         });

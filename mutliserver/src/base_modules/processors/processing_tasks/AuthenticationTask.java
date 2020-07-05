@@ -89,7 +89,7 @@ public class AuthenticationTask implements Component {
     public synchronized void addAuthorizedUser(SocketChannel socketChannel, User user) {
         StringBuilder allUsers = new StringBuilder();
         for (Map.Entry<SocketChannel, User> tempEntry : LOGGED_USERS.entrySet()) {
-            allUsers.append(tempEntry.getValue().getLogin());
+            allUsers.append(tempEntry.getValue().getLogin() + " ");
             UsersAlarmThread.submit(() -> {
 //                System.out.println("добавил" + Thread.currentThread().getName());
 //                SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0,tempEntry.getValue().getLogin() + " connected to the server!")));
@@ -98,13 +98,16 @@ public class AuthenticationTask implements Component {
         }
         LOGGED_USERS.putIfAbsent(socketChannel, user);
         logger.info("User " + user.getLogin() + " was added to \"authorized\" list ");
+//        try {
+//            Thread.sleep(300);
+//        }catch (InterruptedException ex) {/*NOPE*/}
+        SUB_PROCESS_CONTROLLER.notify(this, new ClientPackBag(socketChannel, new ClientPackage(null,null)));
         try {
-            Thread.sleep(300);
+            Thread.sleep(600);
         }catch (InterruptedException ex) {/*NOPE*/}
         UsersAlarmThread.submit(() -> {
-           SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(socketChannel, new Report(0, allUsers.toString() + " зашел")));
+            SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(socketChannel, new Report(0, allUsers.toString() + " зашел")));
         });
-        SUB_PROCESS_CONTROLLER.notify(this, new ClientPackBag(socketChannel, new ClientPackage(null,null)));
     }
     public synchronized void removeAuthorizedUser(SocketChannel socketChannel) {
         try {

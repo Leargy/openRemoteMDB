@@ -126,6 +126,7 @@ public class Dispatcher extends ADispatcher {
      * @throws IOException
      */
     public synchronized void send(Segment parcel) {
+//        System.out.println(parcel.getCommandData().getClass());
         byteArrayOutputStream = new ByteArrayOutputStream();
         try {
             Thread.sleep(100);

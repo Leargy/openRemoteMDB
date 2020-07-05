@@ -125,6 +125,9 @@ public class InteractWindowController extends Dialog {
 
     }
 
+    @Override
+    public void changingSignal() { /*NOPE*/ }
+
     private java.util.Locale currentLocale = Localizator.DEFAULT;
 
     @FXML

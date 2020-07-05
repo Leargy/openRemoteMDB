@@ -33,7 +33,6 @@ public class SceneWriter implements SceneWriterActions, Component {
         };
     }
 
-
     @Override
     public void startShow() {
         tempScene = 0;
@@ -48,6 +47,7 @@ public class SceneWriter implements SceneWriterActions, Component {
             return;
         }
         tempScene++;
+        scenes[tempScene].changingSignal();
         windowOwner.setTempWindow(scenes[tempScene]);
         windowOwner.renderTempWindow();
     }
@@ -59,6 +59,14 @@ public class SceneWriter implements SceneWriterActions, Component {
             return;
         }
         tempScene--;
+//        scenes[tempScene].changingSignal();
+        windowOwner.setTempWindow(scenes[tempScene]);
+        windowOwner.renderTempWindow();
+    }
+
+    @Override
+    public void setConnectionScene() {
+        while (--tempScene != 0);
         windowOwner.setTempWindow(scenes[tempScene]);
         windowOwner.renderTempWindow();
     }

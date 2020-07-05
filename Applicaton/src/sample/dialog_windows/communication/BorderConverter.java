@@ -41,10 +41,14 @@ public class BorderConverter implements Converting {
         if (segment.getClientPackage() != null) {
             withClientPackage = true;
         }
-
+//        System.out.println(segment.getMarker());
         ApplicationParcel applicationParcel = null;
         switch (segment.getMarker()) {
-            case USER_CONNECTED:applicationParcel = new ApplicationParcel(segment.getClientPackage().getReport().Message(), sample.dialog_windows.communication.enum_section.Markers.USER_CONNECTED);
+            case SIGNALSTAGE: applicationParcel = new ApplicationParcel(segment.getStringData()[0], sample.dialog_windows.communication.enum_section.Markers.SIGNALSTAGE);
+                break;
+            case INTERRUPTED: applicationParcel = new ApplicationParcel(segment.getStringData()[0], sample.dialog_windows.communication.enum_section.Markers.INTERRUPTED);
+                break;
+            case USER_CONNECTED: applicationParcel = new ApplicationParcel(segment.getClientPackage().getReport().Message(), sample.dialog_windows.communication.enum_section.Markers.USER_CONNECTED);
                 break;
             case USER_DISCONNECTED: applicationParcel = new ApplicationParcel(segment.getClientPackage().getReport().Message(), sample.dialog_windows.communication.enum_section.Markers.USER_DISCONNECTED);
                 break;

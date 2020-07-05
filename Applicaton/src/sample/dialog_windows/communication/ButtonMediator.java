@@ -31,11 +31,19 @@ public class ButtonMediator implements Mediating {
 
     @Override
     public void notify(Component component, ApplicationParcel applicationParcel) {
+        if (component == null && applicationParcel.getMarker() == Markers.SIGNALSTAGE) Platform.runLater(() -> {
+            windowOwner.signalSceneInstantly();
+            if (!applicationParcel.getMessage().equals("")) windowOwner.initAlertBox(applicationParcel.getMessage());
+        });
+//        System.out.println(applicationParcel.getMarker());
         if (component == null && applicationParcel.getMarker() == Markers.STOP) clientsMediator.notify(null,borderConverter.convertToClientsPackage(applicationParcel));
         if (component == totalCommander && applicationParcel.getMarker() == Markers.RESETCONNECCTION) {
             clientsMediator.notify(null, borderConverter.convertToClientsPackage(applicationParcel));
         }
-        if ((component == totalCommander || component == null) && applicationParcel.getMarker() == Markers.SENDALLERT) Platform.runLater(() -> windowOwner.initAlertBox(applicationParcel.getMessage()));
+        if ((component == totalCommander || component == null) && applicationParcel.getMarker() == Markers.SENDALLERT) Platform.runLater(() -> {
+            windowOwner.signalSceneInstantly();
+            windowOwner.initAlertBox(applicationParcel.getMessage());
+        });
         if (component == totalCommander && applicationParcel.getMarker() == Markers.SENDCOMMAND) {
             clientsMediator.notify(null, borderConverter.convertToClientsPackage(applicationParcel));
         }
@@ -45,9 +53,11 @@ public class ButtonMediator implements Mediating {
             ((Mediator)clientsMediator).getServant().setConnection(ip, port);
         }
         if (applicationParcel.getMarker() == Markers.PRIVIOUSSTAGE) Platform.runLater(() -> sceneWriter.setPreviousScene());
-        if (applicationParcel.getMarker() == Markers.NEXTSTAGE) {
-            Platform.runLater(() -> sceneWriter.setNextScene());
-        }
+        if (applicationParcel.getMarker() == Markers.NEXTSTAGE)
+            Platform.runLater(() -> {
+                windowOwner.signalSceneInstantly();
+                sceneWriter.setNextScene();
+            });
 
         if (component == null && applicationParcel.getMarker() == Markers.UPDATE) Platform.runLater(() -> windowOwner.updateTable(applicationParcel));
         if (component == null && applicationParcel.getMarker() == Markers.CLEAR) Platform.runLater(() -> windowOwner.clearTable(applicationParcel));
@@ -55,11 +65,13 @@ public class ButtonMediator implements Mediating {
         if (component == null && applicationParcel.getMarker() == Markers.REMOVE) Platform.runLater(() -> windowOwner.removeFromTable(applicationParcel));
         if (component == null && applicationParcel.getMarker() == Markers.INFO) Platform.runLater(() -> {
             windowOwner.setInfo(applicationParcel.getMessage());
-            windowOwner.setConnectedUser("s");
         });
         if (component == null && applicationParcel.getMarker() == Markers.USER_CONNECTED) Platform.runLater(() -> windowOwner.setConnectedUser(applicationParcel.getMessage()));
         if (component == null && applicationParcel.getMarker() == Markers.USER_DISCONNECTED) Platform.runLater(() -> windowOwner.removeDisconnectedUser(applicationParcel.getMessage()));
-
+        if (component == null && applicationParcel.getMarker() == Markers.INTERRUPTED) Platform.runLater(() -> {
+            windowOwner.initAlertBox(applicationParcel.getMessage());
+            sceneWriter.setConnectionScene();
+        });
     }
 
     public void start() { sceneWriter.startShow();}

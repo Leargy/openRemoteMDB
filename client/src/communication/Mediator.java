@@ -72,8 +72,14 @@ public class Mediator implements Mediating {
      */
     @Override
     public void notify(Component component, Segment parcel) {
+        if (component == SERVANT && parcel.getMarker() == Markers.SIGNALSTAGE) {
+            ApplicationParcel applicationParcel = borderConverter.convertToApplicationPackage(parcel);
+            applicationMediator.notify(null, applicationParcel);
+        }
+
         if (component == RECEIVER && parcel.getMarker() == Markers.UPDATE) {
-            System.out.println(System.currentTimeMillis() + " " + Thread.currentThread().getName() + " " + parcel.getClientPackage().getCommand().getClass());
+            client.setInputCondition(true);
+//            System.out.println(System.currentTimeMillis() + " " + Thread.currentThread().getName() + " " + parcel.getClientPackage().getCommand().getClass());
             if (parcel.getClientPackage().getCommand() instanceof RawInsert) parcel.setMarker(Markers.INSERT);
             else if (parcel.getClientPackage().getCommand() instanceof RawClear) parcel.setMarker(Markers.CLEAR);
             else if (parcel.getClientPackage().getCommand() instanceof RawRemoveKey) parcel.setMarker(Markers.REMOVE);
@@ -91,7 +97,7 @@ public class Mediator implements Mediating {
         if (component == RECEIVER && parcel.getMarker() == Markers.HASSERVERKEY) ((Dispatcher)DISPATCHER).setServerKey(parcel.getClientPackage().getReport().Message());
         if (component == client && parcel.getMarker() == Markers.INTERRUPTED) {
             ((Servant)SERVANT).setIsIncoming(true);
-            SERVANT.resetConnection(true);
+//            SERVANT.resetConnection(true);
         }
         if ((component == SERVANT || component == null) && parcel.getMarker() == Markers.WRITE) DISPATCHER.giveOrder(parcel);
         if (component == SERVANT && parcel.getMarker() == Markers.GOODINPUTCONDITION) applicationMediator.notify(null, borderConverter.convertToApplicationPackage(parcel));
@@ -104,15 +110,17 @@ public class Mediator implements Mediating {
         }
         if (component == DISPATCHER && parcel.getMarker() == Markers.INTERRUPTED) {
             ((Servant)SERVANT).setIsIncoming(true);
-            SERVANT.resetConnection(true);
+//            SERVANT.resetConnection(true);
         }
         if ((component == DISPATCHER || component == SERVANT || component == null ) && parcel.getMarker() == Markers.STOP) client.stopAndClose();
         if (component == client  && parcel.getMarker() == Markers.WRITE) SERVANT.order(parcel);
         if (component == client && parcel.getMarker() == Markers.READ) RECEIVER.receive(parcel);
         if (component == RECEIVER && parcel.getMarker() == Markers.INTERRUPTED) {
-            ((Servant)SERVANT).setIsIncoming(true);
             client.killSocket();
-            SERVANT.resetConnection(true);
+            ApplicationParcel applicationParcel = borderConverter.convertToApplicationPackage(parcel);
+            applicationMediator.notify(null, applicationParcel);
+            ((Servant)SERVANT).setIsIncoming(true);
+//            SERVANT.resetConnection(true);
             DISPATCHER.confirm(false);
         }
         if (component == RECEIVER && parcel.getMarker() == Markers.WRITE) {

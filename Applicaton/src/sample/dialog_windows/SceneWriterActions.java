@@ -4,4 +4,5 @@ public interface SceneWriterActions {
     void startShow();
     void setNextScene();
     void setPreviousScene();
+    void setConnectionScene();
 }

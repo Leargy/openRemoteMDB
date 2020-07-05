@@ -109,6 +109,9 @@ public class LogInWindowController extends Dialog {
         alert.showAndWait();
     }
 
+    @Override
+    public void changingSignal() { /*NOPE*/ }
+
     @FXML
     public void changeLanguage(ActionEvent actionEvent) {
         Object menuItem = actionEvent.getSource();
