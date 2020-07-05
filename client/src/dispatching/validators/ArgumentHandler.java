@@ -87,7 +87,7 @@ public class ArgumentHandler extends DataHandler{
             }
             switch (foundedCommand.getKey()) {
                 case RawRemoveKey.NAME: return new RawRemoveKey(intArgument);
-                case RawInsertByStep.NAME:{
+                case RawInsertByStep.NAME: {
                     try {
                         Organization organization = organizationBuilder.makeWithParsing(parcel.getStringData()[2]);
                         return new RawInsert(intArgument, organization);
@@ -96,6 +96,14 @@ public class ArgumentHandler extends DataHandler{
                     }
                 }
                 case RawInsert.NAME: return new RawInsert(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
+                case RawUpdateByStep.NAME: {
+                    try {
+                        Organization organization = organizationBuilder.makeWithParsing(parcel.getStringData()[2]);
+                        return new RawUpdate(intArgument, organization);
+                    }catch (PartNotFoundException ex) {
+                        throw new CommandSyntaxException(ex.getMessage());
+                    }
+                }
                 case RawUpdate.NAME: return new RawUpdate(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
                 case RawReplaceIfLower.NAME: return new RawReplaceIfLower(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));
                 case RawReplaceIfGreater.NAME: return new RawReplaceIfGreater(intArgument, organizationBuilder.make(junkerCreator.prepareJunker()));

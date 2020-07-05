@@ -54,7 +54,7 @@
         </Label>
       <AnchorPane layoutY="51.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="334.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <MenuBar fx:id="laguage_menu" layoutX="7.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="77.0" style="-fx-background-color: #73ACE6;">
+            <MenuBar fx:id="laguage_menu" layoutX="7.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="77.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;">
                <menus>
                   <Menu fx:id="login_lang_choser" mnemonicParsing="false" text="Язык">
                       <items>

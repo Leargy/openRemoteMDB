@@ -21,7 +21,8 @@ public class TableResources_uk extends java.util.ListResourceBundle {
             {"Creation date", "Дата створення"},
             {"Owner", "Власник"},
             {"Interaction", "Взаємодія"},
-            {"No contents in table", "Таблиця порожня"}
+            {"No contents in table", "Таблиця порожня"},
+            {"Edit", "Редагувати"}
             // ENDING OF INTERNATIONALIZATION
     };
 

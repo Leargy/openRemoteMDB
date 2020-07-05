@@ -14,6 +14,8 @@ import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import locale.Localizator;
+import organization.Organization;
+import organization.OrganizationWithUId;
 import sample.dialog_windows.Commander;
 import sample.dialog_windows.Dialog;
 import sample.dialog_windows.InteructionSceneFactory;
@@ -24,11 +26,16 @@ public class InteractWindowController extends Dialog {
     public static final Stage stage = new Stage();
     public static final StringProperty organizationParams = new SimpleStringProperty();
     public static final ObservableList<String> langs = FXCollections.observableArrayList("Public", "Trust", "Open_join_stock_company", "Private_limited_company");
+    private static Organization tempOrganization = null;
 
     public InteractWindowController() {
         inteructionSceneFactory = new InteructionSceneFactory();
         stage.setTitle("RemoteMDB");
         organizationParams.bindBidirectional(MainWindowController.organizationParams);
+    }
+
+    public void setRowOrganization(Organization organization) {
+        tempOrganization = organization;
     }
 
     public InteractWindowController setCommander(Commander totalCommander) {
@@ -71,13 +78,19 @@ public class InteractWindowController extends Dialog {
         type_combo_box.setItems(langs);
         type_combo_box.setValue("");
         interact_confirm_btn.setOnAction(event -> {
-            totalCommander.insert(prepareParams());
+            if(tempOrganization != null) {
+                totalCommander.update(String.valueOf(tempOrganization.getID()), prepareParams());
+            }else {
+                totalCommander.insert(prepareParams());
+            }
+            stage.hide();
 
         });
         interact_delete_btn.setOnAction(event -> {
+            totalCommander.remove(String.valueOf(tempOrganization.id));
+            stage.hide();
         });
-
-
+        decomposeInformation();
     }
 
     @Override
@@ -93,15 +106,8 @@ public class InteractWindowController extends Dialog {
     }
 
     @Override
-    public String getData() {
-        synchronized (this) {
-            try {
-                Thread.currentThread().wait();
-            }catch (InterruptedException ex) {
-                System.err.println(ex.getMessage());
-            }
-        }
-        return null;
+    public void setInfo(String info) {
+
     }
 
     @Override
@@ -169,8 +175,36 @@ public class InteractWindowController extends Dialog {
         interact_employees.setText(employees);
         String interact_x = String.valueOf(interact_map_x.getText().charAt(interact_map_x.getText().length() - 1));
         String interact_y = String.valueOf(interact_map_y.getText().charAt(interact_map_y.getText().length() - 1));
-        interact_map_x.setText(position + interact_x);
-        interact_map_y.setText(position + interact_y);
+        interact_map_x.setText(position + " " + interact_x);
+        interact_map_y.setText(position + " " + interact_y);
+    }
+
+    public void decomposeInformation() {
+        if (tempOrganization != null) {
+            name_field.setText(tempOrganization.getName());
+            full_name_field.setText(tempOrganization.getFullname());
+            type_combo_box.setValue(tempOrganization.getType().toString());
+            employees_count_field.setText(String.valueOf(tempOrganization.getEmployeesCount()));
+            annual_turnover_field.setText(String.valueOf(tempOrganization.getAnnualTurnOver()));
+            coord_x_field.setText(String.valueOf(tempOrganization.getCoordinates().getX()));
+            coord_y_field.setText(String.valueOf(tempOrganization.getCoordinates().getY()));
+            zip_cod_field.setText(tempOrganization.getAddress().getZipCode());
+            locate_x_field.setText(String.valueOf(tempOrganization.getAddress().getTown().getX()));
+            locate_y_field.setText(String.valueOf(tempOrganization.getAddress().getTown().getY()));
+            locate_z_field.setText(String.valueOf(tempOrganization.getAddress().getTown().getZ()));
+        }else {
+            name_field.setText("");
+            full_name_field.setText("");
+            type_combo_box.setValue("");
+            employees_count_field.setText("");
+            annual_turnover_field.setText("");
+            coord_x_field.setText("");
+            coord_y_field.setText("");
+            zip_cod_field.setText("");
+            locate_x_field.setText("");
+            locate_y_field.setText("");
+            locate_z_field.setText("");
+        }
     }
 
     @FXML
@@ -188,6 +222,7 @@ public class InteractWindowController extends Dialog {
         params.append("locx=" + locate_x_field.getText() + ";");
         params.append("locy=" + locate_y_field.getText() + ";");
         params.append("locz=" + locate_z_field.getText() + ";");
+        if (tempOrganization != null) params.append("id=" + tempOrganization.getID() + ";");
         return params.toString();
     }
 }

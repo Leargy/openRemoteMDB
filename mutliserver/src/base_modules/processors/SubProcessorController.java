@@ -74,8 +74,8 @@ public final class SubProcessorController implements Processors {
             SERVER_CONTROLLER.notify(this, parcel); // sending to determine the concrete command
         }
         if (sender == INSTRUCTION_BUILDER) (LILY_INVOKER).invoke((ExecuteBag) parcel); //sending to execute command
-        if (sender == LILY_INVOKER) SERVER_CONTROLLER.notify(this, parcel); //sending to dispatcher
         if (sender == LILY_INVOKER && parcel.getClass().getSimpleName().equals("ClientPackBag")) AUTHENTICATION_TASK.notifyAllUsers((ClientPackBag) parcel);
+        else if (sender == LILY_INVOKER) SERVER_CONTROLLER.notify(this, parcel); //sending to dispatcher
         if (sender instanceof QueryHandlingTask) SERVER_CONTROLLER.notify(this, parcel);
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }

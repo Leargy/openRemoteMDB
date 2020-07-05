@@ -21,7 +21,8 @@ public class TableResources_en extends java.util.ListResourceBundle {
             {"Creation date", "Creation date"},
             {"Owner", "Owner"},
             {"Interaction", "Interaction"},
-            {"No contents in table", "No contents in table"}
+            {"No contents in table", "No contents in table"},
+            {"Edit", "Edit"}
             // ENDING OF INTERNATIONALIZATION
     };
 

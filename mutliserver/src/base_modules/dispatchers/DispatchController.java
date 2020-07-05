@@ -42,6 +42,7 @@ public class DispatchController implements Dispatchers {
     }
 
     public Report sendResults2Client(ClientPackBag parcel) {
+        if (parcel.getClientPacket().getCommand() != null) System.out.println(Thread.currentThread().getName() + " " + parcel.getClientPacket().getCommand().getClass());
         DISPATCHER.submit(new SendingResultsTask(this, parcel));
         return ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod());
     }

@@ -45,7 +45,7 @@
       </Label>
       <AnchorPane layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="334.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <MenuBar fx:id="language_menu_button" layoutX="7.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="77.0" style="-fx-background-color: #73ACE6;">
+            <MenuBar fx:id="language_menu_button" layoutX="7.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="77.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;">
                <Menu fx:id="connect_lang_choser" mnemonicParsing="false" text="Язык">
                   <items>
                      <MenuItem fx:id="connect_change_ru" mnemonicParsing="false" onAction="#changeLanguage" text="Русский ru_RU" />

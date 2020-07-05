@@ -10,6 +10,7 @@ public interface Commander {
     void signUp(String login, String password);
     void clear();
     void insert(String orgParams);
-    void update();
+    void update(String id, String orgParametrs);
     void info();
+    void remove(String id);
 }

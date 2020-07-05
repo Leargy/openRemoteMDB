@@ -1,9 +1,6 @@
 package sample.dialog_windows;
 
-import instructions.rotten.base.RawInsertByStep;
-import instructions.rotten.base.RawSignIn;
-import instructions.rotten.base.RawSignOut;
-import instructions.rotten.base.RawSignUp;
+import instructions.rotten.base.*;
 import organization.Organization;
 import sample.dialog_windows.communication.Component;
 import sample.dialog_windows.communication.Mediating;
@@ -34,7 +31,7 @@ public class TotalCommander implements Commander, Component {
         try {
             applicationParcel = connectionHandler.handle(applicationParcel);
         }catch (CommonHandlerException ex) {
-            mediator.notify(this,new ApplicationParcel(ex.getMessage(),Markers.SENDALLERT));
+            mediator.notify(this, new ApplicationParcel(ex.getMessage(), Markers.SENDALLERT));
             return;
         }
         mediator.notify(this, new ApplicationParcel(applicationParcel.getMessage(), Markers.SETCONNECTION));
@@ -49,56 +46,66 @@ public class TotalCommander implements Commander, Component {
     @Override
     public void signIn(String login, String password) {
         ApplicationParcel applicationParcel = new ApplicationParcel(RawSignIn.NAME + " " + login + " " + password, Markers.SENDCOMMAND);
-        fixedThredPool.submit(() -> mediator.notify(this,applicationParcel));
+        fixedThredPool.submit(() -> mediator.notify(this, applicationParcel));
     }
 
 
     @Override
     public void signOut() {
         ApplicationParcel applicationParcel = new ApplicationParcel(RawSignOut.NAME , Markers.SENDCOMMAND);
-        fixedThredPool.submit(() -> mediator.notify(this,applicationParcel));
+        fixedThredPool.submit(() -> mediator.notify(this, applicationParcel));
 //        mediator.notify(this, new ApplicationParcel(Markers.PRIVIOUSSTAGE));
     }
 
     @Override
     public void signUp(String login, String password) {
         ApplicationParcel applicationParcel = new ApplicationParcel(RawSignUp.NAME + " " + login + " " + password, Markers.SENDCOMMAND);
-        fixedThredPool.submit(() -> mediator.notify(this,applicationParcel));
+        fixedThredPool.submit(() -> mediator.notify(this, applicationParcel));
     }
 
 
     @Override
     public void clear() {
-
+        ApplicationParcel applicationParcel = new ApplicationParcel(RawClear.NAME, Markers.SENDCOMMAND);
+        fixedThredPool.submit(() -> mediator.notify(this, applicationParcel));
     }
 
     @Override
     public void insert(String orgParametrs) {
         ApplicationParcel applicationParcel = new ApplicationParcel(RawInsertByStep.NAME + " " + 666 + " " +orgParametrs, Markers.SENDCOMMAND);
-        fixedThredPool.submit(() -> mediator.notify(this,applicationParcel));
+        fixedThredPool.submit(() -> mediator.notify(this, applicationParcel));
     }
 
     @Override
-    public void update() {
-
+    public void update(String id, String orgParametrs) {
+        ApplicationParcel applicationParcel = new ApplicationParcel(RawUpdateByStep.NAME + " " + id + " " + orgParametrs, Markers.SENDCOMMAND);
+        fixedThredPool.submit(() -> mediator.notify(this, applicationParcel));
     }
 
     @Override
     public void info() {
-
+        ApplicationParcel applicationParcel = new ApplicationParcel(RawInfo.NAME, Markers.SENDCOMMAND);
+        fixedThredPool.submit(() -> mediator.notify(this, applicationParcel));
     }
 
-    public boolean confirmAction(boolean isConfirmed) {
-
-        return false;
+    @Override
+    public void remove(String id) {
+        ApplicationParcel applicationParcel = new ApplicationParcel(RawRemoveKey.NAME + " " + id, Markers.SENDCOMMAND);
+        fixedThredPool.submit(() -> mediator.notify(this, applicationParcel));
     }
 
-    public Organization exchangeOrg(Organization organization) {
-        try {
-            return organizationExchanger.exchange(organization);
-        }catch (InterruptedException ex) {
-            System.out.println(ex.getMessage());
-            return null;
-        }
-    }
+
+//    public boolean confirmAction(boolean isConfirmed) {
+//
+//        return false;
+//    }
+//
+//    public Organization exchangeOrg(Organization organization) {
+//        try {
+//            return organizationExchanger.exchange(organization);
+//        }catch (InterruptedException ex) {
+//            System.out.println(ex.getMessage());
+//            return null;
+//        }
+//    }
 }

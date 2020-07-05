@@ -119,7 +119,7 @@ public final class Organization implements Mappable<Integer> {
   public int hashCode() {
     return (int) (
             name.hashCode() + fullname.hashCode()
-                    + (employeesCount + annualTurnover) % 2
+                    + (employeesCount + annualTurnover + id)
                     + (coordinates.hashCode()
                     + ((officialAddress != null)? officialAddress.hashCode() : 0)) % 3
 //                    + creationDate.hashCode()

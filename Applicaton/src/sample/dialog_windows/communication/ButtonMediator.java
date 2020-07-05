@@ -51,10 +51,15 @@ public class ButtonMediator implements Mediating {
 
         if (component == null && applicationParcel.getMarker() == Markers.UPDATE) Platform.runLater(() -> windowOwner.updateTable(applicationParcel));
         if (component == null && applicationParcel.getMarker() == Markers.CLEAR) Platform.runLater(() -> windowOwner.clearTable(applicationParcel));
-        if (component == null && applicationParcel.getMarker() == Markers.INSERT) {
-            Platform.runLater(() -> windowOwner.insertInTable(applicationParcel));
-        }
+        if (component == null && applicationParcel.getMarker() == Markers.INSERT) Platform.runLater(() -> windowOwner.insertInTable(applicationParcel));
         if (component == null && applicationParcel.getMarker() == Markers.REMOVE) Platform.runLater(() -> windowOwner.removeFromTable(applicationParcel));
+        if (component == null && applicationParcel.getMarker() == Markers.INFO) Platform.runLater(() -> {
+            windowOwner.setInfo(applicationParcel.getMessage());
+            windowOwner.setConnectedUser("s");
+        });
+        if (component == null && applicationParcel.getMarker() == Markers.USER_CONNECTED) Platform.runLater(() -> windowOwner.setConnectedUser(applicationParcel.getMessage()));
+        if (component == null && applicationParcel.getMarker() == Markers.USER_DISCONNECTED) Platform.runLater(() -> windowOwner.removeDisconnectedUser(applicationParcel.getMessage()));
+
     }
 
     public void start() { sceneWriter.startShow();}

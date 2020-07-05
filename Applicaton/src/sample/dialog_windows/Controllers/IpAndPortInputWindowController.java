@@ -79,8 +79,8 @@ public class IpAndPortInputWindowController extends Dialog {
     }
 
     @Override
-    public String getData() {
-        return null;
+    public void setInfo(String info) {
+
     }
 
     @Override

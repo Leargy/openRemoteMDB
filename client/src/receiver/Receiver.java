@@ -24,7 +24,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Receiver extends AReceiver{
     private ByteArrayInputStream byteArrayInputStream;
     private ObjectInputStream objectInputStream;
-    private final ByteBuffer byteBuffer = ByteBuffer.allocate(5 * 1024);
+    private final ByteBuffer byteBuffer = ByteBuffer.allocate(9 * 1024);
     private Lock lock = new ReentrantLock();
 
 

@@ -5,10 +5,7 @@ import communication.Report;
 import instructions.concrete.ConcreteDecree;
 import instructions.concrete.base.Save;
 import instructions.concrete.extended.ExecuteScript;
-import instructions.rotten.base.RawClear;
-import instructions.rotten.base.RawInsert;
-import instructions.rotten.base.RawRemoveKey;
-import instructions.rotten.base.RawUpdate;
+import instructions.rotten.base.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import patterns.mediator.Controllers;
@@ -58,13 +55,16 @@ public class LilyInvoker extends FondleEmulator {
     Report result = concreteCommand.execute();
     if (result.isSuccessful()) {
       if (concreteCommand.toString().equals("insert"))
-        alarmPull.submit(() -> MAGIV.notify(this, new ClientPackBag(executeBag.Channel(), new ClientPackage(new RawInsert(0, null), result))));
+        alarmPull.submit(() -> {
+          System.out.println("погнал" + Thread.currentThread().getName());
+          MAGIV.notify(this, new ClientPackBag(executeBag.Channel(), new ClientPackage(new RawInsert(0, null), result)));
+        });
       else if (concreteCommand.toString().equals("update"))
         alarmPull.submit(() -> MAGIV.notify(this, new ClientPackBag(executeBag.Channel(), new ClientPackage(new RawUpdate(0, null), result))));
       else if (concreteCommand.toString().equals("clear"))
         alarmPull.submit(() -> MAGIV.notify(this, new ClientPackBag(executeBag.Channel(), new ClientPackage(new RawClear(), result))));
       else if (concreteCommand.toString().equals("info"))
-        alarmPull.submit(() -> MAGIV.notify(this, new ClientPackBag(executeBag.Channel(), new ClientPackage(new RawClear(), result))));
+        alarmPull.submit(() -> MAGIV.notify(this, new ClientPackBag(executeBag.Channel(), new ClientPackage(new RawInfo(), result))));
       else if (concreteCommand.toString().equals("remove_key"))
         alarmPull.submit(() -> MAGIV.notify(this, new ClientPackBag(executeBag.Channel(), new ClientPackage(new RawRemoveKey(0), result))));
     }

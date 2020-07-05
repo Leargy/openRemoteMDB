@@ -12,11 +12,11 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
@@ -38,7 +38,7 @@
                         <Image url="@../images/iconfinder_magnifying-glass_226571.png" />
                      </image>
                   </ImageView>
-                  <ComboBox fx:id="filter_button" layoutX="277.0" layoutY="4.0" minHeight="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="170.0" promptText="Фильтр" style="-fx-background-color: #73ACE6;">
+                  <ComboBox fx:id="filter_button" layoutX="277.0" layoutY="4.0" minHeight="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="170.0" promptText="Фильтр" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;">
                       <items>
                           <FXCollections fx:factory="observableArrayList">
                               <String fx:value="Name" />
@@ -58,7 +58,7 @@
                         <Font name="Georgia" size="15.0" />
                      </font>
                   </Button>
-                  <MenuBar fx:id="language_menu" layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="82.0" style="-fx-background-color: #73ACE6;">
+                  <MenuBar fx:id="language_menu" layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="82.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;">
                     <menus>
                       <Menu fx:id="main_lang_choser" mnemonicParsing="false" text="Язык">
                           <items>
@@ -77,24 +77,24 @@
                   </Button>
                </children>
             </AnchorPane>
-            <TabPane layoutX="71.0" layoutY="39.0" prefHeight="506.0" prefWidth="1081.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane layoutX="40.0" layoutY="40.0" prefHeight="506.0" prefWidth="1091.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab fx:id="table_selector" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Таблица">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="468.0" prefWidth="1009.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="433.0" prefWidth="1090.0">
                            <children>
-                              <TableView fx:id="tabl" prefHeight="457.0" prefWidth="1081.0" style="-fx-border-color: #8F8F8F;">
+                              <TableView fx:id="tabl" prefHeight="424.0" prefWidth="1090.0" style="-fx-border-color: #8F8F8F;">
                                 <columns>
                                     <TableColumn fx:id="main_table_name" prefWidth="65.0" text="Имя" />
-                                    <TableColumn fx:id="main_table_fullname" prefWidth="124.0" text="Полное имя" />
-                                    <TableColumn fx:id="main_table_type" prefWidth="97.0" text="Тип" />
-                                    <TableColumn fx:id="main_table_employees" minWidth="9.0" prefWidth="153.0" text="Число сотрудников" />
-                                    <TableColumn fx:id="main_table_annual" prefWidth="136.0" text="Годовой оборот" />
-                                    <TableColumn fx:id="main_table_zipcode" prefWidth="85.0" text="Индекс" />
-                                    <TableColumn fx:id="main_table_creation_date" prefWidth="136.0" text="Дата создания" />
-                                    <TableColumn fx:id="main_table_owner" prefWidth="96.0" text="Владелец" />
-                                    <TableColumn fx:id="main_table_id" prefWidth="55.0" text="ID" />
-                                    <TableColumn fx:id="main_table_interact" prefWidth="132.0" text="Взаимодействие" />
+                                    <TableColumn fx:id="main_table_fullname" prefWidth="110.0" text="Полное имя" />
+                                    <TableColumn fx:id="main_table_type" prefWidth="91.0" text="Тип" />
+                                    <TableColumn fx:id="main_table_employees" minWidth="9.0" prefWidth="161.0" text="Число сотрудников" />
+                                    <TableColumn fx:id="main_table_annual" prefWidth="134.0" text="Годовой оборот" />
+                                    <TableColumn fx:id="main_table_zipcode" prefWidth="81.0" text="Индекс" />
+                                    <TableColumn fx:id="main_table_creation_date" prefWidth="154.0" text="Дата создания" />
+                                    <TableColumn fx:id="main_table_owner" prefWidth="88.0" text="Владелец" />
+                                    <TableColumn fx:id="main_table_id" prefWidth="66.0" text="ID" />
+                                    <TableColumn fx:id="main_table_interact" prefWidth="138.0" text="Взаимодействие" />
                                 </columns>
                               </TableView>
                            </children>
@@ -108,24 +108,30 @@
                 </Tab>
               </tabs>
             </TabPane>
+            <Button fx:id="info_button" layoutX="-71.0" layoutY="192.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="170.0" rotate="90.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Информация">
+               <font>
+                  <Font name="Georgia Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="online_button" alignment="CENTER" contentDisplay="CENTER" layoutX="1056.0" layoutY="520.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="104.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Онлайн" textAlignment="JUSTIFY">
+               <font>
+                  <Font name="Georgia" size="15.0" />
+               </font>
+            </Button>
             </children></AnchorPane>
-      <TextArea fx:id="info_panel" layoutX="-205.0" layoutY="176.0" prefHeight="150.0" prefWidth="211.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" />
         <Label layoutX="95.0" layoutY="8.0" prefHeight="35.0" prefWidth="202.0" text="RemoteMDB" textFill="WHITE">
             <font>
                 <Font name="Georgia Bold Italic" size="30.0" />
             </font>
         </Label>
       <TextFlow fx:id="nick_name_panel" layoutX="921.0" layoutY="18.0" prefHeight="31.0" prefWidth="123.0" style="-fx-text-alignment: center;" textAlignment="JUSTIFY" />
+      <Line endX="100.0" layoutX="943.0" layoutY="41.0" startX="-22.0" stroke="WHITE" />
+      <Label fx:id="info_panel" layoutX="-571.0" layoutY="176.0" prefHeight="170.0" prefWidth="569.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F8F;" text="Label" />
       <Button fx:id="sign_out_button" alignment="CENTER" contentDisplay="CENTER" layoutX="1054.0" layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="28.0" prefWidth="83.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #8F8F8F;" text="Выйти" textAlignment="CENTER">
          <font>
             <Font name="Georgia Bold" size="14.0" />
          </font>
       </Button>
-      <Line endX="100.0" layoutX="943.0" layoutY="41.0" startX="-22.0" stroke="WHITE" />
-      <Button fx:id="info_button" layoutX="-59.0" layoutY="235.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="150.0" rotate="90.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;" text="Информация">
-         <font>
-            <Font name="Georgia Bold" size="15.0" />
-         </font>
-      </Button>
+      <VBox fx:id="online_panel" layoutX="990.0" layoutY="600.0" prefHeight="200.0" prefWidth="170.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #3f3f3f;" />
     </children>
 </AnchorPane>

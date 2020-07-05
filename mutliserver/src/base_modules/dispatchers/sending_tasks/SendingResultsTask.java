@@ -13,7 +13,7 @@ import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
 
 public class SendingResultsTask implements Component, Runnable {
-    private static final int BUFFER_MAX_SIZE = 10 * 1024;
+    private static final int BUFFER_MAX_SIZE = 20 * 1024;
     private final ByteBuffer BYTE_BUFFER = ByteBuffer.allocate(BUFFER_MAX_SIZE);
     public final Controllers CONTROLLER;
 //    public final NotifyBag NOTIFICATION;

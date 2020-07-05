@@ -49,7 +49,10 @@ public class OrganizationsTableInteractor implements TablesInteractor {
 //        return (length == result)? ReportsFormatter.makeUpSuccessReport(ClassUtils.retrieveExecutedMethod()) : ReportsFormatter.makeUpUnsuccessReport(ClassUtils.retrieveExecutedMethod());
     }
     public Report insertUserOrganization(Integer key, OrganizationWithUId organizationWithUId) throws SQLException {
-        System.out.println(organizationWithUId.getOrganization().hashCode());
+        if (getDBOrganizationId(organizationWithUId) != -1) {
+            throw new SQLException("Такой элемент уже существует!");
+        }
+//        System.out.println(organizationWithUId.getOrganization().hashCode());
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         logger.info("Preparing SQL request");
         PreparedStatement insertion = currentConnection
@@ -222,11 +225,12 @@ public class OrganizationsTableInteractor implements TablesInteractor {
     }
 
     public Report updateUserOrganization(User user, Integer key, OrganizationWithUId organizationWithUId) throws SQLException{
+        System.out.println("ID = " + organizationWithUId.getOrganization().getID());
         Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
         logger.info("Preparing SQL request");
         PreparedStatement updating = currentConnection.prepareStatement("UPDATE " + DB_TABLE_NAME + " SET name = ?,"
                 + " fullname = ?, type = ?, employeescount = ?, annualturnover = ?, creationdate = ?, coordinates_x = ?, coordinates_y = ?, zipcode = ?, location_x = ?,"
-                + "location_y = ?, location_z = ?, hash_cod = ? WHERE user_login = ?;");
+                + "location_y = ?, location_z = ?, hash_cod = ? WHERE user_login = ? AND id = ?;");
         updating.setString(1, organizationWithUId.getName());
         updating.setString(2, organizationWithUId.getFullname());
         updating.setString(3, organizationWithUId.getType().name());
@@ -240,7 +244,9 @@ public class OrganizationsTableInteractor implements TablesInteractor {
         updating.setLong(11, organizationWithUId.getAddress().getTown().getY());
         updating.setDouble(12, organizationWithUId.getAddress().getTown().getZ());
         updating.setInt(13,organizationWithUId.getOrganization().hashCode());
-        updating.setString(14, organizationWithUId.getUserLogin());
+        updating.setString(14, user.getLogin());
+        updating.setInt(15, organizationWithUId.getOrganization().getID());
+
         try {
             logger.info("Executing SQL request \"update\"");
             updating.executeUpdate();
@@ -297,13 +303,27 @@ public class OrganizationsTableInteractor implements TablesInteractor {
     }
 
     public int getDBOrganizationId(OrganizationWithUId organizationWithUId) {
-        System.out.println(organizationWithUId.getOrganization().hashCode());
+//        System.out.println(organizationWithUId.getOrganization().hashCode());
         int currentOrganizationId = -1;
         try {
             Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
             logger.info("Preparing SQL request");
-            PreparedStatement counting = currentConnection.prepareStatement("SELECT * FROM " + DB_TABLE_NAME + " WHERE hash_cod = ?");
-            counting.setInt(1,organizationWithUId.getOrganization().hashCode());
+//            PreparedStatement counting = currentConnection.prepareStatement("SELECT * FROM " + DB_TABLE_NAME + " WHERE hash_cod = ?");
+            PreparedStatement counting = currentConnection.prepareStatement("SELECT * FROM organizations WHERE (name = ? AND fullname = ? AND type = ? AND employeescount = ? AND annualturnover = ? AND coordinates_x = ? AND coordinates_y = ? AND zipcode = ? AND location_x = ? AND location_y = ? AND location_z = ? AND user_login = ?);");
+            counting.setString(1, organizationWithUId.getName());
+            counting.setString(2, organizationWithUId.getFullname());
+            counting.setString(3, organizationWithUId.getType().name());
+            counting.setInt(4, organizationWithUId.getEmployeesCount());
+            counting.setFloat(5, organizationWithUId.getAnnualTurnover());
+//            counting.setTimestamp(6, Timestamp.valueOf(organizationWithUId.getCreationDate()));
+            counting.setInt(6, organizationWithUId.getCoordinates().getX());
+            counting.setFloat(7, organizationWithUId.getCoordinates().getY());
+            counting.setString(8, organizationWithUId.getAddress().getZipCode());
+            counting.setDouble(9, organizationWithUId.getAddress().getTown().getX());
+            counting.setLong(10, organizationWithUId.getAddress().getTown().getY());
+            counting.setDouble(11, organizationWithUId.getAddress().getTown().getZ());
+            counting.setString(12, organizationWithUId.getUserLogin());
+//            counting.setInt(1,organizationWithUId.getOrganization().hashCode());
             logger.info("Executing SQL request \"get organizations id\"");
             ResultSet resultSet = counting.executeQuery();
             resultSet.next();
@@ -312,6 +332,21 @@ public class OrganizationsTableInteractor implements TablesInteractor {
             logger.error(ex.getMessage());
 //            System.out.println(ex.getMessage());
         }
+        System.out.println("id " + currentOrganizationId);
         return currentOrganizationId;
+    }
+
+    public void setHashCod(OrganizationWithUId organizationWithUId) {
+        Connection currentConnection = DataBaseConnector.getInstance().retrieveCurrentConnection();
+        logger.info("Preparing SQL request");
+        try {
+            PreparedStatement counting = currentConnection.prepareStatement("UPDATE " + DB_TABLE_NAME + " SET hash_cod = ? WHERE id = ?");
+            counting.setInt(1, organizationWithUId.getOrganization().hashCode());
+            counting.setInt(2, organizationWithUId.getOrganization().id);
+            counting.executeUpdate();
+//            System.out.println("hash " + organizationWithUId.getOrganization().hashCode());
+        }catch (SQLException ex) {
+            logger.error(ex.getMessage());
+        }
     }
 }

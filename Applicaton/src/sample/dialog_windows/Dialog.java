@@ -1,12 +1,17 @@
 package sample.dialog_windows;
 
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import organization.Organization;
 import organization.OrganizationWithUId;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class Dialog {
     public static final Stage thisStage = new Stage();
@@ -23,24 +28,41 @@ public abstract class Dialog {
 
     public abstract Scene getScene();
 
-    public abstract String getData();
+    public abstract void setInfo(String info);
 
     public abstract void initAlertBox(String alertMessage);
 
     public void insertOrganizations(ArrayList<OrganizationWithUId> tempAddition) {
-//        System.out.println(System.currentTimeMillis() + " + " + Thread.currentThread().getName());
-        synchronized (organizationsToAdd){
-            System.out.println(tempAddition.size());
+        synchronized (organizationsToAdd) {
             organizationsToAdd.addAll(tempAddition);
-//            System.out.println();
             hasChanges = true;
         }
-//        System.out.println(System.currentTimeMillis() + " - " + Thread.currentThread().getName());
-
-//        System.out.println(Thread.currentThread().getName());
-//        ObservableList<OrganizationWithUId> organizationWithUIds = FXCollections.observableArrayList(tempAddition);
-//        tabl.refresh();
-//        tabl.setItems(organizationWithUIds);
 // TODO: дописать инсерт и другие команды, добавить обработку отключающегося и недоступного сервера, добавить анимацию, добавить фильтрацию
+    }
+    public void clearOrganizations(ArrayList<OrganizationWithUId> tempAddition) {
+        synchronized (organizationsToAdd) {
+            List result = Arrays.asList(organizationsToAdd.stream().filter((tempOrg) -> (tempOrg.USER_LOGIN.equals(tempAddition.get(0).USER_LOGIN))).toArray());
+            organizationsToAdd.removeAll(result);
+            hasChanges = true;
+        }
+    }
+
+    public void updateOrganizations(ArrayList<OrganizationWithUId> tempAddition) {
+        synchronized (organizationsToAdd) {
+            List result = Arrays.asList(organizationsToAdd.stream().filter((tempOrg) -> (tempOrg.getOrganization().id == tempAddition.get(0).getOrganization().id)).toArray());
+            organizationsToAdd.removeAll(result);
+            organizationsToAdd.add(tempAddition.get(0));
+            hasChanges = true;
+        }
+    }
+
+    public void removeOrganization(ArrayList<OrganizationWithUId> tempAddition) {
+        synchronized (organizationsToAdd) {
+            List result = Arrays.asList(organizationsToAdd.stream().filter((tempOrg) -> (tempOrg.getOrganization().id == tempAddition.get(0).getOrganization().id)).toArray());
+            System.out.println(result.get(0));
+//            organizationsToAdd.remove(result);
+            organizationsToAdd.removeAll(result);
+            hasChanges = true;
+        }
     }
 }

@@ -5,22 +5,25 @@ import java.sql.Time;
 import java.util.*;
 import java.util.concurrent.Executor;
 
+import com.sun.scenario.effect.LockableResource;
 import instructions.Decree;
+import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.beans.value.ObservableSetValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+import javafx.scene.text.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.util.Callback;
 import locale.Localizator;
 import organization.Organization;
@@ -40,11 +43,20 @@ public class MainWindowController extends Dialog {
     public static final StringProperty nickForDisplaying = new ReadOnlyStringWrapper("st");
     public static final StringProperty organizationParams = new ReadOnlyStringWrapper("");
     private static boolean[] isOffseted;
-    public static InteractWindowController interactWindowController;
+    private static InteractWindowController interactWindowController;
     private static ObservableList<OrganizationWithUId> concatenationList = FXCollections.observableArrayList();
+    private static final ArrayList<Button> tableButtons = new ArrayList<>();
+    private static final ObservableList<Label> onlineUsers = FXCollections.observableArrayList();
+    private static int numberOfUsers = 1;
+    private static boolean userCollectionModified = false;
+//    private static boolean firstLoad = true;
+    private static final Text info = new Text();
 
-    private static Timer timer = new Timer();
-    private static TimerTask timerTask ;
+    private static Timer tableTimer = new Timer();
+    private static Timer infoTimer = new Timer();
+    private static TimerTask tableTimerTask ;
+    private static TimerTask infoTimerTask ;
+
 
     private StringProperty name = new SimpleStringProperty();
     private StringProperty fullName = new SimpleStringProperty();
@@ -55,14 +67,13 @@ public class MainWindowController extends Dialog {
     private FloatProperty annualTurnover = new SimpleFloatProperty();
     private IntegerProperty employeesCount = new SimpleIntegerProperty();
     private IntegerProperty id = new SimpleIntegerProperty();
-    //    private StringProperty annualTurnover = new SimpleStringProperty();
-//    private StringProperty employeesCount = new SimpleStringProperty();
-//    private StringProperty id = new SimpleStringProperty();
 
     public MainWindowController() {
-        isOffseted = new boolean[2];
+        isOffseted = new boolean[4];
         mainWindowFactory = new MainWindowFactory();
         interactWindowController = new InteractWindowController().setCommander(totalCommander);
+//        onlineUsers.add(nickForDisplaying.get());
+//        System.out.println(onlineUsers.size());
     }
 
     public void setInteractionPropertys() {
@@ -101,13 +112,17 @@ public class MainWindowController extends Dialog {
     @FXML private TableColumn<OrganizationWithUId, Integer> main_table_id;
     @FXML private TableColumn<OrganizationWithUId, Void> main_table_interact;
     @FXML private Tab vizualization_selector;
-    @FXML private TextArea info_panel;
+    @FXML private Label info_panel;
     @FXML private TextFlow nick_name_panel;
     @FXML private Button sign_out_button;
     @FXML private Button info_button;
+    @FXML private Button online_button;
+    @FXML private VBox online_panel;
 
     @FXML
     void initialize() {
+        addOnlineUser(nickForDisplaying.get());
+//        online_panel.setText(onlineUsers.getText());
         Text nick = new Text(nickForDisplaying.get());
         nick.setFill(Color.WHITE);
 //        Iterator iter = Font.getFontNames().iterator();
@@ -127,6 +142,7 @@ public class MainWindowController extends Dialog {
         main_change_uk.setGraphic(ukrView);
 
         insert_button.setOnAction(event -> {
+            interactWindowController.setRowOrganization(null);
             interactWindowController.renderWindow();
 //            try {
 //                new Thread(() -> interactWindowController.getData()).join();
@@ -139,17 +155,23 @@ public class MainWindowController extends Dialog {
             totalCommander.clear();
         });
         info_button.setOnAction(event -> {
-            offset(info_button, 160, 1,0);
-            offset(info_panel,160,1,1);
+            offset(info_button, 569, 1,0,"X");
+            offset(info_panel,569,1,1,"X");
         });
+        online_button.setOnAction(event -> {
+            offset(online_button, 150, 1,2,"Y");
+            offset(online_panel,150,1,3, "Y");
+        });
+
         sign_out_button.setOnAction(event -> {
-            timerTask.cancel();
+//            firstLoad = true;
+            tableTimerTask.cancel();
+            infoTimerTask.cancel();
 //            timer.cancel();
             tabl.getItems().clear();
             organizationsToAdd.clear();
             totalCommander.signOut();
         });
-
 
         tabl.refresh();
         main_table_name.setCellValueFactory(celldata -> {
@@ -190,23 +212,40 @@ public class MainWindowController extends Dialog {
         });
 
 
-        timerTask = new TimerTask() {
+        tableTimerTask = new TimerTask() {
             @Override
             public void run() {
-//                System.out.println(hasChanges);
-                if (hasChanges) {
+//                if (hasChanges) {
                     synchronized (organizationsToAdd) {
+//                        System.out.println(organizationsToAdd);
                         tabl.getItems().clear();
                         tabl.getItems().addAll(organizationsToAdd);
-//                            System.out.println("___" + concatenationList);
-//                            tabl.setItems(organizationsToAdd);
                         tabl.refresh();
                         hasChanges = false;
                     }
-                }
+//                }
             }
         };
-        timer.schedule(timerTask,50L,100L);
+        infoTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    if (userCollectionModified) {
+                        online_panel.getChildren().clear();
+                        online_panel.getChildren().addAll(onlineUsers);
+                    }
+                    totalCommander.info();
+                    info_panel.setText(info.getText());
+                });
+            }
+        };
+
+        tableTimer.schedule(tableTimerTask,100L,200L);
+        infoTimer.schedule(infoTimerTask,500L,2000L);
+
+
+
+        addInteructionButton();
     }
 
     @Override
@@ -226,8 +265,9 @@ public class MainWindowController extends Dialog {
     }
 
     @Override
-    public String getData() {
-        return "";
+    public void setInfo(String info) {
+            this.info.setText("\t" + info);
+//        info_panel.setText(info);
     }
 
     @Override
@@ -239,19 +279,48 @@ public class MainWindowController extends Dialog {
         alert.showAndWait();
     }
 
-    private void offset(Control entity, double distance, double speed, int id) {
-        double start = entity.getLayoutX();
-        if (isOffseted[id] == false) {
-            for (double i = start; i < (start + distance); i += speed * Math.abs(1/start)) {
-                entity.setLayoutX(i);
+    public void addOnlineUser(String userName) {
+        onlineUsers.add(prepareLabel(userName));
+        userCollectionModified = true;
+    }
+
+    public void removeOnlineUser(String userName) {
+        onlineUsers.removeAll(prepareLabel(userName));
+        userCollectionModified = true;
+    }
+
+    private void offset(Node entity, double distance, double speed, int id, String vector) {
+        switch (vector.toUpperCase()) {
+            case "X": {
+                double start = entity.getLayoutX();
+                if (isOffseted[id] == false) {
+                    for (double i = start; i < (start + distance); i += speed * Math.abs(1 / start)) {
+                        entity.setLayoutX(i);
+                    }
+                    isOffseted[id] = true;
+                } else {
+                    for (double i = start; i > (start - distance); i -= speed * Math.abs(1 / start)) {
+                        entity.setLayoutX(i);
+                    }
+                    isOffseted[id] = false;
+                }
+                break;
             }
-            isOffseted[id] = true;
-        }
-        else {
-            for (double i = start; i > (start - distance); i -= speed * Math.abs(1/start) ) {
-                entity.setLayoutX(i);
+            case "Y": {
+                double start = entity.getLayoutY();
+                if (isOffseted[id] == false) {
+                    for (double i = start; i > (start - distance); i -= speed ) {
+                        entity.setLayoutY(i);
+                    }
+                    isOffseted[id] = true;
+                } else {
+                    for (double i = start; i < (start + distance); i += speed) {
+                        entity.setLayoutY(i);
+                    }
+                    isOffseted[id] = false;
+                }
+                break;
             }
-            isOffseted[id] = false;
         }
     }
     @FXML
@@ -292,6 +361,7 @@ public class MainWindowController extends Dialog {
         String owner = (String) bundle.getObject("Owner");
         String interact = (String) bundle.getObject("Interaction");
         String noContent = (String) bundle.getObject("No contents in table");
+        String editingButton = (String) bundle.getObject("Edit");
         sign_out_button.setText(exit);
         main_lang_choser.setText(language);
         filter_button.setPromptText(filter);
@@ -319,14 +389,13 @@ public class MainWindowController extends Dialog {
             public TableCell<OrganizationWithUId, Void> call(final TableColumn<OrganizationWithUId, Void> param) {
                 final TableCell<OrganizationWithUId, Void> cell = new TableCell<OrganizationWithUId, Void>() {
 
-                    private final Button btn = new Button();
-
+                    private final Button btn = new Button((String) Localizator.changeLocale("locale.table.TableResources", currentLocale).getObject("Edit"));
                     {
                         btn.setOnAction((ActionEvent event) -> {
+                            interactWindowController.setRowOrganization(tabl.getColumns().get(super.getIndex()).getTableView().getItems().get(super.getIndex()).getOrganization());
                             interactWindowController.renderWindow();
-//                            OrganizationWithUId organizationWithUId = getTableView().getItems().get(getIndex());
-//                            openSuck(organizationWithUId);
                         });
+                        btn.setStyle("-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F");
                     }
 
                     @Override
@@ -344,20 +413,15 @@ public class MainWindowController extends Dialog {
         };
 
         main_table_interact.setCellFactory(cellFactory);
-        tabl.getColumns().add(main_table_interact);
     }
 
-//    private StringProperty name = new SimpleStringProperty();
-//    private StringProperty fullName = new SimpleStringProperty();
-//    private StringProperty zipCod = new SimpleStringProperty();
-//    private StringProperty type = new SimpleStringProperty();
-//    private StringProperty owner = new SimpleStringProperty();
-//    private StringProperty date = new SimpleStringProperty();
-//    private FloatProperty annualTurnover = new SimpleFloatProperty();
-//    private IntegerProperty employeesCount = new SimpleIntegerProperty();
-//    private IntegerProperty id = new SimpleIntegerProperty();
-
-
-
-
+    private Label prepareLabel(String textForLabel) {
+        Label label = new Label();
+        label.setMinWidth(169);
+        label.setMinHeight(32);
+        label.setAlignment(Pos.CENTER);
+        label.setFont(Font.font("Georgia Bold",15));
+        label.setText(textForLabel);
+        return label;
+    }
 }

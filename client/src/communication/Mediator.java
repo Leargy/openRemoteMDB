@@ -3,6 +3,7 @@ package communication;
 import data_section.enumSection.Markers;
 import dispatching.ADispatcher;
 import instructions.rotten.base.RawClear;
+import instructions.rotten.base.RawInfo;
 import instructions.rotten.base.RawInsert;
 import instructions.rotten.base.RawRemoveKey;
 import receiver.AReceiver;
@@ -72,13 +73,13 @@ public class Mediator implements Mediating {
     @Override
     public void notify(Component component, Segment parcel) {
         if (component == RECEIVER && parcel.getMarker() == Markers.UPDATE) {
-//            System.out.println(System.currentTimeMillis() + " " + Thread.currentThread().getName());
+            System.out.println(System.currentTimeMillis() + " " + Thread.currentThread().getName() + " " + parcel.getClientPackage().getCommand().getClass());
             if (parcel.getClientPackage().getCommand() instanceof RawInsert) parcel.setMarker(Markers.INSERT);
             else if (parcel.getClientPackage().getCommand() instanceof RawClear) parcel.setMarker(Markers.CLEAR);
             else if (parcel.getClientPackage().getCommand() instanceof RawRemoveKey) parcel.setMarker(Markers.REMOVE);
+            else if (parcel.getClientPackage().getCommand() instanceof RawInfo) parcel.setMarker(Markers.INFO);
             ApplicationParcel applicationParcel = borderConverter.convertToApplicationPackage(parcel);
             applicationMediator.notify(null, applicationParcel);
-
         }
         if (component == null && parcel.getMarker() == Markers.WRITE) {
             Segment tempSegment = new Segment(client.getSocketChannel(),Markers.WRITE);
@@ -123,6 +124,16 @@ public class Mediator implements Mediating {
                 appThread.start();
             }
 
+            parcel = checkForFeatures(parcel);
+
+            if (parcel.getMarker() == Markers.USER_DISCONNECTED || parcel.getMarker() == Markers.USER_CONNECTED) {
+                ApplicationParcel applicationParcel =  borderConverter.convertToApplicationPackage(parcel);
+                Thread appThread = new Thread(() -> applicationMediator.notify(null, applicationParcel));
+                appThread.setDaemon(true);
+                appThread.start();
+                client.setInputCondition(true);
+            }
+
             ((Servant)SERVANT).setIsIncoming(true);
             SERVANT.notification(parcel);
             client.setInputCondition(true);
@@ -131,13 +142,15 @@ public class Mediator implements Mediating {
             client.setInputCondition(true);
             ApplicationParcel applicationParcel = borderConverter.convertToApplicationPackage(parcel);
             if (applicationParcel != null) {
-//                System.out.println(System.currentTimeMillis() + " " + Thread.currentThread().getName());
                 applicationMediator.notify(null, applicationParcel);
             }
         }
-        if (component == RECEIVER  && parcel.getMarker() == Markers.CONFIRMING) {
-//            client.setInputCondition(true);
-            DISPATCHER.confirm(parcel.getClientPackage().getReport().getIsConfirmed());
-        }
+        if (component == RECEIVER  && parcel.getMarker() == Markers.CONFIRMING) DISPATCHER.confirm(parcel.getClientPackage().getReport().getIsConfirmed());
+    }
+
+    private Segment checkForFeatures(Segment parcel) {
+        if (parcel.getClientPackage().getReport().Message().matches(".* вышел .*")) parcel.setMarker(Markers.USER_DISCONNECTED);
+        if (parcel.getClientPackage().getReport().Message().matches(".* зашел .*")) parcel.setMarker(Markers.USER_CONNECTED);
+        return parcel;
     }
 }

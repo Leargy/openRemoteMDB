@@ -130,8 +130,9 @@ public final class OrganizationBuilder implements Factory<Organization>, Compone
 
   @Override
   public Organization makeWithParsing(String rawData) throws PartNotFoundException {
+    System.out.println(rawData);
     StringBuilder exceptionResult = new StringBuilder();
-    int coor_x = 0;
+    int coor_x = 0; int id = -1;
     Float coord_y = null;
     long loc_x = 0;
     long loc_y = 0;
@@ -176,7 +177,10 @@ public final class OrganizationBuilder implements Factory<Organization>, Compone
       }
     }
     if (exceptionResult.toString().isEmpty() == false) throw new PartNotFoundException(exceptionResult.toString());
-    return new Organization(name,new Coordinates(coor_x,coord_y),annualTurnover,fullName,employeesCount,organizationType,new Address(zip_cod,new Location(loc_x,loc_y,loc_z)),0, creation_date);
+    Organization organization = new Organization(name,new Coordinates(coor_x,coord_y),annualTurnover,fullName,employeesCount,organizationType,new Address(zip_cod,new Location(loc_x,loc_y,loc_z)),0, creation_date);
+    id = getIdIfGiven(rawData);
+    if (id != -1) organization.id = id;
+    return organization;
   }
 
   private String getName(String rawData) throws PartNotFoundException {
@@ -357,6 +361,23 @@ public final class OrganizationBuilder implements Factory<Organization>, Compone
     }
     if (z == 0) throw new PartNotFoundException("Location coordinate Z shouldn't be empty");
     return z;
+  }
+
+  private int getIdIfGiven(String rawData){
+    Pattern nameReg = Pattern.compile("id=[^;]*[\\d]*;");
+    Matcher matcher = nameReg.matcher(rawData);
+    int id = -1;
+//    try {
+      while (matcher.find()) {
+        if (rawData.substring(matcher.start() + 3, matcher.end() - 1).isEmpty()) break;
+        id = Integer.valueOf(rawData.substring(matcher.start() + 3, matcher.end() - 1));
+        break;
+      }
+
+//    }catch (NumberFormatException ex) {
+//      throw new PartNotFoundException("Wrong format for location coordinate Z - Use \".\" instead \",\"");
+//    }
+    return id;
   }
 
 

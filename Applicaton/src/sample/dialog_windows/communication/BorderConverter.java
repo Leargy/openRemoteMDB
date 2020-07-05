@@ -44,7 +44,15 @@ public class BorderConverter implements Converting {
 
         ApplicationParcel applicationParcel = null;
         switch (segment.getMarker()) {
-            case CLEAR:{
+            case USER_CONNECTED:applicationParcel = new ApplicationParcel(segment.getClientPackage().getReport().Message(), sample.dialog_windows.communication.enum_section.Markers.USER_CONNECTED);
+                break;
+            case USER_DISCONNECTED: applicationParcel = new ApplicationParcel(segment.getClientPackage().getReport().Message(), sample.dialog_windows.communication.enum_section.Markers.USER_DISCONNECTED);
+                break;
+            case INFO: {
+                applicationParcel = new ApplicationParcel(segment.getClientPackage().getReport().Message(), sample.dialog_windows.communication.enum_section.Markers.INFO);
+                break;
+            }
+            case CLEAR: {
                 applicationParcel = new ApplicationParcel("", sample.dialog_windows.communication.enum_section.Markers.CLEAR);
                 applicationParcel.setOrganizationArrayList(segment.getClientPackage().getReport().getOrganizations());
                 break;
@@ -54,23 +62,21 @@ public class BorderConverter implements Converting {
                 applicationParcel.setOrganizationArrayList(segment.getClientPackage().getReport().getOrganizations());
                 break;
             }
-            case INSERT:{
+            case INSERT: {
                 applicationParcel = new ApplicationParcel("", sample.dialog_windows.communication.enum_section.Markers.INSERT);
                 applicationParcel.setOrganizationArrayList(segment.getClientPackage().getReport().getOrganizations());
                 break;
             }
-            case REMOVE:{
+            case REMOVE: {
                 applicationParcel = new ApplicationParcel("", sample.dialog_windows.communication.enum_section.Markers.REMOVE);
                 applicationParcel.setOrganizationArrayList(segment.getClientPackage().getReport().getOrganizations());
                 break;
             }
             case BADINPUTCONDITION: {
                 if (withClientPackage) {
-//                    System.out.println("gege");
                     String[] segregatedMessage = segment.getClientPackage().getReport().Message().split(":");
                     applicationParcel = new ApplicationParcel(segregatedMessage[1], sample.dialog_windows.communication.enum_section.Markers.SENDALLERT);
                 }else {
-//                    System.out.println("gege");
                     applicationParcel = new ApplicationParcel(segment.getStringData()[0], sample.dialog_windows.communication.enum_section.Markers.SENDALLERT);
                 }
                 break;
@@ -79,17 +85,14 @@ public class BorderConverter implements Converting {
                 break;
             case CONFIRMING: {
                 if (withClientPackage){
-//                    System.out.println("gege");
                     if (!segment.getClientPackage().getReport().getIsConfirmed() && segment.getClientPackage().getReport().isSuccessful()) {
                         applicationParcel = new ApplicationParcel(sample.dialog_windows.communication.enum_section.Markers.PRIVIOUSSTAGE);
                     }else if (!segment.getClientPackage().getReport().isSuccessful()) {
                         break;
-//                        System.out.println("gege");
 //                        String[] segregatedMessage = segment.getClientPackage().getReport().Message().split(":");
 //                        applicationParcel = new ApplicationParcel(segregatedMessage[1], sample.dialog_windows.communication.enum_section.Markers.SENDALLERT);
                     } else applicationParcel = new ApplicationParcel(sample.dialog_windows.communication.enum_section.Markers.NEXTSTAGE);
                 }else {
-//                    System.out.println("gege");
                     applicationParcel = new ApplicationParcel(sample.dialog_windows.communication.enum_section.Markers.NEXTSTAGE);
                 }
                 break;

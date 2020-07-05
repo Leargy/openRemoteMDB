@@ -96,8 +96,8 @@ public class LogInWindowController extends Dialog {
     }
 
     @Override
-    public String getData() {
-        return "";
+    public void setInfo(String info) {
+
     }
 
     @Override

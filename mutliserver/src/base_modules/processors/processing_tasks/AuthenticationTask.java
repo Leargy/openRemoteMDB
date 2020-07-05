@@ -87,8 +87,11 @@ public class AuthenticationTask implements Component {
 
     // Synchronized method to make "Happens-before"
     public synchronized void addAuthorizedUser(SocketChannel socketChannel, User user) {
+        StringBuilder allUsers = new StringBuilder();
         for (Map.Entry<SocketChannel, User> tempEntry : LOGGED_USERS.entrySet()) {
+            allUsers.append(tempEntry.getValue().getLogin());
             UsersAlarmThread.submit(() -> {
+//                System.out.println("добавил" + Thread.currentThread().getName());
 //                SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0,tempEntry.getValue().getLogin() + " connected to the server!")));
                 SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(tempEntry.getKey(),new Report(0,user.getLogin() + " зашел на сервер!")));
             });
@@ -98,6 +101,9 @@ public class AuthenticationTask implements Component {
         try {
             Thread.sleep(300);
         }catch (InterruptedException ex) {/*NOPE*/}
+        UsersAlarmThread.submit(() -> {
+           SUB_PROCESS_CONTROLLER.notify(this, new NotifyBag(socketChannel, new Report(0, allUsers.toString() + " зашел")));
+        });
         SUB_PROCESS_CONTROLLER.notify(this, new ClientPackBag(socketChannel, new ClientPackage(null,null)));
     }
     public synchronized void removeAuthorizedUser(SocketChannel socketChannel) {
@@ -127,6 +133,7 @@ public class AuthenticationTask implements Component {
     public synchronized void notifyAllUsers(ClientPackBag clientPackBag) {
         for (Map.Entry<SocketChannel,User> tempLoggedUser : LOGGED_USERS.entrySet()) {
             UsersAlarmThread.submit(() -> {
+                System.out.println("гого" + Thread.currentThread().getName());
                 SUB_PROCESS_CONTROLLER.notify(this, new ClientPackBag(tempLoggedUser.getKey(), clientPackBag.getClientPacket()));
             });
         }

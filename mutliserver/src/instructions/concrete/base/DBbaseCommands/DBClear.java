@@ -5,6 +5,8 @@ import entities.User;
 import extension_modules.dbinteraction.OrganizationsTableInteractor;
 import extension_modules.dbinteraction.TablesInteractor;
 import instructions.concrete.base.Clear;
+import organization.Organization;
+import organization.OrganizationWithUId;
 import parsing.customer.local.TotalCommander;
 import patterns.command.Receiver;
 
@@ -30,7 +32,9 @@ public class DBClear extends Clear {
             return new Report(12,"Не удалось удалить ваши организации!\n ");
         }
         Report report = super.execute();
-        report.setOrganizations(((TotalCommander)SIEVE).getOrganizationList());
+        ArrayList<OrganizationWithUId> removedOrganizations = new ArrayList<>();
+        removedOrganizations.add(new OrganizationWithUId(null,TEMP_USER.getLogin(),-1));
+        report.setOrganizations(removedOrganizations);
         return report;
     }
 
