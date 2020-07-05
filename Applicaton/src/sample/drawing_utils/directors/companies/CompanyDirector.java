@@ -10,15 +10,26 @@ import sample.drawing_utils.materials.ArchitectureType;
 import sample.drawing_utils.materials.Company;
 
 public class CompanyDirector {
-    private CompanyBuilder companyBuilder;
-    private HallDirector hallDirector;
-    private OfficesDirector officesDirector;
-    private NegotiateDirector negotiateDirector;
-    private CanteenDirector canteenDirector;
-    private StorageDirector storageDirector;
-    private BossDirector bossDirector;
-    private AtticDirector atticDirector;
-    private RoofDirector roofDirector;
+    private CompanyBuilder companyBuilder = new CompanyBuilder();
+    private HallDirector hallDirector = new HallDirector();
+    private OfficesDirector officesDirector = new OfficesDirector();
+    private NegotiateDirector negotiateDirector = new NegotiateDirector();
+    private CanteenDirector canteenDirector = new CanteenDirector();
+    private StorageDirector storageDirector = new StorageDirector();
+    private BossDirector bossDirector = new BossDirector();
+    private AtticDirector atticDirector = new AtticDirector();
+    private RoofDirector roofDirector = new RoofDirector();
+
+    {
+        changeBuilder(new HallBuilder());
+        changeBuilder(new OfficeBuilder());
+        changeBuilder(new NegotiateBuilder());
+        changeBuilder(new CanteenBuilder());
+        changeBuilder(new StorageBuilder());
+        changeBuilder(new BossBuilder());
+        changeBuilder(new AtticBuilder());
+        changeBuilder(new RoofBuilder());
+    }
 
     public Company make(OrganizationWithUId organization, Paint colour, Group group) {
         companyBuilder.destroy();
@@ -38,7 +49,7 @@ public class CompanyDirector {
                 companyBuilder.buildNegotiate(negotiateDirector.make(organization, colour, group));
             }
             case STORAGED: {
-                companyBuilder.buildStorage(storageDirector.make(organization, colour, group));
+//                companyBuilder.buildStorage(storageDirector.make(organization, colour, group));
             }
             case CANTEENED: {
                 companyBuilder.buildCanteen(canteenDirector.make(organization, colour, group));

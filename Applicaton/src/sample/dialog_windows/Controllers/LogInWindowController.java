@@ -87,6 +87,7 @@ public class LogInWindowController extends Dialog {
     @Override
     public void renderWindow() {
         thisStage.setScene(getScene());
+//        thisStage.centerOnScreen();
         thisStage.show();
     }
 

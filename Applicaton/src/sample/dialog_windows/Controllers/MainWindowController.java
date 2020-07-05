@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.concurrent.Executor;
 
 import com.sun.scenario.effect.LockableResource;
+import entities.organizationFactory.OrganizationBuilder;
 import instructions.Decree;
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -18,12 +19,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,10 +40,11 @@ import sample.dialog_windows.Commander;
 import sample.dialog_windows.Dialog;
 import sample.dialog_windows.MainWindowFactory;
 import sample.dialog_windows.WindowsFactory;
+import sample.drawing_utils.builders.companies.CompanyBuilder;
+import sample.drawing_utils.directors.companies.CompanyDirector;
+import sample.drawing_utils.materials.Company;
 
 public class MainWindowController extends Dialog {
-    private static IButton buttonActioner;
-
     private WindowsFactory mainWindowFactory;
     private static Commander totalCommander;
     public static final StringProperty nickForDisplaying = new ReadOnlyStringWrapper("st");
@@ -48,6 +52,7 @@ public class MainWindowController extends Dialog {
     private static boolean[] isOffseted;
     private static InteractWindowController interactWindowController;
     private static ObservableList<OrganizationWithUId> filteredList = FXCollections.observableArrayList();
+    private static ArrayList<Company> buildingsList = new ArrayList<>();
     private static final ArrayList<Button> tableButtons = new ArrayList<>();
     private static final ObservableList<String> onlineUsers = FXCollections.observableArrayList();
     private static int numberOfUsers = 1;
@@ -71,8 +76,11 @@ public class MainWindowController extends Dialog {
     private IntegerProperty employeesCount = new SimpleIntegerProperty();
     private IntegerProperty id = new SimpleIntegerProperty();
 
+    private Company arranger = null;
+    private HashMap<String, Paint> UsersLinkedWithColor = new HashMap<>();
+
     public MainWindowController() {
-        isOffseted = new boolean[4];
+        isOffseted = new boolean[5];
         mainWindowFactory = new MainWindowFactory();
         interactWindowController = new InteractWindowController().setCommander(totalCommander);
 //        onlineUsers.add(nickForDisplaying.get());
@@ -121,6 +129,7 @@ public class MainWindowController extends Dialog {
     @FXML private Button info_button;
     @FXML private Button online_button;
     @FXML private TextArea online_panel;
+    @FXML private Group organization_objects_group;
 
     @FXML
     void initialize() {
@@ -234,6 +243,10 @@ public class MainWindowController extends Dialog {
             return id.asObject();
         });
 
+        vizualization_selector.setOnSelectionChanged((event) -> {
+            isOffseted[4] = true;
+            drawBuildings(filteredList);
+        });
 
         tableTimerTask = new TimerTask() {
             @Override
@@ -245,6 +258,7 @@ public class MainWindowController extends Dialog {
 //                        System.out.println(organizationsToAdd);
                         tabl.getItems().clear();
                         tabl.getItems().addAll(filteredList);
+                        drawBuildings(filteredList);
                         tabl.refresh();
                         hasChanges = false;
                     }
@@ -257,10 +271,10 @@ public class MainWindowController extends Dialog {
             public void run() {
                 if (isOffseted[1]) {
                     Platform.runLater(() -> {
-                        if (userCollectionModified) {
-//                            online_panel.getChildren().clear();
-//                            online_panel.getChildren().addAll(onlineUsers);
-                        }
+//                        if (userCollectionModified) {
+////                            online_panel.getChildren().clear();
+////                            online_panel.getChildren().addAll(onlineUsers);
+//                        }
                         totalCommander.info();
                         info_panel.setText(info.getText());
                     });
@@ -524,13 +538,27 @@ public class MainWindowController extends Dialog {
         return result;
     }
 
-//    <String fx:value="Name" />
-//                              <String fx:value="Fullname" />
-//                              <String fx:value="Type" />
-//                              <String fx:value="Employees count" />
-//                              <String fx:value="Annual turnover" />
-//                              <String fx:value="Zip code" />
-//                              <String fx:value="Creation date" />
-//                              <String fx:value="Owner" />
-//                              <String fx:value="ID" />
+    private void drawBuildings(ObservableList<OrganizationWithUId> organizationWithUIds) {
+        creatLinkedColorForUser(organizationWithUIds);
+        Iterator<OrganizationWithUId> iter = organizationWithUIds.iterator();
+        while (iter.hasNext()) {
+            OrganizationWithUId tempOrganization = iter.next();
+            buildingsList.add(new CompanyDirector().make(tempOrganization,UsersLinkedWithColor.get(tempOrganization.getUserLogin()),organization_objects_group));
+        }
+    }
+
+    private void creatLinkedColorForUser(ObservableList<OrganizationWithUId> organizationWithUIds) {
+        Iterator<OrganizationWithUId> iter = organizationWithUIds.iterator();
+        while (iter.hasNext()) {
+            UsersLinkedWithColor.put(iter.next().getUserLogin(), randomColor());
+        }
+    }
+
+    public Paint randomColor() {
+        Random random = new Random();
+        int r = random.nextInt(255);
+        int g = random.nextInt(255);
+        int b = random.nextInt(255);
+        return Color.rgb(r, g, b);
+    }
 }

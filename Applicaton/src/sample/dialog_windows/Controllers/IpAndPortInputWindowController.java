@@ -83,6 +83,7 @@ public class IpAndPortInputWindowController extends Dialog {
 //        thisStage.setResizable(true);
         thisStage.setScene(getScene());
 //        thisStage.setResizable(false);
+//        thisStage.centerOnScreen();
         thisStage.show();
 
     }
