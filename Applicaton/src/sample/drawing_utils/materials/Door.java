@@ -1,0 +1,22 @@
+package sample.drawing_utils.materials;
+
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
+import organization.OrganizationWithUId;
+
+public final class Door extends Rectangle implements Linkable {
+    private OrganizationWithUId LINK;
+    public Door(double x, double y, double width, double height, Paint colour) {
+
+    }
+
+    @Override
+    public void setLink(OrganizationWithUId link) {
+        LINK = link;
+    }
+
+    @Override
+    public OrganizationWithUId getLink() {
+        return LINK;
+    }
+}
