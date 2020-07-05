@@ -178,12 +178,16 @@ public class MainWindowController extends Dialog {
         });
 
         sign_out_button.setOnAction(event -> {
+            online_panel.clear();
+            onlineUsers.clear();
+
 //            firstLoad = true;
             tableTimerTask.cancel();
             infoTimerTask.cancel();
 //            timer.cancel();
             tabl.getItems().clear();
             organizationsToAdd.clear();
+            filteredList.clear();
             totalCommander.signOut();
         });
 

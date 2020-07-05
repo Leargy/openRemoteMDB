@@ -36,8 +36,10 @@ public class Clear extends ConcreteDecree {
     } catch (UnsupportedOperationException e) {
       return new Report(0xBAD, "Извините, но данный тип коллекции не поддерживает операцию очистки");
     }
-    if (numOfDeletedArguments == 0) return new Report(0,"Ваших элементов в коллекции не было найдено.\n\t Удалено элементов: " + numOfDeletedArguments);
-    return new Report(0, "Очистка коллекции успешна.\n\t Удалено элементов: " + numOfDeletedArguments);
+//    if (numOfDeletedArguments == 0) return new Report(0,"Ваших элементов в коллекции не было найдено.\n\t Удалено элементов: " + numOfDeletedArguments);
+    if (numOfDeletedArguments == 0) return new Report(0,"You elements hasn;t been found.\n\t Elements deleted: " + numOfDeletedArguments);
+//    return new Report(0, "Очистка коллекции успешна.\n\t Удалено элементов: " + numOfDeletedArguments);
+    return new Report(0, "Collection successfully cleared from your elements.\n\t Elements deleted: " + numOfDeletedArguments);
   }
 
 //  public void setUserLogin(String userLogin) {

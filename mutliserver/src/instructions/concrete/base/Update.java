@@ -51,7 +51,8 @@ public class Update extends Committer {
       OrganizationWithUId litmus = EMBEDDED;
       OrganizationWithUId[] buffers = new OrganizationWithUId[]{litmus};
       if (!((TotalCommander)realSiever).checkIfYours(findedOrganization[0],litmus)) {
-        return new Report(3, "Заменяемая организация не пренадлежит взаимодействующему пользователю.");
+//        return new Report(3, "Заменяемая организация не пренадлежит взаимодействующему пользователю.");
+        return new Report(3, "Current organization isn't belongs to actioning user.");
       }
       realSiever.add(keys, buffers, (org)->(true));
       if (buffers[0] != null)

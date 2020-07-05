@@ -31,7 +31,8 @@ public class SignOut extends ConcreteDecree {
     public Report execute() {
         AUTHENTICATION_TASK.removeAuthorizedUser(userSocketChannel);
 //        return new Report(0,"You successfully deauthorized.");
-        Report report = new Report(0,"Вы успешно деавторезировались.");
+//        Report report = new Report(0,"Вы успешно деавторезировались.");
+        Report report = new Report(0,"You successfully deauthorizes.");
         report.setIsConfirmed(false);
         return report;
     }

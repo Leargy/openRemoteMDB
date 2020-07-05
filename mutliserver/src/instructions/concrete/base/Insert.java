@@ -45,7 +45,8 @@ public class Insert extends Committer {
     realSiever.search(keys, buffers, (org)->(true));
     if (buffers[0] != null)
 //      return new Report(3, "Обнаружена попытка добавить элемент по уже существующему ключу");
-      return new Report(3, "Такой элемент уже существует.");
+//      return new Report(3, "Такой элемент уже существует.");
+      return new Report(3, "Such element already exists.");
     buffers[0] = EMBEDDED;
     OrganizationWithUId[] added = new OrganizationWithUId[]{EMBEDDED};
 //    keys = new Integer[]{EMBEDDED.getOrganization().key};
