@@ -10,7 +10,8 @@ public class AtticBuilder extends RoomBuilder {
     public static final int CENTER_WINDOW = 0;
     public static final int LEFT_BEAM = 0;
     public static final int CENTER_BEAM = 1;
-    public static final int RIGHT_BEAM = 2;
+    public static final int CENTER_WINDOW_ROUNDING = 2;
+    public static final int RIGHT_BEAM = 3;
     public static final int BOTTOM_BEAM = 0;
     public static final int MIDDLE_BEAM = 1;
     public static final int TOP_BEAM = 2;
@@ -22,7 +23,7 @@ public class AtticBuilder extends RoomBuilder {
 
     @Override
     public void buildWindows(double x, double y, double width, double height, Paint fill) {
-        product.installWindow(CENTER_WINDOW, new Window(x + width / 4, y + height / 4, width / 5, height / 5, fill));
+        product.installWindow(CENTER_WINDOW, new Window(x + width / 4.5, y + height / 4.5, width / 5, height / 5, fill));
     }
 
     @Override
@@ -42,6 +43,7 @@ public class AtticBuilder extends RoomBuilder {
         product.installVBeam(LEFT_BEAM, new Beam(x, y, width / 10, height, fill));
         product.installVBeam(CENTER_BEAM, new Beam(x + width / 2, y, width / 10, height, fill));
         product.installVBeam(RIGHT_BEAM, new Beam(x + width, y, width / 10, height, fill));
+        product.installVBeam(CENTER_WINDOW_ROUNDING, new Beam(x + width / 4.5 - 2, y + height / 4.5 - 2, width / 4, height / 4, fill));
     }
 
     @Override

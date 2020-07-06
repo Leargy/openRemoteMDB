@@ -36,6 +36,6 @@ public class RoofBuilder extends RoomBuilder {
 
     @Override
     public void buildFlags(double x, double y, double width, double height, Paint fill) {
-        product.installFlag(0, new Flag(x + 0.55 * width, y + height / 2, width / 2, height / 2, fill));
+        product.installFlag(0, new Flag(x + 0.55 * width, y + height / 2, width / 2.6, height / 3.5, fill));
     }
 }

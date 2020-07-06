@@ -33,8 +33,8 @@ public class StorageBuilder extends RoomBuilder {
     @Override
     public void buildHBeams(double x, double y, double width, double height, Paint fill) {
         product.installHBeam(BOTTOM_BEAM, new Beam(x - width / 10, y + height - 0.5, width * 1.3, height / 10, fill));
-        product.installHBeam(LOWER_MIDDLE_BEAM, new Beam(x - width / 10, y + 0.6 * height - 1, width * 1.3, height / 10, fill));
-        product.installHBeam(UPPER_MIDDLE_BEAM, new Beam(x - width / 10, y + 0.3 * height - 1, width * 1.3, height / 10, fill));
+        product.installHBeam(LOWER_MIDDLE_BEAM, new Beam(x - 4.5, y + 0.6 * height - 1, width * 1.22, height / 10, fill));
+        product.installHBeam(UPPER_MIDDLE_BEAM, new Beam(x - 4.5, y + 0.3 * height - 1, width * 1.22, height / 10, fill));
         product.installHBeam(TOP_BEAM, new Beam(x - width / 10, y, width * 1.3, height / 10, fill));
     }
 

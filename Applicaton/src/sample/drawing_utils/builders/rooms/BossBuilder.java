@@ -9,7 +9,8 @@ public class BossBuilder extends RoomBuilder {
     public static final int SITE = 5;
     public static final int CENTER_WINDOW = 0;
     public static final int LEFT_BEAM = 0;
-    public static final int RIGHT_BEAM = 1;
+    public static final int CENTER_WINDOW_ROUNDING = 1;
+    public static final int RIGHT_BEAM = 2;
     public static final int BOTTOM_BEAM = 0;
     public static final int TOP_BEAM = 1;
 
@@ -20,7 +21,7 @@ public class BossBuilder extends RoomBuilder {
 
     @Override
     public void buildWindows(double x, double y, double width, double height, Paint fill) {
-        product.installWindow(CENTER_WINDOW, new Window(x + width / 4, y + height / 3, width / 5, height * 0.3, fill));
+        product.installWindow(CENTER_WINDOW, new Window(x + width / 2.25, y + height / 3, width / 5, height * 0.3, fill));
     }
 
     @Override
@@ -38,6 +39,7 @@ public class BossBuilder extends RoomBuilder {
     public void buildVBeams(double x, double y, double width, double height, Paint fill) {
         product.installVBeam(LEFT_BEAM, new Beam(x, y, width / 10, height, fill));
         product.installVBeam(RIGHT_BEAM, new Beam(x + width, y, width / 10, height, fill));
+        product.installVBeam(CENTER_WINDOW_ROUNDING, new Beam(x + width / 2.25 - 2, y + height / 3 - 2, width / 4, height * 0.35, fill));
     }
 
     @Override

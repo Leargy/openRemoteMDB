@@ -1,11 +1,12 @@
 package sample.dialog_windows.Controllers;
 
-import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -13,7 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import locale.Localizator;
-import sample.buttons.IButton;
 import sample.dialog_windows.Commander;
 import sample.dialog_windows.ConnectionSceneFactory;
 import sample.dialog_windows.Dialog;
@@ -38,6 +38,7 @@ public class IpAndPortInputWindowController extends Dialog {
         return this;
     }
 
+
     @FXML private TextField ip_field;
     @FXML private TextField port_field;
     @FXML private Button connectionButton;
@@ -52,6 +53,7 @@ public class IpAndPortInputWindowController extends Dialog {
 
     @FXML
     void initialize() {
+        language_menu_button.getMenus();
         // initialize menu items with images
         ImageView rusView = new ImageView(new Image(getClass().getResource("../../assets/images/ussr.png").toString()));
         connect_change_ru.setGraphic(rusView);
@@ -63,12 +65,7 @@ public class IpAndPortInputWindowController extends Dialog {
         connect_change_uk.setGraphic(ukrView);
 
         connectionButton.setOnAction(event -> {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    totalCommander.setConnection(new ApplicationParcel("ip=" + ip_field.getText() + " " + "port=" + port_field.getText()));
-                }
-            });
+            Platform.runLater(() -> totalCommander.setConnection(new ApplicationParcel("ip=" + ip_field.getText() + " " + "port=" + port_field.getText())));
             try {
                 progressIndicator.start(progressStage);
             }catch (Exception ex) {
@@ -79,9 +76,16 @@ public class IpAndPortInputWindowController extends Dialog {
 
     @Override
     public void renderWindow() {
+//        Parent root = null;
+//        try {
+//             root = FXMLLoader.load(getClass().getResource("/sample/assets/windows/connectionScene.fxml"));
+//        }catch (Exception ex) {
+//
+//        }
 //        thisStage.hide();
 //        thisStage.setResizable(true);
         thisStage.setScene(getScene());
+//        thisStage.setScene(new Scene(root,336.0, 413.0));
 //        thisStage.setResizable(false);
 //        thisStage.centerOnScreen();
         thisStage.show();

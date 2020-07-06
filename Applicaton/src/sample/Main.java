@@ -12,7 +12,7 @@ import сlient.KickStarter;
 public class Main extends Application {
     private ButtonMediator buttonMediator;
 //    private IpAndPortInputWindow ipAndPortInputWindow;
-//    private Stage mainStage;
+    private Stage mainStage;
     {
         buttonMediator = new ButtonMediator();
 //        ipAndPortInputWindow = new IpAndPortInputWindow();

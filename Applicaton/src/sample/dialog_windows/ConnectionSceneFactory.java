@@ -14,7 +14,7 @@ public class ConnectionSceneFactory implements WindowsFactory {
         try {
             root = FXMLLoader.load(getClass().getResource("/sample/assets/windows/connectionScene.fxml"));
         }catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println(ex.getCause());
         }
         return new Scene(root, 336.0, 413.0);
     }

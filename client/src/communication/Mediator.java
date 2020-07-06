@@ -72,7 +72,7 @@ public class Mediator implements Mediating {
      */
     @Override
     public void notify(Component component, Segment parcel) {
-        if(parcel.getClientPackage() != null) System.out.println(parcel.getClientPackage().getCommand());
+//        if(parcel.getClientPackage() != null) System.out.println(parcel.getClientPackage().getCommand());
         if (component == SERVANT && parcel.getMarker() == Markers.SIGNALSTAGE) {
             ApplicationParcel applicationParcel = borderConverter.convertToApplicationPackage(parcel);
             applicationMediator.notify(null, applicationParcel);

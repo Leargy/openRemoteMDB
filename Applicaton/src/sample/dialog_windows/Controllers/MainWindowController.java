@@ -1,18 +1,8 @@
 package sample.dialog_windows.Controllers;
 
-import java.net.URL;
-import java.sql.Time;
 import java.util.*;
-import java.util.concurrent.Executor;
-
-import com.sun.scenario.effect.LockableResource;
-import entities.organizationFactory.OrganizationBuilder;
-import instructions.Decree;
 import javafx.application.Platform;
 import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableSetValue;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -23,8 +13,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.*;
@@ -32,32 +21,26 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import locale.Localizator;
-import organization.Organization;
 import organization.OrganizationWithUId;
-import sample.Main;
-import sample.buttons.IButton;
 import sample.dialog_windows.Commander;
 import sample.dialog_windows.Dialog;
 import sample.dialog_windows.MainWindowFactory;
 import sample.dialog_windows.WindowsFactory;
-import sample.drawing_utils.builders.companies.CompanyBuilder;
 import sample.drawing_utils.directors.companies.CompanyDirector;
 import sample.drawing_utils.materials.Company;
 
-import javax.jws.soap.SOAPBinding;
-
 public class MainWindowController extends Dialog {
-    private WindowsFactory mainWindowFactory;
+    private final WindowsFactory mainWindowFactory;
     private static Commander totalCommander;
     public static final StringProperty nickForDisplaying = new ReadOnlyStringWrapper("st");
     public static final StringProperty organizationParams = new ReadOnlyStringWrapper("");
     private static boolean[] isOffseted;
     private static InteractWindowController interactWindowController;
-    private static ObservableList<OrganizationWithUId> filteredList = FXCollections.observableArrayList();
-    private static ArrayList<Company> buildingsList = new ArrayList<>();
-    private static final ArrayList<Button> tableButtons = new ArrayList<>();
+    private static final ObservableList<OrganizationWithUId> filteredList = FXCollections.observableArrayList();
+    private static final ArrayList<Company> buildingsList = new ArrayList<>();
+//    private static final ArrayList<Button> tableButtons = new ArrayList<>();
     private static final ObservableList<String> onlineUsers = FXCollections.observableArrayList();
-    private static int numberOfUsers = 1;
+//    private static int numberOfUsers = 1;
     private static boolean userCollectionModified = false;
 //    private static boolean firstLoad = true;
     private static final Text info = new Text();
@@ -289,12 +272,9 @@ public class MainWindowController extends Dialog {
             }
         };
 
-        onlineUsers.addListener(new ListChangeListener<String>() {
-            @Override
-            public void onChanged(Change<? extends String> c) {
-                online_panel.clear();
-                online_panel.setText(prepareUsersList());
-            }
+        onlineUsers.addListener((ListChangeListener<String>) c -> {
+            online_panel.clear();
+            online_panel.setText(prepareUsersList());
         });
 
         tableTimer.schedule(tableTimerTask,100L,300L);
@@ -304,17 +284,14 @@ public class MainWindowController extends Dialog {
         addOnlineUser(nickForDisplaying.get());
         addInteructionButton();
 
-        filteredList.addListener(new ListChangeListener<OrganizationWithUId>() {
-            @Override
-            public void onChanged(Change<? extends OrganizationWithUId> c) {
+        filteredList.addListener((ListChangeListener<OrganizationWithUId>) c -> {
 //                System.out.println(filteredList.size());
-                buildingsList.clear();
-                drawBuildings(filteredList);
-                Platform.runLater(() -> {
-                    organization_objects_group.getChildren().clear();
-                    setBuildings(buildingsList);
-                });
-            }
+            buildingsList.clear();
+            drawBuildings(filteredList);
+            Platform.runLater(() -> {
+                organization_objects_group.getChildren().clear();
+                setBuildings(buildingsList);
+            });
         });
     }
 
@@ -471,7 +448,7 @@ public class MainWindowController extends Dialog {
             @Override
             public TableCell<OrganizationWithUId, Void> call(final TableColumn<OrganizationWithUId, Void> param) {
                 final TableCell<OrganizationWithUId, Void> cell = new TableCell<OrganizationWithUId, Void>() {
-
+                    private final HBox boxForBtn = new HBox();
                     private final Button btn = new Button((String) Localizator.changeLocale("locale.table.TableResources", currentLocale).getObject("Edit"));
                     {
                         btn.setOnAction((ActionEvent event) -> {
@@ -479,6 +456,9 @@ public class MainWindowController extends Dialog {
                             interactWindowController.renderWindow();
                         });
                         btn.setStyle("-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F");
+                        boxForBtn.getChildren().add(btn);
+                        boxForBtn.setAlignment(Pos.CENTER);
+//                        boxForBtn.setPadding(new Insets());
                     }
 
                     @Override
@@ -487,7 +467,7 @@ public class MainWindowController extends Dialog {
                         if (empty) {
                             setGraphic(null);
                         } else {
-                            setGraphic(btn);
+                            setGraphic(boxForBtn);
                         }
                     }
                 };

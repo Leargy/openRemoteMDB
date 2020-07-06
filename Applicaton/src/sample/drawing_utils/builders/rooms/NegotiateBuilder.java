@@ -12,7 +12,10 @@ public class NegotiateBuilder extends RoomBuilder {
     public static final int CENTER_WINDOW = 1;
     public static final int RIGHT_WINDOW = 2;
     public static final int LEFT_BEAM = 0;
-    public static final int RIGHT_BEAM = 1;
+    public static final int LEFT_WINDOW_ROUNDING = 1;
+    public static final int CENTER_WINDOW_ROUNDING = 2;
+    public static final int RIGHT_WINDOW_ROUNDING = 3;
+    public static final int RIGHT_BEAM = 4;
     public static final int TOP_BEAM = 0;
 
     @Override
@@ -41,6 +44,9 @@ public class NegotiateBuilder extends RoomBuilder {
     public void buildVBeams(double x, double y, double width, double height, Paint fill) {
         product.installVBeam(LEFT_BEAM, new Beam(x, y, width / 10, height, fill));
         product.installVBeam(RIGHT_BEAM, new Beam(x + width, y, width / 10, height, fill));
+        product.installVBeam(LEFT_WINDOW_ROUNDING, new Beam(x + width * 0.2 - 2,  y + height * 0.35 - 2, width / 4, height * 0.35, fill));
+        product.installVBeam(CENTER_WINDOW_ROUNDING, new Beam(x + width * 0.45 - 2, y + height * 0.35 - 2, width / 4, height * 0.35, fill));
+        product.installVBeam(RIGHT_WINDOW_ROUNDING, new Beam(x + width * 0.7 - 2, y + height * 0.35 - 2, width / 4, height * 0.35, fill));
     }
 
     @Override
