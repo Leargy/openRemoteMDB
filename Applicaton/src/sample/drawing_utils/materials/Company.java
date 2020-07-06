@@ -1,6 +1,7 @@
 package sample.drawing_utils.materials;
 
 import javafx.scene.Node;
+import javafx.util.Pair;
 import organization.OrganizationWithUId;
 
 import java.util.ArrayList;
@@ -52,5 +53,13 @@ public final class Company {
                     room.turnOnLight();
                 });
         opened = true;
+    }
+
+    public boolean isIntersecs(Pair<Double, Double> coordinates) {
+        short[] result = new short[]{0};
+        Arrays.stream(ROOMS).forEach((room)->{
+            result[0] |= room.isIntersects(coordinates);
+        });
+        return result[0] == 1;
     }
 }

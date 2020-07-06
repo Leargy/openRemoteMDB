@@ -23,6 +23,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -31,6 +32,7 @@ import javafx.scene.text.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
+import javafx.util.Pair;
 import locale.Localizator;
 import organization.Organization;
 import organization.OrganizationWithUId;
@@ -608,5 +610,16 @@ public class MainWindowController extends Dialog {
         int g = random.nextInt(255);
         int b = random.nextInt(255);
         return Color.rgb(r, g, b);
+    }
+
+    public void updateOrganizationFromMap(MouseEvent mouseEvent) {
+        Pair<Double, Double> point = new Pair<>(mouseEvent.getX(), mouseEvent.getY());
+        Optional<Company> possibleIntersection = buildingsList.stream()
+                .filter((building)->(building.isIntersecs(point)))
+                .findAny();
+        if (possibleIntersection.isPresent()) {
+            Company intersection = possibleIntersection.get();
+            interactWindowController.setRowOrganization(intersection.getLink().getOrganization());
+        }
     }
 }
