@@ -4,7 +4,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import organization.OrganizationWithUId;
 
-public final class Window extends Rectangle implements Linkable {
+public class Window extends Rectangle implements Linkable {
     private OrganizationWithUId LINK;
 
     public Window(double x, double y, double width, double height, Paint colour) {
