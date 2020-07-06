@@ -18,7 +18,7 @@ public class OfficesDirector extends RoomDirector {
         _builder.buildFacade(anchor.getKey(), anchor.getValue(), OfficeMapper.DEFAULT_WIDTH, OfficeMapper.DEFAULT_HEIGHT, colour);
         _builder.buildHBeams(anchor.getKey(), anchor.getValue(), OfficeMapper.DEFAULT_WIDTH, OfficeMapper.DEFAULT_HEIGHT, HBEAMS_COLOUR);
         _builder.buildVBeams(anchor.getKey(), anchor.getValue(), OfficeMapper.DEFAULT_WIDTH, OfficeMapper.DEFAULT_HEIGHT, VBEAMS_COLOUR);
-        _builder.buildWindows(anchor.getKey(), anchor.getValue(), OfficeMapper.DEFAULT_WIDTH, OfficeMapper.DEFAULT_HEIGHT, WINDOWS_COLOUR);
+        _builder.buildWindows(anchor.getKey(), anchor.getValue(), OfficeMapper.DEFAULT_WIDTH, OfficeMapper.DEFAULT_HEIGHT, WINDOWS_COLOUR_CLOSED);
         return _builder.getResult();
     }
 }

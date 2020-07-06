@@ -12,6 +12,7 @@ public class HallBuilder extends RoomBuilder {
     public static final int RIGHT_WINDOW = 1;
     public static final int BOTTOM_BEAM = 0;
     public static final int TOP_DOOR_WAY_BEAM = 1;
+    public static final int TOP_BEAM = 2;
     public static final int LEFT_BEAM = 0;
     public static final int LEFT_WINDOW_ROUNDING = 1;
     public static final int RIGHT_BEAM = 2;
@@ -37,8 +38,9 @@ public class HallBuilder extends RoomBuilder {
 
     @Override
     public void buildHBeams(double x, double y, double width, double height, Paint fill) {
-        product.installHBeam(BOTTOM_BEAM, new Beam(x - 5, y + height - 1, width * 1.25, height / 10, fill));
+        product.installHBeam(TOP_BEAM , new Beam(x - width / 10, y, width * 1.27, height / 10, fill));
         product.installHBeam(TOP_DOOR_WAY_BEAM, new Beam(x + width * 0.31, y + height / 1.38, width / 2.13, height / 15, fill));
+        product.installHBeam(BOTTOM_BEAM, new Beam(x - 5, y + height - 1, width * 1.25, height / 10, fill));
     }
 
     @Override

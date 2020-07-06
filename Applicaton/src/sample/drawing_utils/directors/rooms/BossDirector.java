@@ -20,7 +20,7 @@ public class BossDirector extends RoomDirector {
         _builder.buildFacade(anchor.getKey(), anchor.getValue(), BossMapper.DEFAULT_WIDTH, BossMapper.DEFAULT_HEIGHT, colour);
         _builder.buildHBeams(anchor.getKey(), anchor.getValue(), BossMapper.DEFAULT_WIDTH, BossMapper.DEFAULT_HEIGHT, HBEAMS_COLOUR);
         _builder.buildVBeams(anchor.getKey(), anchor.getValue(), BossMapper.DEFAULT_WIDTH, BossMapper.DEFAULT_HEIGHT, VBEAMS_COLOUR);
-        _builder.buildWindows(anchor.getKey(), anchor.getValue(), BossMapper.DEFAULT_WIDTH, BossMapper.DEFAULT_HEIGHT, WINDOWS_COLOUR);
+        _builder.buildWindows(anchor.getKey(), anchor.getValue(), BossMapper.DEFAULT_WIDTH, BossMapper.DEFAULT_HEIGHT, WINDOWS_COLOUR_CLOSED);
         return _builder.getResult();
     }
 }

@@ -1,15 +1,12 @@
 package sample.drawing_utils.materials;
 
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.util.Pair;
 import organization.OrganizationWithUId;
 import sample.drawing_utils.directors.rooms.RoomDirector;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public final class Room {
     private final OrganizationWithUId LINK;
@@ -103,12 +100,12 @@ public final class Room {
                 });
     }
     
-    public short isIntersects(Pair<Double, Double> coordinates) {
-        if (coordinates.getKey() - FACADE.getX() <= Double.MIN_VALUE)
-            if (FACADE.getX() + FACADE.getWidth() - coordinates.getKey() <= Double.MIN_VALUE)
-                if (coordinates.getValue() - FACADE.getY() <= Double.MIN_VALUE)
-                    if (FACADE.getY() + FACADE.getHeight() - coordinates.getValue() <= Double.MIN_VALUE)
-                        return 1;
-        return 0;
-    }
+//    public short isIntersects(Pair<Double, Double> coordinates) {
+//        if (coordinates.getKey() - FACADE.getX() <= Double.MIN_VALUE)
+//            if (FACADE.getX() + FACADE.getWidth() - coordinates.getKey() <= Double.MIN_VALUE)
+//                if (coordinates.getValue() - FACADE.getY() <= Double.MIN_VALUE)
+//                    if (FACADE.getY() + FACADE.getHeight() - coordinates.getValue() <= Double.MIN_VALUE)
+//                        return 1;
+//        return 0;
+//    }
 }

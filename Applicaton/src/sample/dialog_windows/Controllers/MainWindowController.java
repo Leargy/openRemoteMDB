@@ -14,8 +14,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -47,12 +47,27 @@ public class MainWindowController extends Dialog {
 //    private static int numberOfUsers = 1;
     private static boolean userCollectionModified = false;
 //    private static boolean firstLoad = true;
+    private static boolean changeStatemant = true;
     private static final Text info = new Text();
 
     private static Timer tableTimer = new Timer();
     private static Timer infoTimer = new Timer();
+    private static Timer animationTimer = new Timer();
     private static TimerTask tableTimerTask ;
     private static TimerTask infoTimerTask ;
+    private static TimerTask animationTask1 ;
+    private static TimerTask animationTask2 ;
+
+    private static final String[] ambiance = new String[] {
+            "-fx-background-color: #aea5d5", //morning
+            "-fx-background-color: #998ec9", //morning-evening
+            "-fx-background-color: #827ab0", //evening
+            "-fx-background-color: #696293", //evening-night
+            "-fx-background-color: #4d4671", //night
+            "-fx-background-color: #696293", //evening-night
+            "-fx-background-color: #827ab0", //evening
+            "-fx-background-color: #998ec9" //morning-evening
+    };
 
 
     private StringProperty name = new SimpleStringProperty();
@@ -119,6 +134,7 @@ public class MainWindowController extends Dialog {
     @FXML private Button online_button;
     @FXML private TextArea online_panel;
     @FXML private Group organization_objects_group;
+    @FXML private AnchorPane buildings_field;
 
     @FXML
     void initialize() {
@@ -181,6 +197,8 @@ public class MainWindowController extends Dialog {
             onlineUsers.clear();
 
 //            firstLoad = true;
+            animationTask1.cancel();
+            animationTask2.cancel();
             tableTimerTask.cancel();
             infoTimerTask.cancel();
 //            timer.cancel();
@@ -233,9 +251,20 @@ public class MainWindowController extends Dialog {
             return id.asObject();
         });
 
-        vizualization_selector.setOnSelectionChanged((event) -> {
-            isOffseted[4] = true;
+//        vizualization_selector.setOnSelectionChanged((event) -> {
+//            if (!isOffseted[4]) drawBuildings(filteredList);
+//            isOffseted[4] = true;
+//        });
+
+        filteredList.addListener((ListChangeListener<OrganizationWithUId>) c -> {
+//            System.out.println(filteredList.size());
+            if (filteredList.size() == 0) return;
+            buildingsList.clear();
             drawBuildings(filteredList);
+            Platform.runLater(() -> {
+                organization_objects_group.getChildren().clear();
+                setBuildings(buildingsList);
+            });
         });
 
         tableTimerTask = new TimerTask() {
@@ -276,27 +305,42 @@ public class MainWindowController extends Dialog {
             }
         };
 
+        animationTask1 = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() ->{
+                    animateBuildings();
+                });
+            }
+        };
+        animationTask2 = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() ->{
+                    setNightOrDay();
+                });
+            }
+        };
+
+        tableTimer.schedule(tableTimerTask,100L,300L);
+        infoTimer.schedule(infoTimerTask,100L,800L);
+        animationTimer.schedule(animationTask1,400L, 3000L);
+        animationTimer.schedule(animationTask2,20L,8000L);
+
+
         onlineUsers.addListener((ListChangeListener<String>) c -> {
             online_panel.clear();
             online_panel.setText(prepareUsersList());
         });
 
-        tableTimer.schedule(tableTimerTask,100L,300L);
-        infoTimer.schedule(infoTimerTask,100L,800L);
-
-
         addOnlineUser(nickForDisplaying.get());
         addInteructionButton();
 
-        filteredList.addListener((ListChangeListener<OrganizationWithUId>) c -> {
-//                System.out.println(filteredList.size());
-            buildingsList.clear();
-            drawBuildings(filteredList);
-            Platform.runLater(() -> {
-                organization_objects_group.getChildren().clear();
-                setBuildings(buildingsList);
-            });
-        });
+
+//        organization_objects_group.setOnMouseClicked((mouseEvent) -> {
+//
+//        });
+
     }
 
     @Override
@@ -556,12 +600,16 @@ public class MainWindowController extends Dialog {
 //        }
     }
 
-    private void drawBuildings(ObservableList<OrganizationWithUId> organizationWithUIds) {
+    private synchronized void drawBuildings(ObservableList<OrganizationWithUId> organizationWithUIds) {
         creatLinkedColorForUser(organizationWithUIds);
 //        Iterator<OrganizationWithUId> iter = organizationWithUIds.iterator();
         organizationWithUIds.stream().forEach((tempOrg) -> {
             buildingsList.add(new CompanyDirector().make(tempOrg,UsersLinkedWithColor.get(tempOrg.getUserLogin()),organization_objects_group));
         });
+
+//        buildingsList.stream().forEach((company) -> {
+//            System.out.println("----" + company.getLink());
+//        });
 //        while (iter.hasNext()) {
 //            OrganizationWithUId tempOrganization = iter.next();
 //            buildingsList.add(new CompanyDirector().make(tempOrganization,UsersLinkedWithColor.get(tempOrganization.getUserLogin()),organization_objects_group));
@@ -595,13 +643,47 @@ public class MainWindowController extends Dialog {
     }
 
     public void updateOrganizationFromMap(MouseEvent mouseEvent) {
+//        System.out.println(mouseEvent.getX() + " " + mouseEvent.getY());
         Pair<Double, Double> point = new Pair<>(mouseEvent.getX(), mouseEvent.getY());
-        Optional<Company> possibleIntersection = buildingsList.stream()
-                .filter((building)->(building.isIntersecs(point)))
-                .findAny();
+        Optional<Company> possibleIntersection =
+                buildingsList.stream()
+                .filter((building)->(building.isIntersecs(point))).findFirst();
         if (possibleIntersection.isPresent()) {
             Company intersection = possibleIntersection.get();
             interactWindowController.setRowOrganization(intersection.getLink().getOrganization());
+            interactWindowController.renderWindow();
         }
     }
+
+    private void animateBuildings() {
+        if (changeStatemant) {
+            //turns day
+            buildingsList.stream().forEach((building) -> {
+                building.close(60);
+            });
+//            changeStatemant = false;
+        }else {
+            //turns night
+            buildingsList.stream().forEach((building) -> {
+                building.open(60);
+            });
+//            changeStatemant = true;
+        }
+    }
+
+    private int number = 0;
+    private void setNightOrDay() {
+        buildings_field.setStyle(ambiance[number]);
+        if (number == 0) changeStatemant = true; //turn day mode
+        if (number == 3) changeStatemant = false; //turn night mode
+        if (number == 6) changeStatemant = true; //turn day mode
+        if (++number == 7) number = 0;
+//        for (int i) {
+//            buildings_field.setBackground();
+//            buildings_field.setStyle("-fx-background-color: #332a66");
+//            buildings_field.setStyle("-fx-background-color: #4d4671");
+//        }
+    }
+
+
 }

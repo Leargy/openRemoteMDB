@@ -11,8 +11,9 @@ public abstract class RoomDirector {
     public static final Color HBEAMS_COLOUR = Color.SANDYBROWN;
     public static final Color VBEAMS_COLOUR = Color.SADDLEBROWN;
     public static final Color DOOR_COLOUR = Color.CYAN;
-    public static final Color WINDOWS_COLOUR_OPENED = Color.BLACK;
-    public static final Color WINDOWS_COLOUR_CLOSED = Color.GHOSTWHITE;
+    public static final Color WINDOWS_COLOUR_OPENED = Color.YELLOW;
+//    public static final Color WINDOWS_COLOUR_CLOSED = Color.GHOSTWHITE;
+    public static final Color WINDOWS_COLOUR_CLOSED = Color.BLACK;
 
     protected RoomBuilder _builder;
     public abstract Room make(OrganizationWithUId organization, Paint colour, Group group);

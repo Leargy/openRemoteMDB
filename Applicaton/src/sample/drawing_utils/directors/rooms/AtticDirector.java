@@ -19,7 +19,7 @@ public class AtticDirector extends RoomDirector {
         _builder.buildFacade(anchor.getKey(), anchor.getValue(), AtticMapper.DEFAULT_WIDTH, AtticMapper.DEFAULT_HEIGHT, colour);
         _builder.buildHBeams(anchor.getKey(), anchor.getValue(), AtticMapper.DEFAULT_WIDTH, AtticMapper.DEFAULT_HEIGHT, HBEAMS_COLOUR);
         _builder.buildVBeams(anchor.getKey(), anchor.getValue(), AtticMapper.DEFAULT_WIDTH, AtticMapper.DEFAULT_HEIGHT, VBEAMS_COLOUR);
-        _builder.buildWindows(anchor.getKey(), anchor.getValue(), AtticMapper.DEFAULT_WIDTH, AtticMapper.DEFAULT_HEIGHT, WINDOWS_COLOUR);
+        _builder.buildWindows(anchor.getKey(), anchor.getValue(), AtticMapper.DEFAULT_WIDTH, AtticMapper.DEFAULT_HEIGHT, WINDOWS_COLOUR_CLOSED);
         return _builder.getResult();
     }
 }

@@ -7,6 +7,7 @@ import organization.OrganizationWithUId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public final class Company {
     public static final int MAX_ROOMS_NUMBER = 8;
@@ -14,6 +15,8 @@ public final class Company {
     private final ArchitectureType TYPE;
     private final Room[] ROOMS;
     private boolean opened = true;
+    private Random random = new Random();
+
 
     public Company(OrganizationWithUId link) {
         LINK = link;
@@ -39,26 +42,36 @@ public final class Company {
         return LINK;
     }
 
-    public void close() {
+    public void close(int density) {
         Arrays.stream(ROOMS)
                 .forEach((room)->{
-                    room.turnOffLight();
+                    if (random.nextInt() % 100 <= density) {
+                        room.turnOffLight();
+                    }else room.turnOnLight();
                 });
         opened = false;
     }
 
-    public void open() {
+    public void open(int density) {
         Arrays.stream(ROOMS)
                 .forEach((room)->{
-                    room.turnOnLight();
+                    if (random.nextInt() % 100 <= density ) {
+                        room.turnOnLight();
+                    }else room.turnOffLight();
                 });
         opened = true;
     }
 
     public boolean isIntersecs(Pair<Double, Double> coordinates) {
+//        boolean final isIntersecs = false;
         short[] result = new short[]{0};
-        Arrays.stream(ROOMS).forEach((room)->{
-            result[0] |= room.isIntersects(coordinates);
+        Arrays.stream(ROOMS).forEach((room)-> {
+            Arrays.stream(room.getAllBuildingMaterials()).forEach((node) -> {
+                if (node.contains(coordinates.getKey(), coordinates.getValue())) result[0] = 1;
+            });
+//            Arrays.stream(room.getAllBuildingMaterials()).filter((node) ->
+//                node.contains(coordinates.getKey(),coordinates.getValue()));
+//            result[0] |= room.isIntersects(coordinates);
         });
         return result[0] == 1;
     }

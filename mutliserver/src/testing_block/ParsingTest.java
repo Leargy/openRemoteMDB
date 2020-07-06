@@ -1,15 +1,5 @@
 package testing_block;
 
-import czerkaloggers.customer.B_4D4_GE3;
-import instructions.concrete.base.*;
-import instructions.concrete.extended.*;
-import organization.*;
-import parsing.customer.bootstrapper.NakedCrateLoader;
-import parsing.customer.distro.ShedBlock;
-
-import static org.junit.Assert.*;
-
-import java.util.List;
 
 public class ParsingTest {
 //    private NakedCrateLoader nakedCrateLoader = new NakedCrateLoader();
