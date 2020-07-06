@@ -17,7 +17,7 @@ public class AtticBuilder extends RoomBuilder {
 
     @Override
     public void buildFacade(double x, double y, double width, double height, Paint fill) {
-        product.installFacade(new Facade(x, y, width, height, fill));
+        product.installFacade(new Facade(x, y, width, height , fill));
     }
 
     @Override
@@ -32,9 +32,9 @@ public class AtticBuilder extends RoomBuilder {
 
     @Override
     public void buildHBeams(double x, double y, double width, double height, Paint fill) {
-        product.installHBeam(TOP_BEAM, new Beam(x - width / 10, y, width * 1.2, height / 10, fill));
-        product.installHBeam(MIDDLE_BEAM, new Beam(x - width / 10, y + height / 2, width * 1.2, height / 10, fill));
-        product.installHBeam(BOTTOM_BEAM, new Beam(x - width / 10, y + height - 1, width * 1.2, height / 10, fill));
+        product.installHBeam(TOP_BEAM, new Beam(x - width / 10, y, width * 1.3, height / 10, fill));
+        product.installHBeam(MIDDLE_BEAM, new Beam(x - width / 10, y + height / 2, width * 1.3, height / 10, fill));
+        product.installHBeam(BOTTOM_BEAM, new Beam(x - width / 10, y + height - 1, width * 1.3, height / 10, fill));
     }
 
     @Override

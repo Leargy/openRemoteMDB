@@ -25,10 +25,10 @@ public class OfficeBuilder extends RoomBuilder {
 
     @Override
     public void buildWindows(double x, double y, double width, double height, Paint fill) {
-        product.installWindow(UPPER_LEFT_WINDOW, new Window(x + width * 0.25,  y + height * 0.15, width / 5, height * 0.3, fill));
-        product.installWindow(UPPER_RIGHT_WINDOW, new Window(x + 0.6 * width, y + height * 0.15, width / 5, height * 0.3, fill));
-        product.installWindow(LOWER_LEFT_WINDOW, new Window(x + width * 0.25, y + height * 0.6, width / 5, height * 0.3, fill));
-        product.installWindow(LOWER_RIGHT_WINDOW, new Window(x + width * 0.6, y + height * 0.6, width / 5, height * 0.3, fill));
+        product.installWindow(UPPER_LEFT_WINDOW, new Window(x + width * 0.2,  y + height * 0.15, width / 5, height * 0.3, fill));
+        product.installWindow(UPPER_RIGHT_WINDOW, new Window(x + 0.7 * width, y + height * 0.15, width / 5, height * 0.3, fill));
+        product.installWindow(LOWER_LEFT_WINDOW, new Window(x + width * 0.2, y + height * 0.6, width / 5, height * 0.3, fill));
+        product.installWindow(LOWER_RIGHT_WINDOW, new Window(x + width * 0.7, y + height * 0.6, width / 5, height * 0.3, fill));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class OfficeBuilder extends RoomBuilder {
 
     @Override
     public void buildHBeams(double x, double y, double width, double height, Paint fill) {
-        product.installHBeam(TOP_BEAM, new Beam(x - width / 10, y, width * 1.2, height / 10, fill));
+        product.installHBeam(TOP_BEAM, new Beam(x - width / 10, y, width * 1.27, height / 10, fill));
         product.installHBeam(BOTTOM_BEAM, new Beam(x - width / 10, y + height - 1, width * 1.2, height / 10, fill));
     }
 

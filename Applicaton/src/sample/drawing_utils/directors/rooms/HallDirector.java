@@ -13,7 +13,7 @@ public class HallDirector extends RoomDirector {
     @Override
     public Room make(OrganizationWithUId organization, Paint colour, Group group) {
         _builder.destroy();
-        _builder.plan(organization, RoomType.BOSS_ROOM);
+        _builder.plan(organization, RoomType.HALL);
         Pair<Double, Double> anchor = HallMapper.getLeftUpperCorner(organization, group);
         _builder.buildFacade(anchor.getKey(), anchor.getValue(), HallMapper.DEFAULT_WIDTH, HallMapper.DEFAULT_HEIGHT, colour);
         _builder.buildHBeams(anchor.getKey(), anchor.getValue(), HallMapper.DEFAULT_WIDTH, HallMapper.DEFAULT_HEIGHT, HBEAMS_COLOUR);

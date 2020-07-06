@@ -20,7 +20,7 @@ public class BossBuilder extends RoomBuilder {
 
     @Override
     public void buildWindows(double x, double y, double width, double height, Paint fill) {
-        product.installWindow(CENTER_WINDOW, new Window(x + width / 4, y + height / 4, width / 5, height / 5, fill));
+        product.installWindow(CENTER_WINDOW, new Window(x + width / 4, y + height / 3, width / 5, height * 0.3, fill));
     }
 
     @Override
@@ -30,8 +30,8 @@ public class BossBuilder extends RoomBuilder {
 
     @Override
     public void buildHBeams(double x, double y, double width, double height, Paint fill) {
-        product.installHBeam(TOP_BEAM, new Beam(x - 2, y, width * 1.2, height / 10, fill));
-        product.installHBeam(BOTTOM_BEAM, new Beam(x - 2, y + height - 1, width * 1.2, height / 10, fill));
+        product.installHBeam(TOP_BEAM, new Beam(x - 2, y, width * 1.3, height / 10, fill));
+        product.installHBeam(BOTTOM_BEAM, new Beam(x - 2, y + height , width * 1.3, height / 10, fill));
     }
 
     @Override

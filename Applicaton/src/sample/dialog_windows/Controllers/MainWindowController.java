@@ -44,6 +44,8 @@ import sample.drawing_utils.builders.companies.CompanyBuilder;
 import sample.drawing_utils.directors.companies.CompanyDirector;
 import sample.drawing_utils.materials.Company;
 
+import javax.jws.soap.SOAPBinding;
+
 public class MainWindowController extends Dialog {
     private WindowsFactory mainWindowFactory;
     private static Commander totalCommander;
@@ -133,6 +135,7 @@ public class MainWindowController extends Dialog {
 
     @FXML
     void initialize() {
+        info_panel.setText("");
 //        filter_box.setValue("Фильтр");
         serchin_field.setText("");
 //        organizationsToAdd.addListener(new ListChangeListener<OrganizationWithUId>() {
@@ -254,11 +257,15 @@ public class MainWindowController extends Dialog {
                 if (hasChanges) {
                     synchronized (organizationsToAdd) {
                         filteredList.clear();
-                        filteredList.addAll(filter(filter_box.getValue(),serchin_field.getText()));
-//                        System.out.println(organizationsToAdd);
                         tabl.getItems().clear();
-                        tabl.getItems().addAll(filteredList);
-                        drawBuildings(filteredList);
+                        filteredList.addAll(filter(filter_box.getValue(),serchin_field.getText()));
+//                                .stream().forEach((tempOrg) -> {
+                        Platform.runLater(()->{
+                            tabl.getItems().addAll(filteredList);
+                        });
+//                        });
+//                        System.out.println(organizationsToAdd);
+//                        tabl.getItems().addAll(filteredList);
                         tabl.refresh();
                         hasChanges = false;
                     }
@@ -296,6 +303,19 @@ public class MainWindowController extends Dialog {
 
         addOnlineUser(nickForDisplaying.get());
         addInteructionButton();
+
+        filteredList.addListener(new ListChangeListener<OrganizationWithUId>() {
+            @Override
+            public void onChanged(Change<? extends OrganizationWithUId> c) {
+//                System.out.println(filteredList.size());
+                buildingsList.clear();
+                drawBuildings(filteredList);
+                Platform.runLater(() -> {
+                    organization_objects_group.getChildren().clear();
+                    setBuildings(buildingsList);
+                });
+            }
+        });
     }
 
     @Override
@@ -492,7 +512,7 @@ public class MainWindowController extends Dialog {
         ObservableList<OrganizationWithUId> result = FXCollections.observableArrayList();
         List filtered = new ArrayList();
         whatFind.toLowerCase();
-        if (whatFind.trim().equals("") == false) {
+        if (whatFind.trim().equals("") == false && findBy != null) {
             switch (findBy) {
                 case "Name": {
                     filtered = Arrays.asList(organizationsToAdd.stream().filter((tempOrg) -> (tempOrg.getOrganization().getName().toLowerCase().contains(whatFind))).toArray());
@@ -538,20 +558,48 @@ public class MainWindowController extends Dialog {
         return result;
     }
 
+    private void setBuildings(ArrayList<Company> setOrganizations) {
+//        Iterator<Company> iter = setOrganizations.iterator();
+        try {
+            setOrganizations.stream().forEach((comp) -> {
+                Arrays.stream(comp.getAllBuildingMaterials()).forEach((node) -> {
+                    organization_objects_group.getChildren().add(node);
+                });
+            });
+        }catch (ConcurrentModificationException ex) { /*NOPE*/ }
+//        while (iter.hasNext()) {
+//            organization_objects_group.getChildren().add(iter.next().getAllBuildingMaterials());
+//        }
+    }
+
     private void drawBuildings(ObservableList<OrganizationWithUId> organizationWithUIds) {
         creatLinkedColorForUser(organizationWithUIds);
-        Iterator<OrganizationWithUId> iter = organizationWithUIds.iterator();
-        while (iter.hasNext()) {
-            OrganizationWithUId tempOrganization = iter.next();
-            buildingsList.add(new CompanyDirector().make(tempOrganization,UsersLinkedWithColor.get(tempOrganization.getUserLogin()),organization_objects_group));
-        }
+//        Iterator<OrganizationWithUId> iter = organizationWithUIds.iterator();
+        organizationWithUIds.stream().forEach((tempOrg) -> {
+            buildingsList.add(new CompanyDirector().make(tempOrg,UsersLinkedWithColor.get(tempOrg.getUserLogin()),organization_objects_group));
+        });
+//        while (iter.hasNext()) {
+//            OrganizationWithUId tempOrganization = iter.next();
+//            buildingsList.add(new CompanyDirector().make(tempOrganization,UsersLinkedWithColor.get(tempOrganization.getUserLogin()),organization_objects_group));
+//        }
     }
 
     private void creatLinkedColorForUser(ObservableList<OrganizationWithUId> organizationWithUIds) {
-        Iterator<OrganizationWithUId> iter = organizationWithUIds.iterator();
-        while (iter.hasNext()) {
-            UsersLinkedWithColor.put(iter.next().getUserLogin(), randomColor());
-        }
+//        Iterator<OrganizationWithUId> iter = organizationWithUIds.iterator();
+//        System.out.println(organizationWithUIds.size());
+        organizationWithUIds.stream().forEach((tempOrg) -> {
+                if (UsersLinkedWithColor.get(tempOrg.getUserLogin()) == null) {
+                    UsersLinkedWithColor.put(tempOrg.getUserLogin(),randomColor());
+                }
+        });
+
+//        while (iter.hasNext()) {
+//            OrganizationWithUId tempOrg = iter.next();
+//            if (UsersLinkedWithColor.get(tempOrg.getUserLogin()) == null) UsersLinkedWithColor.put(tempOrg.getUserLogin(), randomColor());
+//        }
+//        UsersLinkedWithColor.entrySet().stream().forEach((ent) -> {
+//            System.out.println(ent.getKey() + " " + ent.getValue());
+//        });
     }
 
     public Paint randomColor() {

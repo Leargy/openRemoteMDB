@@ -73,17 +73,16 @@ public final class Room {
 
     public Node[] getAllBuildingMaterials() {
         Node[] nodes = new Node[WINDOWS.length + DOORS.length + VERTICAL_BEAMS.length + HORIZONTAL_BEAMS.length + FLAGS.length + 1];
-        System.arraycopy(nodes, 0,
-                WINDOWS, 0, WINDOWS.length);
-        System.arraycopy(nodes, WINDOWS.length,
-                DOORS, 0, DOORS.length);
-        System.arraycopy(nodes, WINDOWS.length + DOORS.length,
-                VERTICAL_BEAMS, 0, VERTICAL_BEAMS.length);
-        System.arraycopy(nodes, WINDOWS.length + DOORS.length + VERTICAL_BEAMS.length,
-                HORIZONTAL_BEAMS,0, HORIZONTAL_BEAMS.length);
-        System.arraycopy(nodes, WINDOWS.length + DOORS.length + VERTICAL_BEAMS.length + HORIZONTAL_BEAMS.length,
-                FLAGS, 0, FLAGS.length);
-        nodes[nodes.length - 1] = FACADE;
+        nodes[0] = FACADE;
+        System.arraycopy(VERTICAL_BEAMS, 0,
+                nodes, 1, VERTICAL_BEAMS.length);
+        System.arraycopy(HORIZONTAL_BEAMS, 0,
+                nodes, 1 + VERTICAL_BEAMS.length, HORIZONTAL_BEAMS.length);
+        System.arraycopy(DOORS, 0,
+                nodes, 1 + HORIZONTAL_BEAMS.length +  VERTICAL_BEAMS.length, DOORS.length);
+        System.arraycopy(WINDOWS, 0, nodes, 1 + HORIZONTAL_BEAMS.length +  VERTICAL_BEAMS.length + DOORS.length, WINDOWS.length);
+        System.arraycopy(FLAGS, 0,
+                nodes, WINDOWS.length + 1 + HORIZONTAL_BEAMS.length +  VERTICAL_BEAMS.length + DOORS.length, FLAGS.length);
         return nodes;
     }
 

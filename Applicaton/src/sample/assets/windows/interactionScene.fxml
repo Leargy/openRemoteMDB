@@ -31,7 +31,7 @@
                 </Text>
                 <AnchorPane prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #FFFFFF;">
                     <children>
-                        <MenuBar layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="77.0" style="-fx-background-color: #73ACE6;">
+                        <MenuBar layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="90.0" style="-fx-background-color: #73ACE6;">
                             <menus>
                                 <Menu fx:id="interact_lang_choser" mnemonicParsing="false" text="Язык">
                                     <items>

@@ -59,7 +59,7 @@
                         <Font name="Georgia" size="15.0" />
                      </font>
                   </Button>
-                  <MenuBar fx:id="language_menu" layoutX="7.0" layoutY="4.0" prefHeight="32.0" prefWidth="82.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;">
+                  <MenuBar fx:id="language_menu" layoutX="7.0" layoutY="4.0" prefHeight="34.0" prefWidth="90.0" style="-fx-background-color: #73ACE6; -fx-border-color: #8F8F8F;">
                     <menus>
                       <Menu fx:id="main_lang_choser" mnemonicParsing="false" text="Язык">
                           <items>
@@ -86,16 +86,16 @@
                            <children>
                               <TableView fx:id="tabl" prefHeight="424.0" prefWidth="1090.0" style="-fx-border-color: #8F8F8F;">
                                 <columns>
+                                    <TableColumn fx:id="main_table_id" prefWidth="66.0" text="ID" />
                                     <TableColumn fx:id="main_table_name" prefWidth="65.0" text="Имя" />
                                     <TableColumn fx:id="main_table_fullname" prefWidth="110.0" text="Полное имя" />
                                     <TableColumn fx:id="main_table_type" prefWidth="91.0" text="Тип" />
-                                    <TableColumn fx:id="main_table_employees" minWidth="9.0" prefWidth="161.0" text="Число сотрудников" />
-                                    <TableColumn fx:id="main_table_annual" prefWidth="134.0" text="Годовой оборот" />
+                                    <TableColumn fx:id="main_table_employees" minWidth="9.0" prefWidth="152.0" text="Число сотрудников" />
+                                    <TableColumn fx:id="main_table_annual" prefWidth="127.0" text="Годовой оборот" />
                                     <TableColumn fx:id="main_table_zipcode" prefWidth="81.0" text="Индекс" />
-                                    <TableColumn fx:id="main_table_creation_date" prefWidth="154.0" text="Дата создания" />
-                                    <TableColumn fx:id="main_table_owner" prefWidth="88.0" text="Владелец" />
-                                    <TableColumn fx:id="main_table_id" prefWidth="66.0" text="ID" />
-                                    <TableColumn fx:id="main_table_interact" prefWidth="138.0" text="Взаимодействие" />
+                                    <TableColumn fx:id="main_table_creation_date" prefWidth="159.0" text="Дата создания" />
+                                    <TableColumn fx:id="main_table_owner" prefWidth="90.0" text="Владелец" />
+                                    <TableColumn fx:id="main_table_interact" prefWidth="147.0" text="Взаимодействие" />
                                 </columns>
                               </TableView>
                            </children>

@@ -21,18 +21,18 @@ public class HallBuilder extends RoomBuilder {
 
     @Override
     public void buildWindows(double x, double y, double width, double height, Paint fill) {
-        product.installWindow(LEFT_WINDOW, new Window(x + width * 0.15,  y + height * 0.3, width / 5, height * 0.3, fill));
+        product.installWindow(LEFT_WINDOW, new Window(x + width * 0.25,  y + height * 0.3, width / 5, height * 0.3, fill));
         product.installWindow(RIGHT_WINDOW, new Window(x + 0.65 * width, y + height * 0.3, width / 5, height * 0.3, fill));
     }
 
     @Override
     public void buildDoors(double x, double y, double width, double height, Paint fill) {
-        product.installDoor(CENTER_DOOR, new Door(x + width * 0.3, y + height / 1.25, width / 2.5, height / 5, fill));
+        product.installDoor(CENTER_DOOR, new Door(x + width * 0.35, y + height / 1.25, width / 2.5, height / 5, fill));
     }
 
     @Override
     public void buildHBeams(double x, double y, double width, double height, Paint fill) {
-        product.installHBeam(BOTTOM_BEAM, new Beam(x - 2, y + height - 1, width * 1.2, height / 10, fill));
+        product.installHBeam(BOTTOM_BEAM, new Beam(x - 5, y + height - 1, width * 1.3, height / 10, fill));
     }
 
     @Override

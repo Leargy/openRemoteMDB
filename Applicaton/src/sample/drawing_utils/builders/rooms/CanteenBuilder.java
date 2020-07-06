@@ -24,9 +24,9 @@ public class CanteenBuilder extends RoomBuilder {
 
     @Override
     public void buildWindows(double x, double y, double width, double height, Paint fill) {
-        product.installWindow(LEFT_WINDOW, new Window(x + width / 10, y + height / 4, width / 10, height / 5, fill));
-        product.installWindow(CENTER_WINDOW, new Window(x + width / 5 + 2, y + height / 4, width / 10, height / 5, fill));
-        product.installWindow(RIGHT_WINDOW, new Window(x + width / 5 + 2 + width / 10, y + height / 4, width / 10, height / 5, fill));
+        product.installWindow(LEFT_WINDOW, new Window(x + width / 5.4, y + height / 2.5, width / 5, height * 0.3, fill));
+        product.installWindow(CENTER_WINDOW, new Window(x + width / 2.16, y + height / 2.5, width / 5, height * 0.3, fill));
+        product.installWindow(RIGHT_WINDOW, new Window(x + width / 2  + 2 + width / 5, y + height / 2.5, width / 5, height * 0.3, fill));
     }
 
     @Override
@@ -36,10 +36,10 @@ public class CanteenBuilder extends RoomBuilder {
 
     @Override
     public void buildHBeams(double x, double y, double width, double height, Paint fill) {
-        product.installHBeam(TOP_BEAM, new Beam(x - 2, y, width * 1.2, height / 10, fill));
-        product.installHBeam(TOP_MIDDLE_BEAM, new Beam(x - 2, y + height / 4, width * 1.2, height / 10, fill));
-        product.installHBeam(LOW_MIDDLE_BEAM, new Beam(x - 2, y + height / 2, width * 1.2, height / 10, fill));
-        product.installHBeam(BOTTOM_BEAM, new Beam(x - 2, y + height - 1, width * 1.2, height / 10, fill));
+        product.installHBeam(TOP_BEAM, new Beam(x - 5, y, width * 1.25, height / 10, fill));
+        product.installHBeam(TOP_MIDDLE_BEAM, new Beam(x - 5, y + height / 3, width * 1.25, height / 10, fill));
+        product.installHBeam(LOW_MIDDLE_BEAM, new Beam(x - 5, y + height / 1.5, width * 1.25, height / 10, fill));
+        product.installHBeam(BOTTOM_BEAM, new Beam(x - 5, y + height - 1, width * 1.25, height / 10, fill));
     }
 
     @Override

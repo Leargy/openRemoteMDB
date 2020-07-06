@@ -2,9 +2,9 @@ package sample.drawing_utils.materials;
 
 public enum ArchitectureType {
     HALLED(1, 1),
-    STORAGED(8, 2),
+    OFFICED( 8, 2),
     CANTEENED(1024, 3),
-    OFFICED(65536, 4),
+    STORAGED(65536, 4),
     NEGOTIATED(2097152, 5),
     BOSSED(33554432, 6),
     ATTICED(268435456, 7),

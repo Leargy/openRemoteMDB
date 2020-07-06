@@ -22,8 +22,8 @@ public class NegotiateBuilder extends RoomBuilder {
 
     @Override
     public void buildWindows(double x, double y, double width, double height, Paint fill) {
-        product.installWindow(LEFT_WINDOW, new Window(x + width * 0.15,  y + height * 0.35, width / 5, height * 0.3, fill));
-        product.installWindow(CENTER_WINDOW, new Window(x + width * 0.4, y + height * 0.35, width / 5, height * 0.3, fill));
+        product.installWindow(LEFT_WINDOW, new Window(x + width * 0.2,  y + height * 0.35, width / 5, height * 0.3, fill));
+        product.installWindow(CENTER_WINDOW, new Window(x + width * 0.45, y + height * 0.35, width / 5, height * 0.3, fill));
         product.installWindow(RIGHT_WINDOW, new Window(x + 0.7 * width, y + height * 0.35, width / 5, height * 0.3, fill));
     }
 
@@ -34,7 +34,7 @@ public class NegotiateBuilder extends RoomBuilder {
 
     @Override
     public void buildHBeams(double x, double y, double width, double height, Paint fill) {
-        product.installHBeam(TOP_BEAM, new Beam(x - width / 10, y, width * 1.2, height / 10, fill));
+        product.installHBeam(TOP_BEAM, new Beam(x - width / 10, y, width * 1.3, height / 10, fill));
     }
 
     @Override

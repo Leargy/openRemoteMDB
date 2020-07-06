@@ -49,7 +49,7 @@ public class CompanyDirector {
                 companyBuilder.buildNegotiate(negotiateDirector.make(organization, colour, group));
             }
             case STORAGED: {
-//                companyBuilder.buildStorage(storageDirector.make(organization, colour, group));
+                companyBuilder.buildStorage(storageDirector.make(organization, colour, group));
             }
             case CANTEENED: {
                 companyBuilder.buildCanteen(canteenDirector.make(organization, colour, group));

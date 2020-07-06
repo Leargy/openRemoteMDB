@@ -7,7 +7,8 @@ import organization.OrganizationWithUId;
 public final class Door extends Rectangle implements Linkable {
     private OrganizationWithUId LINK;
     public Door(double x, double y, double width, double height, Paint colour) {
-
+        super(x, y, width, height);
+        setFill(colour);
     }
 
     @Override
