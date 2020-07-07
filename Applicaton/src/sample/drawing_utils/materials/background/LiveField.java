@@ -1,12 +1,24 @@
 package sample.drawing_utils.materials.background;
 
+import javafx.animation.Animation;
+import javafx.animation.FillTransition;
 import javafx.scene.Group;
+import javafx.util.Duration;
+import sample.drawing_utils.materials.LiveWindow;
 
 import java.util.Random;
 
 public final class LiveField extends Field {
     public LiveField(Group resident) {
         super(resident);
+        FillTransition colorChanging = new FillTransition();
+        colorChanging.setDuration(Duration.millis(LiveWindow.ANIMATION_CYCLE_DURATION));
+        colorChanging.setFromValue(Field.SURFACE_DAY);
+        colorChanging.setToValue(Field.SURFACE_NIGHT);
+        colorChanging.setAutoReverse(true);
+        colorChanging.setCycleCount(Animation.INDEFINITE);
+        colorChanging.setShape(BACKGROUND);
+        colorChanging.play();
     }
 
     @Override

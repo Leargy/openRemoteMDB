@@ -16,12 +16,12 @@ public final class LiveBush extends Bush {
         colorChanging.setAutoReverse(true);
         ScaleTransition sizeChanging = new ScaleTransition();
         sizeChanging.setDuration(Duration.millis(LiveWindow.ANIMATION_CYCLE_DURATION));
-        sizeChanging.setToX(Bush.DEFAULT_WIDTH * 1.1);
-        sizeChanging.setToY(Bush.DEFAULT_HEIGHT * 1.2);
+        sizeChanging.setToX(Bush.DEFAULT_WIDTH * 0.01);
+        sizeChanging.setToY(Bush.DEFAULT_HEIGHT * 0.05);
         sizeChanging.setAutoReverse(true);
         TranslateTransition motionChanging = new TranslateTransition();
         motionChanging.setDuration(Duration.millis(LiveWindow.ANIMATION_CYCLE_DURATION));
-        motionChanging.setToX(x + Bush.DEFAULT_WIDTH / 10);
+        motionChanging.setToX(x + Bush.DEFAULT_WIDTH / 100000);
         motionChanging.setAutoReverse(true);
         ParallelTransition collection = new ParallelTransition();
         collection.setNode(this);

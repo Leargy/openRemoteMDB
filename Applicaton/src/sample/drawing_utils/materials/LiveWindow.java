@@ -8,7 +8,7 @@ import javafx.util.Duration;
 import sample.drawing_utils.directors.rooms.RoomDirector;
 
 public final class LiveWindow extends Window {
-    public static final double ANIMATION_CYCLE_DURATION = 2000;
+    public static final double ANIMATION_CYCLE_DURATION = 6000;
 
     public LiveWindow(double x, double y, double width, double height, Paint colour) {
         super(x, y, width, height, colour);

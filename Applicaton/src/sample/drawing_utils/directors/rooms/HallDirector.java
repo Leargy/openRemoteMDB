@@ -1,6 +1,7 @@
 package sample.drawing_utils.directors.rooms;
 
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.util.Pair;
 import organization.OrganizationWithUId;
@@ -19,6 +20,8 @@ public class HallDirector extends RoomDirector {
         _builder.buildVBeams(anchor.getKey(), anchor.getValue(), HallMapper.DEFAULT_WIDTH, HallMapper.DEFAULT_HEIGHT, VBEAMS_COLOUR);
         _builder.buildWindows(anchor.getKey(), anchor.getValue(), HallMapper.DEFAULT_WIDTH, HallMapper.DEFAULT_HEIGHT, WINDOWS_COLOUR_OPENED);
         _builder.buildDoors(anchor.getKey(), anchor.getValue(), HallMapper.DEFAULT_WIDTH, HallMapper.DEFAULT_HEIGHT, DOOR_COLOUR);
+        if (HallMapper.isOutOfBounds(organization, group))
+            _builder.buildFlags(anchor.getKey(), anchor.getValue(), HallMapper.DEFAULT_WIDTH, HallMapper.DEFAULT_HEIGHT, Color.RED);
         return _builder.getResult();
     }
 }

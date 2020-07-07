@@ -1,10 +1,7 @@
 package sample.drawing_utils.builders.rooms;
 
 import javafx.scene.paint.Paint;
-import sample.drawing_utils.materials.Beam;
-import sample.drawing_utils.materials.Door;
-import sample.drawing_utils.materials.Facade;
-import sample.drawing_utils.materials.Window;
+import sample.drawing_utils.materials.*;
 
 public class HallBuilder extends RoomBuilder {
     public static final int SITE = 0;
@@ -20,6 +17,7 @@ public class HallBuilder extends RoomBuilder {
     public static final int LEFT_DOOR_WAY_BEAM = 4;
     public static final int RIGHT_DOOR_WAY_BEAM = 5;
     public static final int CENTER_DOOR = 0;
+    public static final int OUT_OF_BOUNDS_FLAG = 0;
     @Override
     public void buildFacade(double x, double y, double width, double height, Paint fill) {
         product.installFacade(new Facade(x, y, width, height, fill));
@@ -56,6 +54,6 @@ public class HallBuilder extends RoomBuilder {
 
     @Override
     public void buildFlags(double x, double y, double width, double height, Paint fill) {
-        System.out.println("There are no flags in hall");
+        product.installFlag(OUT_OF_BOUNDS_FLAG, new Flag(x + width, y + height / 2, width / 4 , height / 4, fill));
     }
 }

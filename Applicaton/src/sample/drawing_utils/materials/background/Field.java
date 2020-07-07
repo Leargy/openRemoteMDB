@@ -12,7 +12,7 @@ import java.util.Random;
 public class Field {
     public static final Color SURFACE_DAY = Color.LAWNGREEN;
     public static final Color SURFACE_NIGHT = Color.DARKSLATEGREY;
-    private final Rectangle BACKGROUND;
+    protected final Rectangle BACKGROUND;
     public static final int MAX_BUSHES_COUNT = 20;
     private final Bush[] BUSHES;
 
